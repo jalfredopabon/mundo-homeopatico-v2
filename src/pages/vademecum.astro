@@ -1,0 +1,446 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CartDrawer from '../components/cart/CartDrawer.astro';
+---
+
+<BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
+    
+    <!-- Carrito Lateral (Drawer) -->
+    <CartDrawer />
+
+    <!-- Modal de Autenticación (Capa sobre todo el Dashboard) -->
+    <div id="auth-modal-overlay" class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300">
+        
+        <!-- Enlace invisible que cubre el fondo para cerrar el modal al hacer clic fuera -->
+        <a href="/" class="absolute inset-0 z-0" aria-label="Cerrar y volver al inicio"></a>
+
+        <div id="auth-modal" class="w-full max-w-[440px] mx-4 relative z-10">
+            
+            <!-- Tarjeta Principal del Modal -->
+            <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl shadow-brand/20 border border-white/50 overflow-hidden relative">
+                
+                <!-- Botón de Cerrar (X) Superior Derecha (Alineado con el padding de px-8) -->
+                <a href="/" class="absolute top-6 right-6 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-1 focus:ring-brand z-20" aria-label="Cerrar modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </a>
+
+                <!-- Encabezado del Modal (Blanco puro Minimalista) -->
+                <div class="px-8 pt-10 pb-4 text-left">
+                    <h2 class="text-slate-900 text-[26px] font-extrabold tracking-tight mb-2">Acceso</h2>
+                </div>
+
+                <!-- Cuerpo del Formulario -->
+                <div class="px-8 pb-10">
+                    <form id="auth-form" class="space-y-4" novalidate>
+                        
+                        <!-- Campo NIT / Cédula -->
+                        <div class="space-y-1.5">
+                            <label for="auth-nit" class="text-[13px] font-bold text-slate-800">
+                                Cédula o NIT
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="auth-nit" 
+                                    placeholder="Ej: 1234567890"
+                                    autocomplete="username"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all shadow-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Campo Contraseña -->
+                        <div class="space-y-1.5">
+                            <label for="auth-password" class="text-[13px] font-bold text-slate-800">
+                                Contraseña
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="auth-password"
+                                    placeholder="••••••••••"
+                                    autocomplete="current-password"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all shadow-sm pr-12 tracking-widest font-mono"
+                                />
+                                <!-- Botón para mostrar/ocultar contraseña -->
+                                <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all" aria-label="Mostrar contraseña">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="icon-eye-open"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="icon-eye-closed" class="hidden"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                                </button>
+                            </div>
+                            <!-- Vía de escape (Proximidad) -->
+                            <div class="flex justify-end pt-1">
+                                <!-- TODO: Reemplazar el número '573000000000' por la línea WhatsApp de Atención al Cliente de la empresa -->
+                                <a 
+                                    href="https://wa.me/573000000000?text=Hola,%20Mundo%20Homeop%C3%A1tico.%20Soy%20profesional%20m%C3%A9dico%20y%20olvid%C3%A9%20mis%20credenciales%20de%20acceso%20al%20Vadem%C3%A9cum.%20%C2%BFPodr%C3%ADan%20asistirme?" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="text-[12px] font-medium text-secondary hover:text-brand hover:underline transition-all cursor-pointer"
+                                >
+                                    ¿Olvidó su contraseña?
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox "Mantener sesión" -->
+                        <div class="flex items-center pt-2 pb-1">
+                            <label class="flex items-center gap-2.5 text-[13px] text-secondary cursor-pointer hover:text-slate-800 transition-colors">
+                                <input type="checkbox" class="size-4 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                                Mantener sesión iniciada
+                            </label>
+                        </div>
+
+                        <!-- Mensaje de Error -->
+                        <div id="auth-error" class="hidden items-center gap-2.5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-[13px] font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                            <span id="auth-error-text">Credenciales incorrectas</span>
+                        </div>
+
+                        <!-- Botón de Ingreso Limpio -->
+                        <button 
+                            type="submit" 
+                            id="auth-submit"
+                            class="w-full flex items-center justify-center bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-brand/20 hover:-translate-y-[1px] active:scale-[0.98] focus:ring-2 focus:ring-brand focus:ring-offset-2 text-[15px]"
+                        >
+                            Ingresar
+                        </button>
+                        
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Contenedor Principal Dashboard 3 Columnas -->
+    <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)]">
+        
+        <!-- Columna Izquierda: Sidebar de Filtros (w-64 = Consistente con Catálogo y Contacto) -->
+        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] sticky top-16 md:top-20 overflow-y-auto shrink-0">
+            <div class="p-6 space-y-7">
+
+                <!-- Buscador de medicamentos -->
+                <div class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input 
+                        type="search" 
+                        placeholder="Buscar patología o medicamento" 
+                        class="w-full pl-9 pr-3 py-2 bg-surface-white border border-subtle rounded-lg text-sm text-body focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all shadow-sm placeholder:text-muted/70"
+                    />
+                    <div class="mt-1.5 text-[10px] text-slate-400 font-medium px-1">8 resultados</div>
+                </div>
+
+                <!-- Filtro: Tipo de terapia -->
+                <section>
+                    <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+                        Tipo de terapia
+                    </h4>
+                    <div class="space-y-2.5 pl-0.5">
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Homeopatía compleja
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Terapia floral
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Oligoelementos
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Filtro: Sistema del cuerpo -->
+                <section>
+                    <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
+                        Sistema del cuerpo
+                    </h4>
+                    <div class="space-y-2.5 pl-0.5">
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Digestivo
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Nervioso
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Cardiovascular
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Respiratorio
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Locomotor
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Filtro: Forma farmacéutica -->
+                <section>
+                    <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                        Forma farmacéutica
+                    </h4>
+                    <div class="space-y-2.5 pl-0.5">
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Gotas
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Tabletas
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Spray
+                        </label>
+                        <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            Crema
+                        </label>
+                    </div>
+                </section>
+
+            </div>
+        </aside>
+
+        <!-- Columna Central: Grilla de Resultados (Scroll independiente) -->
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] scroll-smooth" id="vademecum-main-scroll">
+            <div class="px-8 md:px-10 pt-8 pb-24 flex-1">
+
+                <!-- Encabezado del Vademécum -->
+                <div class="flex items-end justify-between mb-8">
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Vademécum clínico</h1>
+                        <p class="text-[13px] text-slate-500 mt-1.5">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-lg text-[11px] font-semibold text-muted shadow-sm shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        8 medicamentos
+                    </div>
+                </div>
+
+                <!-- Listado de Tarjetas Clínicas -->
+                <div class="space-y-3.5 max-w-3xl">
+
+                    <!-- Card 1: Activa (Seleccionada) -->
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 shadow-md transition-all" data-med="nux-vomica">
+                        <div class="flex items-baseline gap-2.5 mb-2">
+                            <h3 class="text-[16px] font-bold text-brand">Nux vomica</h3>
+                            <span class="text-slate-400 text-xs font-medium">D4</span>
+                        </div>
+                        <p class="text-[13px] text-slate-600 leading-relaxed mb-4">
+                            Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario. Especialmente indicado para pacientes con temperamento colérico que sufren agravación matutina y después de las comidas.
+                        </p>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="4"/></svg>
+                                Digestivo
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Nervioso
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Gotas
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Inactiva -->
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="arnica-montana">
+                        <div class="flex items-baseline gap-2.5 mb-2">
+                            <h3 class="text-[16px] font-bold text-slate-800">Arnica montana</h3>
+                            <span class="text-slate-400 text-xs font-medium">D6</span>
+                        </div>
+                        <p class="text-[13px] text-slate-500 leading-relaxed mb-4">
+                            Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma. Indicado en pre y post operatorio para reducir hematomas y acelerar la recuperación tisular.
+                        </p>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Locomotor
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Cardiovascular
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Gotas
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Inactiva -->
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="ignatia-amara">
+                        <div class="flex items-baseline gap-2.5 mb-2">
+                            <h3 class="text-[16px] font-bold text-slate-800">Ignatia amara</h3>
+                            <span class="text-slate-400 text-xs font-medium">D12</span>
+                        </div>
+                        <p class="text-[13px] text-slate-500 leading-relaxed mb-4">
+                            Trastornos emocionales, ansiedad con espasmos, labilidad afectiva y efectos de duelos recientes. Útil en pacientes con tendencia a la somatización de emociones y sensación de nudo en la garganta.
+                        </p>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Nervioso
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Gotas
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Inactiva -->
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="pulsatilla">
+                        <div class="flex items-baseline gap-2.5 mb-2">
+                            <h3 class="text-[16px] font-bold text-slate-800">Pulsatilla</h3>
+                            <span class="text-slate-400 text-xs font-medium">D6</span>
+                        </div>
+                        <p class="text-[13px] text-slate-500 leading-relaxed mb-4">
+                            Afecciones de mucosas con secreciones blandas, variabilidad de síntomas y timidez. Indicada en rinitis con secreción amarillo-verdosa, otitis media y trastornos digestivos con intolerancia a grasas.
+                        </p>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Respiratorio
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Digestivo
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                                Tabletas
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Panel de Ficha Técnica (Scroll independiente) -->
+        <aside class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] overflow-y-auto shrink-0">
+            <div class="p-8 xl:p-10 flex-1">
+
+                <!-- Encabezado de la Ficha -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                        Ficha técnica del producto
+                    </div>
+                    <h2 class="text-3xl xl:text-4xl font-extrabold text-slate-900 tracking-tight mb-5">Nux vomica <span class="text-brand">D4</span></h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-bold text-muted rounded-full italic">Strychnos nux-vomica</span>
+                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-bold text-muted rounded-full">Potencia D4</span>
+                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-bold text-muted rounded-full">Origen vegetal</span>
+                    </div>
+                </div>
+
+                <!-- Secciones de la Ficha -->
+                <div class="space-y-8">
+
+                    <!-- Sección 1: Indicaciones clínicas -->
+                    <div class="border-t border-subtle pt-7">
+                        <h4 class="text-[11px] font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M12 11v4"/><path d="M14 13h-4"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M18 6a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V8a2 2 0 0 1 2-2Z"/><path d="M10 20v2"/><path d="M14 20v2"/></svg>
+                            Indicaciones clínicas
+                        </h4>
+                        <p class="text-[13px] text-slate-600 leading-[1.8]">
+                            Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario. Especialmente indicado para pacientes con temperamento colérico que sufren agravación matutina y después de las comidas.
+                        </p>
+                    </div>
+
+                    <!-- Sección 2: Perfil farmacológico -->
+                    <div class="border-t border-subtle pt-7">
+                        <h4 class="text-[11px] font-bold text-slate-800 mb-5 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42Z"/><circle cx="6" cy="9.5" r="1" fill="currentColor"/></svg>
+                            Perfil farmacológico
+                        </h4>
+                        <ul class="space-y-5">
+                            <li class="flex gap-3">
+                                <div class="size-1.5 rounded-full bg-brand mt-2 shrink-0"></div>
+                                <div class="text-[13px] leading-relaxed">
+                                    <span class="font-bold text-slate-900">Tropismo principal</span><br/>
+                                    <span class="text-slate-500">Sistema Digestivo y Sistema Nervioso Central (médula espinal).</span>
+                                </div>
+                            </li>
+                            <li class="flex gap-3">
+                                <div class="size-1.5 rounded-full bg-brand mt-2 shrink-0"></div>
+                                <div class="text-[13px] leading-relaxed">
+                                    <span class="font-bold text-slate-900">Modalidad diagnóstica</span><br/>
+                                    <span class="text-slate-500">Mejora con el calor y el reposo; empeora por la mañana y con estimulantes.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Sección 3: Protocolo de posología -->
+                    <div class="border-t border-subtle pt-7">
+                        <h4 class="text-[11px] font-bold text-slate-800 mb-5 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                            Protocolo de posología
+                        </h4>
+                        <div class="p-5 rounded-xl bg-brand/5 border border-brand/10 flex gap-4 items-start">
+                            <div class="bg-brand/10 p-2 rounded-lg shrink-0 mt-0.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                            </div>
+                            <p class="text-[13px] text-slate-700 leading-[1.8] font-medium">
+                                Disolver <span class="font-bold text-slate-900">5 glóbulos bajo la lengua</span>, 3 veces al día, idealmente 30 minutos antes o después de la ingesta de alimentos. Evitar café y menta durante el tratamiento.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+</BaseLayout>
+
+<script>
+    // ⚠️ TEMPORAL: Credenciales hardcodeadas para desarrollo. Reemplazar por autenticación real (GAS) en Fase 3.
+    const TEMP_USER = 'alfredo';
+    const TEMP_PASS = '1234';
+
+    const overlay = document.getElementById('auth-modal-overlay');
+    const form = document.getElementById('auth-form');
+    const inputNit = document.getElementById('auth-nit');
+    const inputPass = document.getElementById('auth-password');
+    const errorBox = document.getElementById('auth-error');
+    const errorText = document.getElementById('auth-error-text');
+    const toggleBtn = document.getElementById('toggle-password');
+    const iconOpen = document.getElementById('icon-eye-open');
+    const iconClosed = document.getElementById('icon-eye-closed');
+
+    // Validación del formulario
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = inputNit?.value.trim();
+        const pass = inputPass?.value;
+
+        if (user === TEMP_USER && pass === TEMP_PASS) {
+            // Animación de salida del modal
+            overlay?.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay?.classList.add('hidden');
+            }, 300);
+        } else {
+            // Mostrar error
+            errorBox?.classList.remove('hidden');
+            errorBox?.classList.add('flex');
+            if (errorText) errorText.textContent = 'Credenciales incorrectas. Verifique usuario y contraseña.';
+            inputPass?.focus();
+        }
+    });
+
+    // Toggle de visibilidad de contraseña
+    toggleBtn?.addEventListener('click', () => {
+        const isPassword = inputPass?.type === 'password';
+        if (inputPass) inputPass.type = isPassword ? 'text' : 'password';
+        iconOpen?.classList.toggle('hidden');
+        iconClosed?.classList.toggle('hidden');
+    });
+</script>

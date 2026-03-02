@@ -1,0 +1,101 @@
+---
+// Componente Sidebar específico para la vista de Contacto
+---
+
+<aside class="w-full md:w-64 bg-surface-white border-b md:border-b-0 md:border-r border-subtle flex flex-col z-20 sticky top-0 md:static shrink-0 overflow-y-auto h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)]">
+    
+    <!-- Header del Sidebar (Card de Acción Rápida - Reemplaza al buscador) -->
+    <div class="p-6 space-y-8">
+        <div class="space-y-3">
+            <a href="#instagram" class="relative group flex items-center w-full pl-9 pr-3 py-2 bg-surface-white border border-strong rounded-lg text-sm text-muted hover:border-brand hover:text-brand transition-all shadow-sm focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand">
+                <!-- Icono Instagram alineado como el icono de buscar -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted/80 group-hover:text-brand transition-colors"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Síguenos en Instagram</span>
+            </a>
+        </div>
+
+        <!-- Navegación ScrollSpy: Índice de la página -->
+        <nav class="flex-1 flex flex-col text-[14px] leading-relaxed" aria-label="Navegación de secciones" id="contacto-scrollspy">
+            
+            <a href="#excelencia" class="flex items-center gap-2.5 text-muted px-3 py-1.5 border-l-[3px] border-transparent hover:border-strong hover:text-secondary transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-muted/80 group-hover:text-secondary transition-colors"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Excelencia homeopática</span>
+            </a>
+
+            <a href="#sedes" class="flex items-center gap-2.5 text-muted px-3 py-1.5 border-l-[3px] border-transparent hover:border-strong hover:text-secondary transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-muted/80 group-hover:text-secondary transition-colors"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>Sedes y distribuciones</span>
+            </a>
+
+            <a href="#faq" class="flex items-center gap-2.5 text-muted px-3 py-1.5 border-l-[3px] border-transparent hover:border-strong hover:text-secondary transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-muted/80 group-hover:text-secondary transition-colors"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Preguntas frecuentes</span>
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- Contenedor Inferior: Información estática de soporte -->
+    <div class="p-6 mt-auto bg-surface-muted/50 border-t border-subtle hidden md:block">
+        <div class="flex flex-col gap-2">
+            <h4 class="text-[12px] font-bold text-muted/80">Atención al cliente</h4>
+            <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-brand mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div>
+                    <p class="text-[13px] font-medium text-body leading-tight">Lunes a sábado</p>
+                    <p class="text-[11px] text-muted">8:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<script>
+    /**
+     * Lógica de Auto-Anclaje y Resaltado Dinámico (ScrollSpy)
+     * Utiliza IntersectionObserver sobre el contenedor fluido de la columna derecha.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        // Contenedor que tiene el scroll independiente
+        const scrollContainer = document.getElementById('contacto-main-scroll');
+        const sections = document.querySelectorAll('section[id]');
+        
+        if (!scrollContainer || sections.length === 0) return;
+
+        // Opciones del observador: la zona de activación (trigger) estará en el tercio superior de la pantalla
+        const observerOptions = {
+            root: scrollContainer,
+            rootMargin: '-10% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    // Resetear el estilo de todos los enlaces del sidebar
+                    document.querySelectorAll('#contacto-scrollspy a').forEach(link => {
+                        // Estados Inactivos
+                        link.classList.remove('text-secondary', 'border-brand', 'font-bold');
+                        link.classList.add('text-muted', 'border-transparent', 'font-medium');
+                        // Restauramos efectos hover
+                        link.classList.add('hover:text-secondary', 'hover:border-strong');
+                    });
+
+                    // Aplicar estado 'Activo' ('Brand') al que corresponda
+                    const activeLink = document.querySelector(`#contacto-scrollspy a[href="#${currentId}"]`);
+                    if (activeLink) {
+                        // Remover estilos de inactivo/hover
+                        activeLink.classList.remove('text-muted', 'border-transparent', 'font-medium', 'hover:text-secondary', 'hover:border-strong');
+                        // Aplicar clase Activa premium
+                        activeLink.classList.add('text-secondary', 'border-brand', 'font-bold');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    });
+</script>

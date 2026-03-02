@@ -450,6 +450,21 @@ _(Este registro es exclusivo para marcar hitos relevantes y tareas arquitectóni
   - Implementación definitiva del "Dashboard App Feel" inyectando gris corporativo (`bg-surface-muted/30`) a los contenedores principales fluidos de las tres páginas maestras, reservando el blanco inmaculado (`bg-surface-white`) estrictamente para Sidebars, Tarjetas, Tablas de Precios y Fichas Técnicas.
   - Purga global visual (UI): Destrucción de bordes crudos Slate y sombras monstruosas personalizadas herencia de diseños previos en todas las grillas e interfaces. Se estandariza a `border-subtle` y `shadow-sm`, recuperando el minimalismo premium.
   - Modificación estructural del Footer: Eliminación total en el entorno médico (`/vademecum`) purificando su naturaleza como herramienta clínica de uso intenso sin interrupciones visuales panfletarias. En Catálogo e Inicio conservó un rediseño de UI contenida solo dentro de la columna main fluid para jerarquizar el poder de acción del Sidebar global.
+- **[2026-03-02] Componentización y Orquestación Modular de Sedes y Contacto:**
+  - Migración atómica de la página de contacto a componentes de sección en `src/components/sections/` (`VideoSection`, `Locations`, `FAQ`).
+  - Refactorización de `contacto.astro` eliminando lógica inline extensiva y transformándola en un lienzo de ensamblaje modular.
+  - Estandarización de `Sentence case` y Design Tokens en todos los nuevos sub-componentes extraídos.
+- **[2026-03-02] Migración Cromática al Verde Petróleo Premium:**
+  - Sustitución del verde medio (`#0E8A71/#12A388/#0B6E5A`) por el esquema bicromático del legacy: Verde Petróleo Profundo (`#0A5C4E`) como color corporativo base y Verde Jade (`#158C77`) como color vibrante de acción. Comportamiento de botones estandarizado: "Soy médico" oscuro→jadeal hover, CTAs y botones "+" jade→oscuro al hover. Sincronización global en `global.css`, `index.astro`, `vademecum.astro`, `Header.astro` y `Locations.astro`.
+- **[2026-03-02] Purga Global de Sombras (Flat Design Consistente):**
+  - Eliminación sistemática de todas las clases `shadow-*` en contenedores principales de las tres vistas: tablas del Catálogo (`index.astro`), tarjetas y acordeones de Sedes y Contacto (`Locations.astro`, `FAQ.astro`, `VideoSection.astro`), y tarjetas del Vademécum (`vademecum.astro`). Se conservan bordes sutiles (`border-subtle`) como única separación visual, logrando un diseño plano premium sin elevaciones artificiales.
+- **[2026-03-02] Alineamiento Estructural del Sidebar Vademécum y Estandarización Cromática de Controles:**
+  - Corrección de la lupa desalineada: extracción del texto "8 resultados" fuera del contenedor `relative` del input, restaurando el centrado vertical perfecto del ícono de búsqueda.
+  - Creación de eje vertical unificado (`pl-3`) para alinear lupa, texto auxiliar, títulos de categoría, íconos y checkboxes a una misma línea de plomada invisible.
+  - Íconos de títulos de sección igualados cromáticamente con su texto (`text-slate-800`).
+  - Checkboxes migrados a `accent-brand text-brand`: chulitos verdes corporativos eliminando el azul nativo del navegador.
+  - Botones de cantidad del carrito (`CartDrawer`) transformados de texto gris sutil a botones sólidos con fondo jade y hover petróleo, replicando la estética del legacy.
+  - Ícono de eliminar producto oscurecido para visibilidad (`slate-300` → `slate-400`). Ícono de carrito en headers de tabla igualado al token `text-muted`.
 
 ---
 
@@ -462,6 +477,7 @@ Estos aspectos visuales y de interacción se implementarán obligatoriamente dur
 - [ ] **Empty States y Botón "Limpiar":** Si una búsqueda o filtro multicriterio devuelve 0 resultados, reemplazar la columna central vacía con un "Empty State" (estado vacío) premium ilustrado, y un botón directo de "Limpiar filtros" para no frustrar la navegación.
 - [ ] **Interacción "Mapa" Sede Principal (Contacto):** Cuando se integren datos reales, conectar el "mapa fake" (fondo borroso con pin) a un enlace o iframe real de Google Maps. Añadir un efecto hover que quite parcialmente el blur e indique al usuario que puede hacer clic para ver la ruta.
 - [ ] **Comportamiento Orgánico en Acordeones FAQ (Contacto):** Durante la fase de Javascript, asegurar que el ícono (ej: `+` o flecha) no cambie bruscamente, sino que rote de forma fluida (ej: `transform: rotate(45deg)` o `180deg`) al abrir y cerrar la respuesta.
+- [ ] **Sombras Modernas y Difusas (Contacto/Sedes):** Implementar sombras tipo "Ambient Occlusion" con tinte de marca (`shadow-brand/10`) y baja opacidad exclusivamente en las tarjetas de Sedes y Contacto. **Nota:** No aplicar a listas de precios ni Vademécum para mantener un estilo plano y profesional en datos densos.
 
 ---
 

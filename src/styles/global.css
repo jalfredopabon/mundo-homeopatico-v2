@@ -10,9 +10,9 @@ body {
 }
 
 :root {
-  --primary: #0e8a71;
-  --primary-vibrant: #12a388;
-  --primary-hover: #0b6e5a;
+  --primary: #0A5C4E;
+  --primary-vibrant: #158C77;
+  --primary-hover: #158C77;
   --secondary: #020617;
   --text-body: #334155;
   --text-muted: #64748b;
@@ -24,8 +24,8 @@ body {
 
 /* ─── Selección de Texto Corporativa ─── */
 ::selection {
-  background: rgba(14, 138, 113, 0.15);
-  color: #0b6e5a;
+  background: rgba(10, 92, 78, 0.15);
+  color: #0A5C4E;
 }
 
 /* ─── Scrollbar Premium Global ─── */

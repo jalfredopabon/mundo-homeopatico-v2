@@ -85,7 +85,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         <!-- Checkbox "Mantener sesión" -->
                         <div class="flex items-center pt-2 pb-1">
                             <label class="flex items-center gap-2.5 text-[13px] text-secondary cursor-pointer hover:text-slate-800 transition-colors">
-                                <input type="checkbox" class="size-4 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                                <input type="checkbox" class="size-4 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                                 Mantener sesión iniciada
                             </label>
                         </div>
@@ -100,7 +100,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         <button 
                             type="submit" 
                             id="auth-submit"
-                            class="w-full flex items-center justify-center bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-brand/20 hover:-translate-y-[1px] active:scale-[0.98] focus:ring-2 focus:ring-brand focus:ring-offset-2 text-[15px]"
+                            class="w-full flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-brand/20 hover:-translate-y-[1px] active:scale-[0.98] focus:ring-2 focus:ring-brand focus:ring-offset-2 text-[15px]"
                         >
                             Ingresar
                         </button>
@@ -120,89 +120,91 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
             <div class="p-6 space-y-7">
 
                 <!-- Buscador de medicamentos -->
-                <div class="relative group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input 
-                        type="search" 
-                        placeholder="Buscar patología o medicamento" 
-                        class="w-full pl-9 pr-3 py-2 bg-surface-white border border-subtle rounded-lg text-sm text-body focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all shadow-sm placeholder:text-muted/70"
-                    />
-                    <div class="mt-1.5 text-[10px] text-slate-400 font-medium px-1">8 resultados</div>
+                <div class="flex flex-col">
+                    <div class="relative group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input 
+                            type="search" 
+                            placeholder="Buscar..." 
+                            class="w-full pl-9 pr-3 py-2 bg-surface-white border border-subtle rounded-lg text-sm text-body focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all shadow-sm placeholder:text-muted/70"
+                        />
+                    </div>
+                    <div class="mt-1.5 text-[10px] text-slate-400 font-medium pl-3">8 resultados</div>
                 </div>
 
                 <!-- Filtro: Tipo de terapia -->
-                <section>
+                <section class="pl-3">
                     <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
                         Tipo de terapia
                     </h4>
-                    <div class="space-y-2.5 pl-0.5">
+                    <div class="space-y-2.5">
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Homeopatía compleja
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Terapia floral
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Oligoelementos
                         </label>
                     </div>
                 </section>
 
                 <!-- Filtro: Sistema del cuerpo -->
-                <section>
+                <section class="pl-3">
                     <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
                         Sistema del cuerpo
                     </h4>
-                    <div class="space-y-2.5 pl-0.5">
+                    <div class="space-y-2.5">
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Digestivo
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Nervioso
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Cardiovascular
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Respiratorio
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Locomotor
                         </label>
                     </div>
                 </section>
 
                 <!-- Filtro: Forma farmacéutica -->
-                <section>
+                <section class="pl-3">
                     <h4 class="text-[11px] font-bold text-slate-800 mb-3.5 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
                         Forma farmacéutica
                     </h4>
-                    <div class="space-y-2.5 pl-0.5">
+                    <div class="space-y-2.5">
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Gotas
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Tabletas
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Spray
                         </label>
                         <label class="flex items-center gap-2.5 text-[13px] text-slate-600 cursor-pointer hover:text-slate-800 transition-colors">
-                            <input type="checkbox" class="size-3.5 rounded border-slate-300 text-brand focus:ring-brand/20 cursor-pointer" />
+                            <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                             Crema
                         </label>
                     </div>
@@ -221,7 +223,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Vademécum clínico</h1>
                         <p class="text-[13px] text-slate-500 mt-1.5">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
                     </div>
-                    <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-lg text-[11px] font-semibold text-muted shadow-sm shrink-0">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-lg text-[11px] font-semibold text-muted shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
                         8 medicamentos
                     </div>
@@ -231,7 +233,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                 <div class="space-y-3.5 max-w-3xl">
 
                     <!-- Card 1: Activa (Seleccionada) -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 shadow-md transition-all" data-med="nux-vomica">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 transition-all" data-med="nux-vomica">
                         <div class="flex items-baseline gap-2.5 mb-2">
                             <h3 class="text-[16px] font-bold text-brand">Nux vomica</h3>
                             <span class="text-slate-400 text-xs font-medium">D4</span>
@@ -254,7 +256,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
 
                     <!-- Card 2: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="arnica-montana">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="arnica-montana">
                         <div class="flex items-baseline gap-2.5 mb-2">
                             <h3 class="text-[16px] font-bold text-slate-800">Arnica montana</h3>
                             <span class="text-slate-400 text-xs font-medium">D6</span>
@@ -276,7 +278,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
 
                     <!-- Card 3: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="ignatia-amara">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="ignatia-amara">
                         <div class="flex items-baseline gap-2.5 mb-2">
                             <h3 class="text-[16px] font-bold text-slate-800">Ignatia amara</h3>
                             <span class="text-slate-400 text-xs font-medium">D12</span>
@@ -295,7 +297,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
 
                     <!-- Card 4: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle shadow-sm transition-all hover:shadow-md hover:border-brand/30" data-med="pulsatilla">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="pulsatilla">
                         <div class="flex items-baseline gap-2.5 mb-2">
                             <h3 class="text-[16px] font-bold text-slate-800">Pulsatilla</h3>
                             <span class="text-slate-400 text-xs font-medium">D6</span>

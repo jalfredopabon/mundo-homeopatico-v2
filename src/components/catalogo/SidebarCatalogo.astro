@@ -1,258 +1,302 @@
 ---
 // src/components/catalogo/SidebarCatalogo.astro
+import { CATALOGO_DATA } from "../../data/catalogo";
+import Icons from "./Icons.astro";
 ---
 
-<aside class="hidden md:flex flex-col w-64 border-r border-slate-200 bg-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] sticky top-16 md:top-20 overflow-y-auto">
-  <div class="p-6 space-y-8">
-    
-    <!-- Buscador Integrado UI Premium -->
-    <div class="space-y-3">
-      <div class="relative group">
-        <!-- Ícono lupa -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        
-        <!-- Input con fondo dinámico -->
-        <input 
-          type="search" 
-          id="catalogo-search"
-          placeholder="Buscar producto..." 
-          class="w-full pl-9 pr-9 py-2 bg-slate-50/70 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all placeholder:text-slate-400"
-        />
-
-        <!-- Botón Limpiar (X) - Se activará con JS -->
-        <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 transition-colors hidden" aria-label="Limpiar búsqueda">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-5rem)] sticky top-20 overflow-y-auto scrollbar-premium">
+  
+  <!-- BUSCADOR STICKY -->
+  <div class="sticky top-0 z-30 bg-surface-white px-4 py-4 border-b border-subtle">
+    <div class="relative group">
+      <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
+        <div class="relative w-4 h-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+            <path d="M17 17L21 21" />
+            <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" />
+          </svg>
+        </div>
       </div>
+      <input 
+        type="search" 
+        id="catalogo-search"
+        placeholder="Buscar productos..." 
+        class="w-full pl-8 pr-4 py-2 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all placeholder:text-slate-700"
+      />
     </div>
-
-    <!-- Navegación Jerárquica del Catálogo -->
-    <nav class="flex flex-col text-[14px] leading-relaxed" id="catalogo-scrollspy">
-      
-      <!-- NIVEL 1 -->
-      <div class="font-bold text-slate-800 pb-2">De nuestra farmacia</div>
-      
-      <!-- NIVEL 2 -->
-      <div class="font-bold text-slate-500 py-1">Según prescripción</div>
-      
-      <!-- NIVEL 3 (Agrupador) -->
-      <div class="accordion-header group flex items-center gap-2.5 text-slate-800 px-3 py-1.5 cursor-pointer hover:text-slate-900 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon transition-transform duration-300 transform rotate-180 shrink-0"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        <span>Homeopáticos</span>
-      </div>
-      
-      <!-- NIVEL 4 (Abierto por defecto) -->
-      <div class="accordion-content overflow-hidden transition-all duration-300 max-h-96 opacity-100">
-        <div class="ml-[18px] border-l border-slate-500 py-1 space-y-0.5 mb-2 mt-1">
-          <a href="#oficinales" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Oficinales</a>
-          <a href="#multipotencias" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Multipotencias</a>
-          <a href="#magistrales" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Magistrales</a>
-        </div>
-      </div>
-      
-      <!-- NIVEL 3 (CON ICONO) -->
-      <a href="#esencias-florales" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        <span>Esencias florales</span>
-      </a>
-      <a href="#oligoelementos" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-        <span>Oligoelementos</span>
-      </a>
-
-      <!-- NIVEL 2 -->
-      <div class="font-bold text-slate-500 pt-5 pb-1">Línea MH</div>
-      
-      <!-- NIVEL 3 (Agrupador) -->
-      <div class="accordion-header group flex items-center gap-2.5 text-slate-800 px-3 py-1.5 cursor-pointer hover:text-slate-900 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon transition-transform duration-300 transform shrink-0"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        <span>Homeopatía</span>
-      </div>
-      
-      <!-- NIVEL 4 (Cerrado por defecto) -->
-      <div class="accordion-content overflow-hidden transition-all duration-300 max-h-0 opacity-0 pointer-events-none">
-        <div class="ml-[18px] border-l border-slate-500 py-1 space-y-0.5 mb-2 mt-1">
-          <a href="#homeopaticos-esenciales" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Homeopáticos esenciales</a>
-          <a href="#homeopaticos-especiales" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Homeopáticos especiales</a>
-          <a href="#cuidado-capilar" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Cuidado capilar</a>
-          <a href="#capsulas" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Cápsulas</a>
-          <a href="#cremas" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Cremas</a>
-          <a href="#geles" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Geles</a>
-          <a href="#unguentos" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Ungüentos</a>
-          <a href="#elixires" class="block pl-6 pr-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors border-l-[2px] border-transparent -ml-[1px]">Elíxires</a>
-        </div>
-      </div>
-
-      <!-- NIVEL 3 (CON ICONO) -->
-      <a href="#esencias-florales-lmh" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        <span>Esencias florales</span>
-      </a>
-      <a href="#oligoelementos-k7" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-        <span>Oligoelementos K7</span>
-      </a>
-
-      <!-- ESPACIO EXTRA PARA EL NIVEL 1 POR PROXIMIDAD -->
-      <div class="h-8"></div>
-
-      <!-- NIVEL 1 -->
-      <div class="font-bold text-slate-800 pb-2">Productos exclusivos</div>
-
-      <!-- NIVEL 3 (CON ICONOS) -->
-      <a href="#alimentos-funcionales" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        <span>Alimentos funcionales</span>
-      </a>
-      <a href="#cbd" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><path d="M2 12a10 10 0 0 1 10-10"></path><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M22 12a10 10 0 0 1-10 10"></path><path d="M12 22a10 10 0 0 1-10-10"></path><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
-        <span>CBD</span>
-      </a>
-      <a href="#aceites-esenciales" class="flex items-center gap-2.5 text-slate-500 px-3 py-1.5 border-l-[3px] border-transparent hover:border-slate-200 hover:text-slate-900 transition-colors group">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-slate-400 group-hover:text-slate-900 transition-colors"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        <span>Aceites esenciales</span>
-      </a>
-
-    </nav>
-    
   </div>
+
+  <nav class="pb-20 mt-4 space-y-6" id="catalogo-scrollspy">
+    {CATALOGO_DATA.map((section) => (
+      <div class="space-y-2">
+        {/* Nivel 1: Título de Sección - Alineado al borde del buscador (pl-5) */}
+        <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">{section.title}</span>
+        
+        <div class="flex flex-col gap-4">
+          {section.subsections.map((sub) => (
+            <div class="flex flex-col gap-0">
+              {/* Nivel 2: Título de Subsección - Alineado al borde del buscador (pl-5) */}
+                <span class="block text-[12px] font-medium text-slate-600 px-4">{sub.title}</span>
+              
+              <div class="flex flex-col gap-0.5">
+                {sub.groups.map((group) => {
+                  const hasSubLinks = group.links && group.links.length > 0;
+                  
+                  return (
+                    <div class="flex flex-col">
+                      {/* Nivel 3: Agrupador o Link Directo - Alineación Centralizada */}
+                      {hasSubLinks ? (
+                        <button 
+                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-8 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
+                          data-target={group.name.toLowerCase().replace(/\s+/g, '-')}
+                        >
+                          <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
+                            <div class="w-[18px] h-[18px] flex items-center justify-center">
+                              <Icons type={group.iconType} />
+                            </div>
+                          </div>
+                          <span class="text-[14px] font-normal">{group.name}</span>
+                          
+                          {/* Chevron Down (Hugeicons) - Alineado con el fin del buscador */}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto transition-all duration-300 accordion-icon">
+                            <path d="M18 9L12 15L6 9" />
+                          </svg>
+                        </button>
+                      ) : (
+                        <a href={group.href} class="sidebar-link group relative flex items-center h-8 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                          <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
+                            <div class="w-[18px] h-[18px] flex items-center justify-center">
+                              <Icons type={group.iconType} />
+                            </div>
+                          </div>
+                          <span class="text-[14px] font-normal group-[.is-active]:font-bold">{group.name}</span>
+                        </a>
+                      )}
+
+                      {/* Nivel 4: Sub-links (Acordeón) */}
+                      {hasSubLinks && (
+                        <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
+                          {group.links.map((link) => (
+                            <a href={link.href} class="sidebar-link group relative flex items-center h-8 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                              <div class="w-8 flex-shrink-0"></div>
+                              <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none">{link.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </nav>
+
 </aside>
+
+<style>
+
+
+  /* Scrollbar Invisible Premium */
+  .scrollbar-premium::-webkit-scrollbar {
+    width: 4px;
+    background: transparent;
+  }
+  
+  .scrollbar-premium::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 20px;
+    transition: background 0.3s;
+  }
+
+  .scrollbar-premium:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Separación de profundidad Flat */
+  aside {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Sistema de Líneas de Jerarquía (Tree-Guide) - Fase 3 */
+  .accordion-content {
+    position: relative;
+  }
+
+  /* Sistema de Línea Maestra (Tronco Único) */
+  .accordion-content {
+    position: relative;
+  }
+
+  /* El Tronco: Línea recta continua centrada con los iconos */
+  .accordion-content::before {
+    content: "";
+    position: absolute;
+    left: 31px; /* Eje central del icono (6px padding + 9px medio icono) + 16px margen ext */
+    top: -8px;
+    bottom: 16px;
+    border-left: 1.5px solid #64748b;
+    z-index: 0;
+  }
+
+  /* Las Ramas: Eliminadas por petición del usuario */
+  .accordion-content .sidebar-link::before {
+    display: none;
+  }
+
+  /* Limpieza de pseudo-elementos antiguos fragmentados */
+  .accordion-content .sidebar-link::after {
+    display: none;
+  }
+
+  /* El último hijo no debe continuar el tronco hacia abajo */
+  .accordion-content .sidebar-link:last-child::after {
+    display: none;
+  }
+
+  /* Ajuste óptico Flush: Alineación perfecta con el texto de nivel 3 */
+  .accordion-content .sidebar-link span {
+    position: relative;
+    z-index: 1;
+    margin-left: 0; /* Eliminado indentación redundante (ya está en el HTML) */
+  }
+
+  /* Rotación del Chevron */
+  .accordion-trigger.is-expanded .accordion-icon {
+    transform: rotate(180deg);
+    color: var(--brand);
+    opacity: 1;
+  }
+
+  /* Estilos para el estado activo unificado - Cápsula Sombreada (Estilo Vademécum) */
+  .sidebar-link.is-active,
+  .sidebar-link:focus,
+  .accordion-trigger:focus {
+    outline: none !important;
+  }
+  
+  .sidebar-link.is-active {
+    background-color: #e2e8f0; /* Color un poco más oscuro (slate-200) para mayor contraste */
+    color: #0f172a !important; /* slate-900 para máxima legibilidad */
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Ajuste de margin para consistencia */
+  .sidebar-link.is-active {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .sidebar-link.is-active .icon-container {
+    color: var(--primary);
+  }
+
+  .sidebar-link:hover:not(.is-active) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  /* Animación de escala para ítems activos */
+  .sidebar-link {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Ajuste de scroll */
+  nav {
+    scroll-behavior: smooth;
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const headers = document.querySelectorAll('.accordion-header');
-    const contents = document.querySelectorAll('.accordion-content');
+    // LÓGICA DE SCROLLSPY
     const scrollContainer = document.getElementById('catalogo-main-scroll');
     const sections = scrollContainer ? scrollContainer.querySelectorAll('section[id]') : [];
+    
+    if (scrollContainer && sections.length > 0) {
+      const observerOptions = {
+        root: scrollContainer,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
 
-    // --- Acordeón: Abrir/Cerrar subcategorías ---
-    const closeAccordion = (content, icon) => {
-      content.classList.remove('max-h-96', 'opacity-100');
-      content.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
-      if (icon) icon.classList.remove('rotate-180');
-    };
-
-    const openAccordion = (content, icon) => {
-      content.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
-      content.classList.add('max-h-96', 'opacity-100');
-      if (icon) icon.classList.add('rotate-180');
-    };
-
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        const content = header.nextElementSibling;
-        const icon = header.querySelector('.accordion-icon');
-        const isOpen = content.classList.contains('max-h-96');
-
-        contents.forEach(c => {
-          const cHeader = c.previousElementSibling;
-          const cIcon = cHeader ? cHeader.querySelector('.accordion-icon') : null;
-          closeAccordion(c, cIcon);
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            document.querySelectorAll('#catalogo-scrollspy .sidebar-link').forEach(link => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                link.classList.add('is-active');
+              } else {
+                link.classList.remove('is-active');
+              }
+            });
+          }
         });
+      }, observerOptions);
 
-        if (!isOpen) {
-          openAccordion(content, icon);
+      sections.forEach(section => observer.observe(section));
+    }
+
+    // LÓGICA DE ACORDEONES INTELIGENTES (Fase 2)
+    const triggers = document.querySelectorAll('.accordion-trigger');
+    
+    const closeAllAccordions = (except = null) => {
+      document.querySelectorAll('.accordion-content').forEach(content => {
+        if (content !== except) {
+          content.style.maxHeight = '0';
+          const trigger = content.previousElementSibling;
+          if (trigger) trigger.classList.remove('is-expanded');
         }
-      });
-    });
-
-    // Cerrar acordeones al hacer clic en enlaces directos (fuera de agrupadores)
-    const closeAllAccordions = () => {
-      contents.forEach(c => {
-        const h = c.previousElementSibling;
-        const i = h ? h.querySelector('.accordion-icon') : null;
-        closeAccordion(c, i);
       });
     };
 
-    document.querySelectorAll('#catalogo-scrollspy > a').forEach(link => {
-      link.addEventListener('click', closeAllAccordions);
-    });
-
-    // --- ScrollSpy: Iluminación dinámica por IntersectionObserver ---
-    if (!scrollContainer || sections.length === 0) return;
-
-    const resetAllLinks = () => {
-      // 1. Resetear todos los enlaces (Niveles 3 directos y Nivel 4 internos)
-      document.querySelectorAll('#catalogo-scrollspy a').forEach(link => {
-        // Nivel 3 (con border-l-[3px])
-        if (link.classList.contains('border-l-[3px]')) {
-          link.classList.remove('border-brand', 'text-slate-900', 'font-bold');
-          link.classList.add('border-transparent', 'text-slate-500', 'font-medium', 'hover:border-slate-200', 'hover:text-slate-900');
-          const icon = link.querySelector('svg');
-          if (icon) {
-            icon.classList.remove('text-slate-900');
-            icon.classList.add('text-slate-400');
-          }
-        }
-        // Nivel 4 (dentro de acordeón, class .block)
-        if (link.classList.contains('block')) {
-          link.classList.remove('text-slate-900', 'font-bold', 'border-brand', 'bg-slate-50/50');
-          link.classList.add('text-slate-500', 'border-transparent', 'hover:text-slate-900');
-        }
-      });
-
-      // 2. Resetear el estilo de todos los agrupadores padre (Acordeones Header)
-      document.querySelectorAll('.accordion-header').forEach(header => {
-        header.classList.remove('text-slate-900', 'font-bold');
-        header.classList.add('text-slate-800', 'font-medium', 'hover:text-slate-900');
-      });
-    };
-
-    const activateLink = (sectionId) => {
-      resetAllLinks();
-      const activeLink = document.querySelector(`#catalogo-scrollspy a[href="#${sectionId}"]`);
-      if (!activeLink) return;
-
-      // Aplicar estado activo directo
-      if (activeLink.classList.contains('border-l-[3px]')) {
-        // Enlace Nivel 3 (Directo con ícono)
-        activeLink.classList.remove('border-transparent', 'text-slate-500', 'font-medium', 'hover:border-slate-200', 'hover:text-slate-900');
-        activeLink.classList.add('border-brand', 'text-slate-900', 'font-bold');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const content = trigger.nextElementSibling as HTMLElement;
+        if (!content) return;
         
-        const icon = activeLink.querySelector('svg');
-        if (icon) {
-          icon.classList.remove('text-slate-400');
-          icon.classList.add('text-slate-900');
-        }
-      } else if (activeLink.classList.contains('block')) {
-        // Enlace Nivel 4 (Dentro de acordeón)
-        activeLink.classList.remove('text-slate-500', 'border-transparent', 'hover:text-slate-900');
-        activeLink.classList.add('text-slate-900', 'font-bold', 'border-brand', 'bg-slate-50/50');
+        const isExpanded = trigger.classList.contains('is-expanded');
+        closeAllAccordions(content);
 
-        // Herencia Visual: Iluminar también al Acordeón Padre
-        const parentAccordion = activeLink.closest('.accordion-content');
-        if (parentAccordion) {
-          const parentHeader = parentAccordion.previousElementSibling;
-          if (parentHeader) {
-            parentHeader.classList.remove('text-slate-800', 'font-medium', 'hover:text-slate-900');
-            parentHeader.classList.add('text-slate-900', 'font-bold');
-          }
-
-          // Auto-abrir el acordeón padre si el enlace activo entra en pantalla y el acordeón estaba cerrado
-          if (parentAccordion.classList.contains('max-h-0')) {
-            const parentIcon = parentHeader ? parentHeader.querySelector('.accordion-icon') : null;
-            openAccordion(parentAccordion, parentIcon);
-          }
+        if (isExpanded) {
+          content.style.maxHeight = '0';
+          trigger.classList.remove('is-expanded');
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          trigger.classList.add('is-expanded');
         }
+        
+        // Evitar el foco persistente del botón al hacer clic
+        setTimeout(() => { trigger.blur(); }, 50);
+      });
+    });
+
+    // Auto-apertura si hay un link activo dentro
+    const activeChild = document.querySelector('.sidebar-link.is-active');
+    if (activeChild) {
+      const parentAccordion = activeChild.closest('.accordion-content') as HTMLElement;
+      if (parentAccordion) {
+        parentAccordion.style.maxHeight = parentAccordion.scrollHeight + 'px';
+        const trigger = parentAccordion.previousElementSibling;
+        if (trigger) trigger.classList.add('is-expanded');
       }
-    };
+    }
 
-    const observerOptions = {
-      root: scrollContainer,
-      rootMargin: '-10% 0px -70% 0px',
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          activateLink(entry.target.getAttribute('id'));
+    // Cerrar acordeones al hacer clic en un link que NO sea de cuarto nivel
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const isFourthLevel = link.closest('.accordion-content');
+        if (!isFourthLevel) {
+          closeAllAccordions();
         }
       });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
+    });
   });
 </script>
-

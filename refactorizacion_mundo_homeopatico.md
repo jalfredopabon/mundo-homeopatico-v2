@@ -7,6 +7,12 @@
 
 ---
 
+## 🛡️ REGLAMENTO OPERATIVO "ELITE"
+
+**Protección de arquitectura:** Actuar como consultor técnico crítico. Advertir y detener la ejecución si una instrucción compromete el rendimiento, la filosofía de diseño UI/UX o las buenas prácticas de desarrollo del proyecto. Nunca ejecutar una orden incoherente sin antes presentar una observación técnica detallada.
+
+---
+
 ## 📋 Contexto del Proyecto
 
 ### ¿Qué es?
@@ -84,6 +90,12 @@ Un archivo monolítico (`index.html`) de ~10,000 líneas que mezcla HTML + CSS (
 
 - **Barra de Progreso (Loading Bar):** Implementación OBLIGATORIA de una línea verde sutil (2px-3px) justo debajo del Header. Proporciona feedback visual inmediato durante peticiones asíncronas o cargas de datos, evitando que el usuario perciba lentitud o haga clics compulsivos.
 - **Optimización Tipográfica (Antialiasing):** Aplicar suavizado de fuentes globalmente (clase `antialiased` en el `<body>`). Esto asegura texto prolijo y nítido en monitores antiguos o de baja resolución, evitando que las letras se vean "mordidas" por el pixel-snapping.
+- **Precisión Tipográfica (text-box-trim):** Implementación de la propiedad `text-box-trim` para eliminar el espacio invisible (leading) arriba y abajo de los textos. Esto permite una alineación matemática perfecta de 8px en botones y componentes con iconos, garantizando centrado quirúrgico en navegadores modernos.
+- **Equilibrio Visual (text-wrap: balance/pretty):** Uso de algoritmos de balanceo de texto en títulos para evitar palabras huérfanas y asegurar bloques de texto armoniosos sin intervención manual.
+- **Transiciones Orgánicas (interpolate-size):** Activación de animaciones nativas para dimensiones dinámicas (de `0` a `auto`), permitiendo que acordeones y menús se desplacen de forma fluida sin trucos de JavaScript.
+- **Estabilidad Estructural (scrollbar-gutter):** Reserva de espacio estable para la barra de desplazamiento, evitando saltos horizontales del layout cuando el contenido crece o decrece.
+- **Navegación Precisa (scroll-padding-top):** Configuración de margen de navegación para compensar el Header fijo, asegurando que los anclajes y secciones se posicionen perfectamente visibles debajo de la cabecera.
+- **Estética Flat Design (Cero Sombras):** Eliminación total de sombras (`box-shadow`, `shadow-*`) en todos los componentes y contenedores. La jerarquía visual se define exclusivamente mediante el uso de color, bordes sutiles (`border-subtle`) y espacios, logrando una interfaz limpia, profesional y libre de profundidades artificiales.
 - **Micro-animaciones Premium:** Mantener y pulir las interacciones ricas heredadas del monolito. Ejemplo: La tarjeta "Sé distribuidor / WhatsApp" del sidebar debe mantener su efecto hover expansivo hacia arriba que revela elementos gráficos (hojas). Estas animaciones se harán por CSS fluido (`transition-all`, `group-hover`) para no afectar el rendimiento y aportar vitalidad a la marca.
 
 ### Lógica de negocio crítica (funcional en el monolito):
@@ -402,6 +414,10 @@ _Este listado consolida tareas menores de integración y optimización que deben
 
 - [ ] **`Header.astro`**: Ligar el ancho (`w-[X%]`) de la Barra de Progreso (Loading Bar) a los estados asíncronos reales (actualmente hardcodeada en `w-[30%]`).
 - [ ] **`Header.astro`**: Volver dinámica la "Burbuja de notificación" (Badge) del icono de Pedidos para que refleje la longitud real del arreglo `cart` (actualmente está fija en `3`).
+- [ ] **Herencia de Radios (Nested Radii)**: Ajustar radios de bordes matemáticamente para asegurar armonía visual (Radio Exterior - Padding = Radio Interior).
+- [ ] **Etiquetado para Analítica**: Inyectar atributos `data-analytics` o `data-cta` en todos los puntos de conversión para rastreo de métricas futuro.
+- [ ] **Rejilla Estricta de 8px**: Auditoría de espaciados (paddings, margins, gaps) para asegurar que todos los valores sean múltiplos de 8.
+- [ ] **Identidad de Iconos**: Finalización de la migración a Hugeicons Rounded con sistema de estados Stroke/Solid.
 
 ---
 
@@ -465,6 +481,28 @@ _(Este registro es exclusivo para marcar hitos relevantes y tareas arquitectóni
   - Checkboxes migrados a `accent-brand text-brand`: chulitos verdes corporativos eliminando el azul nativo del navegador.
   - Botones de cantidad del carrito (`CartDrawer`) transformados de texto gris sutil a botones sólidos con fondo jade y hover petróleo, replicando la estética del legacy.
   - Ícono de eliminar producto oscurecido para visibilidad (`slate-300` → `slate-400`). Ícono de carrito en headers de tabla igualado al token `text-muted`.
+- **[2026-03-10] Estandarización cromática y estructural del laboratorio de iconos:**
+  - Evolución cromática: Transición total del verde petróleo (`#0A5C4E`) al azul pizarra profundo (`#1e293b`) en todo el inventario de SVGs para un contraste más neutro y profesional.
+  - Unificación del layout de tarjetas: Implementación de "Macro Tarjetas" tripartitas que visualizan de forma simultánea los estados Stroke, Solid e interacción real (Hover).
+  - Preparación arquitectónica: Creación de secciones dedicadas para "Página de contactos" y "Página de vademécum", estableciendo la infraestructura grid para recibir nuevos activos especializados.
+  - Aplicación estricta de la regla de *Sentence case* en los encabezados y etiquetas del laboratorio.
+  - Eliminación de ruidos visuales: Supresión de sombras elevadas y fondos grises en las zonas interactivas para priorizar el minimalismo premium y la claridad del trazo SVG.
+- **[2026-03-12] Definición de Estrategia para Sidebars (Estandarización Homóloga):**
+  - Acuerdo de arquitectura: "Ajustar primero el máster (Catálogo) y luego heredar/unificar".
+  - **Plan de Intervención Micro-Quirúrgica (Sidebar Maestro):**
+    1. **Fase 1: Cimientos (Plomada y Estructura):**
+       - Eliminación de acordeones (Arquitectura Flat).
+       - Implementación de los 4 Ejes de Plomada (Eje B: Borde 0px integrado con buscador, Eje C: Icono 12px, Eje D: Texto 36px).
+       - Configuración de `Sticky Search` y `Sticky Headers` (Secciones L2).
+    2. **Fase 2: Cableado (Jerarquía y Accesibilidad):**
+       - Mapeo de la lista completa de 25 ítems (Nivel 3 y 4).
+       - Aplicación de contraste médico `slate-800` (WCAG AAA).
+       - Sincronización de pesos tipográficos (Semi-bold N3 vs Medium N4).
+    3. **Fase 3: Pintura (Iconografía y Estados):**
+       - Inserción de íconos pulidos (Doble Capa: Stroke/Solid inyectados en SVG nativo con `currentColor`).
+       - Sincronización de micro-animaciones premium (`scale-95` a `scale-100` con `opacity`) estilo "Neutralidad Médica".
+       - Implementación de la "Cápsula Premium" (`bg-brand/10` como único indicador de estado activo, texto en `slate-800`).
+       - Activación de Scrollbar Invisible mediante utilidades globales.
 
 ---
 
@@ -478,6 +516,36 @@ Estos aspectos visuales y de interacción se implementarán obligatoriamente dur
 - [ ] **Interacción "Mapa" Sede Principal (Contacto):** Cuando se integren datos reales, conectar el "mapa fake" (fondo borroso con pin) a un enlace o iframe real de Google Maps. Añadir un efecto hover que quite parcialmente el blur e indique al usuario que puede hacer clic para ver la ruta.
 - [ ] **Comportamiento Orgánico en Acordeones FAQ (Contacto):** Durante la fase de Javascript, asegurar que el ícono (ej: `+` o flecha) no cambie bruscamente, sino que rote de forma fluida (ej: `transform: rotate(45deg)` o `180deg`) al abrir y cerrar la respuesta.
 - [ ] **Sombras Modernas y Difusas (Contacto/Sedes):** Implementar sombras tipo "Ambient Occlusion" con tinte de marca (`shadow-brand/10`) y baja opacidad exclusivamente en las tarjetas de Sedes y Contacto. **Nota:** No aplicar a listas de precios ni Vademécum para mantener un estilo plano y profesional en datos densos.
+- [x] **Estandarización de Alineación Sidebar (Plomada 12/36):** Unificación de ejes verticales para íconos (12px) e indentación de texto (36px) en las tres vistas principales (Catálogo, Contacto, Vademécum). Alineación simétrica de Checkboxes y controles de búsqueda.
+- [x] **Sincronización de Contenedores y Ritmo Visual:** Estandarización de paddings de página (`px-8 md:px-16 pt-8 md:pt-10 pb-24`) y `gaps` de sección (`gap-16 md:gap-20`) en todas las vistas maestras. Se garantiza que el contenido principal de Contacto, Catálogo y Vademécum respete la misma retícula espacial.
+- **[2026-03-15] Implementación de Precisión Tipográfica Elite:**
+  - Integración global de `text-box-trim` y `text-box-edge` en `global.css`.
+  - Aplicación automática a todos los elementos `button`, `.btn-elite` y `.badge-elite` para asegurar alineación vertical matemática.
+  - Establecimiento del estándar de "Mejora Progresiva" para tipografía de vanguardia (Chrome 133+ / Safari 18.2+).
+- **[2026-03-15] Adopción de Estándares CSS Modernos 2025 y Flat Design:**
+  - Configuración de `text-wrap: balance` y `pretty` para una composición tipográfica profesional automática.
+  - Implementación de `interpolate-size: allow-keywords` en el bloque raíz para habilitar animaciones de altura fluida (`height: auto`).
+  - Integración de `scrollbar-gutter: stable` y `scroll-padding-top: 5rem` para garantizar estabilidad visual y navegación precisa bajo el Header fijo. 
+  - Definición de arquitectura selectora basada en `:has()` para estados relacionales eficientes.
+  - **Migración total a Flat Design**: Eliminación sistemática de todas las sombras (`box-shadow`, `shadow-*`) en todos los componentes del proyecto (Header, Footer, Vademécum, Catálogo, Contacto y CartDrawer), logrando una estética minimalista premium basada en bordes y color en lugar de elevación artificial.
+  - **Refinamiento de Navegación**: Ajuste de la línea indicadora de página activa en el Header para que quede perfectamente pegada al borde inferior, mejorando la solidez arquitectónica del menú.
+  - **Reingeniería del Sidebar (Navegación Elite)**:
+    - Implementación de sistema de **acordeones inteligentes** para niveles profundos (4to nivel).
+    - Creación de **guía visual de árbol (Tree-guide)** con líneas verticales y brazos en "L" curvos para una jerarquía clara y moderna.
+    - Unificación de estados activos mediante "cápsulas" (bg-muted) para consistencia visual absoluta entre niveles.
+    - Alineación matemática de chevrons e ítems con el buscador superior.
+
+- **[2026-03-15] Estandarización de Legibilidad y Contraste (WCAG 2.1):**
+  - Implementación global de un contraste mínimo de `slate-700` para todos los elementos de texto sobre fondos claros, asegurando legibilidad elite en todas las vistas (Catálogo, Vademécum, Contacto).
+  - Actualización quirúrgica de componentes compartidos (`CartDrawer`, `FAQ`, `Locations`, `VideoSection`) y sidebars, eliminando tonos `slate-400/500/600` y `muted` en favor del estándar de legibilidad.
+  - Sincronización de iconos auxiliares (breadcrumbs, inputs, estados vacíos) para heredar el color `slate-700`, logrando una cohesión visual integral entre texto y activos gráficos.
+
+- **[2026-03-16] Reingeniería de Sidebar Estilo "Elite App" (Inspiración Figma/Notion):**
+  - **Sincronización a Rejilla de 16px (1rem):** Alineación global de plomada entre Logotipo del Header, Buscador y Títulos del Sidebar.
+  - **Compresión Vertical de Alta Densidad:** Reducción de altura de cápsulas a `h-8` (32px) y compactado de gaps (`space-y-6`, `gap-4`), logrando una organización tipo software profesional.
+  - **Alineación de Extrema Precisión:** Iconos y lupa sincronizados a 6px del borde de sus cápsulas, con guía de árbol (tronco) reubicada al eje de 31px.
+  - **Jerarquía Tipográfica y Cromática:** Títulos N1 elevados a `slate-900` para autoridad, guías de árbol suavizadas a `slate-500` para sutileza, y herencia de medidas del buscador desde el menú.
+  - **Higiene Visual Final:** Eliminación del modo diagnóstico y purga de caracteres parásitos (`>`), logrando una interfaz limpia, robusta y libre de ruido.
 
 ---
 

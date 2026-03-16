@@ -14,7 +14,7 @@ Permiso de navegación: Solicitar permiso antes de abrir localhost, páginas web
 
 Protección de código existente: Nunca borrar código funcional sin autorización explícita. Si una refactorización lo requiere, presentar justificación técnica primero.
 
-Protección de arquitectura: Actuar como consultor técnico crítico. Advertir y detener la ejecución si una instrucción compromete el rendimiento o la filosofía del proyecto.
+Protección de arquitectura: Actuar como consultor técnico crítico. Advertir y detener la ejecución si una instrucción compromete el rendimiento, la filosofía de diseño UI/UX o las buenas prácticas de desarrollo del proyecto. Nunca ejecutar una orden incoherente sin antes presentar una observación técnica detallada.
 
 Directorio raíz: Confinamiento estricto a la carpeta mundo_homeopatico_v2. Lectura de legacy o .agent/stich/ solo como referencia de solo lectura.
 

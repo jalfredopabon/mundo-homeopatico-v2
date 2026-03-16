@@ -556,3 +556,5 @@ Estos aspectos visuales y de interacción se implementarán obligatoriamente dur
 - [x] **Migración de hex `#0E8A71` a tokens Tailwind:** ~~Reemplazar las 50+ ocurrencias del hex crudo.~~ Completado: 65 líneas migradas en 7 archivos. Variable `--primary` sincronizada a `#0E8A71`. Token `brand-dark` redirigido a `--primary-hover` (`#0b6e5a`).
 - [x] **Sombras `rgba(14,138,113,...)` residuales:** ~~3 sombras decorativas en `contacto.astro` (líneas 50, 115, 223) usan el rgba del verde brand en `shadow-[...]`.~~ Completado: Purgadas y reemplazadas exitosamente por clases nativas de tailwind usando el token de color modificado con opacidad (ej. `shadow-brand/50`).
 - [ ] **Precios hardcodeados en index.astro:** 4 precios estáticos (`$19.500`, `$36.000`, `$25.500`, `$44.000`) directamente en el HTML. Se reemplazarán por datos dinámicos al conectar la fuente de datos Google Sheets/GAS en Fase de Cableado.
+   
+ 

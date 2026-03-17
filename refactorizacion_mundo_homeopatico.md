@@ -66,7 +66,7 @@ Un archivo monolítico (`index.html`) de ~10,000 líneas que mezcla HTML + CSS (
 - **Izquierda:** Isotipo + Nombre de la empresa (alineados al sidebar).
 - **Centro (Navegación):** "Lista de precios", "Contactos y sedes", "Soy médico". Al hacer clic en "Soy médico" se despliega un **modal o recuadro solicitando contraseña**.
 - **Derecha (Controles):**
-  - **Botón de Accesibilidad (Zoom):** Icono `AA` con la palabra "Zoom" debajo. Permite ciclar tamaño de letra (normal, mediano, grande) solo para los ítems de las tablas de productos. Al hacer hover muestra el estado actual. _Nota: Este botón debe mostrarse SOLO en la página "Lista de precos"._
+  - **Botón de Accesibilidad (Zoom):** Icono `AA` con la palabra "Texto" debajo. Permite ciclar tamaño de letra (normal, mediano, grande) solo para los ítems de las tablas de productos. Al hacer hover muestra el estado actual. _Nota: Este botón debe mostrarse SOLO en la página "Lista de precos"._
   - **Botón Carrito:** Icono del carrito con burbuja de cantidad. Visible en TODAS las páginas.
 - **Drawer / Panel del Carrito:**
   - Listado de productos agregados (nombre, sumatoria `- N +`, precio unitario). Sumatoria por producto (cant. \* precio).

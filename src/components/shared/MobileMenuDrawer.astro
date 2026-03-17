@@ -11,16 +11,13 @@ const isCatalogo = !isContacto && !isVademecum;
 const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum' : 'Lista de precios');
 ---
 
-<!-- Overlay / Backdrop -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
-
-<!-- Drawer Panel -->
-<div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-[300px] bg-surface-white z-[70] translate-x-full transition-transform duration-300 ease-out md:hidden flex flex-col shadow-2xl">
+<!-- Drawer Panel: Pantalla Completa (Estilo Figma) -->
+<div id="mobile-menu-drawer" class="fixed inset-0 w-full bg-surface-white z-[70] translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col">
   
   <!-- Header del Drawer -->
   <div class="h-16 flex items-center justify-between px-6 border-b border-subtle shrink-0">
-    <span class="text-slate-800 font-bold tracking-tight">{drawerTitle}</span>
-    <button id="close-mobile-menu" class="p-2 text-slate-500 hover:text-slate-800 transition-colors" aria-label="Cerrar menú">
+    <span class="text-slate-800 font-bold tracking-tight text-[16px]">{drawerTitle}</span>
+    <button id="close-mobile-menu" class="p-2 text-slate-500 hover:text-slate-800 active:bg-slate-100 rounded-full transition-all" aria-label="Cerrar menú">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
     </button>
   </div>
@@ -32,32 +29,33 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
       {isCatalogo && (
         <div class="flex flex-col gap-1">
           {CATALOGO_DATA.map(section => (
-          <div class="mb-0">
-            <div class="flex flex-col gap-2">
+            <div class="mb-4">
               {section.subsections.map(sub => (
                 <div class="flex flex-col mb-4">
-                  <span class="block text-[12px] font-bold text-brand tracking-tight mb-2 opacity-80 mt-1 px-1">{sub.title}</span>
-                  <div class="flex flex-col border-t border-slate-500">
+                  {/* Etiqueta Guía Nivel 2 (No clickeable, al ras del borde) */}
+                  <span class="block text-[11px] font-bold text-slate-500 tracking-tight mb-2 pl-0">{sub.title}</span>
+                  
+                  <div class="flex flex-col border-t border-slate-700">
                   {sub.groups.map(group => {
                     const hasSubLinks = group.links && group.links.length > 0;
                     return (
-                      <div class="flex flex-col border-b border-slate-500">
+                      <div class="flex flex-col border-b border-slate-700">
                         {hasSubLinks ? (
-                          <button class="drawer-accordion-trigger w-full flex items-center justify-between py-4 text-slate-900 active:opacity-70 transition-opacity group">
+                          <button class="drawer-accordion-trigger w-full flex items-center justify-between py-3.5 pl-4 text-slate-900 active:opacity-70 transition-opacity group">
                             <span class="text-[15px] font-medium tracking-tight flex-1 text-left">{group.name}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-current transition-transform duration-300 drawer-chevron"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 transition-transform duration-300 drawer-chevron"><path d="m6 9 6 6 6-6"/></svg>
                           </button>
                         ) : (
-                          <a href={group.href} class="w-full flex items-center justify-between py-4 text-slate-900 active:opacity-70 transition-opacity group">
+                          <a href={group.href} class="w-full flex items-center justify-between py-3.5 pl-4 text-slate-900 active:opacity-70 transition-opacity group">
                             <span class="text-[15px] font-medium tracking-tight">{group.name}</span>
                           </a>
                         )}
 
                         {hasSubLinks && (
-                          <div class="drawer-accordion-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out pl-2 pr-2 flex flex-col pt-0">
-                            <div class="pb-3 pt-1">
+                          <div class="drawer-accordion-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out pl-4 pr-2 flex flex-col pt-0">
+                            <div class="pb-3 pt-1 flex flex-col gap-1">
                                 {group.links?.map(link => (
-                                  <a href={link.href} class="block py-2.5 text-[14px] font-medium text-slate-900 hover:text-brand transition-colors">{link.name}</a>
+                                  <a href={link.href} class="block py-2.5 pl-4 text-[14px] font-medium text-slate-700 hover:text-brand transition-colors border-l border-slate-700 ml-1">{link.name}</a>
                                 ))}
                             </div>
                           </div>
@@ -69,8 +67,7 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
                 </div>
               ))}
             </div>
-          </div>
-        ))}
+          ))}
       </div>
       )}
 
@@ -194,13 +191,10 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
     </div>
 
   <!-- Footer del Drawer -->
-  <div class="p-6 border-t border-subtle bg-surface-muted/30">
+  <div class="p-6 bg-surface-muted/30">
     <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs">MH</div>
-        <div class="flex flex-col">
-            <span class="text-xs font-bold text-slate-800">Mundo homeopático</span>
-            <span class="text-[10px] text-slate-500 font-medium">Versión digital 2026</span>
-        </div>
+        <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs shrink-0">MH</div>
+        <span class="text-xs font-bold text-slate-800">Mundo homeopático</span>
     </div>
   </div>
 </div>
@@ -208,19 +202,15 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
 <script>
     // Lógica básica de apertura y cierre (Cableado inicial)
     const openBtn = document.getElementById('mobile-menu-btn');
+    // Lógica básica de apertura y cierre (Estilo Pantalla Completa Figma)
     const closeBtn = document.getElementById('close-mobile-menu');
-    const overlay = document.getElementById('mobile-menu-overlay');
     const drawer = document.getElementById('mobile-menu-drawer');
 
     function toggleMenu(isOpen: boolean) {
         if (isOpen) {
-            overlay?.classList.remove('pointer-events-none', 'opacity-0');
-            overlay?.classList.add('opacity-100');
             drawer?.classList.remove('translate-x-full');
             document.body.style.overflow = 'hidden';
         } else {
-            overlay?.classList.add('opacity-0', 'pointer-events-none');
-            overlay?.classList.remove('opacity-100');
             drawer?.classList.add('translate-x-full');
             document.body.style.overflow = '';
         }
@@ -229,7 +219,6 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
     // Escuchar evento personalizado que vendrá del Header
     document.addEventListener('toggleMobileMenu', () => toggleMenu(true));
     closeBtn?.addEventListener('click', () => toggleMenu(false));
-    overlay?.addEventListener('click', () => toggleMenu(false));
 
     // Lógica de Acordeones del Catálogo (Acordeón Exclusivo)
     const drawerAccordions = document.querySelectorAll('.drawer-accordion-trigger');

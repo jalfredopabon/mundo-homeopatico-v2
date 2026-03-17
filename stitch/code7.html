@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Mundo Homeopático - Lista de Precios</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Compact Utility Header -->
+<header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">health_metrics</span>
+</div>
+<h1 class="font-bold text-lg tracking-tight">Mundo <span class="text-primary">Homeopático</span></h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold px-1 rounded-full min-w-[16px] h-4 flex items-center justify-center">3</span>
+</button>
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</div>
+</div>
+<!-- Sticky Segmented Control Navigation -->
+<div class="max-w-5xl mx-auto px-4 pb-3">
+<div class="flex h-10 w-full items-center justify-center rounded-xl bg-primary/10 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-xl px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-sm has-[:checked]:text-primary dark:has-[:checked]:text-white text-slate-600 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">Precios</span>
+<input checked="" class="hidden" name="nav-toggle" type="radio" value="Precios"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-xl px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-sm has-[:checked]:text-primary dark:has-[:checked]:text-white text-slate-600 dark:text-slate-400 text-sm font-semibold transition-all">
+<span class="truncate">Vademécum</span>
+<input class="hidden" name="nav-toggle" type="radio" value="Vademécum"/>
+</label>
+</div>
+</div>
+</header>
+<main class="max-w-5xl mx-auto pb-24">
+<!-- Sticky Search Bar Area -->
+<div class="sticky top-[108px] z-40 bg-background-light dark:bg-background-dark px-4 py-3">
+<label class="flex flex-col w-full group">
+<div class="flex w-full items-stretch rounded-xl h-12 bg-white dark:bg-slate-800 border border-primary/20 shadow-sm group-focus-within:border-primary transition-all">
+<div class="flex items-center justify-center pl-4 text-primary/60 group-focus-within:text-primary">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 placeholder:text-slate-400 text-base px-3" placeholder="Buscar productos, marcas o categorías..." value=""/>
+</div>
+</label>
+</div>
+<!-- Category Sidebar / Desktop View would have this on left -->
+<div class="flex flex-col lg:flex-row gap-6 px-4">
+<!-- Category Quick Scroll (Horizontal for Mobile, Vertical for Desktop) -->
+<aside class="flex lg:flex-col overflow-x-auto lg:overflow-visible py-2 gap-2 shrink-0 lg:w-48 no-scrollbar">
+<button class="whitespace-nowrap px-4 py-2 bg-primary text-white rounded-full lg:rounded-xl text-sm font-medium">Todos</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-full lg:rounded-xl text-sm font-medium hover:border-primary transition-colors">Glóbulos</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-full lg:rounded-xl text-sm font-medium hover:border-primary transition-colors">Diluciones</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-full lg:rounded-xl text-sm font-medium hover:border-primary transition-colors">Pomadas</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-full lg:rounded-xl text-sm font-medium hover:border-primary transition-colors">Tinturas</button>
+</aside>
+<!-- Product List Hierarchy -->
+<div class="flex-1 space-y-8">
+<!-- Category Section -->
+<section>
+<div class="flex items-center justify-between mb-4 border-b border-primary/10 pb-2">
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Glóbulos y Diluciones</h3>
+<span class="text-xs text-primary font-bold uppercase tracking-widest">12 productos</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Product Card -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-primary/5 flex gap-4 items-center">
+<div class="w-20 h-20 bg-background-light dark:bg-background-dark rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40 text-4xl">pill</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-primary/70 uppercase">Homeopatía Francesa</p>
+<h4 class="font-bold text-slate-800 dark:text-slate-200 truncate">Árnica Montana 30CH</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">Glóbulos x 4g - Envase vidrio</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-lg font-bold text-slate-900 dark:text-white">$1.250</span>
+<button class="bg-primary hover:bg-primary/90 text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-primary/5 flex gap-4 items-center">
+<div class="w-20 h-20 bg-background-light dark:bg-background-dark rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40 text-4xl">colorize</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-primary/70 uppercase">Tintura Madre</p>
+<h4 class="font-bold text-slate-800 dark:text-slate-200 truncate">Calendula Officinalis</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">Frasco gotero x 30ml</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-lg font-bold text-slate-900 dark:text-white">$2.800</span>
+<button class="bg-primary hover:bg-primary/90 text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-primary/5 flex gap-4 items-center">
+<div class="w-20 h-20 bg-background-light dark:bg-background-dark rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40 text-4xl">pill</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-primary/70 uppercase">Homeopatía Alemana</p>
+<h4 class="font-bold text-slate-800 dark:text-slate-200 truncate">Oscillococcinum</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">Dosis única x 1g</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-lg font-bold text-slate-900 dark:text-white">$3.150</span>
+<button class="bg-primary hover:bg-primary/90 text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Second Category Section -->
+<section>
+<div class="flex items-center justify-between mb-4 border-b border-primary/10 pb-2">
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Cuidado Personal</h3>
+<span class="text-xs text-primary font-bold uppercase tracking-widest">8 productos</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-primary/5 flex gap-4 items-center">
+<div class="w-20 h-20 bg-background-light dark:bg-background-dark rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40 text-4xl">sanitizer</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-primary/70 uppercase">Cremas Naturales</p>
+<h4 class="font-bold text-slate-800 dark:text-slate-200 truncate">Gel de Árnica</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">Uso tópico - Pomo x 60g</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-lg font-bold text-slate-900 dark:text-white">$1.980</span>
+<button class="bg-primary hover:bg-primary/90 text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Navbar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/95 backdrop-blur-md border-t border-primary/10">
+<div class="max-w-5xl mx-auto flex h-16 items-center">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-semibold uppercase tracking-wider">Inicio</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">sell</span>
+<p class="text-[10px] font-semibold uppercase tracking-wider">Precios</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<p class="text-[10px] font-semibold uppercase tracking-wider">Sedes</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-semibold uppercase tracking-wider">Perfil</p>
+</a>
+</div>
+</nav>
+</body></html>

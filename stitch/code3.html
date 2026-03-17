@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Sidebar Overlay (Visible for demonstration of the design task) -->
+<div class="fixed inset-0 z-50 flex">
+<!-- Sidebar Content -->
+<div class="w-10/12 max-w-sm bg-background-light dark:bg-background-dark h-full shadow-2xl flex flex-col border-r border-slate-200 dark:border-slate-800">
+<div class="p-6 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">health_metrics</span>
+</div>
+<h1 class="font-bold text-xl text-primary">PharmaMenu</h1>
+</div>
+<div class="flex-1 overflow-y-auto py-4">
+<!-- Navigation Sections -->
+<div class="px-4 mb-6">
+<p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">Navegación</p>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary text-white font-semibold" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span>Lista de Precios</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Vademécum</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>Sedes</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Jump Links Categories -->
+<div class="px-4 mb-6">
+<p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">Categorías</p>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-primary/10 transition-colors text-sm" href="#analgesicos">
+<span>Analgésicos</span>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-primary/10 transition-colors text-sm" href="#antibioticos">
+<span>Antibióticos</span>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-primary/10 transition-colors text-sm" href="#vitaminas">
+<span>Vitaminas</span>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-primary/10 transition-colors text-sm" href="#digestivos">
+<span>Digestivos</span>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Settings -->
+<div class="px-4 border-t border-slate-200 dark:border-slate-800 pt-6">
+<p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4 px-2">Preferencias</p>
+<div class="flex items-center justify-between px-2">
+<span class="text-sm font-medium">Tamaño de Fuente</span>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-white dark:bg-slate-700 shadow-sm text-xs">A</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-base font-bold">A</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-lg font-black">A</button>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<button class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-200 dark:border-slate-800 font-medium text-sm">
+<span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión
+                </button>
+</div>
+</div>
+<!-- Backdrop -->
+<div class="flex-1 bg-black/50 backdrop-blur-sm"></div>
+</div>
+<!-- Main Content Wrapper -->
+<div class="relative flex flex-col min-h-screen">
+<!-- Header -->
+<header class="sticky top-0 z-40 bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 px-4 h-16 flex items-center justify-between">
+<button class="p-2 hover:bg-primary/10 rounded-xl transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="font-bold text-lg tracking-tight">Farmacia Central</span>
+</div>
+<button class="p-2 hover:bg-primary/10 rounded-xl transition-colors relative">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">shopping_cart</span>
+<span class="absolute top-1 right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+</button>
+</header>
+<!-- Persistent Search Bar -->
+<div class="px-4 py-3 bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm placeholder-slate-500" placeholder="Buscar productos, marcas o componentes..." type="text"/>
+</div>
+</div>
+<!-- Main Product List -->
+<main class="flex-1 p-4 pb-24">
+<!-- Category Header -->
+<section class="mb-8" id="analgesicos">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold border-l-4 border-primary pl-3">Analgésicos</h2>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">12 productos</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Product Card 1 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex gap-4">
+<div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="Caja de pastillas blancas en fondo neutro" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPHT8J2FtWjQXMdsVmpekMYA2za6qRIH3V4qKaIwQxqH49WR8jUXSWVdYXAmaEa3e4VVLtie1S4y0Kpuud6tKDiK_-juszneRLdeCafdfx8IqiyC6J152ymZmQMqwRKsr-ClbWYWlYNOKqxRn-zbQ7bSqLwhbt6-xripRHPftCj-1JTIRbuQfqzxY70Lq_ykOZPvyt_krk4Y5m7qur6TD_cbtLdmSXGC6QboFb-Z-keKHtu3RK8ktDndRY7BzalYMr0D-TEsIiqEW3"/>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-sm leading-snug mb-1">Ibuprofeno 600mg - 20 Cápsulas</h3>
+<p class="text-xs text-slate-500 mb-2">Laboratorio Medix</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-bold text-primary">$1,250.00</span>
+<button class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex gap-4">
+<div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="Pack de medicina sobre mesa de madera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-hOT473thZytLKgsnv4kZn_LgPDvh0d9IFLmiZ-Wmvi4fA7BAClTTHbQBcOLy3d6ABVWOWiYf7Ds0DYDupnTHbyQfL1gz2DrtYTmtNr_psqIu3vF9Te_kfltP6VnJhxo8RtOBSaRQh-E0eIIc_Pldq-WzD9UWX3mVwPy1BvW6g6cRKsVa1h24NxvdT8LDNzi9o8oDQkjg_C_3cgDFWVRP0LF87HfLbNssGNesc8wGASMT9D1jZZ3HlCT2LPOTgTdzQc9al0Vj2EKr"/>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-sm leading-snug mb-1">Paracetamol 500mg Forte - 30 Tabs</h3>
+<p class="text-xs text-slate-500 mb-2">Salud Global</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-bold text-primary">$890.00</span>
+<button class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Header 2 -->
+<section class="mb-8" id="antibioticos">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold border-l-4 border-primary pl-3">Antibióticos</h2>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">8 productos</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex gap-4">
+<div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="Frasco de jarabe médico moderno" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuN9kM57D2EVQe2ccS7O67GM6M3GJAWW2HIxDT0y1tX6Z_d-EP0Vmn7QKRyY6H1ymgMOcwbnj_iffMbX4AaFK_PA1RxoCitkIyUCO_z9C6ixrQqhNGWADeoVbmf6sKqZ0LhVIU4WNXvLqpPQCyXxIBFwcBdZ1H4lTpjQQl0BhpS2nrPy5ShrhAF7EFEqKcKhTcvqBzwllpanNMaDAxAIkCDnLk-EMcvbrMlBntxcERlaHdGv3PEe89yHNott64va3xoespLS5qBdys"/>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-sm leading-snug mb-1">Amoxicilina Suspensión 250mg/5ml</h3>
+<p class="text-xs text-slate-500 mb-2">BioFarma</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-bold text-primary">$2,450.00</span>
+<button class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 px-6 py-2 flex justify-between items-center z-40">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[10px] font-bold">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-medium">Historial</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-[10px] font-medium">Favoritos</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

@@ -44,7 +44,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                                     id="auth-nit" 
                                     placeholder="Ej: 1234567890"
                                     autocomplete="username"
-                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all focus:placeholder:text-transparent"
                                 />
                             </div>
                         </div>
@@ -60,7 +60,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                                     id="auth-password"
                                     placeholder="••••••••••"
                                     autocomplete="current-password"
-                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all pr-12 tracking-widest font-mono"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all pr-12 tracking-widest font-mono focus:placeholder:text-transparent"
                                 />
                                 <!-- Botón para mostrar/ocultar contraseña -->
                                 <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all" aria-label="Mostrar contraseña">
@@ -336,11 +336,24 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         </div>
 
         <!-- Columna Derecha: Panel de Ficha Técnica (Scroll independiente) -->
-        <aside class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] overflow-y-auto shrink-0">
-            <div class="p-8 xl:p-10 flex-1">
+        <aside 
+            id="vademecum-aside" 
+            data-mobile-open="false"
+            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] overflow-y-auto shrink-0 relative
+                   data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
+        >
+            
+            <!-- Ficha: Nux Vomica -->
+            <div id="ficha-nux-vomica" class="p-8 xl:p-10 flex-1">
 
                 <!-- Encabezado de la Ficha -->
-                <div class="mb-8">
+                <div class="mb-8 relative">
+                    <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
                     <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M8 17H16" />
@@ -441,6 +454,59 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
                 </div>
             </div>
+
+            <!-- TEMPORAL: Ficha Arnica Montana D6 (Oculta por defecto para evaluar idea de toggle) -->
+            <div id="ficha-arnica-montana" class="p-8 xl:p-10 flex-1 hidden">
+                <div class="flex items-center gap-2.5 text-slate-500 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16.5 10.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V10.5" />
+                        <path d="M6 22H18C20 22 21 21 21 19V13C21 11 20 10 18 10H6C4 10 3 11 3 13V19C3 21 4 22 6 22Z" />
+                        <path d="M12 15V17" />
+                    </svg>
+                    <span class="text-[11px] font-bold tracking-wider uppercase">Ficha técnica del producto</span>
+                </div>
+
+                <div class="mb-8 relative">
+                    <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 flex items-baseline gap-2.5 mb-5 block">
+                        Arnica montana <span class="text-brand text-4xl block">D6</span>
+                    </h2>
+                    
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Arnica montana L.</span>
+                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Potencia D6</span>
+                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Origen vegetal</span>
+                    </div>
+                </div>
+
+                <div class="space-y-10">
+                    <div class="border-t border-subtle pt-7">
+                        <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2 block">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="15" height="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900 block">
+                                <path d="M4 6H20" />
+                                <path d="M4 12H20" />
+                                <path d="M4 18H20" />
+                            </svg>
+                            Indicaciones clínicas
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex gap-2">
+                                <div class="w-[15px] flex justify-center shrink-0">
+                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
+                                </div>
+                                <p class="text-[13px] text-slate-700 leading-[1.8]">
+                                    (DATOS INVENTADOS TEMPORALES) Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma. Indicado en pre y post operatorio para reducir hematomas y acelerar la recuperación tisular.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </aside>
 
     </div>
@@ -489,5 +555,55 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         if (inputPass) inputPass.type = isPassword ? 'text' : 'password';
         iconOpen?.classList.toggle('hidden');
         iconClosed?.classList.toggle('hidden');
+    });
+
+    // Lógica de navegación del Vademécum
+    const medCards = document.querySelectorAll('[data-med]');
+    const fichaNux = document.getElementById('ficha-nux-vomica');
+    const fichaArnica = document.getElementById('ficha-arnica-montana');
+    const vademecumAside = document.getElementById('vademecum-aside');
+
+    medCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Actualizar tarjetas
+            medCards.forEach(c => {
+                c.classList.remove('border-brand', 'border-l-[3px]');
+                c.classList.add('border-subtle');
+                const h3 = c.querySelector('h3');
+                if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
+            });
+            
+            card.classList.remove('border-subtle');
+            card.classList.add('border-brand', 'border-l-[3px]');
+            const selectedH3 = card.querySelector('h3');
+            if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
+
+            // Cambiar contenido
+            const medType = card.getAttribute('data-med');
+            if (medType === 'arnica-montana') {
+                fichaNux?.classList.add('hidden');
+                fichaArnica?.classList.remove('hidden');
+            } else {
+                fichaArnica?.classList.add('hidden');
+                fichaNux?.classList.remove('hidden');
+            }
+
+            // Mostrar en móvil usando el atributo de estado
+            if (vademecumAside && window.innerWidth < 1024) {
+                vademecumAside.setAttribute('data-mobile-open', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Cerrar en móvil
+    document.querySelectorAll('.close-ficha-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (vademecumAside) {
+                vademecumAside.setAttribute('data-mobile-open', 'false');
+                document.body.style.overflow = '';
+            }
+        });
     });
 </script>

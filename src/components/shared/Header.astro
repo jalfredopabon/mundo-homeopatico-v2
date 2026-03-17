@@ -12,14 +12,14 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 w-full bg-surface-white border-b border-subtle transition-all duration-300">
   <div class="max-w-full mx-auto h-16 md:h-20 flex items-center justify-between">
     
-    <!-- Lado Izquierdo: Identidad de Marca (Alineado con Sidebar w-64) -->
-    <div class="w-64 flex-shrink-0 flex justify-start pl-4">
+    <!-- Lado Izquierdo: Identidad de Marca (Alineado con Sidebar w-64 en Desktop) -->
+    <div class="w-auto md:w-64 flex-shrink-0 flex justify-start pl-4 md:pl-4">
       <a href="/" class="no-underline inline-flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 group">
       <!-- Icono provisional (reemplazar por el logo real) -->
       <div class="w-9 h-9 bg-brand flex items-center justify-center rounded text-white text-sm font-bold tracking-widest transition-all">
         MH
       </div>
-      <h1 class="text-lg font-bold text-slate-800 tracking-tight whitespace-nowrap">
+      <h1 class="hidden md:block text-lg font-bold text-slate-800 tracking-tight whitespace-nowrap">
         Mundo homeopático
       </h1>
       </a>
@@ -69,11 +69,18 @@ const currentPath = Astro.url.pathname;
               <path d="M16.5 9.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V9.5" />
           </svg>
         </a>
-      </div>
     </nav>
 
+    <!-- Centro: Buscador Móvil (Placeholder inicial para Desktop/Móvil unificado posterior) -->
+    <div class="md:hidden flex-1 px-2">
+      <div class="h-10 w-full bg-slate-100 rounded-xl flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <span class="text-[13px] text-slate-400 font-medium ml-2 select-none">Buscar...</span>
+      </div>
+    </div>
+
     <!-- Lado Derecho: Controles Operativos -->
-    <div class="w-64 flex-shrink-0 flex items-center justify-end gap-4 pr-6">
+    <div class="w-auto md:w-64 flex-shrink-0 flex items-center justify-end gap-1 sm:gap-4 pr-3 md:pr-6">
       
       {mostrarZoom && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer">
@@ -100,8 +107,8 @@ const currentPath = Astro.url.pathname;
       )}
 
       <!-- Botón Carrito -->
-      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-1.5 min-w-[3rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
-         <div class="h-5 flex items-center justify-center text-slate-800/90">
+      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
+         <div class="h-5 flex items-center justify-center text-slate-800/90 relative">
             <!-- Icono Carrito (Hugeicons) -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform">
                 <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" />
@@ -111,14 +118,22 @@ const currentPath = Astro.url.pathname;
                 <path d="M8 20L15 20" />
                 <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" />
             </svg>
+            
+            <!-- Burbuja de notificación re-posicionada -->
+            <span class="absolute -top-1.5 -right-2 flex h-4 w-4">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span class="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold">3</span>
+            </span>
          </div>
-        <span class="text-[10px] font-medium text-slate-800 mt-[2px]">Pedidos</span>
-        
-        <!-- Burbuja de notificación con efecto latido (Pulse) -->
-        <span class="absolute top-0 right-0 flex h-[18px] w-[18px]">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span class="relative inline-flex items-center justify-center rounded-full h-[18px] w-[18px] bg-red-500 text-white text-[9px] font-bold">3</span>
-        </span>
+         <!-- Texto 'Pedidos' oculto en móvil para ahorrar espacio con el buscador -->
+        <span class="hidden sm:block text-[10px] font-medium text-slate-800 mt-[2px]">Pedidos</span>
+      </button>
+
+      <!-- Botón Menú (Solo móvil, movido al extremo derecho) -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors group" aria-label="Abrir menú principal">
+          <div class="h-5 flex items-center justify-center text-slate-800/90">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </div>
       </button>
     </div>
   </div>
@@ -134,9 +149,17 @@ const currentPath = Astro.url.pathname;
   // Emitir evento global para abrir/cerrar el carrito desde el Header
   document.addEventListener('DOMContentLoaded', () => {
     const cartBtn = document.getElementById('header-cart-btn');
+    const menuBtn = document.getElementById('mobile-menu-btn');
+
     if (cartBtn) {
       cartBtn.addEventListener('click', () => {
         document.dispatchEvent(new CustomEvent('toggleCart'));
+      });
+    }
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('toggleMobileMenu'));
       });
     }
   });

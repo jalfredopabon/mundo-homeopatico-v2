@@ -69,7 +69,7 @@ Un archivo monolítico (`index.html`) de ~10,000 líneas que mezcla HTML + CSS (
   - **Botón de Accesibilidad (Zoom):** Icono `AA` con la palabra "Texto" debajo. Permite ciclar tamaño de letra (normal, mediano, grande) solo para los ítems de las tablas de productos. Al hacer hover muestra el estado actual. _Nota: Este botón debe mostrarse SOLO en la página "Lista de precos"._
   - **Botón Carrito:** Icono del carrito con burbuja de cantidad. Visible en TODAS las páginas.
 - **Drawer / Panel del Carrito:**
-  - Listado de productos agregados (nombre, sumatoria `- N +`, precio unitario). Sumatoria por producto (cant. \* precio).
+  - Listado de productos agregados (nombre, sumatoria `- N +`, precio unitario). Sumatoria por producto (cant. * precio).
   - Campo de texto para notas/detalles.
   - Formulario de datos del cliente: Nombre (Oblig.), Cédula/NIT (Oblig.), WhatsApp (Oblig.), Teléfono (Opc.), Correo (Opc.), Dirección de entrega (Opc.).
   - Select para Método de Pago: "Efectivo", "Transferencia/Consignación", "Nequi/Daviplata".
@@ -421,6 +421,21 @@ _Este listado consolida tareas menores de integración y optimización que deben
 
 ---
 
+## Pendientes (Backlog de UI/UX Dinámica)
+
+Estos aspectos visuales y de interacción se implementarán obligatoriamente durante la Fase de Cableado JS y Ajustes Responsivos para asegurar la certificación "Premium" de la UI:
+
+- [ ] **Responsividad Compleja en Móvil (Vademécum):** Implementar un "Drawer" (cajón deslizable) para los filtros del menú izquierdo, y un Modal de formato Mobile que ocupe el 100% de la pantalla para mostrar la Ficha Técnica clínica al tocar un medicamento.
+- [ ] **Skeleton Loaders y Feedback Visual:** Diseñar `Skeletons` animados en grillas y paneles mientras la información de la base de datos carga para evitar saltos. Activar la clásica Loading Bar Verde superior.
+- [ ] **Empty States y Botón "Limpiar":** Si una búsqueda o filtro multicriterio devuelve 0 resultados, reemplazar la columna central vacía con un "Empty State" (estado vacío) premium ilustrado, y un botón directo de "Limpiar filtros" para no frustrar la navegación.
+- [ ] **Interacción "Mapa" Sede Principal (Contacto):** Cuando se integren datos reales, conectar el "mapa fake" (fondo borroso con pin) a un enlace o iframe real de Google Maps. Añadir un efecto hover que quite parcialmente el blur e indique al usuario que puede hacer clic para ver la ruta.
+- [ ] **Comportamiento Orgánico en Acordeones FAQ (Contacto):** Durante la fase de Javascript, asegurar que el ícono (ej: `+` o flecha) no cambie bruscamente, sino que rote de forma fluida (ej: `transform: rotate(45deg)` o `180deg`) al abrir y cerrar la respuesta.
+- [ ] **Sombras Modernas y Difusas (Contacto/Sedes):** Implementar sombras tipo "Ambient Occlusion" con tinte de marca (`shadow-brand/10`) y baja opacidad exclusivamente en las tarjetas de Sedes y Contacto. **Nota:** No aplicar a listas de precios ni Vademécum para mantener un estilo plano y profesional en datos densos.
+- [x] **Estandarización de Alineación Sidebar (Plomada 12/36):** Unificación de ejes verticales para íconos (12px) e indentación de texto (36px) en las tres vistas principales (Catálogo, Contacto, Vademécum). Alineación simétrica de Checkboxes y controles de búsqueda.
+- [x] **Sincronización de Contenedores y Ritmo Visual:** Estandarización de paddings de página (`px-8 md:px-16 pt-8 md:pt-10 pb-24`) y `gaps` de sección (`gap-16 md:gap-20`) en todas las vistas maestras. Se garantiza que el contenido principal de Contacto, Catálogo y Vademécum respete la misma retícula espacial.
+
+---
+
 ## 📓 Bitácora de Avance
 
 _(Este registro es exclusivo para marcar hitos relevantes y tareas arquitectónicas o visuales completadas de manera íntegra, no para ediciones menores.)_
@@ -504,24 +519,11 @@ _(Este registro es exclusivo para marcar hitos relevantes y tareas arquitectóni
        - Implementación de la "Cápsula Premium" (`bg-brand/10` como único indicador de estado activo, texto en `slate-800`).
        - Activación de Scrollbar Invisible mediante utilidades globales.
 
----
-
-## Pendientes (Backlog de UI/UX Dinámica)
-
-Estos aspectos visuales y de interacción se implementarán obligatoriamente durante la Fase de Cableado JS y Ajustes Responsivos para asegurar la certificación "Premium" de la UI:
-
-- [ ] **Responsividad Compleja en Móvil (Vademécum):** Implementar un "Drawer" (cajón deslizable) para los filtros del menú izquierdo, y un Modal de formato Mobile que ocupe el 100% de la pantalla para mostrar la Ficha Técnica clínica al tocar un medicamento.
-- [ ] **Skeleton Loaders y Feedback Visual:** Diseñar `Skeletons` animados en grillas y paneles mientras la información de la base de datos carga para evitar saltos. Activar la clásica Loading Bar Verde superior.
-- [ ] **Empty States y Botón "Limpiar":** Si una búsqueda o filtro multicriterio devuelve 0 resultados, reemplazar la columna central vacía con un "Empty State" (estado vacío) premium ilustrado, y un botón directo de "Limpiar filtros" para no frustrar la navegación.
-- [ ] **Interacción "Mapa" Sede Principal (Contacto):** Cuando se integren datos reales, conectar el "mapa fake" (fondo borroso con pin) a un enlace o iframe real de Google Maps. Añadir un efecto hover que quite parcialmente el blur e indique al usuario que puede hacer clic para ver la ruta.
-- [ ] **Comportamiento Orgánico en Acordeones FAQ (Contacto):** Durante la fase de Javascript, asegurar que el ícono (ej: `+` o flecha) no cambie bruscamente, sino que rote de forma fluida (ej: `transform: rotate(45deg)` o `180deg`) al abrir y cerrar la respuesta.
-- [ ] **Sombras Modernas y Difusas (Contacto/Sedes):** Implementar sombras tipo "Ambient Occlusion" con tinte de marca (`shadow-brand/10`) y baja opacidad exclusivamente en las tarjetas de Sedes y Contacto. **Nota:** No aplicar a listas de precios ni Vademécum para mantener un estilo plano y profesional en datos densos.
-- [x] **Estandarización de Alineación Sidebar (Plomada 12/36):** Unificación de ejes verticales para íconos (12px) e indentación de texto (36px) en las tres vistas principales (Catálogo, Contacto, Vademécum). Alineación simétrica de Checkboxes y controles de búsqueda.
-- [x] **Sincronización de Contenedores y Ritmo Visual:** Estandarización de paddings de página (`px-8 md:px-16 pt-8 md:pt-10 pb-24`) y `gaps` de sección (`gap-16 md:gap-20`) en todas las vistas maestras. Se garantiza que el contenido principal de Contacto, Catálogo y Vademécum respete la misma retícula espacial.
 - **[2026-03-15] Implementación de Precisión Tipográfica Elite:**
   - Integración global de `text-box-trim` y `text-box-edge` en `global.css`.
   - Aplicación automática a todos los elementos `button`, `.btn-elite` y `.badge-elite` para asegurar alineación vertical matemática.
   - Establecimiento del estándar de "Mejora Progresiva" para tipografía de vanguardia (Chrome 133+ / Safari 18.2+).
+
 - **[2026-03-15] Adopción de Estándares CSS Modernos 2025 y Flat Design:**
   - Configuración de `text-wrap: balance` y `pretty` para una composición tipográfica profesional automática.
   - Implementación de `interpolate-size: allow-keywords` en el bloque raíz para habilitar animaciones de altura fluida (`height: auto`).
@@ -547,6 +549,12 @@ Estos aspectos visuales y de interacción se implementarán obligatoriamente dur
   - **Jerarquía Tipográfica y Cromática:** Títulos N1 elevados a `slate-900` para autoridad, guías de árbol suavizadas a `slate-500` para sutileza, y herencia de medidas del buscador desde el menú.
   - **Higiene Visual Final:** Eliminación del modo diagnóstico y purga de caracteres parásitos (`>`), logrando una interfaz limpia, robusta y libre de ruido.
 
+- **[2026-03-17] Estandarización de Alturas y Sincronización Dinámica del Carrito:**
+  - Implementación de la jerarquía de alturas "Elite": Botones de Navegación (L: 48px), Acción (M: 40px) y Sidebar (S: 36px).
+  - Ajuste de Alineación Óptica: Micro-desplazamientos verticales (`mt-[-1px]`) y `leading-none` para lograr un centrado visual perfecto en botones y cápsulas.
+  - Sincronización Carrito-Header: El icono de pedidos ahora refleja en tiempo real la sumatoria total de unidades mediante eventos personalizados (`cartUpdated`), incluyendo una micro-animación de feedback.
+  - Optimización de Flujo UX: Desactivación de la apertura automática del panel lateral al agregar productos, priorizando una navegación fluida y sin interrupciones ("Silent Add").
+
 ---
 
 ## Deuda Técnica (Limpiar antes de producción)
@@ -556,5 +564,3 @@ Estos aspectos visuales y de interacción se implementarán obligatoriamente dur
 - [x] **Migración de hex `#0E8A71` a tokens Tailwind:** ~~Reemplazar las 50+ ocurrencias del hex crudo.~~ Completado: 65 líneas migradas en 7 archivos. Variable `--primary` sincronizada a `#0E8A71`. Token `brand-dark` redirigido a `--primary-hover` (`#0b6e5a`).
 - [x] **Sombras `rgba(14,138,113,...)` residuales:** ~~3 sombras decorativas en `contacto.astro` (líneas 50, 115, 223) usan el rgba del verde brand en `shadow-[...]`.~~ Completado: Purgadas y reemplazadas exitosamente por clases nativas de tailwind usando el token de color modificado con opacidad (ej. `shadow-brand/50`).
 - [ ] **Precios hardcodeados en index.astro:** 4 precios estáticos (`$19.500`, `$36.000`, `$25.500`, `$44.000`) directamente en el HTML. Se reemplazarán por datos dinámicos al conectar la fuente de datos Google Sheets/GAS en Fase de Cableado.
-   
- 

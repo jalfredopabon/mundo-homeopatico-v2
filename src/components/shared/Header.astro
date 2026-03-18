@@ -55,7 +55,7 @@ const currentPath = Astro.url.pathname;
       <div class="flex items-center">
         <a 
           href="/vademecum" 
-          class={`no-underline relative group flex items-center gap-2 text-sm font-semibold px-4 py-1.5 rounded-full transition-all border ${
+          class={`no-underline relative group flex items-center gap-2 text-sm font-semibold px-4 py-1.5 rounded-lg transition-all border ${
             currentPath === '/vademecum' 
               ? 'bg-transparent text-brand border-brand hover:bg-brand/5' 
               : 'bg-brand text-white border-transparent hover:bg-brand-dark'
@@ -73,7 +73,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- Centro: Buscador Móvil (Placeholder inicial para Desktop/Móvil unificado posterior) -->
     <div class="md:hidden flex-1 px-2">
-      <div class="h-10 w-full bg-slate-100 rounded-xl flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+      <div class="h-10 w-full bg-slate-100 rounded-lg flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
         <span class="text-[13px] text-slate-400 font-medium ml-2 select-none">Buscar...</span>
       </div>

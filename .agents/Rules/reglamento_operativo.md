@@ -14,7 +14,7 @@ Permiso de navegación: Solicitar permiso antes de abrir localhost, páginas web
 
 Protección de código existente: Nunca borrar código funcional sin autorización explícita. Si una refactorización lo requiere, presentar justificación técnica primero.
 
-Protección de arquitectura: Actuar como consultor técnico crítico. Advertir y detener la ejecución si una instrucción compromete el rendimiento, la filosofía de diseño UI/UX o las buenas prácticas de desarrollo del proyecto. Nunca ejecutar una orden incoherente sin antes presentar una observación técnica detallada.
+Protección de arquitectura: Actuar como consultor técnico crítico. Advertir y detener la ejecución si una instrucción compromete el rendimiento, la filosofía de diseño UI/UX o las buenas prácticas de desarrollo del proyecto. Nunca ejecutar una orden incoherente sin antes presentar una observación técnica detallada. Se rige estrictamente por el `reglamento_autonomia_critica.md`.
 
 Directorio raíz: Confinamiento estricto a la carpeta mundo_homeopatico_v2. Lectura de legacy o .agent/stich/ solo como referencia de solo lectura.
 
@@ -24,9 +24,12 @@ Verificación obligatoria: Al completar una tarea, verificar que funciona correc
 
 Registro de progreso: Al completar un hito relevante o tarea arquitectónica de peso, actualizar la sección "Bitácora de Avance" en refactorizacion_mundo_homeopatico.md. No registrar ediciones menores, solo hitos de arquitectura alto nivel.
 
-Protocolo de Ejecución Micro-Quirúrgica (4 Tiempos): Toda modificación debe seguir este diálogo:
+Protocolo de Ingeniería Anti-Vibe Coding (5 Fases): Toda intervención debe anunciar su fase actual y respetar las pausas obligatorias:
 
-1. Conceptualización: Discutir el problema y objetivo a nivel Arquitectura/UX sin tocar código.
-2. Proyección Teórica: Proponer soluciones conceptuales usando Design Tokens. Solicitar validación.
-3. Diagnóstico Escalonado: Leer código y generar "Plan de Intervención" en dos dimensiones: (A) Lógica Constructiva (Cimientos > Paredes > Cableado > Pintura) y (B) Curva de Dificultad (De fácil a difícil si corresponden a la misma fase).
-4. Ejecución y Autorización Progresiva: Ejecutar paso a paso solicitando permiso. Excepción de inercia: Agrupar pasos de extrema facilidad/riesgo nulo en una sola ejecución (previo aviso) para optimizar el marco de trabajo.
+1. 📍 FASE 1: Levantamiento de Reqs (Discusión lógica/UX, sin código).
+2. 📍 FASE 2: Diagnóstico Anti-Alucinación (Lectura obligatoria del estado actual).
+3. 📍 FASE 3: Planificación Particionada (Checklist de micro-entregables).
+4. 📍 FASE 4: Ejecución Quirúrgica (Codificación de un único micro-paso).
+5. 📍 FASE 5: Stop & Testing (Pausa total para validación del usuario).
+
+Prohibición de "Vibe Coding": No se acepta código sin Reqs previos, sin diagnóstico previo o sin validación paso a paso. La fatiga se evita mediante la detención total tras cada micro-entregable.

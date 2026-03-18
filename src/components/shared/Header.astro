@@ -12,8 +12,8 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 w-full bg-surface-white border-b border-subtle transition-all duration-300">
   <div class="max-w-full mx-auto h-[64px] md:h-[72px] flex items-center justify-between">
     
-    <!-- Lado Izquierdo: Identidad de Marca (Alineado con Sidebar w-64 en Desktop) -->
-    <div class="w-auto md:w-64 flex-shrink-0 flex justify-start pl-4 md:pl-4">
+    <!-- Lado Izquierdo: Identidad de Marca (Alineado con Sidebar pl-4) -->
+    <div class="w-auto flex-shrink-0 flex justify-start pl-4 md:pl-4">
       <a href="/" class="no-underline inline-flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 group">
       <!-- Icono provisional (reemplazar por el logo real) -->
       <div class="w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all">
@@ -25,8 +25,11 @@ const currentPath = Astro.url.pathname;
       </a>
     </div>
 
-    <!-- Centro: Navegación Principal -->
-    <nav class="hidden md:flex flex-1 self-stretch justify-center gap-10 px-8">
+    <!-- Espaciador Dinámico 1 (Genera Armonía Rítmica) -->
+    <div class="hidden md:block flex-1"></div>
+
+    <!-- Centro: Navegación Principal (Agrupador Central) -->
+    <nav class="hidden md:flex flex-shrink-0 self-stretch items-center gap-10">
       <a 
         href="/" 
         class={`no-underline text-sm font-semibold relative h-full flex items-center transition-colors group ${
@@ -51,7 +54,7 @@ const currentPath = Astro.url.pathname;
         }`}></span>
       </a>
       
-      <!-- Botón Soy Médico -->
+      <!-- Botón Soy Médico (Parte del bloque central) -->
       <div class="flex items-center">
         <a 
           href="/vademecum" 
@@ -69,7 +72,11 @@ const currentPath = Astro.url.pathname;
               <path d="M16.5 9.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V9.5" />
           </svg>
         </a>
+      </div>
     </nav>
+
+    <!-- Espaciador Dinámico 2 (Genera Armonía Rítmica) -->
+    <div class="hidden md:block flex-1"></div>
 
     <!-- Centro: Buscador Móvil (Placeholder inicial para Desktop/Móvil unificado posterior) -->
     <div class="md:hidden flex-1 px-2">
@@ -80,7 +87,7 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Lado Derecho: Controles Operativos -->
-    <div class="w-auto md:w-64 flex-shrink-0 flex items-center justify-end gap-6 pr-4 md:pr-[72px]">
+    <div class="w-auto flex-shrink-0 flex items-center justify-end gap-6 pr-4 md:pr-4">
       
       {mostrarZoom && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer">

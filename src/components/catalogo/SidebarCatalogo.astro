@@ -47,7 +47,7 @@ import Icons from "./Icons.astro";
                       {/* Nivel 3: Agrupador o Link Directo - Alineación Centralizada */}
                       {hasSubLinks ? (
                         <button 
-                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-8 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
+                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
                           data-target={group.name.toLowerCase().replace(/\s+/g, '-')}
                         >
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
@@ -55,7 +55,7 @@ import Icons from "./Icons.astro";
                               <Icons type={group.iconType} />
                             </div>
                           </div>
-                          <span class="text-[14px] font-normal">{group.name}</span>
+                          <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">{group.name}</span>
                           
                           {/* Chevron Down (Hugeicons) - Alineado con el fin del buscador */}
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto transition-all duration-300 accordion-icon">
@@ -63,13 +63,13 @@ import Icons from "./Icons.astro";
                           </svg>
                         </button>
                       ) : (
-                        <a href={group.href} class="sidebar-link group relative flex items-center h-8 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                             <div class="w-[18px] h-[18px] flex items-center justify-center">
                               <Icons type={group.iconType} />
                             </div>
                           </div>
-                          <span class="text-[14px] font-normal group-[.is-active]:font-bold">{group.name}</span>
+                          <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">{group.name}</span>
                         </a>
                       )}
 
@@ -77,9 +77,9 @@ import Icons from "./Icons.astro";
                       {hasSubLinks && (
                         <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                           {group.links.map((link) => (
-                            <a href={link.href} class="sidebar-link group relative flex items-center h-8 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                               <div class="w-8 flex-shrink-0"></div>
-                              <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none">{link.name}</span>
+                              <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">{link.name}</span>
                             </a>
                           ))}
                         </div>

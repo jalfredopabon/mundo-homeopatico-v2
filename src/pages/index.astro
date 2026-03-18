@@ -35,19 +35,18 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                 </button>
             </div>
 
-            <!-- Contenido de Tablas (Scroll Continuo) -->
             <div class="px-4 md:px-16 pt-4 md:pt-10 pb-24 flex-1 flex flex-col">
-                <div class="flex flex-col gap-16 md:gap-20">
+                <div class="flex flex-col gap-[72px]">
                     <!-- Sección: Oligoelementos -->
                 <section id="oligoelementos" class="scroll-mt-32">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-0 py-4 mb-4 flex flex-col gap-1 auto-animate-header">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-6 py-4 mb-8 flex flex-col auto-animate-header">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
                             <span class="hover:text-slate-800 transition-colors cursor-pointer">De nuestra farmacia</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             <span class="hover:text-slate-800 transition-colors cursor-pointer">Según prescripción</span>
                         </nav>
-                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight">Oligoelementos</h2>
-                        <p class="text-slate-700 text-base font-medium">Elaborados a la D7</p>
+                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight mb-3">Oligoelementos</h2>
+                        <p class="text-slate-700 text-base font-medium mb-8">Elaborados a la D7</p>
                     </header>
                     <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden">
                         <!-- Encabezado de Tabla (Solo Desktop) -->
@@ -151,14 +150,14 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
                 <!-- Sección: Esencias florales -->
                 <section id="esencias-florales" class="scroll-mt-32">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-0 py-4 mb-4 flex flex-col gap-1">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-6 py-4 mb-8 flex flex-col">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
                             <span>De nuestra farmacia</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             <span>Según prescripción</span>
                         </nav>
-                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight">Esencias florales</h2>
-                        <p class="text-slate-700 text-base font-medium">Flores de Bach y otras esencias</p>
+                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight mb-3">Esencias florales</h2>
+                        <p class="text-slate-700 text-base font-medium mb-8">Flores de Bach y otras esencias</p>
                     </header>
                     <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
                         <span class="text-slate-700 text-sm font-medium">Tabla de esencias florales (datos reales en Fase 3)</span>
@@ -167,12 +166,12 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
                 <!-- Sección: Alimentos funcionales -->
                 <section id="alimentos-funcionales" class="scroll-mt-32">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-0 py-4 mb-4 flex flex-col gap-1">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-6 py-4 mb-8 flex flex-col">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
                             <span>Productos exclusivos</span>
                         </nav>
-                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight">Alimentos funcionales</h2>
-                        <p class="text-slate-700 text-base font-medium">Suplementos y alimentos de alta calidad</p>
+                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight mb-3">Alimentos funcionales</h2>
+                        <p class="text-slate-700 text-base font-medium mb-8">Suplementos y alimentos de alta calidad</p>
                     </header>
                     <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
                         <span class="text-slate-700 text-sm font-medium">Tabla de alimentos funcionales (datos reales en Fase 3)</span>
@@ -181,12 +180,12 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
                 <!-- Sección: CBD -->
                 <section id="cbd" class="scroll-mt-32">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-0 py-4 mb-4 flex flex-col gap-1">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-6 py-4 mb-8 flex flex-col">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
                             <span>Productos exclusivos</span>
                         </nav>
-                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight">CBD</h2>
-                        <p class="text-slate-700 text-base font-medium">Productos de cannabidiol de grado farmacéutico</p>
+                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight mb-3">CBD</h2>
+                        <p class="text-slate-700 text-base font-medium mb-8">Productos de cannabidiol de grado farmacéutico</p>
                     </header>
                     <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
                         <span class="text-slate-700 text-sm font-medium">Tabla de CBD (datos reales en Fase 3)</span>
@@ -195,12 +194,12 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
                 <!-- Sección: Aceites esenciales -->
                 <section id="aceites-esenciales" class="scroll-mt-32">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-0 py-4 mb-4 flex flex-col gap-1">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-4 px-4 md:mx-0 md:px-6 py-4 mb-8 flex flex-col">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
                             <span>Productos exclusivos</span>
                         </nav>
-                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight">Aceites esenciales</h2>
-                        <p class="text-slate-700 text-base font-medium">Extractos puros de plantas medicinales</p>
+                        <h2 class="text-[2.25rem] leading-tight font-extrabold text-slate-900 tracking-tight mb-3">Aceites esenciales</h2>
+                        <p class="text-slate-700 text-base font-medium mb-8">Extractos puros de plantas medicinales</p>
                     </header>
                     <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
                         <span class="text-slate-700 text-sm font-medium">Tabla de aceites esenciales (datos reales en Fase 3)</span>

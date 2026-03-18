@@ -113,10 +113,10 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
     </div>
 
     <!-- Contenedor Principal Dashboard 3 Columnas -->
-    <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)]">
+    <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
         
         <!-- Columna Izquierda: Sidebar de Filtros (w-64 = Consistente con Catálogo y Contacto) -->
-        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] sticky top-16 md:top-20 overflow-y-auto shrink-0">
+        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] sticky top-[64px] md:top-[72px] overflow-y-auto shrink-0">
             <div class="p-6 space-y-7">
 
                 <!-- Buscador de medicamentos -->
@@ -223,8 +223,8 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         </aside>
 
         <!-- Columna Central: Grilla de Resultados (Scroll independiente) -->
-        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] scroll-smooth" id="vademecum-main-scroll">
-            <div class="px-8 md:px-16 pt-8 pb-24 flex-1">
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth" id="vademecum-main-scroll">
+            <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1">
 
                 <!-- Encabezado del Vademécum -->
                 <div class="flex items-end justify-between mb-8">
@@ -339,7 +339,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         <aside 
             id="vademecum-aside" 
             data-mobile-open="false"
-            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] overflow-y-auto shrink-0 relative
+            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
                    data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
         >
             

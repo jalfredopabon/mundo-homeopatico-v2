@@ -16,16 +16,16 @@ import FAQ from '../components/sections/FAQ.astro';
     <CartDrawer />
     
     <!-- Contenedor Principal de 2 columnas (Aísla el scroll) -->
-    <div class="flex flex-col md:flex-row w-full flex-1 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)]">
+    <div class="flex flex-col md:flex-row w-full flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
         
         <!-- Columna Izquierda: Sidebar de Navegación (Fijo en Desktop) -->
         <SidebarContacto />
 
         <!-- Columna Derecha: Contenedor Principal Fluid + Footer ancho total relativo -->
-        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] scroll-smooth" id="contacto-main-scroll">
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth" id="contacto-main-scroll">
             
             <!-- Área de Contenido -->
-            <div class="px-8 md:px-16 pt-8 md:pt-10 pb-24 flex-1 flex flex-col">
+            <div class="px-8 md:px-[72px] pt-8 md:pt-10 pb-24 flex-1 flex flex-col">
                 <div class="flex flex-col gap-16 md:gap-20 max-w-5xl">
                 
                     <!-- Sección 1: Excelencia Homeopática -->

@@ -549,6 +549,11 @@ _(Este registro es exclusivo para marcar hitos relevantes y tareas arquitectóni
   - **Jerarquía Tipográfica y Cromática:** Títulos N1 elevados a `slate-900` para autoridad, guías de árbol suavizadas a `slate-500` para sutileza, y herencia de medidas del buscador desde el menú.
   - **Higiene Visual Final:** Eliminación del modo diagnóstico y purga de caracteres parásitos (`>`), logrando una interfaz limpia, robusta y libre de ruido.
 
+- **[2026-03-17] Rediseño del Header "Elite" y Sincronización Estructural:**
+  - Implementación del sistema de espaciado SaaS (Altura: 72px, Gaps: 40px/24px) para máxima claridad visual.
+  - Sincronización global de la rejilla de 72px en todas las vistas (Catálogo, Vademécum, Contacto) y sidebars.
+  - Estandarización de paddings laterales a 72px para un flujo visual ininterrumpido.
+  - Respeto a la alineación manual del logotipo conservando su identidad de marca solicitada.
 - **[2026-03-17] Estandarización de Alturas y Sincronización Dinámica del Carrito:**
   - Implementación de la jerarquía de alturas "Elite": Botones de Navegación (L: 48px), Acción (M: 40px) y Sidebar (S: 36px).
   - Ajuste de Alineación Óptica: Micro-desplazamientos verticales (`mt-[-1px]`) y `leading-none` para lograr un centrado visual perfecto en botones y cápsulas.

@@ -300,6 +300,12 @@
         }
         updateTotals();
         attachEventListeners();
+
+        // Notificar al Header del cambio
+        const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+        document.dispatchEvent(new CustomEvent('cartUpdated', { 
+            detail: { totalItems } 
+        }));
     }
 
     function updateTotals() {
@@ -335,10 +341,6 @@
         const existing = cart.find(item => item.name === name);
         if (existing) { existing.quantity++; } else { cart.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); }
         renderCart();
-        // En desktop abre el panel automáticamente; en móvil solo actualiza el contador
-        if (window.innerWidth >= 1024) {
-            document.body.classList.add('cart-open');
-        }
     });
 
     document.getElementById('close-cart')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
@@ -351,6 +353,9 @@
     document.addEventListener('toggleCart', () => {
         document.body.classList.toggle('cart-open');
     });
+
+    // Sincronización inicial
+    renderCart();
 </script>
 
 <style>

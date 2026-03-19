@@ -5,7 +5,7 @@
 html {
   interpolate-size: allow-keywords; /* Permite animar de 0 a auto (Chrome 129+) */
   scrollbar-gutter: stable; /* Evita saltos de layout cuando aparece/desaparece el scroll */
-  scroll-padding-top: 5rem; /* Ajuste para que el Header fijo (h-20) no tape los títulos al navegar */
+  scroll-padding-top: 4rem; /* Ajuste para que el Header fijo (h-16 = 64px) no tape los títulos al navegar */
 }
 
 body {

@@ -226,21 +226,30 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth" id="vademecum-main-scroll">
             <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1">
 
-                <!-- Encabezado del Vademécum -->
-                <div class="flex items-end justify-between mb-8">
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Vademécum clínico</h1>
-                        <p class="text-[13px] text-slate-700 mt-1.5">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
+                <header class="md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
+                    <div class="flex items-end justify-between w-full">
+                        <div class="flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
+                                <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">De nuestra farmacia</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Acompañamiento clínico</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Vademécum clínico</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                        </div>
+                        
+                        <!-- Burbuja de contador (Alineada al flujo Elite) -->
+                        <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-lg text-[11px] font-semibold text-slate-700 mb-1 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700">
+                                <path d="M6.5 2H17.5C18.4346 2 18.9019 2 19.25 2.20096C19.478 2.33261 19.6674 2.52197 19.799 2.75C20 3.09808 20 3.56538 20 4.5C20 5.43462 20 5.90192 19.799 6.25C19.6674 6.47803 19.478 6.66739 19.25 6.79904C18.9019 7 18.4346 7 17.5 7H6.5C5.56538 7 5.09808 7 4.75 6.79904C4.52197 6.66739 4.33261 6.47803 4.20096 6.25C4 5.90192 4 5.43462 4 4.5C4 3.56538 4 3.09808 4.20096 2.75C4.33261 2.52197 4.52197 2.33261 4.75 2.20096C5.09808 2 5.56538 2 6.5 2Z" />
+                                <path d="M18 16V7H6V16C6 18.8284 6 20.2426 6.87868 21.1213C7.75736 22 9.17157 22 12 22C14.8284 22 16.2426 22 17.1213 21.1213C18 20.2426 18 18.8284 18 16Z" />
+                                <path d="M6 11H10C10.9428 11 11.4142 11 11.7071 11.2929C12 11.5858 12 12.0572 12 13V15C12 15.9428 12 16.4142 11.7071 16.7071C11.4142 17 10.9428 17 10 17H6" />
+                            </svg>
+                            8 medicamentos
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-lg text-[11px] font-semibold text-slate-700 shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700">
-                            <path d="M6.5 2H17.5C18.4346 2 18.9019 2 19.25 2.20096C19.478 2.33261 19.6674 2.52197 19.799 2.75C20 3.09808 20 3.56538 20 4.5C20 5.43462 20 5.90192 19.799 6.25C19.6674 6.47803 19.478 6.66739 19.25 6.79904C18.9019 7 18.4346 7 17.5 7H6.5C5.56538 7 5.09808 7 4.75 6.79904C4.52197 6.66739 4.33261 6.47803 4.20096 6.25C4 5.90192 4 5.43462 4 4.5C4 3.56538 4 3.09808 4.20096 2.75C4.33261 2.52197 4.52197 2.33261 4.75 2.20096C5.09808 2 5.56538 2 6.5 2Z" />
-                            <path d="M18 16V7H6V16C6 18.8284 6 20.2426 6.87868 21.1213C7.75736 22 9.17157 22 12 22C14.8284 22 16.2426 22 17.1213 21.1213C18 20.2426 18 18.8284 18 16Z" />
-                            <path d="M6 11H10C10.9428 11 11.4142 11 11.7071 11.2929C12 11.5858 12 12.0572 12 13V15C12 15.9428 12 16.4142 11.7071 16.7071C11.4142 17 10.9428 17 10 17H6" />
-                        </svg>
-                        8 medicamentos
-                    </div>
-                </div>
+                </header>
 
                 <!-- Listado de Tarjetas Clínicas -->
                 <div class="space-y-3.5 max-w-3xl">
@@ -344,9 +353,9 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         >
             
             <!-- Ficha: Nux Vomica -->
-            <div id="ficha-nux-vomica" class="p-8 xl:p-10 flex-1">
+            <div id="ficha-nux-vomica" class="px-8 md:px-12 pt-8 pb-24 flex-1">
 
-                <!-- Encabezado de la Ficha -->
+                <!-- Encabezado de la Ficha (ADN Clon Elite) -->
                 <div class="mb-8 relative">
                     <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -354,7 +363,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-4">
+                    <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M8 17H16" />
                             <path d="M8 13H12" />
@@ -362,7 +371,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         </svg>
                         Ficha técnica del producto
                     </div>
-                    <h2 class="text-3xl xl:text-4xl font-extrabold text-slate-900 tracking-tight mb-5">Nux vomica <span class="text-brand">D4</span></h2>
+                    <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5">Nux vomica <span class="text-brand">D4</span></h2>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-normal text-slate-700 rounded-full">Strychnos nux-vomica</span>
                         <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-normal text-slate-700 rounded-full">Potencia D4</span>
@@ -398,7 +407,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
 
                     <!-- Sección 2: Perfil farmacológico -->
-                    <div class="border-t border-subtle pt-7">
+                    <div class="border-t border-subtle pt-6">
                         <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900">
                                 <path d="M17.5 21C15.567 21 14 19.433 14 17.5L14 3L21 3L21 17.5C21 19.433 19.433 21 17.5 21Z" />
@@ -432,7 +441,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
 
                     <!-- Sección 3: Protocolo de posología -->
-                    <div class="border-t border-subtle pt-7">
+                    <div class="border-t border-subtle pt-6">
                         <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900">
                                 <path d="M16.4249 4.60509L17.4149 3.6151C18.2351 2.79497 19.5648 2.79497 20.3849 3.6151C21.205 4.43524 21.205 5.76493 20.3849 6.58507L19.3949 7.57506M16.4249 4.60509L9.76558 11.2644C9.25807 11.772 8.89804 12.4078 8.72397 13.1041L8 16L10.8959 15.276C11.5922 15.102 12.228 14.7419 12.7356 14.2344L19.3949 7.57506M16.4249 4.60509L19.3949 7.57506" />
@@ -455,9 +464,9 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                 </div>
             </div>
 
-            <!-- TEMPORAL: Ficha Arnica Montana D6 (Oculta por defecto para evaluar idea de toggle) -->
-            <div id="ficha-arnica-montana" class="p-8 xl:p-10 flex-1 hidden">
-                <div class="flex items-center gap-2.5 text-slate-500 mb-6">
+            <!-- TEMPORAL: Ficha Arnica Montana D6 (ADN Clon Elite) -->
+            <div id="ficha-arnica-montana" class="px-8 md:px-12 pt-8 pb-24 flex-1 hidden">
+                <div class="flex items-center gap-2.5 text-slate-500 mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16.5 10.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V10.5" />
                         <path d="M6 22H18C20 22 21 21 21 19V13C21 11 20 10 18 10H6C4 10 3 11 3 13V19C3 21 4 22 6 22Z" />
@@ -473,8 +482,8 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
-                    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 flex items-baseline gap-2.5 mb-5 block">
-                        Arnica montana <span class="text-brand text-4xl block">D6</span>
+                    <h2 class="text-[2.25rem] leading-[0.9] font-extrabold tracking-tight text-slate-900 flex items-baseline gap-2.5 mb-5 block">
+                        Arnica montana <span class="text-brand text-[2.5rem] block">D6</span>
                     </h2>
                     
                     <div class="flex flex-wrap gap-2.5">
@@ -484,8 +493,8 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                     </div>
                 </div>
 
-                <div class="space-y-10">
-                    <div class="border-t border-subtle pt-7">
+                <div class="space-y-8">
+                    <div class="border-t border-subtle pt-6">
                         <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2 block">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="15" height="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900 block">
                                 <path d="M4 6H20" />

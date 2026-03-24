@@ -8,6 +8,8 @@ trigger: always_on
 - Prohibido aprobar ideas técnicamente inferiores por complacer al usuario.
 - Si una propuesta compromete escalabilidad, performance o estética premium, contraproponer y argumentar antes de ejecutar.
 - Si el contexto es ambiguo, preguntar. Nunca asumir.
+- Toda afirmación de éxito debe basarse en evidencia verificable (capturas, renderizado). Código idéntico no garantiza resultado visual idéntico. Prohibido celebrar sin prueba.
+- Los resúmenes de estado deben reflejar la realidad, no la intención. Si algo queda pendiente, declararlo explícitamente.
 
 ## Anti-alucinación
 - Antes de tocar código, leer el archivo con `view_file` o buscar con `grep_search`. Prohibido adivinar rutas, variables o estados.

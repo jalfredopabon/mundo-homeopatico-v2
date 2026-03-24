@@ -143,7 +143,15 @@
 
 <script>
     // Lógica del Carrito (Bloque 2 y 3)
-    let cart = [];
+    interface CartItem {
+        name: string;
+        price: number;
+        quantity: number;
+        hasNote: boolean;
+        note: string;
+    }
+
+    let cart: CartItem[] = [];
 
     const cartDrawer = document.getElementById('cart-drawer');
     const cartOverlay = document.getElementById('cart-overlay');
@@ -154,16 +162,16 @@
     const cartTotalEl = document.getElementById('cart-total');
 
     // Elementos del formulario
-    const inputName = document.getElementById('bill-name');
-    const inputId = document.getElementById('bill-id');
-    const inputWhatsapp = document.getElementById('bill-whatsapp');
-    const inputAddress = document.getElementById('bill-address');
-    const inputPayment = document.getElementById('bill-payment');
+    const inputName = document.getElementById('bill-name') as HTMLInputElement | null;
+    const inputId = document.getElementById('bill-id') as HTMLInputElement | null;
+    const inputWhatsapp = document.getElementById('bill-whatsapp') as HTMLInputElement | null;
+    const inputAddress = document.getElementById('bill-address') as HTMLInputElement | null;
+    const inputPayment = document.getElementById('bill-payment') as HTMLSelectElement | null;
     const btnOrderMedico = document.getElementById('btn-order-medico');
     const btnOrderFarmacia = document.getElementById('btn-order-farmacia');
     
     // Función para formatear moneda colombiana
-    const formatCurrency = (val) => new Intl.NumberFormat('es-CO', {
+    const formatCurrency = (val: number) => new Intl.NumberFormat('es-CO', {
         style: 'currency',
         currency: 'COP',
         maximumFractionDigits: 0
@@ -173,13 +181,15 @@
 
     // Filtro estricto para Cédula/NIT (Solo números y guiones)
     inputId?.addEventListener('input', (e) => {
-        const val = e.target.value;
-        e.target.value = val.replace(/[^0-9-]/g, '');
+        const target = e.target as HTMLInputElement;
+        const val = target.value;
+        target.value = val.replace(/[^0-9-]/g, '');
     });
 
     // Formateo visual de WhatsApp (Chunking: 300 000 00 00)
     inputWhatsapp?.addEventListener('input', (e) => {
-        let val = e.target.value.replace(/\D/g, ''); // Solo números
+        const target = e.target as HTMLInputElement;
+        let val = target.value.replace(/\D/g, ''); // Solo números
         if (val.length > 10) val = val.substring(0, 10);
         
         // Aplicamos el formato 320 123 45 67
@@ -189,7 +199,7 @@
         if (val.length > 6) formatted += ' ' + val.substring(6, 8);
         if (val.length > 8) formatted += ' ' + val.substring(8, 10);
         
-        e.target.value = formatted;
+        target.value = formatted;
     });
 
     // Validación de campos obligatorios con feedback visual
@@ -198,6 +208,7 @@
         const requiredFields = [inputName, inputId, inputWhatsapp];
 
         requiredFields.forEach(field => {
+            if (!field) return;
             if (!field.value.trim()) {
                 field.classList.add('border-red-400', 'bg-red-50/30');
                 isValid = false;
@@ -210,12 +221,14 @@
     }
 
     // --- LÓGICA DE ENVÍO A WHATSAPP ---
-    function sendOrder(type) {
+    function sendOrder(type: 'medico' | 'farmacia') {
         if (!validateForm()) {
             // Animación de Shake al contenedor de botones o al botón específico
             const btn = type === 'medico' ? btnOrderMedico : btnOrderFarmacia;
-            btn.classList.add('animate-shake');
-            setTimeout(() => btn.classList.remove('animate-shake'), 500);
+            if (btn) {
+                btn.classList.add('animate-shake');
+                setTimeout(() => btn.classList.remove('animate-shake'), 500);
+            }
             return;
         }
 
@@ -228,11 +241,13 @@
         
         // Construcción del mensaje de texto
         let message = `*NUEVO PEDIDO (${type.toUpperCase()})*\n\n`;
-        message += `*CLIENTE:* ${inputName.value}\n`;
-        message += `*ID/NIT:* ${inputId.value}\n`;
-        message += `*WHA:* ${inputWhatsapp.value}\n`;
-        if(inputAddress.value) message += `*DIR:* ${inputAddress.value}\n`;
-        message += `*PAGO:* ${inputPayment.options[inputPayment.selectedIndex].text}\n\n`;
+        message += `*CLIENTE:* ${inputName?.value || ''}\n`;
+        message += `*ID/NIT:* ${inputId?.value || ''}\n`;
+        message += `*WHA:* ${inputWhatsapp?.value || ''}\n`;
+        if(inputAddress?.value) message += `*DIR:* ${inputAddress.value}\n`;
+        if(inputPayment) {
+            message += `*PAGO:* ${inputPayment.options[inputPayment.selectedIndex].text}\n\n`;
+        }
         
         message += `*PRODUCTOS:*\n`;
         cart.forEach(item => {
@@ -256,47 +271,49 @@
     // --- LÓGICA DE RENDERIZADO (REUTILIZADA DEL BLOQUE 2) ---
     function renderCart() {
         if (cart.length === 0) {
-            cartEmptyState.style.display = 'block';
-            cartItemsList.innerHTML = '';
+            if (cartEmptyState) cartEmptyState.style.display = 'block';
+            if (cartItemsList) cartItemsList.innerHTML = '';
         } else {
-            cartEmptyState.style.display = 'none';
-            cartItemsList.innerHTML = cart.map((item, index) => `
-                <div class="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl space-y-3 relative group transition-all hover:border-slate-200 hover:bg-white animate-fade-in">
-                    <button class="absolute top-4 right-4 text-slate-700 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-                    </button>
-                    
-                    <div class="pr-8">
-                        <h4 class="text-sm font-bold text-slate-900 leading-tight">${item.name}</h4>
-                        <p class="text-xs text-slate-700 mt-0.5">${formatCurrency(item.price)} unitario</p>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-1">
-                            <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-minus" data-index="${index}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            </button>
-                            <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
-                            <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-plus" data-index="${index}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            </button>
+            if (cartEmptyState) cartEmptyState.style.display = 'none';
+            if (cartItemsList) {
+                cartItemsList.innerHTML = cart.map((item, index) => `
+                    <div class="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl space-y-3 relative group transition-all hover:border-slate-200 hover:bg-white animate-fade-in">
+                        <button class="absolute top-4 right-4 text-slate-700 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                        </button>
+                        
+                        <div class="pr-8">
+                            <h4 class="text-sm font-bold text-slate-900 leading-tight">${item.name}</h4>
+                            <p class="text-xs text-slate-700 mt-0.5">${formatCurrency(item.price)} unitario</p>
                         </div>
-                        <div class="text-right">
-                            <span class="text-sm font-extrabold text-[#158C77]">${formatCurrency(item.price * item.quantity)}</span>
+    
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1">
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-minus" data-index="${index}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                                <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-plus" data-index="${index}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-extrabold text-[#158C77]">${formatCurrency(item.price * item.quantity)}</span>
+                            </div>
+                        </div>
+    
+                        <div class="pt-2 border-t border-slate-100/50">
+                            ${item.hasNote ? 
+                                `<textarea class="w-full bg-white border border-slate-200 rounded-lg p-3 text-xs focus:ring-1 focus:ring-emerald-500 outline-none mt-1 input-note animate-slide-down" data-index="${index}" placeholder="Especifique diluciones o cambios...">${item.note || ''}</textarea>` : 
+                                `<button class="flex items-center gap-1.5 text-[10px] font-bold text-slate-700 hover:text-emerald-700 transition-colors btn-add-note" data-index="${index}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    Añadir nota o especificación
+                                </button>`
+                            }
                         </div>
                     </div>
-
-                    <div class="pt-2 border-t border-slate-100/50">
-                        ${item.hasNote ? 
-                            `<textarea class="w-full bg-white border border-slate-200 rounded-lg p-3 text-xs focus:ring-1 focus:ring-emerald-500 outline-none mt-1 input-note animate-slide-down" data-index="${index}" placeholder="Especifique diluciones o cambios...">${item.note || ''}</textarea>` : 
-                            `<button class="flex items-center gap-1.5 text-[10px] font-bold text-slate-700 hover:text-emerald-700 transition-colors btn-add-note" data-index="${index}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                Añadir nota o especificación
-                            </button>`
-                        }
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
         }
         updateTotals();
         attachEventListeners();
@@ -313,33 +330,70 @@
         const discount = 0; // Descuento cero por ahora
         const total = subtotal - discount;
 
-        cartSubtotalEl.innerText = formatCurrency(subtotal);
-        cartDiscountEl.innerText = `-${formatCurrency(discount)}`;
-        cartTotalEl.innerText = formatCurrency(total);
+        if (cartSubtotalEl) cartSubtotalEl.innerText = formatCurrency(subtotal);
+        if (cartDiscountEl) cartDiscountEl.innerText = `-${formatCurrency(discount)}`;
+        if (cartTotalEl) cartTotalEl.innerText = formatCurrency(total);
     }
 
     function attachEventListeners() {
         document.querySelectorAll('.btn-qty-plus').forEach(btn => {
-            btn.onclick = () => { cart[btn.dataset.index].quantity++; renderCart(); };
+            const button = btn as HTMLButtonElement;
+            button.onclick = () => { 
+                const index = parseInt(button.dataset.index || '0');
+                if (cart[index]) {
+                    cart[index].quantity++; 
+                    renderCart(); 
+                }
+            };
         });
         document.querySelectorAll('.btn-qty-minus').forEach(btn => {
-            btn.onclick = () => { if (cart[btn.dataset.index].quantity > 1) { cart[btn.dataset.index].quantity--; renderCart(); } };
+            const button = btn as HTMLButtonElement;
+            button.onclick = () => { 
+                const index = parseInt(button.dataset.index || '0');
+                if (cart[index] && cart[index].quantity > 1) { 
+                    cart[index].quantity--; 
+                    renderCart(); 
+                } 
+            };
         });
         document.querySelectorAll('.btn-remove-item').forEach(btn => {
-            btn.onclick = () => { cart.splice(btn.dataset.index, 1); renderCart(); };
+            const button = btn as HTMLButtonElement;
+            button.onclick = () => { 
+                const index = parseInt(button.dataset.index || '0');
+                cart.splice(index, 1); 
+                renderCart(); 
+            };
         });
         document.querySelectorAll('.btn-add-note').forEach(btn => {
-            btn.onclick = () => { cart[btn.dataset.index].hasNote = true; renderCart(); };
+            const button = btn as HTMLButtonElement;
+            button.onclick = () => { 
+                const index = parseInt(button.dataset.index || '0');
+                if (cart[index]) {
+                    cart[index].hasNote = true; 
+                    renderCart(); 
+                }
+            };
         });
         document.querySelectorAll('.input-note').forEach(textarea => {
-            textarea.oninput = (e) => { cart[textarea.dataset.index].note = e.target.value; };
+            const area = textarea as HTMLTextAreaElement;
+            area.oninput = (e) => { 
+                const index = parseInt(area.dataset.index || '0');
+                if (cart[index]) {
+                    cart[index].note = (e.target as HTMLTextAreaElement).value; 
+                }
+            };
         });
     }
 
     document.addEventListener('addToCart', (e) => {
-        const { name, price } = e.detail;
+        const customEvent = e as CustomEvent;
+        const { name, price } = customEvent.detail;
         const existing = cart.find(item => item.name === name);
-        if (existing) { existing.quantity++; } else { cart.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); }
+        if (existing) { 
+            existing.quantity++; 
+        } else { 
+            cart.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); 
+        }
         renderCart();
     });
 

@@ -2,29 +2,16 @@
 // src/components/catalogo/SidebarCatalogo.astro
 import { CATALOGO_DATA } from "../../data/catalogo";
 import Icons from "./Icons.astro";
+import StickyActionBox from "../shared/StickyActionBox.astro";
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium">
   
-  <!-- BUSCADOR STICKY -->
-  <div class="sticky top-0 z-30 bg-surface-white px-4 py-4 border-b border-subtle">
-    <div class="relative group">
-      <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
-        <div class="relative w-4 h-4 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-            <path d="M17 17L21 21" />
-            <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" />
-          </svg>
-        </div>
-      </div>
-        <input 
-        type="search" 
-        id="catalogo-search"
-        placeholder="Buscar productos..." 
-        class="w-full h-10 pl-8 pr-4 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all placeholder:text-slate-700 mt-[-2.5px]"
-      />
-    </div>
-  </div>
+  <!-- BUSCADOR STICKY UNIFICADO -->
+  <StickyActionBox 
+    id="catalogo-search" 
+    placeholder="Buscar productos..." 
+  />
 
   <nav class="pb-20 mt-4 space-y-6" id="catalogo-scrollspy">
     {CATALOGO_DATA.map((section) => (
@@ -74,7 +61,7 @@ import Icons from "./Icons.astro";
                       )}
 
                       {/* Nivel 4: Sub-links (Acordeón) */}
-                      {hasSubLinks && (
+                      {hasSubLinks && group.links && (
                         <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                           {group.links.map((link) => (
                             <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
@@ -270,8 +257,9 @@ import Icons from "./Icons.astro";
     // LÓGICA DE ACORDEONES INTELIGENTES (Fase 2)
     const triggers = document.querySelectorAll('.accordion-trigger');
     
-    const closeAllAccordions = (except = null) => {
-      document.querySelectorAll('.accordion-content').forEach(content => {
+    const closeAllAccordions = (except: HTMLElement | null = null) => {
+      document.querySelectorAll('.accordion-content').forEach(el => {
+        const content = el as HTMLElement;
         if (content !== except) {
           content.style.maxHeight = '0';
           const trigger = content.previousElementSibling;
@@ -297,7 +285,7 @@ import Icons from "./Icons.astro";
         }
         
         // Evitar el foco persistente del botón al hacer clic
-        setTimeout(() => { trigger.blur(); }, 50);
+        setTimeout(() => { (trigger as HTMLElement).blur(); }, 50);
       });
     });
 

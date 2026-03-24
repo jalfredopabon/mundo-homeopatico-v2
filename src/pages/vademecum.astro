@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
+import StickyActionBox from '../components/shared/StickyActionBox.astro';
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -117,25 +118,11 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
         
         <!-- Columna Izquierda: Sidebar de Filtros (w-64 = Consistente con Catálogo y Contacto) -->
         <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] sticky top-[64px] md:top-[72px] overflow-y-auto shrink-0">
-            <!-- BUSCADOR STICKY (ADN Maestro) -->
-            <div class="sticky top-0 z-30 bg-surface-white px-4 py-4 border-b border-subtle">
-                <div class="relative group">
-                    <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
-                        <div class="relative w-4 h-4 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                                <path d="M17 17L21 21" />
-                                <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <input 
-                        type="search" 
-                        id="vademecum-search"
-                        placeholder="Buscar..." 
-                        class="w-full h-10 pl-8 pr-4 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all placeholder:text-slate-700 mt-[-2.5px]"
-                    />
-                </div>
-            </div>
+            <!-- BUSCADOR STICKY UNIFICADO -->
+            <StickyActionBox 
+                id="vademecum-search" 
+                placeholder="Buscar..." 
+            />
 
             <div class="p-6 pt-7 space-y-7">
 
@@ -533,8 +520,8 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
     const overlay = document.getElementById('auth-modal-overlay');
     const form = document.getElementById('auth-form');
-    const inputNit = document.getElementById('auth-nit');
-    const inputPass = document.getElementById('auth-password');
+    const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
+    const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
     const errorBox = document.getElementById('auth-error');
     const errorText = document.getElementById('auth-error-text');
     const toggleBtn = document.getElementById('toggle-password');
@@ -564,8 +551,9 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
     // Toggle de visibilidad de contraseña
     toggleBtn?.addEventListener('click', () => {
-        const isPassword = inputPass?.type === 'password';
-        if (inputPass) inputPass.type = isPassword ? 'text' : 'password';
+        if (!inputPass) return;
+        const isPassword = inputPass.type === 'password';
+        inputPass.type = isPassword ? 'text' : 'password';
         iconOpen?.classList.toggle('hidden');
         iconClosed?.classList.toggle('hidden');
     });

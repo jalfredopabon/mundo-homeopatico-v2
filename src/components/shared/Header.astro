@@ -86,8 +86,7 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
-    <!-- Lado Derecho: Controles Operativos -->
-    <div class="w-auto flex-shrink-0 flex items-center justify-end gap-6 pr-4 md:pr-4">
+    <div class="w-auto flex-shrink-0 flex items-center justify-end gap-2 pr-4 md:pr-4">
       
       {mostrarZoom && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer">
@@ -148,7 +147,7 @@ const currentPath = Astro.url.pathname;
   <!-- Barra de progreso / loading sutil (Obligatoria por UX) -->
   <div class="w-full h-[2px] bg-slate-100 relative overflow-hidden">
     <!-- El width será controlado por JS, aquí hay un estado de ejemplo al 30% -->
-    <div class="h-full bg-brand w-[30%] rounded-r-full transition-all duration-500 ease-out" id="global-progress-bar"></div>
+    <div class="h-full bg-brand w-0 rounded-r-full transition-all duration-500 ease-out" id="global-progress-bar"></div>
   </div>
 </header>
 

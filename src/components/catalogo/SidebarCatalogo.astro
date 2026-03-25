@@ -5,7 +5,7 @@ import Icons from "./Icons.astro";
 import StickyActionBox from "../shared/StickyActionBox.astro";
 ---
 
-<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-slate-50 h-[calc(100vh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium">
+<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium">
   
   <!-- BUSCADOR STICKY UNIFICADO -->
   <StickyActionBox 
@@ -13,7 +13,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
     placeholder="Buscar productos..." 
   />
 
-  <nav class="pb-20 mt-4 space-y-6" id="catalogo-scrollspy">
+  <nav class="pb-20 mt-0 space-y-6" id="catalogo-scrollspy">
     {CATALOGO_DATA.map((section) => (
       <div class="space-y-2">
         {/* Nivel 1: Título de Sección - Alineado al borde del buscador (pl-5) */}

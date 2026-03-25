@@ -117,14 +117,14 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
         
         <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
-        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-slate-50 overflow-y-auto h-full hide-scrollbar sticky top-0 shrink-0">
+        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white overflow-y-auto h-full hide-scrollbar sticky top-0 shrink-0">
             <!-- BUSCADOR STICKY UNIFICADO -->
             <StickyActionBox 
                 id="vademecum-search" 
                 placeholder="Buscar..." 
             />
 
-            <div class="p-6 pt-7 space-y-7">
+            <div class="p-6 pt-0 space-y-7">
 
                 <section class="pl-1">
                     <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">

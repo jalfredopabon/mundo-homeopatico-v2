@@ -2,7 +2,7 @@
 import StickyActionBox from "../shared/StickyActionBox.astro";
 ---
 
-<aside class="hidden md:flex w-full md:w-64 bg-surface-white border-r border-subtle flex-col z-20 sticky top-0 md:static shrink-0 overflow-y-auto h-[calc(100vh-64px)] md:h-full hide-scrollbar">
+<aside class="hidden md:flex w-full md:w-64 bg-surface-white border-r border-subtle flex-col z-20 sticky top-0 md:static shrink-0 overflow-y-auto h-[calc(100vh-64px)] md:h-full scrollbar-premium">
     
     <!-- HEADER UNIFICADO (Action Box) -->
     <StickyActionBox>
@@ -12,7 +12,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                 </svg>
             </div>
-            <div class="h-10 flex items-center pl-10 pr-4 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 group-hover:bg-white group-hover:border-brand transition-all shadow-sm">
+            <div class="h-10 flex items-center pl-10 pr-4 bg-slate-50/70 border border-subtle rounded-xl text-[14px] text-slate-800 group-hover:bg-white group-hover:border-brand transition-all shadow-sm">
                 <span>Síguenos en Instagram</span>
             </div>
         </a>
@@ -21,7 +21,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
     <!-- Navegación ScrollSpy: Índice de la página -->
     <nav class="flex-1 flex flex-col pb-20 mt-0 space-y-1" aria-label="Navegación de secciones" id="contacto-scrollspy">
             
-            <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
+            <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                     <div class="w-[18px] h-[18px] flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
@@ -34,7 +34,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 transition-colors group-hover:text-slate-900 group-[.is-active]:text-slate-900 leading-none mt-[-1px]">Excelencia homeopática</span>
             </a>
 
-            <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
+            <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                     <div class="w-[18px] h-[18px] flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
@@ -46,7 +46,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 transition-colors group-hover:text-slate-900 group-[.is-active]:text-slate-900 leading-none mt-[-1px]">Sedes y distribuciones</span>
             </a>
 
-            <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
+            <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                     <div class="w-[18px] h-[18px] flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
@@ -85,18 +85,31 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
 </aside>
 
 <style>
-    /* Limpieza de foco nativo del navegador para evitar bordes azules indeseados */
+    /* Estabilidad de Layout: Reserva espacio para el scrollbar para evitar saltos entre páginas */
+    aside {
+        scrollbar-gutter: stable;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Limpieza de foco nativo */
     .sidebar-link:focus {
         outline: none !important;
     }
 
-    /* Sincronización con Sidebar Catálogo: Estado Activo Premium (OSCURO) */
+    /* Estado Activo: Cápsula Verde-Sage (Sincronizado con Catálogo) */
     .sidebar-link.is-active {
-        background-color: #e2e8f0 !important; /* slate-200 (idéntico al catálogo) */
-        color: #0f172a !important; /* slate-900 para máxima legibilidad */
+        background-color: #e6efed !important;
+        color: inherit !important;
         font-weight: 700 !important;
         box-shadow: none !important;
         border: none !important;
+    }
+
+    /* Estado Hover: Solo negrita, mantiene color original */
+    .sidebar-link:hover:not(.is-active) {
+        background-color: rgba(0, 0, 0, 0.02);
+        font-weight: 700;
     }
 </style>
 

@@ -34,7 +34,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                       {/* Nivel 3: Agrupador o Link Directo - Alineación Centralizada */}
                       {hasSubLinks ? (
                         <button 
-                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
+                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-xl hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
                           data-target={group.name.toLowerCase().replace(/\s+/g, '-')}
                         >
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
@@ -50,7 +50,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                           </svg>
                         </button>
                       ) : (
-                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                             <div class="w-[18px] h-[18px] flex items-center justify-center">
                               <Icons type={group.iconType || ""} />
@@ -64,7 +64,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                       {hasSubLinks && group.links && (
                         <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                           {group.links.map((link) => (
-                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                               <div class="w-8 flex-shrink-0"></div>
                               <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">{link.name}</span>
                             </a>
@@ -110,26 +110,12 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
 <style>
 
 
-  /* Scrollbar Invisible Premium */
-  .scrollbar-premium::-webkit-scrollbar {
-    width: 4px;
-    background: transparent;
-  }
-  
-  .scrollbar-premium::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 20px;
-    transition: background 0.3s;
-  }
-
-  .scrollbar-premium:hover::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-  }
 
   /* Separación de profundidad Flat */
   aside {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-gutter: stable; /* Reserva espacio para el scrollbar, evitando saltos de layout */
   }
 
   /* Sistema de Líneas de Jerarquía (Tree-Guide) - Fase 3 */
@@ -190,8 +176,8 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
   }
   
   .sidebar-link.is-active {
-    background-color: #e2e8f0; /* Color un poco más oscuro (slate-200) para mayor contraste */
-    color: #0f172a !important; /* slate-900 para máxima legibilidad */
+    background-color: #e6efed; /* Tono verdoso-sage un poco más oscuro y saturado */
+    color: inherit;
     font-weight: 700 !important;
     border: none !important;
     box-shadow: none !important;
@@ -209,6 +195,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
 
   .sidebar-link:hover:not(.is-active) {
     background-color: rgba(0, 0, 0, 0.02);
+    font-weight: 700;
   }
 
   /* Animación de escala para ítems activos */

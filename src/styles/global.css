@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
   --text-body: #334155;
   --text-muted: #64748b;
   --bg-surface: #ffffff;
-  --bg-muted: #f1f5f9;
+  --bg-muted: #f4f7f6; /* Sage Gray Saturado (10% Brand) */
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
 }
@@ -39,30 +39,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ─── Scrollbar Premium Global ─── */
-/* 1. Webkit (Chrome, Edge, Safari) */
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 *::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.02); /* Pista ultra-tenue para guiar el ojo */
+  background: rgba(0, 0, 0, 0.02);
 }
 
-/* ESTADO 1: Reposo (Visibilidad Garantizada) */
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.5); /* slate-400 al 50% */
+  background-color: rgba(148, 163, 184, 0.5);
   border-radius: 20px;
 }
 
-/* ESTADO 2: El cursor entra en el territorio */
 *:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 116, 139, 0.8); /* slate-500 al 80% */
+  background-color: rgba(100, 116, 139, 0.8);
 }
 
-/* ESTADO 3: Agarre/Hover directo (Gris Oscuro Premium) */
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #475569; /* slate-600 sólido */
+  background-color: #475569;
+}
+
+/* Variante para Sidebars (Fina e Invisible hasta Hover) */
+.scrollbar-premium {
+  scrollbar-gutter: stable;
+}
+
+.scrollbar-premium::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+
+.scrollbar-premium::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 20px;
+}
+
+.scrollbar-premium:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* 2. Firefox (Sincronización de Contraste) */
@@ -81,4 +96,53 @@ button,
 .badge-elite {
   text-box-trim: both;
   text-box-edge: cap alphabetic;
+}
+
+/* --- 🏛️ Sistema Maestro de Tablas (Estética Elite) --- */
+.mh-table-container {
+  @apply w-full bg-surface-white border border-subtle shadow-sm overflow-hidden rounded-2xl;
+}
+
+/* El grid maestro: 1fr para producto, y anchos fijos para precios y acción */
+/* px-6 = 24px armónicos (Simetría total con el py-6 de las filas) */
+.mh-table-grid {
+  @apply grid gap-4 items-center px-6;
+  grid-template-columns: 1fr; /* Mobile: Una sola columna */
+}
+
+@media (min-width: 640px) {
+  .mh-table-grid {
+    grid-template-columns: 1fr 120px 120px 56px; /* sm */
+  }
+}
+
+@media (min-width: 768px) {
+  .mh-table-grid {
+    grid-template-columns: 1fr 130px 130px 56px; /* md+ */
+  }
+}
+
+.mh-table-header {
+  @apply hidden sm:grid bg-slate-50/50 border-b border-subtle py-4 text-[11px] font-bold text-slate-500 tracking-widest;
+  /* Sin uppercase: Sentence case según guías UI/UX del proyecto */
+}
+
+/* El ícono de carrito en el header hereda el color de los títulos de columna */
+.mh-table-header .mh-table-action-cell svg {
+  color: inherit;
+}
+
+.mh-table-row {
+  @apply flex flex-col sm:grid py-6 border-b border-subtle transition-all duration-300 relative z-0;
+  /* El efecto hover coincide con el tono verdoso-sage oscurecido del sidebar (#e6efed) */
+  @apply cursor-pointer hover:bg-[#e6efed] hover:z-10;
+}
+
+/* Botón anclado al borde derecho — simetría visual con el margen izquierdo */
+.mh-table-action-cell {
+  @apply flex justify-end items-center;
+}
+
+.mh-table-price-cell {
+  @apply text-left sm:text-right font-medium;
 }

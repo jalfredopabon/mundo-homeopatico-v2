@@ -117,7 +117,7 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
         
         <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
-        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white overflow-y-auto h-full hide-scrollbar sticky top-0 shrink-0">
+        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white overflow-y-scroll h-full scrollbar-premium sticky top-0 shrink-0">
             <!-- BUSCADOR STICKY UNIFICADO -->
             <StickyActionBox 
                 id="vademecum-search" 
@@ -246,7 +246,7 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                 <div class="space-y-3.5 max-w-3xl">
 
                     <!-- Card 1: Activa (Seleccionada) -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 transition-all hover:shadow-md group reveal" data-med="nux-vomica">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-brand transition-all shadow-sm hover:shadow-md group reveal" data-med="nux-vomica">
                         <div class="flex items-baseline gap-2.5 mb-2.5">
                             <h3 class="text-[1.15rem] font-bold text-brand tracking-tight">Nux vomica</h3>
                             <span class="text-slate-700 text-xs font-medium">D4</span>
@@ -255,14 +255,13 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                             Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario. Especialmente indicado para pacientes con temperamento colérico que sufren agravación matutina y después de las comidas.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100 group-hover:bg-emerald-100 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="4"/></svg>
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Digestivo
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Nervioso
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Gotas
                             </span>
                         </div>
@@ -271,20 +270,20 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                     <!-- Card 2: Inactiva -->
                     <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-100" data-med="arnica-montana">
                         <div class="flex items-baseline gap-2.5 mb-2.5">
-                             <h3 class="text-[1.15rem] font-bold text-slate-900 group-hover:text-brand transition-colors tracking-tight">Arnica montana</h3>
+                             <h3 class="text-[1.15rem] font-bold text-slate-900 group-hover:text-slate-700 transition-colors tracking-tight">Arnica montana</h3>
                             <span class="text-slate-700 text-xs font-medium">D6</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma. Indicado en pre y post operatorio para reducir hematomas y acelerar la recuperación tisular.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Locomotor
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Cardiovascular
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Gotas
                             </span>
                         </div>
@@ -293,17 +292,17 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                     <!-- Card 3: Inactiva -->
                     <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-200" data-med="ignatia-amara">
                         <div class="flex items-baseline gap-2.5 mb-2">
-                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-brand group-hover:scale-[1.02] transition-all origin-left">Ignatia amara</h3>
+                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-slate-700 group-hover:scale-[1.02] transition-all origin-left">Ignatia amara</h3>
                              <span class="text-slate-700 text-xs font-medium">D12</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Trastornos emocionales, ansiedad con espasmos, labilidad afectiva y efectos de duelos recientes. Útil en pacientes con tendencia a la somatización de emociones y sensación de nudo en la garganta.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Nervioso
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Gotas
                             </span>
                         </div>
@@ -312,20 +311,20 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                     <!-- Card 4: Inactiva -->
                     <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-300" data-med="pulsatilla">
                         <div class="flex items-baseline gap-2.5 mb-2">
-                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-brand group-hover:scale-[1.02] transition-all origin-left">Pulsatilla</h3>
+                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-slate-700 group-hover:scale-[1.02] transition-all origin-left">Pulsatilla</h3>
                             <span class="text-slate-700 text-xs font-medium">D6</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Afecciones de mucosas con secreciones blandas, variabilidad de síntomas y timidez. Indicada en rinitis con secreción amarillo-verdosa, otitis media y trastornos digestivos con intolerancia a grasas.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Respiratorio
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Digestivo
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors">
                                 Tabletas
                             </span>
                         </div>
@@ -515,6 +514,12 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
 
 
 <style>
+    aside {
+        scrollbar-gutter: stable;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
     /* Micromovimientos y Scroll Reveal */
     .reveal {
         opacity: 0;
@@ -601,14 +606,13 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
             card.addEventListener('click', () => {
                 // Actualizar tarjetas
                 medCards.forEach(c => {
-                    c.classList.remove('border-brand', 'border-l-[3px]');
+                    c.classList.remove('border-brand');
                     c.classList.add('border-subtle');
                     const h3 = c.querySelector('h3');
                     if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
                 });
                 
-                card.classList.remove('border-subtle');
-                card.classList.add('border-brand', 'border-l-[3px]');
+                card.classList.add('border-brand');
                 const selectedH3 = card.querySelector('h3');
                 if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
 

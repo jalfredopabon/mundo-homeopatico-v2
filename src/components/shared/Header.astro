@@ -16,7 +16,7 @@ const currentPath = Astro.url.pathname;
     <div class="w-auto flex-shrink-0 flex justify-start pl-4 md:pl-4">
       <a href="/" class="no-underline inline-flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 group">
       <!-- Icono provisional (reemplazar por el logo real) -->
-      <div class="w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all">
+      <div class="w-11 h-11 bg-brand flex items-center justify-center rounded-xl text-white text-base font-bold tracking-widest transition-all">
         MH
       </div>
       <h1 class="hidden md:block text-lg font-bold text-slate-800 tracking-tight whitespace-nowrap">
@@ -37,7 +37,7 @@ const currentPath = Astro.url.pathname;
         }`}
       >
         Lista de precios
-        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand transition-all duration-300 ease-out ${
+        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand rounded-full transition-all duration-300 ease-out ${
           currentPath === '/' ? 'w-full' : 'w-0 group-hover:w-full'
         }`}></span>
       </a>
@@ -49,7 +49,7 @@ const currentPath = Astro.url.pathname;
         }`}
       >
         Sedes y contacto
-        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand transition-all duration-300 ease-out ${
+        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand rounded-full transition-all duration-300 ease-out ${
           currentPath === '/contacto' ? 'w-full' : 'w-0 group-hover:w-full'
         }`}></span>
       </a>
@@ -58,7 +58,7 @@ const currentPath = Astro.url.pathname;
       <div class="flex items-center">
         <a 
           href="/vademecum" 
-          class={`no-underline relative group flex items-center gap-2 text-sm font-semibold px-5 h-12 rounded-lg transition-all border ${
+          class={`no-underline relative group flex items-center gap-2 text-sm font-semibold px-5 h-12 rounded-xl transition-all border ${
             currentPath === '/vademecum' 
               ? 'bg-transparent text-brand border-brand hover:bg-brand/5' 
               : 'bg-brand text-white border-transparent hover:bg-brand-dark'
@@ -80,7 +80,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- Centro: Buscador Móvil (Placeholder inicial para Desktop/Móvil unificado posterior) -->
     <div class="md:hidden flex-1 px-2">
-      <div class="h-10 w-full bg-slate-100 rounded-lg flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+      <div class="h-10 w-full bg-slate-100 rounded-xl flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
         <span class="text-[13px] text-slate-400 font-medium ml-2 select-none">Buscar...</span>
       </div>
@@ -90,7 +90,7 @@ const currentPath = Astro.url.pathname;
       
       {mostrarZoom && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer">
-          <button class="flex flex-col items-center justify-center p-1.5 min-w-[3rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors" aria-label="Cambiar tamaño de texto">
+          <button class="flex flex-col items-center justify-center p-1.5 min-w-[3rem] text-slate-800 hover:bg-slate-100 rounded-xl transition-colors" aria-label="Cambiar tamaño de texto">
             <div class="h-5 flex items-center justify-center text-slate-800/90">
               <!-- Icono AA (Hugeicons) -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]">
@@ -113,7 +113,7 @@ const currentPath = Astro.url.pathname;
       )}
 
       <!-- Botón Carrito -->
-      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
+      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-xl transition-colors group" aria-label="Ver carrito de pedidos">
          <div class="h-5 flex items-center justify-center text-slate-800/90 relative">
             <!-- Icono Carrito (Hugeicons) -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform">
@@ -136,7 +136,7 @@ const currentPath = Astro.url.pathname;
       </button>
 
       <!-- Botón Menú (Solo móvil, movido al extremo derecho) -->
-      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-lg transition-colors group" aria-label="Abrir menú principal">
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-slate-800 hover:bg-slate-100 rounded-xl transition-colors group" aria-label="Abrir menú principal">
           <div class="h-5 flex items-center justify-center text-slate-800/90">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
           </div>

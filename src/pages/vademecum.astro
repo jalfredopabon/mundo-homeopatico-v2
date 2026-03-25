@@ -116,8 +116,8 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
     <!-- Contenedor Principal Dashboard 3 Columnas -->
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
         
-        <!-- Columna Izquierda: Sidebar de Filtros (w-64 = Consistente con Catálogo y Contacto) -->
-        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] sticky top-[64px] md:top-[72px] overflow-y-auto shrink-0">
+        <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
+        <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-slate-50 overflow-y-auto h-full hide-scrollbar sticky top-0 shrink-0">
             <!-- BUSCADOR STICKY UNIFICADO -->
             <StickyActionBox 
                 id="vademecum-search" 
@@ -226,8 +226,8 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Acompañamiento clínico</span>
                             </nav>
-                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Vademécum clínico</h2>
-                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                            <h2 class="text-[2.25rem] md:text-[2.5rem] leading-[0.85] font-black text-slate-900 tracking-tighter mb-3">Vademécum clínico</h2>
+                            <p class="text-slate-600 text-[15px] font-medium leading-relaxed max-w-md">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
                         </div>
                         
                         <!-- Burbuja de contador (Alineada al flujo Elite) -->
@@ -246,86 +246,86 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
                 <div class="space-y-3.5 max-w-3xl">
 
                     <!-- Card 1: Activa (Seleccionada) -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 transition-all" data-med="nux-vomica">
-                        <div class="flex items-baseline gap-2.5 mb-2">
-                            <h3 class="text-[16px] font-bold text-brand">Nux vomica</h3>
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border-l-[3px] border-y border-r border-brand border-y-brand/20 border-r-brand/20 transition-all hover:shadow-md group reveal" data-med="nux-vomica">
+                        <div class="flex items-baseline gap-2.5 mb-2.5">
+                            <h3 class="text-[1.15rem] font-bold text-brand tracking-tight">Nux vomica</h3>
                             <span class="text-slate-700 text-xs font-medium">D4</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario. Especialmente indicado para pacientes con temperamento colérico que sufren agravación matutina y después de las comidas.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100 group-hover:bg-emerald-100 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="4"/></svg>
                                 Digestivo
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Nervioso
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Gotas
                             </span>
                         </div>
                     </div>
 
                     <!-- Card 2: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="arnica-montana">
-                        <div class="flex items-baseline gap-2.5 mb-2">
-                             <h3 class="text-[16px] font-bold text-slate-900">Arnica montana</h3>
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-100" data-med="arnica-montana">
+                        <div class="flex items-baseline gap-2.5 mb-2.5">
+                             <h3 class="text-[1.15rem] font-bold text-slate-900 group-hover:text-brand transition-colors tracking-tight">Arnica montana</h3>
                             <span class="text-slate-700 text-xs font-medium">D6</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma. Indicado en pre y post operatorio para reducir hematomas y acelerar la recuperación tisular.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Locomotor
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Cardiovascular
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Gotas
                             </span>
                         </div>
                     </div>
 
                     <!-- Card 3: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="ignatia-amara">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-200" data-med="ignatia-amara">
                         <div class="flex items-baseline gap-2.5 mb-2">
-                             <h3 class="text-[16px] font-bold text-slate-900">Ignatia amara</h3>
+                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-brand group-hover:scale-[1.02] transition-all origin-left">Ignatia amara</h3>
                              <span class="text-slate-700 text-xs font-medium">D12</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Trastornos emocionales, ansiedad con espasmos, labilidad afectiva y efectos de duelos recientes. Útil en pacientes con tendencia a la somatización de emociones y sensación de nudo en la garganta.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Nervioso
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Gotas
                             </span>
                         </div>
                     </div>
 
                     <!-- Card 4: Inactiva -->
-                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30" data-med="pulsatilla">
+                    <div class="bg-surface-white rounded-xl p-6 cursor-pointer border border-subtle transition-all hover:border-brand/30 hover:shadow-md group reveal reveal-delay-300" data-med="pulsatilla">
                         <div class="flex items-baseline gap-2.5 mb-2">
-                             <h3 class="text-[16px] font-bold text-slate-900">Pulsatilla</h3>
+                             <h3 class="text-[16px] font-bold text-slate-900 group-hover:text-brand group-hover:scale-[1.02] transition-all origin-left">Pulsatilla</h3>
                             <span class="text-slate-700 text-xs font-medium">D6</span>
                         </div>
                         <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
                             Afecciones de mucosas con secreciones blandas, variabilidad de síntomas y timidez. Indicada en rinitis con secreción amarillo-verdosa, otitis media y trastornos digestivos con intolerancia a grasas.
                         </p>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Respiratorio
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Digestivo
                             </span>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100">
+                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 group-hover:bg-slate-100 transition-colors">
                                 Tabletas
                             </span>
                         </div>
@@ -339,7 +339,7 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
         <aside 
             id="vademecum-aside" 
             data-mobile-open="false"
-            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
+            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-slate-50 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
                    data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
         >
             
@@ -513,98 +513,133 @@ import StickyActionBox from '../components/shared/StickyActionBox.astro';
 
 </BaseLayout>
 
+
+<style>
+    /* Micromovimientos y Scroll Reveal */
+    .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-delay-100 { transition-delay: 100ms; }
+    .reveal-delay-200 { transition-delay: 200ms; }
+    .reveal-delay-300 { transition-delay: 300ms; }
+</style>
+
 <script>
-    // ⚠️ TEMPORAL: Credenciales hardcodeadas para desarrollo. Reemplazar por autenticación real (GAS) en Fase 3.
-    const TEMP_USER = 'invitado';
-    const TEMP_PASS = '1234';
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Sistema de Scroll Reveal ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    const overlay = document.getElementById('auth-modal-overlay');
-    const form = document.getElementById('auth-form');
-    const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
-    const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
-    const errorBox = document.getElementById('auth-error');
-    const errorText = document.getElementById('auth-error-text');
-    const toggleBtn = document.getElementById('toggle-password');
-    const iconOpen = document.getElementById('icon-eye-open');
-    const iconClosed = document.getElementById('icon-eye-closed');
-
-    // Validación del formulario
-    form?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const user = inputNit?.value.trim();
-        const pass = inputPass?.value;
-
-        if (user === TEMP_USER && pass === TEMP_PASS) {
-            // Animación de salida del modal
-            overlay?.classList.add('opacity-0');
-            setTimeout(() => {
-                overlay?.classList.add('hidden');
-            }, 300);
-        } else {
-            // Mostrar error
-            errorBox?.classList.remove('hidden');
-            errorBox?.classList.add('flex');
-            if (errorText) errorText.textContent = 'Credenciales incorrectas. Verifique usuario y contraseña.';
-            inputPass?.focus();
-        }
-    });
-
-    // Toggle de visibilidad de contraseña
-    toggleBtn?.addEventListener('click', () => {
-        if (!inputPass) return;
-        const isPassword = inputPass.type === 'password';
-        inputPass.type = isPassword ? 'text' : 'password';
-        iconOpen?.classList.toggle('hidden');
-        iconClosed?.classList.toggle('hidden');
-    });
-
-    // Lógica de navegación del Vademécum
-    const medCards = document.querySelectorAll('[data-med]');
-    const fichaNux = document.getElementById('ficha-nux-vomica');
-    const fichaArnica = document.getElementById('ficha-arnica-montana');
-    const vademecumAside = document.getElementById('vademecum-aside');
-
-    medCards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Actualizar tarjetas
-            medCards.forEach(c => {
-                c.classList.remove('border-brand', 'border-l-[3px]');
-                c.classList.add('border-subtle');
-                const h3 = c.querySelector('h3');
-                if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
             });
-            
-            card.classList.remove('border-subtle');
-            card.classList.add('border-brand', 'border-l-[3px]');
-            const selectedH3 = card.querySelector('h3');
-            if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
+        }, observerOptions);
 
-            // Cambiar contenido
-            const medType = card.getAttribute('data-med');
-            if (medType === 'arnica-montana') {
-                fichaNux?.classList.add('hidden');
-                fichaArnica?.classList.remove('hidden');
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // --- 2. Lógica de Autenticación (Temporal) ---
+        const TEMP_USER = 'invitado';
+        const TEMP_PASS = '1234';
+
+        const overlay = document.getElementById('auth-modal-overlay');
+        const form = document.getElementById('auth-form');
+        const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
+        const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
+        const errorBox = document.getElementById('auth-error');
+        const errorText = document.getElementById('auth-error-text');
+        const toggleBtn = document.getElementById('toggle-password');
+        const iconOpen = document.getElementById('icon-eye-open');
+        const iconClosed = document.getElementById('icon-eye-closed');
+
+        form?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = inputNit?.value.trim();
+            const pass = inputPass?.value;
+
+            if (user === TEMP_USER && pass === TEMP_PASS) {
+                overlay?.classList.add('opacity-0');
+                setTimeout(() => overlay?.classList.add('hidden'), 300);
             } else {
-                fichaArnica?.classList.add('hidden');
-                fichaNux?.classList.remove('hidden');
-            }
-
-            // Mostrar en móvil usando el atributo de estado
-            if (vademecumAside && window.innerWidth < 1024) {
-                vademecumAside.setAttribute('data-mobile-open', 'true');
-                document.body.style.overflow = 'hidden';
+                errorBox?.classList.remove('hidden');
+                errorBox?.classList.add('flex');
+                if (errorText) errorText.textContent = 'Credenciales incorrectas.';
+                inputPass?.focus();
             }
         });
-    });
 
-    // Cerrar en móvil
-    document.querySelectorAll('.close-ficha-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (vademecumAside) {
-                vademecumAside.setAttribute('data-mobile-open', 'false');
-                document.body.style.overflow = '';
-            }
+        toggleBtn?.addEventListener('click', () => {
+            if (!inputPass) return;
+            const isPassword = inputPass.type === 'password';
+            inputPass.type = isPassword ? 'text' : 'password';
+            iconOpen?.classList.toggle('hidden');
+            iconClosed?.classList.toggle('hidden');
+        });
+
+        // --- 3. Lógica de navegación del Vademécum ---
+        const medCards = document.querySelectorAll('[data-med]');
+        const fichaNux = document.getElementById('ficha-nux-vomica');
+        const fichaArnica = document.getElementById('ficha-arnica-montana');
+        const vademecumAside = document.getElementById('vademecum-aside');
+
+        medCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Actualizar tarjetas
+                medCards.forEach(c => {
+                    c.classList.remove('border-brand', 'border-l-[3px]');
+                    c.classList.add('border-subtle');
+                    const h3 = c.querySelector('h3');
+                    if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
+                });
+                
+                card.classList.remove('border-subtle');
+                card.classList.add('border-brand', 'border-l-[3px]');
+                const selectedH3 = card.querySelector('h3');
+                if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
+
+                // Cambiar contenido
+                const medType = card.getAttribute('data-med');
+                if (medType === 'arnica-montana') {
+                    fichaNux?.classList.add('hidden');
+                    fichaArnica?.classList.remove('hidden');
+                } else {
+                    fichaArnica?.classList.add('hidden');
+                    fichaNux?.classList.remove('hidden');
+                }
+
+                // Mostrar en móvil
+                if (vademecumAside && window.innerWidth < 1024) {
+                    vademecumAside.setAttribute('data-mobile-open', 'true');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // Cerrar en móvil
+        document.querySelectorAll('.close-ficha-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (vademecumAside) {
+                    vademecumAside.setAttribute('data-mobile-open', 'false');
+                    document.body.style.overflow = '';
+                }
+            });
         });
     });
 </script>
+

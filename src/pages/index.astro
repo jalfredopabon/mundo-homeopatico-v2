@@ -67,16 +67,16 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         </div>
 
                         <!-- Fila de Producto 1 -->
-                        <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                        <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all duration-300 relative z-0 hover:z-10 group reveal">
                             <!-- Información del Producto -->
                             <div class="flex flex-col">
-                                <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos individuales</h3>
+                                <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors group-hover:text-brand">Oligoelementos individuales</h3>
                                 <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-slate-300 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
                                         Gotas / Spray
                                     </span>
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-slate-300 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
                                         Glóbulos x 30g
                                     </span>
@@ -88,12 +88,12 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                                 <!-- Columna 2: Precio Farmacia -->
                                 <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
                                     <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-                                    <span class="text-slate-700 font-medium">$19.500</span>
+                                    <span class="text-slate-700 font-medium group-hover:text-slate-900 transition-colors">$19.500</span>
                                 </div>
                                 
                                 <!-- Columna 3: Precio Público (Solo Desktop) -->
                                 <div class="hidden sm:block text-right mt-1 sm:mt-0">
-                                    <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem]">$36.000</span>
+                                    <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem] group-hover:scale-105 transition-transform inline-block">$36.000</span>
                                 </div>
 
                                 <!-- Columna 4: Botón de Acción -->
@@ -109,16 +109,16 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                         </div>
 
                         <!-- Fila de Producto 2 -->
-                        <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                        <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all duration-300 relative z-0 hover:z-10 group reveal reveal-delay-200">
                             <!-- Información del Producto -->
                             <div class="flex flex-col">
-                                <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos combinados (hasta 6 componentes)</h3>
+                                <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors group-hover:text-brand">Oligoelementos combinados (hasta 6 componentes)</h3>
                                 <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-slate-300 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
                                         Gotas / Spray
                                     </span>
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-slate-300 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
                                         Glóbulos x 30g
                                     </span>
@@ -130,12 +130,12 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
                                 <!-- Columna 2: Precio Farmacia -->
                                 <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
                                     <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-                                    <span class="text-slate-700 font-medium">$25.500</span>
+                                    <span class="text-slate-700 font-medium group-hover:text-slate-900 transition-colors">$25.500</span>
                                 </div>
                                 
                                 <!-- Columna 3: Precio Público (Solo Desktop) -->
                                 <div class="hidden sm:block text-right mt-1 sm:mt-0">
-                                    <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem]">$44.000</span>
+                                    <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem] group-hover:scale-105 transition-transform inline-block">$44.000</span>
                                 </div>
 
                                 <!-- Columna 4: Botón de Acción -->
@@ -224,65 +224,110 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
 </BaseLayout>
 
-<script>
-    // Lógica para capturar clics en la tabla y mandarlos al carrito (Bloque 2)
-    const btnAddCart = document.querySelectorAll('.btn-add-cart');
-
-    btnAddCart.forEach(btn => {
-        const button = btn as HTMLButtonElement;
-        button.addEventListener('click', () => {
-            const name = button.getAttribute('data-name');
-            const price = button.getAttribute('data-price');
-
-            // Lanzar evento personalizado para CartDrawer.astro
-            const event = new CustomEvent('addToCart', {
-                detail: { name, price }
-            });
-            document.dispatchEvent(event);
-
-            // Micro-animación: Mutación del botón (+ → ✓)
-            const originalSvg = button.innerHTML;
-            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-            button.classList.add('bg-brand', 'scale-110');
-            setTimeout(() => {
-                button.innerHTML = originalSvg;
-                button.classList.remove('bg-brand', 'scale-110');
-            }, 1200);
-
-            // Micro-animación: Flash verde sutil en la fila
-            const row = button.closest('[class*="grid"]') as HTMLElement | null;
-            if (row) {
-                row.style.transition = 'background-color 0.15s ease';
-                row.style.backgroundColor = 'rgba(16,185,129,0.08)';
-                setTimeout(() => { row.style.backgroundColor = ''; }, 600);
-            }
-
-            // Micro-animación: Toast "+1" flotante
-            const toast = document.createElement('span');
-            toast.textContent = '+1';
-            toast.className = 'absolute -top-2 -right-2 text-[11px] font-extrabold text-white bg-brand px-1.5 py-0.5 rounded-full pointer-events-none';
-            toast.style.transition = 'all 0.6s ease-out';
-            button.style.position = 'relative';
-            button.appendChild(toast);
-            requestAnimationFrame(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(-18px) scale(0.8)';
-            });
-            setTimeout(() => toast.remove(), 700);
-        });
-    });
-
-    // Lógica para cerrar el banner informativo (Scroll Continuo)
-    const btnCloseBanner = document.getElementById('close-banner');
-    const infoBanner = document.getElementById('info-banner');
-    
-    if (btnCloseBanner && infoBanner) {
-        btnCloseBanner.addEventListener('click', () => {
-            infoBanner.style.opacity = '0';
-            infoBanner.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                infoBanner.style.display = 'none';
-            }, 300); // Espera que termine la animación de opacidad antes de borrarlo del DOM visual
-        });
+<style>
+    /* Micromovimientos y Scroll Reveal */
+    .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
     }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-delay-100 { transition-delay: 100ms; }
+    .reveal-delay-200 { transition-delay: 200ms; }
+    .reveal-delay-300 { transition-delay: 300ms; }
+
+    /* Efectos de Hover Refinados */
+    .group:hover .group-hover\:scale-105 {
+        transform: scale(1.05);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Sistema de Scroll Reveal ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+
+        // --- 2. Lógica del Carrito con Micro-animaciones ---
+        const btnAddCart = document.querySelectorAll('.btn-add-cart');
+        
+        btnAddCart.forEach(btn => {
+            const button = btn as HTMLButtonElement;
+            button.addEventListener('click', () => {
+                const name = button.getAttribute('data-name');
+                const price = button.getAttribute('data-price');
+
+                // Lanzar evento personalizado para CartDrawer.astro
+                const event = new CustomEvent('addToCart', {
+                    detail: { name, price }
+                });
+                document.dispatchEvent(event);
+
+                // Micro-animación: Mutación del botón (+ → ✓)
+                const originalSvg = button.innerHTML;
+                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                button.classList.add('bg-brand', 'scale-110');
+                setTimeout(() => {
+                    button.innerHTML = originalSvg;
+                    button.classList.remove('bg-brand', 'scale-110');
+                }, 1200);
+
+                // Micro-animación: Flash verde sutil en la fila
+                const row = button.closest('[class*="grid"]') as HTMLElement | null;
+                if (row) {
+                    row.style.transition = 'background-color 0.15s ease';
+                    row.style.backgroundColor = 'rgba(16,185,129,0.08)';
+                    setTimeout(() => { row.style.backgroundColor = ''; }, 600);
+                }
+
+                // Micro-animación: Toast "+1" flotante
+                const toast = document.createElement('span');
+                toast.textContent = '+1';
+                toast.className = 'absolute -top-2 -right-2 text-[11px] font-extrabold text-white bg-brand px-1.5 py-0.5 rounded-full pointer-events-none';
+                toast.style.transition = 'all 0.6s ease-out';
+                button.style.position = 'relative';
+                button.appendChild(toast);
+                requestAnimationFrame(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-18px) scale(0.8)';
+                });
+                setTimeout(() => toast.remove(), 700);
+            });
+        });
+
+        // --- 3. Lógica para cerrar el banner informativo (Scroll Continuo) ---
+        const btnCloseBanner = document.getElementById('close-banner');
+        const infoBanner = document.getElementById('info-banner');
+        
+        if (btnCloseBanner && infoBanner) {
+            btnCloseBanner.addEventListener('click', () => {
+                infoBanner.style.opacity = '0';
+                infoBanner.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    infoBanner.style.display = 'none';
+                }, 300);
+            });
+        }
+    });
 </script>

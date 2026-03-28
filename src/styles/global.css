@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
   --bg-surface-hover: #e6efed;
-  --header-offset: 72px;
+  --header-offset: 66px;
 }
 
 /* ─── Selección de Texto Corporativa ─── */
@@ -155,10 +155,8 @@ button,
 
 /* --- 🏛️ Estilos Maestros de Sidebars (Estandarización Elite) --- */
 .mh-sidebar {
-  @apply hidden md:flex flex-col w-64 shrink-0 border-r border-subtle bg-surface-white overflow-y-auto scrollbar-premium;
-  height: calc(100vh - var(--header-offset));
-  position: sticky;
-  top: var(--header-offset);
+  @apply hidden md:flex flex-col w-64 shrink-0 border-r border-subtle bg-surface-white overflow-y-auto pt-0 scrollbar-premium;
+  height: 100%; /* El sidebar llena su contenedor que ya está debajo del header */
 }
 
 /* --- 💊 Etiquetas de Categoría (Pills Elite) --- */

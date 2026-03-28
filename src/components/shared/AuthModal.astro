@@ -1,0 +1,166 @@
+---
+import Icons from '../catalogo/Icons.astro';
+---
+
+<!-- Modal de Autenticación (Capa sobre todo el Dashboard) -->
+<div id="auth-modal-overlay" class="fixed inset-0 z-[100] bg-slate-900/70 backdrop-blur-md flex items-start pt-16 md:pt-0 md:items-center justify-center overflow-y-auto transition-opacity duration-300 pb-10">
+    
+    <!-- Enlace invisible que cubre el fondo para cerrar el modal al hacer clic fuera -->
+    <a href="/" class="absolute inset-0 z-0" aria-label="Cerrar y volver al inicio"></a>
+
+    <div id="auth-modal" class="w-full max-w-[440px] mx-4 relative z-10">
+        
+        <!-- Tarjeta Principal del Modal -->
+        <div class="bg-surface-muted rounded-3xl overflow-hidden relative border border-white/60">
+            
+            <!-- Botón de Cerrar (X) Superior Derecha -->
+            <a href="/" class="absolute top-6 right-6 p-2 rounded-full text-secondary hover:text-body hover:bg-surface-muted transition-colors focus:outline-none focus:ring-1 focus:ring-brand z-20" aria-label="Cerrar modal">
+                <div class="w-5 h-5">
+                    <Icons type="close-x" />
+                </div>
+            </a>
+
+            <!-- Encabezado del Modal -->
+            <div class="px-8 pt-10 pb-4 text-left">
+                <h2 class="text-body text-[26px] font-extrabold tracking-tight mb-2 font-display">Acceso</h2>
+            </div>
+
+            <!-- Cuerpo del Formulario -->
+            <div class="px-8 pb-10">
+                <form id="auth-form" class="space-y-4" novalidate>
+                    
+                    <!-- Campo NIT / Cédula -->
+                    <div class="space-y-1.5">
+                        <label for="auth-nit" class="text-[13px] font-bold text-body">
+                            Cédula o NIT
+                        </label>
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="auth-nit" 
+                                placeholder="Ej: 1234567890"
+                                autocomplete="username"
+                                class="w-full px-4 py-3 bg-surface-white border border-subtle focus:border-brand rounded-xl text-[15px] text-body placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-brand shadow-sm hover:border-strong transition-all focus:placeholder:text-transparent"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Campo Contraseña -->
+                    <div class="space-y-1.5">
+                        <label for="auth-password" class="text-[13px] font-bold text-body">
+                            Contraseña
+                        </label>
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="auth-password"
+                                placeholder="••••••••••"
+                                autocomplete="current-password"
+                                class="w-full px-4 py-3 bg-surface-white border border-subtle focus:border-brand rounded-xl text-[15px] text-body placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-brand shadow-sm hover:border-strong transition-all pr-12 tracking-widest font-mono focus:placeholder:text-transparent"
+                            />
+                            <!-- Botón para mostrar/ocultar contraseña -->
+                            <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg text-secondary hover:text-body hover:bg-surface-muted transition-all" aria-label="Mostrar contraseña">
+                                <div id="icon-eye-open" class="w-[18px] h-[18px]">
+                                    <Icons type="eye" />
+                                </div>
+                                <div id="icon-eye-closed" class="w-[18px] h-[18px] hidden">
+                                    <Icons type="eye-off" />
+                                </div>
+                            </button>
+                        </div>
+                        <!-- Vía de escape -->
+                        <div class="flex justify-end pt-1">
+                            <a 
+                                href="https://wa.me/573000000000?text=Hola,%20Soy%20profesional%20m%C3%A9dico%20y%20olvid%C3%A9%20mis%20credenciales." 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="text-[12px] font-medium text-secondary hover:text-brand hover:underline transition-all cursor-pointer"
+                            >
+                                ¿Olvidó su contraseña?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox "Mantener sesión" -->
+                    <div class="flex items-center pt-2 pb-1">
+                        <label class="flex items-center gap-2.5 text-[13px] text-secondary cursor-pointer hover:text-body transition-colors">
+                            <input type="checkbox" class="size-4 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                            Mantener sesión iniciada
+                        </label>
+                    </div>
+
+                    <!-- Mensaje de Error -->
+                    <div id="auth-error" class="hidden items-center gap-2.5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-[13px] font-medium animate-shake">
+                        <div class="w-4 h-4 shrink-0">
+                            <Icons type="alert" />
+                        </div>
+                        <span id="auth-error-text">Credenciales incorrectas</span>
+                    </div>
+
+                    <!-- Botón de Ingreso -->
+                    <button 
+                        type="submit" 
+                        id="auth-submit"
+                        class="w-full flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white font-bold py-3.5 rounded-xl transition-all duration-200 hover:-translate-y-[1px] active:scale-[0.98] focus:ring-2 focus:ring-brand focus:ring-offset-2 text-[15px] shadow-lg shadow-brand/20"
+                    >
+                        Ingresar
+                    </button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const TEMP_USER = 'invitado';
+    const TEMP_PASS = '1234';
+
+    const overlay = document.getElementById('auth-modal-overlay');
+    const form = document.getElementById('auth-form') as HTMLFormElement | null;
+    const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
+    const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
+    const errorBox = document.getElementById('auth-error');
+    const errorText = document.getElementById('auth-error-text');
+    const toggleBtn = document.getElementById('toggle-password');
+    const iconOpen = document.getElementById('icon-eye-open');
+    const iconClosed = document.getElementById('icon-eye-closed');
+
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = inputNit?.value.trim();
+        const pass = inputPass?.value;
+
+        if (user === TEMP_USER && pass === TEMP_PASS) {
+            overlay?.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay?.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        } else {
+            errorBox?.classList.remove('hidden');
+            errorBox?.classList.add('flex');
+            if (errorText) errorText.textContent = 'Credenciales incorrectas.';
+            inputPass?.focus();
+        }
+    });
+
+    toggleBtn?.addEventListener('click', () => {
+        if (!inputPass) return;
+        const isPassword = inputPass.type === 'password';
+        inputPass.type = isPassword ? 'text' : 'password';
+        iconOpen?.classList.toggle('hidden');
+        iconClosed?.classList.toggle('hidden');
+    });
+</script>
+
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-4px); }
+        75% { transform: translateX(4px); }
+    }
+    .animate-shake {
+        animation: shake 0.4s ease-in-out;
+    }
+</style>

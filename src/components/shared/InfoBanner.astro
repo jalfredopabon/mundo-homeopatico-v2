@@ -1,0 +1,41 @@
+---
+import Icons from '../catalogo/Icons.astro';
+
+interface Props {
+    message?: string;
+}
+
+const { message = "Se informa a todos nuestros clientes que no habrá servicio los domingos y festivos." } = Astro.props;
+---
+
+<!-- Banner Informativo Modular -->
+<div id="info-banner" class="mb-4 bg-brand/5 border border-brand/10 p-4 rounded-xl flex items-center justify-between group reveal transition-all duration-300">
+    <div class="flex items-center gap-3">
+        <div class="w-5 h-5 text-brand shrink-0">
+            <Icons type="info" />
+        </div>
+        <p class="text-secondary text-[13px] font-medium leading-tight">
+            <span class="font-bold text-brand">Aviso:</span> {message}
+        </p>
+    </div>
+    <button id="close-banner" class="p-1.5 rounded-lg text-muted hover:text-body hover:bg-surface-white transition-all focus:outline-none" aria-label="Cerrar aviso">
+        <div class="w-4 h-4">
+            <Icons type="close-x" />
+        </div>
+    </button>
+</div>
+
+<script>
+    const btnCloseBanner = document.getElementById('close-banner');
+    const infoBanner = document.getElementById('info-banner');
+    
+    if (btnCloseBanner && infoBanner) {
+        btnCloseBanner.addEventListener('click', () => {
+            infoBanner.style.opacity = '0';
+            infoBanner.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                infoBanner.style.display = 'none';
+            }, 300);
+        });
+    }
+</script>

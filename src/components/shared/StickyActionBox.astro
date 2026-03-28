@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="sticky top-0 z-30 bg-surface-white px-4 py-4 border-b border-subtle">
+<div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
   <div class="relative group flex items-center w-full">
     <slot>
       <!-- Input de Búsqueda por defecto -->
@@ -25,7 +25,7 @@ const {
         type="text" 
         id={id} 
         placeholder={placeholder}
-        class="w-full pl-10 pr-4 py-3 bg-surface-muted/70 border border-subtle rounded-xl text-[14px] text-body placeholder:text-muted focus:outline-none focus:bg-surface-white focus:border-brand focus:ring-4 focus:ring-brand/5 transition-all shadow-sm"
+        class="w-full h-11 pl-10 pr-4 bg-surface-muted/70 border border-subtle rounded-xl text-[14px] text-body placeholder:text-muted focus:outline-none focus:bg-surface-white focus:border-brand focus:ring-4 focus:ring-brand/5 transition-all shadow-sm"
       />
     </slot>
   </div>

@@ -1,0 +1,105 @@
+---
+import Icons from '../catalogo/Icons.astro';
+
+interface Section {
+    title: string;
+    icon: string;
+    content: string;
+    items?: string[];
+}
+
+interface Product {
+    id: string;
+    name: string;
+    potency: string;
+    scientificName: string;
+    origin: string;
+    sections: Section[];
+    isActive?: boolean;
+}
+
+interface Props {
+    products: Product[];
+}
+
+const { products = [] } = Astro.props;
+---
+
+<!-- Columna Derecha: Panel de Ficha Técnica (Scroll independiente) -->
+<aside 
+    id="vademecum-aside" 
+    data-mobile-open="false"
+    class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
+           data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
+>
+    
+    {products.map((product) => (
+        <div 
+            id={`ficha-${product.id}`} 
+            class={`px-8 md:px-12 pt-8 pb-24 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
+            data-sheet-id={product.id}
+        >
+            <!-- Encabezado de la Ficha -->
+            <div class="mb-8 relative">
+                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-muted hover:text-body bg-surface-muted rounded-full border border-subtle transition-colors">
+                    <div class="w-4 h-4">
+                        <Icons type="close-x" />
+                    </div>
+                </button>
+                <div class="flex items-center gap-2 text-[10px] font-bold text-secondary mb-2 uppercase tracking-wider">
+                    <div class="w-3.5 h-3.5">
+                        <Icons type="file-text" />
+                    </div>
+                    Ficha técnica del producto
+                </div>
+                <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-5">
+                    {product.name} <span class="text-brand">{product.potency}</span>
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">{product.scientificName}</span>
+                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">Potencia {product.potency}</span>
+                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">{product.origin}</span>
+                </div>
+            </div>
+
+            <!-- Secciones de la Ficha -->
+            <div class="space-y-8">
+                {product.sections.map((section) => (
+                    <div class="border-t border-subtle pt-7">
+                        <h4 class="text-[11px] font-bold text-body mb-4 flex items-center gap-2 uppercase tracking-wider">
+                            <div class="w-3.5 h-3.5">
+                                <Icons type={section.icon as any} />
+                            </div>
+                            {section.title}
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex gap-3">
+                                <div class="w-1.5 h-1.5 rounded-full bg-brand mt-[7px] shrink-0"></div>
+                                <p class="text-[13px] text-secondary leading-[1.8]" set:html={section.content}>
+                                </p>
+                            </li>
+                            {section.items && section.items.map((item) => (
+                                <li class="flex gap-3">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-brand mt-[7px] shrink-0"></div>
+                                    <p class="text-[13px] text-secondary leading-[1.8]" set:html={item}>
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+    ))}
+
+    {products.length === 0 && (
+        <div class="flex-1 flex flex-col items-center justify-center p-12 text-center">
+            <div class="w-12 h-12 text-subtle mb-4 opacity-20">
+                <Icons type="file-text" />
+            </div>
+            <p class="text-[14px] text-muted leading-relaxed">
+                Seleccione un producto para ver su <br/> ficha técnica detallada.
+            </p>
+        </div>
+    )}
+</aside>

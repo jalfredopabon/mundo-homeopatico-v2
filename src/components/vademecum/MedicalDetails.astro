@@ -46,19 +46,19 @@ const { products = [] } = Astro.props;
                         <Icons type="close-x" />
                     </div>
                 </button>
-                <div class="flex items-center gap-2 text-[10px] font-bold text-secondary mb-2 uppercase tracking-wider">
-                    <div class="w-3.5 h-3.5">
+                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2 tracking-wider">
+                    <div class="w-[15px] flex justify-center shrink-0">
                         <Icons type="file-text" />
                     </div>
                     Ficha técnica del producto
                 </div>
-                <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-5">
+                <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5">
                     {product.name} <span class="text-brand">{product.potency}</span>
                 </h2>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">{product.scientificName}</span>
-                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">Potencia {product.potency}</span>
-                    <span class="px-3 py-1 bg-surface-white border border-subtle text-[10px] font-medium text-secondary rounded-full">{product.origin}</span>
+                <div class="flex flex-wrap items-center gap-2 leading-none">
+                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">{product.scientificName}</span>
+                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">Potencia {product.potency}</span>
+                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">{product.origin}</span>
                 </div>
             </div>
 
@@ -66,22 +66,26 @@ const { products = [] } = Astro.props;
             <div class="space-y-8">
                 {product.sections.map((section) => (
                     <div class="border-t border-subtle pt-7">
-                        <h4 class="text-[11px] font-bold text-body mb-4 flex items-center gap-2 uppercase tracking-wider">
-                            <div class="w-3.5 h-3.5">
+                        <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2 tracking-wider">
+                            <div class="w-[15px] flex justify-center shrink-0">
                                 <Icons type={section.icon as any} />
                             </div>
                             {section.title}
                         </h4>
                         <ul class="space-y-4">
-                            <li class="flex gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-brand mt-[7px] shrink-0"></div>
-                                <p class="text-[13px] text-secondary leading-[1.8]" set:html={section.content}>
+                            <li class="flex gap-2">
+                                <div class="w-[15px] flex justify-center shrink-0">
+                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
+                                </div>
+                                <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={section.content}>
                                 </p>
                             </li>
                             {section.items && section.items.map((item) => (
-                                <li class="flex gap-3">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-brand mt-[7px] shrink-0"></div>
-                                    <p class="text-[13px] text-secondary leading-[1.8]" set:html={item}>
+                                <li class="flex gap-2">
+                                    <div class="w-[15px] flex justify-center shrink-0">
+                                        <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
+                                    </div>
+                                    <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={item}>
                                     </p>
                                 </li>
                             ))}

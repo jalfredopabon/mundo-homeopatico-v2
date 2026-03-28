@@ -1,118 +1,59 @@
-# Plan de Refactorización y Blindaje: Mundo Homeopático v2
+# Plan de RefactorizaciÃ³n y Blindaje: Mundo HomeopÃ¡tico v2
 
-Este documento detalla el diagnóstico técnico real del proyecto y el mapa de ruta para eliminar la fragilidad visual y la deuda técnica acumulada en los Sidebars.
+Este documento detalla el diagnÃ³stico tÃ©cnico real del proyecto y el mapa de ruta para eliminar la fragilidad visual y la deuda tÃ©cnica acumulada en los Sidebars.
 
-## 🚨 Diagnóstico de Vulnerabilidades
+## ðŸš¨ DiagnÃ³stico de Vulnerabilidades
 
-### 1. Fragilidad Visual (CSS "Mágico")
-*   **Problema:** Uso excesivo de valores negativos calculados a mano (`mt-[-2.5px]`, `top-[72px]`).
-*   **Impacto:** Cualquier cambio mínimo en el Header global (fuente, borde, interlineado) rompe la alineación de todos los sidebars de forma impredecible.
-*   **Riesgo:** Desfases de 1-3 píxeles entre páginas "gemelas" (Vademécum vs. Catálogo).
+### 1. Fragilidad Visual (CSS "MÃ¡gico")
 
-### 2. Fragmentación de Lógica (Código Espejo)
-*   **Problema:** El "Cajón Maestro" del buscador/acción rápida está copiado y pegado en 3 archivos:
-    1. `SidebarCatalogo.astro`
-    2. `vademecum.astro`
-    3. `SidebarContacto.astro`
-*   **Impacto:** El mantenimiento es triple. Cada ajuste estético o de accesibilidad requiere 3 ediciones idénticas. La probabilidad de error u olvido en un archivo es alta.
+- **Problema:** Uso excesivo de valores negativos calculados a mano (`mt-[-2.5px]`, `top-[72px]`).
+- **Impacto:** Cualquier cambio mÃ­nimo en el Header global (fuente, borde, interlineado) rompe la alineaciÃ³n de todos los sidebars de forma impredecible.
+- **Riesgo:** Desfases de 1-3 pÃ­xeles entre pÃ¡ginas "gemelas" (VademÃ©cum vs. CatÃ¡logo).
 
-### 3. Ausencia de Verificación de Tipos (Type Safety)
-*   **Problema:** No hay validación de las propiedades (`props`) que fluyen entre componentes.
-*   **Impacto:** En producción, un valor `undefined` o mal formateado puede causar que el buscador no funcione o que el layout colapse silenciosamente.
+### 2. FragmentaciÃ³n de LÃ³gica (CÃ³digo Espejo)
 
----
+- **Problema:** El "CajÃ³n Maestro" del buscador/acciÃ³n rÃ¡pida estÃ¡ copiado y pegado en 3 archivos:
+  1. `SidebarCatalogo.astro`
+  2. `vademecum.astro`
+  3. `SidebarContacto.astro`
+- **Impacto:** El mantenimiento es triple. Cada ajuste estÃ©tico o de accesibilidad requiere 3 ediciones idÃ©nticas. La probabilidad de error u olvido en un archivo es alta.
 
-## 🏗️ Estrategia de Blindaje (Arquitectura de Módulos)
+### 3. Ausencia de VerificaciÃ³n de Tipos (Type Safety)
 
-### Fase A: Creación del Componente Atómico
-1.  **Extraer `StickyActionBox.astro`:** Crear un único componente maestro que contenga la estructura sticky, el padding `px-4 py-4`, el borde inferior y el contenedor del input.
-2.  **Parámetros Dinámicos:** El componente debe aceptar ícono y texto (ej: "Lupa + Buscar" o "Instagram + Síguenos").
-3.  **Alineación Flex Nativa:** Reemplazar los márgenes negativos por una estructura flexbox centrada que garantice el mismo "horizonte" visual sin importar el contenido.
+- **Problema:** No hay validaciÃ³n de las propiedades (`props`) que fluyen entre componentes.
+- **Impacto:** En producciÃ³n, un valor `undefined` o mal formateado puede causar que el buscador no funcione o que el layout colapse silenciosamente.
 
-### Fase B: Unificación de Sidebars
-1.  **Limpiar Vademécum, Catálogo y Contacto:** Eliminar el código repetido de sus cabeceras.
-2.  **Inyectar el Componente Maestro:** Llamar a `StickyActionBox` en los tres archivos. 
-    *   *Resultado:* Garantía de alineación 100% idéntica por construcción, no por imitación.
+## @
 
-### Fase C: Automatización de Calidad (CI/CD)
-1.  **`npx astro check`:** Ejecutar validación de tipos antes de cada push.
-2.  **ESLint con `eslint-plugin-astro`:** Configurar reglas que prohíban clases Tailwind contradictorias.
-3.  **Lighthouse Audit:** Establecer umbrales mínimos de Performance y Accesibilidad para evitar que la deuda técnica degrade la experiencia de usuario.
+## 🗓️ Tareas Prioritarias — Próxima Sesión (2026-03-25)
 
----
+> **CONTEXTO:** Al inicio de la siguiente sesión, comenzar por aquí. Consolidan la globalización de componentes actualmente repetidos o sin estandarizar.
 
-## 🏁 Meta Final: "Robustez Enterprise"
-El proyecto debe pasar de ser una colección de páginas similares a un **Sistema de Diseño Blindado**. Un cambio en el motor del buscador en un solo archivo debe verse reflejado con precisión atómica en todo el sitio, sin necesidad de ajustes manuales de píxeles.
+### Tarea 1 — Clase .mh-sidebar en global.css ⚡ ALTA PRIORIDAD
 
----
+**Objetivo:** Centralizar los estilos estructurales repetidos en los 3 sidebars.
+**Qué unificar:** h-[calc(100vh-72px)] · sticky top-[72px] · overflow-y-auto scrollbar-premium · w-64 shrink-0 · order-r border-subtle bg-surface-white  
+**Archivos a actualizar:** SidebarCatalogo.astro · SidebarContacto.astro · ademecum.astro (aside inline)
 
-## 🛠️ Herramientas de Diagnóstico Automático (El "Radar" de Salud)
 
-Para asegurar que el código no se rompa en producción y sea robusto, implementaremos las siguientes herramientas de revisión automática:
 
-### 1. Astro Check (`npx astro check`)
-*   **Función:** Validación nativa de tipos y sintaxis.
-*   **Objetivo:** Detectar errores "silenciosos" (variables mal escritas, props inexistentes) antes de que el usuario los vea.
-*   **Uso:** Escaneo total del proyecto en segundos.
+## ✅ 🗓️ Tareas Completadas (2026-03-26)
 
-### 2. Análisis Estático (ESLint + Prettier)
-*   **Función:** Limpieza y consistencia de código.
-*   **Objetivo:** Prohibir patrones de código "sucio", clases Tailwind contradictorias y asegurar que el código sea legible para cualquier desarrollador.
-*   **Uso:** Regaña al desarrollador si intenta escribir código frágil.
+### ~~Tarea 1 — Clase .mh-sidebar en global.css~~
+**Estado:** ¡Completada! Se centralizaron los estilos y la variable `--header-offset`.
 
-### 3. Seguridad y Salud de Librerías (NPM Audit)
-*   **Función:** Escaneo de vulnerabilidades.
-*   **Objetivo:** Detectar si alguna dependencia del proyecto tiene fallos de seguridad conocidos.
-*   **Uso:** Ejecución regular de `npm audit`.
+### ~~Tarea 2 — Extraer Sidebar de Vademécum a componente propio~~
+**Estado:** ¡Completada! Se creó `SidebarVademecum.astro` y se limpió `vademecum.astro`.
 
-### 4. Calidad de Salida (Lighthouse CI)
-*   **Función:** Auditoría de Performance, Accesibilidad y SEO.
-*   **Objetivo:** Garantizar que el sitio mantenga una puntuación >90/100 en todas las métricas.
-*   **Uso:** Informe automático después de cada despliegue.
+### ~~Tarea 3 — Clase .mh-pill en global.css~~
+**Estado:** ¡Completada! Se globalizó la estética de las etiquetas de categorías.
 
 ---
 
-## 📍 Siguientes Pasos Operativos: Habilitar "Radar de Salud"
+## 📖 Bitácora de Avance
 
-### Fase A: Blindaje Visual, Unificación y Salud Técnica ✅
-- **Hito 1:** Creación de `StickyActionBox.astro` como componente maestro.
-- **Hito 2:** Unificación de buscadores en Catálogo, Vademécum y Contacto.
-- **Hito 3:** Eliminación de "márgenes mágicos" en sidebars y estandarización de anchos (`w-64`).
-- **Hito 4:** **Auditoría de Salud Total:** Reducción de **338 errores a 0 errores** de TypeScript (Limpieza en `CartDrawer`, `index`, `vademecum` y `SidebarCatalogo`).
-- **Estado:** **100% COMPLETADO (Blindaje Exitoso).**
-
----
-
-### Fase B: Pulido Estético "Elite" ✅
-- **Hito 1:** Implementación de sistema de **Scroll Reveal** (IntersectionObserver) y micro-animaciones en Catálogo y Vademécum.
-- **Hito 2:** Refinamiento tipográfico editorial (`font-black`, `tracking-tighter`, `leading-[0.85]`) en encabezados.
-- **Hito 3:** Creación de **Skeleton Screens** (`VademecumSkeleton.astro`) para estados de carga elegantes.
-- **Hito 4:** **Auditoría de Performance:** Optimización de activos y configuración de `remotePatterns` para imágenes vía `<Image />` de Astro.
-- **Estado:** **100% COMPLETADO (Pulido Estético Elite).**
-
----
-
----
-
-## 🔒 Fase D: Arquitectura de Datos y Seguridad (Próximo Hito)
-
-Para garantizar la **Protección de Propiedad Intelectual** (fórmulas) y una **Experiencia Premium**, implementaremos un modelo híbrido:
-
-### 1. Modelo Híbrido de Entrega
-*   **Contenido Público (Home, Catálogo, Sedes):** 
-    *   **Estrategia:** *Build-time Static Generation*.
-    *   **Beneficio:** Los precios y datos se "hornean" en el HTML durante la construcción. Cero latencia, cero URLs de API expuestas al público.
-*   **Contenido Protegido (Vademécum):**
-    *   **Estrategia:** *Runtime Fetching* con validación en servidor (Apps Script).
-    *   **Beneficio:** Las fórmulas nunca tocan el HTML público. Solo viajan al navegador tras una identificación exitosa.
-
-### 2. Sistema de Acceso Premium (Vademécum)
-*   **Identificación Doble Factor:** Ingreso mediante **Cédula + PIN** (gestionado por la farmacia en Google Sheets).
-*   **Personalización:** Saludo dinámico ("Bienvenido, Dr. [Nombre]") para reforzar el sentido de exclusividad.
-*   **Gestión No-Code:** El cliente gestiona médicos (altas, bajas, cambios de PIN) directamente desde una nueva hoja `Médicos` en su Google Sheet actual.
-
-### 3. Blindaje de Seguridad en Apps Script
-*   **Servidor como Juez:** La lógica de validación vive en Google, no en el navegador. 
-*   **Anti-Fuerza Bruta:** Implementación de límites de intentos por IP.
-*   **Auditoría Técnica:** Creación de una hoja de `Logs` automática para rastrear quién accede a las fórmulas y cuándo.
-
+### Hito 1: Eliminación de Deuda Técnica en Sidebars y CSS (26/03/2026)
+- **Logro Estructural:** Se erradicó el "CSS Mágico" y el "Código Espejo" en los 3 sidebars principales (Catálogo, Vademécum, Contacto).
+- **Globalización CSS:** Se introdujeron utilidades Elite en `global.css` (`.mh-sidebar`, `.mh-pill`) y la variable fundacional `--header-offset: 72px`.
+- **Aislamiento de Componentes:** Refactorización extrema del archivo `vademecum.astro` mediante la extracción de su barra de navegación lateral a un módulo independiente (`SidebarVademecum.astro`), reduciendo su volumen en >100 líneas y facilitando la mantenibilidad futura.
+- **Resultado:** Píxel-perfect cross-page asegurado; cualquier modificación al offset del header o a los estilos del sidebar y píldoras se propaga simétricamente a todo el ecosistema.

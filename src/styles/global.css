@@ -30,6 +30,7 @@ h1, h2, h3, h4, h5, h6 {
   --bg-muted: #f4f7f6; /* Sage Gray Saturado (10% Brand) */
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
+  --header-offset: 72px;
 }
 
 /* ─── Selección de Texto Corporativa ─── */
@@ -61,23 +62,23 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #475569;
 }
 
-/* Variante para Sidebars (Fina e Invisible hasta Hover) */
+/* Variante para Sidebars (Fina y siempre visible) */
 .scrollbar-premium {
   scrollbar-gutter: stable;
 }
 
 .scrollbar-premium::-webkit-scrollbar {
-  width: 4px;
-  background: transparent;
+  width: 4px !important;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .scrollbar-premium::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.15) !important;
   border-radius: 20px;
 }
 
 .scrollbar-premium:hover::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.25) !important;
 }
 
 /* 2. Firefox (Sincronización de Contraste) */
@@ -145,4 +146,17 @@ button,
 
 .mh-table-price-cell {
   @apply text-left sm:text-right font-medium;
+}
+
+/* --- 🏛️ Estilos Maestros de Sidebars (Estandarización Elite) --- */
+.mh-sidebar {
+  @apply hidden md:flex flex-col w-64 shrink-0 border-r border-subtle bg-surface-white overflow-y-auto scrollbar-premium;
+  height: calc(100vh - var(--header-offset));
+  position: sticky;
+  top: var(--header-offset);
+}
+
+/* --- 💊 Etiquetas de Categoría (Pills Elite) --- */
+.mh-pill {
+  @apply inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors;
 }

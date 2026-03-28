@@ -419,30 +419,7 @@ import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 </BaseLayout>
 
 
-<style>
-    aside {
-        scrollbar-gutter: stable;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
 
-    /* Micromovimientos y Scroll Reveal */
-    .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        will-change: opacity, transform;
-    }
-
-    .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .reveal-delay-100 { transition-delay: 100ms; }
-    .reveal-delay-200 { transition-delay: 200ms; }
-    .reveal-delay-300 { transition-delay: 300ms; }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

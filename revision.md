@@ -123,16 +123,19 @@
 
 ## Nivel 2 — Paredes: Centralizar el CSS fugitivo
 
-**Archivos a tocar:** `global.css`, `tailwind.config.mjs`, eliminar bloques `<style>` de componentes
+**Plan Particionado:**
 
-| Problema | Solución concreta |
-|---|---|
-| `.reveal` + `.reveal-delay-*` duplicado en `index.astro` y `vademecum.astro` | Mover ambos bloques a `global.css` bajo `@layer utilities`. Borrar los `<style>` de las dos páginas |
-| `@keyframes pulse-slow` en `VademecumSkeleton.astro` | Mover a `tailwind.config.mjs` en `extend.keyframes` + `extend.animation`. Borrar el `<style>` del componente |
-| `.pb-safe` en `MobileTabNav.astro` | Mover a `global.css`. Borrar el `<style>` del componente |
-| `.accordion-content`, `.sidebar-link`, `.accordion-trigger` en `SidebarCatalogo.astro` | Mover el bloque completo a `global.css` bajo `@layer components`. Borrar el `<style>` del sidebar |
+**Sub-bloque 2.1: Animaciones y Utilidades (3 archivos)**
+- `src/styles/global.css`: Añadir utilidades `@layer utilities` para `.reveal`, `.reveal-delay-*` y `.pb-safe`.
+- `tailwind.config.mjs`: Centralizar `@keyframes pulse-slow` y configuración de animación `pulse-slow`.
+- `src/components/shared/VademecumSkeleton.astro`: Eliminar bloque `<style>` local para consumir animación global.
 
-**Resultado esperado:** Cero bloques `<style>` en componentes. Todo el CSS vive en `global.css` o `tailwind.config.mjs`.
+**Sub-bloque 2.2: Limpieza de Páginas y Componentes (4 archivos)**
+- `src/pages/index.astro` & `src/pages/vademecum.astro`: Eliminar bloques `<style>` locales de la clase `.reveal`.
+- `src/components/shared/MobileTabNav.astro`: Eliminar bloque `<style>` con la clase `.pb-safe`.
+- `src/components/catalogo/SidebarCatalogo.astro`: Trasladar clases `.accordion-content`, `.sidebar-link` y `.accordion-trigger` al `@layer components` de `global.css`. Borrar el `<style>` del componente.
+
+**Resultado esperado:** Cero bloques `<style>` en componentes compartidos y páginas maestras. El 100% de la lógica visual reside en el núcleo (`global.css` y `tailwind.config.mjs`).
 
 ---
 

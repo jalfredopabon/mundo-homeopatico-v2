@@ -15,10 +15,20 @@ export default {
         surface: {
           white: "var(--bg-surface)",
           muted: "var(--bg-muted)",
+          hover: "var(--bg-surface-hover)",
         },
         subtle: "var(--border-light)",
         strong: "var(--border-medium)",
       },
+      keyframes: {
+        'pulse-slow': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.6' },
+        }
+      },
+      animation: {
+        'pulse-slow': 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      }
     },
   },
   plugins: [],

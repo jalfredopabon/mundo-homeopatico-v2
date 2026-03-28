@@ -219,29 +219,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 
 </BaseLayout>
 
-<style>
-    /* Micromovimientos y Scroll Reveal */
-    .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        will-change: opacity, transform;
-    }
 
-    .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .reveal-delay-100 { transition-delay: 100ms; }
-    .reveal-delay-200 { transition-delay: 200ms; }
-    .reveal-delay-300 { transition-delay: 300ms; }
-
-    /* Efectos de Hover Refinados */
-    .group:hover .group-hover\:scale-105 {
-        transform: scale(1.05);
-    }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

@@ -30,13 +30,14 @@ h1, h2, h3, h4, h5, h6 {
   --bg-muted: #f4f7f6; /* Sage Gray Saturado (10% Brand) */
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
+  --bg-surface-hover: #e6efed;
   --header-offset: 72px;
 }
 
 /* ─── Selección de Texto Corporativa ─── */
 ::selection {
   background: rgba(10, 92, 78, 0.15);
-  color: #0A5C4E;
+  color: var(--primary);
 }
 
 /* ─── Scrollbar Premium Global ─── */
@@ -135,8 +136,12 @@ button,
 
 .mh-table-row {
   @apply flex flex-col sm:grid py-6 border-b border-subtle transition-all duration-300 relative z-0;
-  /* El efecto hover coincide con el tono verdoso-sage oscurecido del sidebar (#e6efed) */
-  @apply cursor-pointer hover:bg-[#e6efed] hover:z-10;
+  /* El efecto hover coincide con el tono verdoso-sage oscurecido del sidebar */
+  @apply cursor-pointer hover:z-10;
+}
+
+.mh-table-row:hover {
+  background-color: var(--bg-surface-hover);
 }
 
 /* Botón anclado al borde derecho — simetría visual con el margen izquierdo */
@@ -159,4 +164,90 @@ button,
 /* --- 💊 Etiquetas de Categoría (Pills Elite) --- */
 .mh-pill {
   @apply inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md transition-colors;
+}
+
+@layer components {
+  /* --- 🏛️ Estilos de Navegación Lateral (Jerarquía Lego) --- */
+  
+  /* Sistema de Línea Maestra (Tronco Único) para Acordeones */
+  .accordion-content {
+    position: relative;
+  }
+
+  .accordion-content::before {
+    content: "";
+    position: absolute;
+    left: 31px; /* Eje central del icono */
+    top: -8px;
+    bottom: 16px;
+    border-left: 1.5px solid #64748b;
+    z-index: 0;
+  }
+
+  /* Ajuste óptico: Alineación perfecta con el texto de nivel 4 */
+  .accordion-content .sidebar-link span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Rotación del Chevron en Acordeones */
+  .accordion-trigger.is-expanded .accordion-icon {
+    transform: rotate(180deg);
+    color: var(--brand);
+    opacity: 1;
+  }
+
+  /* Estado Activo y Foco Unificado (Cápsula Premium) */
+  .sidebar-link.is-active,
+  .sidebar-link:focus,
+  .accordion-trigger:focus {
+    outline: none !important;
+  }
+  
+  .sidebar-link.is-active {
+    background-color: var(--bg-surface-hover);
+    color: inherit;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .sidebar-link.is-active .icon-container {
+    color: var(--primary);
+  }
+
+  .sidebar-link:hover:not(.is-active) {
+    background-color: rgba(0, 0, 0, 0.02);
+    font-weight: 700;
+  }
+
+  .sidebar-link {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer utilities {
+  /* Micromovimientos y Scroll Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-100 { transition-delay: 100ms; }
+  .reveal-delay-200 { transition-delay: 200ms; }
+  .reveal-delay-300 { transition-delay: 300ms; }
+
+  /* Soporte para áreas seguras (Barra de inicio iOS) */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

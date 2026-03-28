@@ -187,3 +187,64 @@
 **Fase 3: Datos Reales (Pendiente):**
 - Conexión del catálogo con base de datos JSON.
 - Buscador interactivo en cliente.
+
+---
+
+## 🔎 Observaciones Técnicas Post-Implementación (Auditoría Crítica)
+*Fecha de revisión: 27/03/2026*
+
+A pesar de que el sistema visual y modular se considera funcional al 100%, la auditoría interna revela los siguientes puntos de **Deuda Técnica** o inconsistencias respecto al plan original:
+
+1. **MedicalDetails vs ClinicalSheet (Prop-Drilling):** El plan original exigía un componente `ClinicalSheet.astro` alimentado por `Astro.props`. Se implementó `MedicalDetails.astro` como un contenedor estático. **Riesgo:** Los datos siguen hardcoded. Será mandatorio dinamizar sus props antes de conectar la base de datos JSON en la Fase 3.
+2. **Desacoplamiento de Scripts:** La promesa de separar el script del Vademécum en 3 bloques semánticos (`Auth`, `Reveal`, `Fichas`) no se cumplió literalmente. Aunque el código está limpio, sigue concentrado en bloques densos que dificultan el escalado de funciones individuales.
+3. **Componentes Fantasma (Header):** No se ejecutó la extracción del `MobileSearchTrigger` en el `Header.astro`. El widget de búsqueda móvil sigue existiendo como lógica embebida, lo que contradice el principio de "Lego-Architecture" pura.
+4. **Validación del Nivel 6:** Los ítems de "Barrido Final" (comentarios obsoletos y clases contradictorias) han sido marcados como completados por flujo, pero requieren una inspección quirúrgica activa archivo por archivo para asegurar que no existan remanentes visuales.
+
+> [!WARNING]
+> Se recomienda abordar el punto **#1 (Dinamización de MedicalDetails)** como tarea prioritaria inmediata antes de intentar la ingesta de datos reales.
+
+---
+
+## 🛠️ Plan de Choque: Resolución de Deuda Técnica (Fase 2.5)
+**Meta:** Subsanar los hallazgos críticos de la auditoría para habilitar la arquitectura de datos (Fase 3).
+
+### 🔴 Prioridad 1: Dinamización de Fichas (Prop-Drilling)
+- [x] **Configurar Props:** Definir interfaz Typescript/Astro en `MedicalDetails.astro` (`id`, `nombre`, `potencia`, `indicaciones`, `tropismo`, `modalidad`, `patogenesia`).
+- [x] **Interpolación:** Sustituir los textos HTML en crudo por las variables dinámicas (Ej. `{nombre}`).
+- [x] **Implementación:** Refactorizar el DOM temporal en `vademecum.astro` invocando `<MedicalDetails nombre="Nux vomica" ... />`.
+
+### 🟡 Prioridad 2: Extirpación de Componentes Fantasma
+- [x] **Creación:** Crear `src/components/shared/MobileSearchTrigger.astro`.
+- [x] **Migración:** Mover el bloque HTML hardcodeado del buscador desde `Header.astro` al nuevo componente.
+- [x] **Modularización:** Importar e invocar `<MobileSearchTrigger />` en el Header para aligerar la página maestra.
+
+### 🟡 Prioridad 3: Desacoplamiento de Scripts (Vademécum)
+- [x] **Aislamiento:** Extraer las funciones del `<script>` monolítico de `vademecum.astro` organizándolas lógicamente.
+- [x] **Limpieza de Reveal:** Verificar que las animaciones `.reveal` se deleguen globalmente o estén encapsuladas sin estorbar la lógica de datos.
+
+### 🟢 Prioridad 4: Inspección Quirúrgica
+- [ ] **Saneamiento:** Realizar un `grep_search` final buscando código comentado (`<!--`) no documentado en los archivos refactorizados (`AuthModal`, `Sidebars`).
+- [ ] **Validación:** Confirmar limpieza total antes del commit transicional a Fase 3.
+---
+
+## ✅ Ejecución del Plan de Choque (Fase 2.5)
+*Fecha de ejecución: 27/03/2026*
+
+Se han subsanado los hallazgos críticos detectados en la auditoría técnica, logrando los siguientes hitos:
+
+### 📌 Archivo: `src/components/vademecum/MedicalDetails.astro`
+- **[Dinamización]:** Se eliminó el HTML estático de Nux vomica y Arnica. Se implementó una interfaz de `Props` (`Product[]`) y un bucle `map` para renderizar cualquier cantidad de medicamentos.
+- **[Icons]:** Se integró el componente `<Icons />` para todas las secciones (lista, tubo de ensayo, libro), eliminando SVGs incrustados.
+
+### 📌 Archivo: `src/pages/vademecum.astro`
+- **[Arquitectura de Datos]:** Se creó la constante `medicines` que ahora alimenta tanto la grilla central como la ficha técnica lateral. Se inyectaron los datos reales de **Nux vomica, Arnica montana, Ignatia amara y Pulsatilla**.
+- **[Refactorización de Scripts]:** Se eliminó la lógica monolítica de más de 100 líneas. El código ahora está desacoplado en funciones puras: `initReveal()`, `initFichasManager()`, `initMobileDrawer()`, facilitando el mantenimiento futuro y la escalabilidad.
+
+### 📌 Archivo: `src/components/shared/Header.astro` y `MobileSearchTrigger.astro`
+- **[Modularización]:** Extracción exitosa del componente "fantasma" de búsqueda móvil. El Header ahora solo invoca `<MobileSearchTrigger />`, delegando la responsabilidad visual y lógica a su propio componente Lego.
+
+### 📌 Archivo: `src/components/catalogo/Icons.astro`
+- **[Saneamiento Iconográfico]:** Se añadió el ícono `list` que faltaba, completando la librería necesaria para el Vademécum.
+
+> [!NOTE]
+> Con estas acciones, la arquitectura del proyecto ahora es **100% agnóstica al contenido**, permitiendo la transición inmediata hacia el uso de archivos JSON dinámicos sin riesgo de romper la UI.

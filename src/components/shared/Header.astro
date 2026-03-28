@@ -1,5 +1,6 @@
 ---
 import Icons from "../catalogo/Icons.astro";
+import MobileSearchTrigger from "./MobileSearchTrigger.astro";
 
 interface Props {
   mostrarZoom?: boolean;
@@ -78,15 +79,8 @@ const currentPath = Astro.url.pathname;
     <!-- Espaciador Dinámico 2 (Genera Armonía Rítmica) -->
     <div class="hidden md:block flex-1"></div>
 
-    <!-- Centro: Buscador Móvil (Placeholder inicial para Desktop/Móvil unificado posterior) -->
-    <div class="md:hidden flex-1 px-2">
-      <div class="h-10 w-full bg-surface-muted rounded-xl flex items-center px-3 border border-transparent focus-within:bg-surface-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all">
-        <div class="w-4 h-4 text-muted">
-          <Icons type="search" />
-        </div>
-        <span class="text-[13px] text-muted font-medium ml-2 select-none">Buscar...</span>
-      </div>
-    </div>
+    <!-- Lado Derecho: Acciones (Zoom, Carrito, Menú) -->
+    <MobileSearchTrigger />
 
     <div class="w-auto flex-shrink-0 flex items-center justify-end gap-2 pr-4 md:pr-4">
       

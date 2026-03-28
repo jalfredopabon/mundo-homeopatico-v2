@@ -4,6 +4,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 import AuthModal from '../components/shared/AuthModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
+import Icons from '../components/catalogo/Icons.astro';
 
 const medicines = [
     {
@@ -111,10 +112,13 @@ const medicines = [
                 
                 <!-- Encabezado de Sección -->
                 <header class="mb-10 reveal">
-                   <div class="flex items-center gap-3 mb-2">
-                        <span class="w-10 h-[2px] bg-brand"></span>
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Acompañamiento clínico</span>
-                   </div>
+                       <div class="flex items-center gap-2 text-[11px] font-medium text-slate-500">
+                           <span>De nuestra farmacia</span>
+                           <div class="w-2.5 h-2.5 opacity-40">
+                               <Icons type="chevron-right" />
+                           </div>
+                           <span class="text-slate-900/40">Vademécum</span>
+                       </div>
                    <h1 class="text-[2.5rem] font-black text-slate-900 tracking-tighter mb-3">Vademécum clínico</h1>
                    <p class="text-slate-600 text-[15px] font-medium leading-relaxed max-w-2xl">Explore el catálogo de productos con indicaciones terapéuticas detalladas. Información farmacéutica de alta precisión.</p>
                 </header>

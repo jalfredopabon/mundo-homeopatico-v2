@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
 import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
+import AuthModal from '../components/shared/AuthModal.astro';
+import InfoBanner from '../components/shared/InfoBanner.astro';
+import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -9,109 +12,8 @@ import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
     <!-- Carrito Lateral (Drawer) -->
     <CartDrawer />
 
-    <!-- Modal de Autenticación (Capa sobre todo el Dashboard) -->
-    <div id="auth-modal-overlay" class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-start pt-16 md:pt-0 md:items-center justify-center overflow-y-auto transition-opacity duration-300 pb-10">
-        
-        <!-- Enlace invisible que cubre el fondo para cerrar el modal al hacer clic fuera -->
-        <a href="/" class="absolute inset-0 z-0" aria-label="Cerrar y volver al inicio"></a>
-
-        <div id="auth-modal" class="w-full max-w-[440px] mx-4 relative z-10">
-            
-            <!-- Tarjeta Principal del Modal -->
-            <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-white/50 overflow-hidden relative">
-                
-                <!-- Botón de Cerrar (X) Superior Derecha (Alineado con el padding de px-8) -->
-                <a href="/" class="absolute top-6 right-6 p-2 rounded-full text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-1 focus:ring-brand z-20" aria-label="Cerrar modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </a>
-
-                <!-- Encabezado del Modal (Blanco puro Minimalista) -->
-                <div class="px-8 pt-10 pb-4 text-left">
-                    <h2 class="text-slate-900 text-[26px] font-extrabold tracking-tight mb-2">Acceso</h2>
-                </div>
-
-                <!-- Cuerpo del Formulario -->
-                <div class="px-8 pb-10">
-                    <form id="auth-form" class="space-y-4" novalidate>
-                        
-                        <!-- Campo NIT / Cédula -->
-                        <div class="space-y-1.5">
-                            <label for="auth-nit" class="text-[13px] font-bold text-slate-800">
-                                Cédula o NIT
-                            </label>
-                            <div class="relative">
-                                <input 
-                                    type="text" 
-                                    id="auth-nit" 
-                                    placeholder="Ej: 1234567890"
-                                    autocomplete="username"
-                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all focus:placeholder:text-transparent"
-                                />
-                            </div>
-                        </div>
-
-                        <!-- Campo Contraseña -->
-                        <div class="space-y-1.5">
-                            <label for="auth-password" class="text-[13px] font-bold text-slate-800">
-                                Contraseña
-                            </label>
-                            <div class="relative">
-                                <input 
-                                    type="password" 
-                                    id="auth-password"
-                                    placeholder="••••••••••"
-                                    autocomplete="current-password"
-                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl text-[15px] text-slate-800 placeholder:text-slate-700 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all pr-12 tracking-widest font-mono focus:placeholder:text-transparent"
-                                />
-                                <!-- Botón para mostrar/ocultar contraseña -->
-                                <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all" aria-label="Mostrar contraseña">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="icon-eye-open"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="icon-eye-closed" class="hidden"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
-                                </button>
-                            </div>
-                            <!-- Vía de escape (Proximidad) -->
-                            <div class="flex justify-end pt-1">
-                                <!-- TODO: Reemplazar el número '573000000000' por la línea WhatsApp de Atención al Cliente de la empresa -->
-                                <a 
-                                    href="https://wa.me/573000000000?text=Hola,%20Mundo%20Homeop%C3%A1tico.%20Soy%20profesional%20m%C3%A9dico%20y%20olvid%C3%A9%20mis%20credenciales%20de%20acceso%20al%20Vadem%C3%A9cum.%20%C2%BFPodr%C3%ADan%20asistirme?" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    class="text-[12px] font-medium text-secondary hover:text-brand hover:underline transition-all cursor-pointer"
-                                >
-                                    ¿Olvidó su contraseña?
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Checkbox "Mantener sesión" -->
-                        <div class="flex items-center pt-2 pb-1">
-                            <label class="flex items-center gap-2.5 text-[13px] text-secondary cursor-pointer hover:text-slate-800 transition-colors">
-                                <input type="checkbox" class="size-4 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
-                                Mantener sesión iniciada
-                            </label>
-                        </div>
-
-                        <!-- Mensaje de Error -->
-                        <div id="auth-error" class="hidden items-center gap-2.5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-[13px] font-medium">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-                            <span id="auth-error-text">Credenciales incorrectas</span>
-                        </div>
-
-                        <!-- Botón de Ingreso Limpio -->
-                        <button 
-                            type="submit" 
-                            id="auth-submit"
-                            class="w-full flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white font-semibold py-3.5 rounded-xl transition-all duration-200 hover:-translate-y-[1px] active:scale-[0.98] focus:ring-2 focus:ring-brand focus:ring-offset-2 text-[15px]"
-                        >
-                            Ingresar
-                        </button>
-                        
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    <!-- Modal de Autenticación Modular -->
+    <AuthModal />
 
     <!-- Contenedor Principal Dashboard 3 Columnas -->
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)]">
@@ -122,6 +24,11 @@ import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
         <!-- Columna Central: Grilla de Resultados (Scroll independiente) -->
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth" id="vademecum-main-scroll">
             <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1">
+
+                <!-- Aviso superior dinámico -->
+                <div class="mb-8">
+                    <InfoBanner message="Acceso restringido para profesionales de la salud. Verifique sus credenciales." />
+                </div>
 
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
                 <header class="md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
@@ -240,179 +147,8 @@ import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
             </div>
         </div>
 
-        <!-- Columna Derecha: Panel de Ficha Técnica (Scroll independiente) -->
-        <aside 
-            id="vademecum-aside" 
-            data-mobile-open="false"
-            class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-slate-50 h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
-                   data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
-        >
-            
-            <!-- Ficha: Nux Vomica -->
-            <div id="ficha-nux-vomica" class="px-8 md:px-12 pt-8 pb-24 flex-1">
-
-                <!-- Encabezado de la Ficha (ADN Clon Elite) -->
-                <div class="mb-8 relative">
-                    <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M8 17H16" />
-                            <path d="M8 13H12" />
-                            <path d="M13 2.5V3C13 5.82843 13 7.24264 13.8787 8.12132C14.7574 9 16.1716 9 19 9H19.5M20 10.6569V14C20 17.7712 20 19.6569 18.8284 20.8284C17.6569 22 15.7712 22 12 22C8.22876 22 6.34315 22 5.17157 20.8284C4 19.6569 4 17.7712 4 14V9.45584C4 6.21082 4 4.58831 4.88607 3.48933C5.06508 3.26731 5.26731 3.06508 5.48933 2.88607C6.58831 2 8.21082 2 11.4558 2C12.1614 2 12.5141 2 12.8372 2.11401C12.9044 2.13772 12.9702 2.165 13.0345 2.19575C13.3436 2.34355 13.593 2.593 14.0919 3.09188L18.8284 7.82843C19.4065 8.40649 19.6955 8.69552 19.8478 9.06306C20 9.4306 20 9.83935 20 10.6569Z" />
-                        </svg>
-                        Ficha técnica del producto
-                    </div>
-                    <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5">Nux vomica <span class="text-brand">D4</span></h2>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-normal text-slate-700 rounded-full">Strychnos nux-vomica</span>
-                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-normal text-slate-700 rounded-full">Potencia D4</span>
-                        <span class="px-3 py-1 bg-surface-muted border border-subtle text-[10px] font-normal text-slate-700 rounded-full">Origen vegetal</span>
-                    </div>
-                </div>
-
-                <!-- Secciones de la Ficha -->
-                <div class="space-y-8">
-
-                    <!-- Sección 1: Indicaciones clínicas -->
-                    <div class="border-t border-subtle pt-7">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900">
-                                <path d="M11 6L21 6" />
-                                <path d="M11 12L21 12" />
-                                <path d="M11 18L21 18" />
-                                <path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4" />
-                                <path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15" />
-                            </svg>
-                            Indicaciones clínicas
-                        </h4>
-                        <ul class="space-y-4">
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <p class="text-[13px] text-slate-700 leading-[1.8]">
-                                    Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario. Especialmente indicado para pacientes con temperamento colérico que sufren agravación matutina y después de las comidas.
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Sección 2: Perfil farmacológico -->
-                    <div class="border-t border-subtle pt-6">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900">
-                                <path d="M17.5 21C15.567 21 14 19.433 14 17.5L14 3L21 3L21 17.5C21 19.433 19.433 21 17.5 21Z" />
-                                <path d="M22 3L13 3" />
-                                <path d="M17 7H14" />
-                                <path d="M10 16.875C10 19.9126 8 21 6 21C4 21 2 19.9126 2 16.875C2 13.8374 6 10 6 10C6 10 10 13.8374 10 16.875Z" />
-                                <path d="M14 12C15.083 11.1336 16.2974 9.87843 17.771 10.7626C19.0014 11.5009 20.0342 10.7244 21 10" />
-                            </svg>
-                            Perfil farmacológico
-                        </h4>
-                        <ul class="space-y-5">
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <div class="text-[13px] leading-relaxed">
-                                    <span class="font-bold text-slate-900">Tropismo principal</span><br/>
-                                    <span class="text-slate-700">Sistema Digestivo y Sistema Nervioso Central (médula espinal).</span>
-                                </div>
-                            </li>
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <div class="text-[13px] leading-relaxed">
-                                    <span class="font-bold text-slate-900">Modalidad diagnóstica</span><br/>
-                                    <span class="text-slate-700">Mejora con el calor y el reposo; empeora por la mañana y con estimulantes.</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Sección 3: Protocolo de posología -->
-                    <div class="border-t border-subtle pt-6">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900">
-                                <path d="M16.4249 4.60509L17.4149 3.6151C18.2351 2.79497 19.5648 2.79497 20.3849 3.6151C21.205 4.43524 21.205 5.76493 20.3849 6.58507L19.3949 7.57506M16.4249 4.60509L9.76558 11.2644C9.25807 11.772 8.89804 12.4078 8.72397 13.1041L8 16L10.8959 15.276C11.5922 15.102 12.228 14.7419 12.7356 14.2344L19.3949 7.57506M16.4249 4.60509L19.3949 7.57506" />
-                                <path d="M18.9999 13.5C18.9999 16.7875 18.9999 18.4312 18.092 19.5376C17.9258 19.7401 17.7401 19.9258 17.5375 20.092C16.4312 21 14.7874 21 11.4999 21H11C7.22876 21 5.34316 21 4.17159 19.8284C3.00003 18.6569 3 16.7712 3 13V12.5C3 9.21252 3 7.56879 3.90794 6.46244C4.07417 6.2599 4.2599 6.07417 4.46244 5.90794C5.56879 5 7.21252 5 10.5 5" />
-                            </svg>
-                            Protocolo de posología
-                        </h4>
-                        <ul class="space-y-4">
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <p class="text-[13px] text-slate-700 leading-[1.8]">
-                                    Disolver <span class="font-bold text-slate-900">5 glóbulos bajo la lengua</span>, 3 veces al día, idealmente 30 minutos antes o después de la ingesta de alimentos. Evitar café y menta durante el tratamiento.
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- TEMPORAL: Ficha Arnica Montana D6 (ADN Clon Elite) -->
-            <div id="ficha-arnica-montana" class="px-8 md:px-12 pt-8 pb-24 flex-1 hidden">
-                <div class="flex items-center gap-2.5 text-slate-500 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16.5 10.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V10.5" />
-                        <path d="M6 22H18C20 22 21 21 21 19V13C21 11 20 10 18 10H6C4 10 3 11 3 13V19C3 21 4 22 6 22Z" />
-                        <path d="M12 15V17" />
-                    </svg>
-                    <span class="text-[11px] font-bold tracking-wider uppercase">Ficha técnica del producto</span>
-                </div>
-
-                <div class="mb-8 relative">
-                    <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                    <h2 class="text-[2.25rem] leading-[0.9] font-extrabold tracking-tight text-slate-900 flex items-baseline gap-2.5 mb-5 block">
-                        Arnica montana <span class="text-brand text-[2.5rem] block">D6</span>
-                    </h2>
-                    
-                    <div class="flex flex-wrap gap-2.5">
-                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Arnica montana L.</span>
-                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Potencia D6</span>
-                        <span class="inline-flex py-1.5 px-3.5 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] rounded-full drop-shadow-none">Origen vegetal</span>
-                    </div>
-                </div>
-
-                <div class="space-y-8">
-                    <div class="border-t border-subtle pt-6">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-5 flex items-center gap-2 block">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="15" height="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900 block">
-                                <path d="M4 6H20" />
-                                <path d="M4 12H20" />
-                                <path d="M4 18H20" />
-                            </svg>
-                            Indicaciones clínicas
-                        </h4>
-                        <ul class="space-y-4">
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <p class="text-[13px] text-slate-700 leading-[1.8]">
-                                    (DATOS INVENTADOS TEMPORALES) Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma. Indicado en pre y post operatorio para reducir hematomas y acelerar la recuperación tisular.
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        <!-- Columna Derecha: Panel de Ficha Técnica Modular -->
+        <MedicalDetails />
 
     </div>
 
@@ -441,45 +177,7 @@ import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // --- 2. Lógica de Autenticación (Temporal) ---
-        const TEMP_USER = 'invitado';
-        const TEMP_PASS = '1234';
-
-        const overlay = document.getElementById('auth-modal-overlay');
-        const form = document.getElementById('auth-form');
-        const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
-        const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
-        const errorBox = document.getElementById('auth-error');
-        const errorText = document.getElementById('auth-error-text');
-        const toggleBtn = document.getElementById('toggle-password');
-        const iconOpen = document.getElementById('icon-eye-open');
-        const iconClosed = document.getElementById('icon-eye-closed');
-
-        form?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const user = inputNit?.value.trim();
-            const pass = inputPass?.value;
-
-            if (user === TEMP_USER && pass === TEMP_PASS) {
-                overlay?.classList.add('opacity-0');
-                setTimeout(() => overlay?.classList.add('hidden'), 300);
-            } else {
-                errorBox?.classList.remove('hidden');
-                errorBox?.classList.add('flex');
-                if (errorText) errorText.textContent = 'Credenciales incorrectas.';
-                inputPass?.focus();
-            }
-        });
-
-        toggleBtn?.addEventListener('click', () => {
-            if (!inputPass) return;
-            const isPassword = inputPass.type === 'password';
-            inputPass.type = isPassword ? 'text' : 'password';
-            iconOpen?.classList.toggle('hidden');
-            iconClosed?.classList.toggle('hidden');
-        });
-
-        // --- 3. Lógica de navegación del Vademécum ---
+        // --- 2. Lógica de navegación del Vademécum ---
         const medCards = document.querySelectorAll('[data-med]');
         const fichaNux = document.getElementById('ficha-nux-vomica');
         const fichaArnica = document.getElementById('ficha-arnica-montana');

@@ -3,6 +3,8 @@
 import { CATALOGO_DATA } from "../../data/catalogo";
 import Icons from "./Icons.astro";
 import StickyActionBox from "../shared/StickyActionBox.astro";
+
+const { } = Astro.props;
 ---
 
 <aside class="mh-sidebar">
@@ -17,13 +19,13 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
     {CATALOGO_DATA.map((section) => (
       <div class="space-y-2">
         {/* Nivel 1: Título de Sección - Alineado al borde del buscador (pl-5) */}
-        <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">{section.title}</span>
+        <span class="block text-[12px] font-semibold text-body px-4 tracking-tight">{section.title}</span>
         
         <div class="flex flex-col gap-4">
           {section.subsections.map((sub) => (
             <div class="flex flex-col gap-0">
               {/* Nivel 2: Título de Subsección - Alineado al borde del buscador (pl-5) */}
-                <span class="block text-[12px] font-medium text-slate-600 px-4">{sub.title}</span>
+                <span class="block text-[12px] font-medium text-muted px-4">{sub.title}</span>
               
               <div class="flex flex-col gap-0.5">
                 {sub.groups.map((group) => {
@@ -34,7 +36,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                       {/* Nivel 3: Agrupador o Link Directo - Alineación Centralizada */}
                       {hasSubLinks ? (
                         <button 
-                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-xl hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
+                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-body transition-colors rounded-xl hover:bg-surface-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
                           data-target={group.name.toLowerCase().replace(/\s+/g, '-')}
                         >
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
@@ -44,13 +46,13 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                           </div>
                           <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">{group.name}</span>
                           
-                          {/* Chevron Down (Hugeicons) - Alineado con el fin del buscador */}
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto transition-all duration-300 accordion-icon">
-                            <path d="M18 9L12 15L6 9" />
-                          </svg>
+                          {/* Chevron Down unificado */}
+                          <div class="ml-auto w-4 h-4 text-muted transition-all duration-300 accordion-icon">
+                            <Icons type="chevron-down" />
+                          </div>
                         </button>
                       ) : (
-                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-body hover:bg-surface-muted hover:text-body [&.is-active]:bg-surface-muted mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                           <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                             <div class="w-[18px] h-[18px] flex items-center justify-center">
                               <Icons type={group.iconType || ""} />
@@ -64,7 +66,7 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
                       {hasSubLinks && group.links && (
                         <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                           {group.links.map((link) => (
-                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 [&.is-active]:bg-slate-200 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
+                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-body hover:bg-surface-muted hover:text-body [&.is-active]:bg-surface-muted mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                               <div class="w-8 flex-shrink-0"></div>
                               <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">{link.name}</span>
                             </a>
@@ -83,31 +85,29 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
   </nav>
 
   <!-- FIRMA DE AUTOR (Crédito de Autor persistente) -->
-  <div class="mt-auto px-4 pb-8 pt-4 border-t border-slate-50 bg-slate-50/30">
+  <div class="mt-auto px-4 pb-8 pt-4 border-t border-subtle bg-surface-muted/30">
     <a 
       href="https://www.linkedin.com/in/jalfredopabon/" 
       target="_blank" 
       rel="noopener noreferrer" 
-      class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-white hover:shadow-sm ring-1 ring-transparent hover:ring-slate-200"
+      class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface-white hover:shadow-sm ring-1 ring-transparent hover:ring-subtle"
     >
       <!-- Avatar / Iniciales AP -->
-      <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-[10px] font-bold text-white transition-transform group-hover:scale-110">
+      <div class="w-8 h-8 rounded-lg bg-body flex items-center justify-center text-[10px] font-bold text-white transition-transform group-hover:scale-110">
         AP
       </div>
       <div class="flex flex-col">
-        <span class="text-[10px] text-slate-500 font-bold leading-none mb-1">Creado por</span>
-        <span class="text-[12px] font-bold text-slate-900 leading-none group-hover:text-brand transition-colors">Alfredo Pabón</span>
+        <span class="text-[10px] text-muted font-bold leading-none mb-1">Creado por</span>
+        <span class="text-[12px] font-bold text-body leading-none group-hover:text-brand transition-colors">Alfredo Pabón</span>
       </div>
       <!-- Icono de salida externa sutil -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 ml-auto text-slate-300 group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all">
-        <path d="M7 17L17 7M17 7H7M17 7V17" />
-      </svg>
+      <div class="w-3 h-3 ml-auto text-muted group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all">
+        <Icons type="external-link" />
+      </div>
     </a>
   </div>
 
 </aside>
-
-
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

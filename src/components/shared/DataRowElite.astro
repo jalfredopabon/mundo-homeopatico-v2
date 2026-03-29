@@ -1,0 +1,38 @@
+---
+// src/components/shared/DataRowElite.astro
+import Icons from "../catalogo/Icons.astro";
+
+interface Props {
+  icon?: string;
+  label: string;
+  value?: string;
+  class?: string;
+}
+
+const { 
+  icon, 
+  label, 
+  value,
+  class: className = ''
+} = Astro.props;
+---
+
+<div class:list={["flex items-start gap-3 py-2 border-b border-subtle/40 last:border-0", className]}>
+  {icon && (
+    <div class="w-4 h-4 text-brand/80 shrink-0 mt-0.5">
+      <Icons type={icon} />
+    </div>
+  )}
+  
+  <div class="flex flex-col gap-0.5 min-w-0">
+    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider select-none leading-none">
+      {label}
+    </span>
+    
+    <div class="text-[14px] text-slate-800 font-medium leading-[1.4] break-words">
+      <slot>
+        {value || <span class="text-slate-300 italic">No especificado</span>}
+      </slot>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+---
+// src/components/catalogo/ProductRowElite.astro
+import Icons from "./Icons.astro";
+import BadgeElite from "../shared/BadgeElite.astro";
+import ButtonElite from "../shared/ButtonElite.astro";
+
+interface Badge {
+  label: string;
+  icon?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+}
+
+interface Props {
+  name: string;
+  badges: Badge[];
+  farmaciaPrice: string;
+  publicoPrice: string;
+  cartData?: {
+    name: string;
+    price: string;
+  };
+}
+
+const { 
+  name, 
+  badges, 
+  farmaciaPrice, 
+  publicoPrice, 
+  cartData 
+} = Astro.props;
+---
+
+<div class="mh-table-row mh-table-grid group">
+    <!-- Información del Producto (Nivel 3 Lego) -->
+    <div class="flex flex-col">
+        <h3 class="text-body font-bold text-base md:text-[1.05rem] leading-tight transition-colors group-hover:text-brand">
+            {name}
+        </h3>
+        <div class="flex flex-wrap items-center gap-2 mt-2">
+            {badges.map((badge) => (
+                <BadgeElite 
+                  label={badge.label} 
+                  variant={badge.variant || 'outline'} 
+                  size="xs" 
+                />
+            ))}
+        </div>
+    </div>
+
+    <!-- Precios y Acción (Estructura responsiva Elite) -->
+    <div class="sm:contents">
+        <!-- Farmacia -->
+        <div class="mh-table-price-cell">
+            <span class="sm:hidden text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Farmacia</span>
+            <span class="text-slate-500 font-medium group-hover:text-slate-900 transition-colors uppercase tracking-tight">
+                {farmaciaPrice}
+            </span>
+        </div>
+        
+        <!-- Público (Desktop) -->
+        <div class="mh-table-price-cell hidden sm:block">
+            <span class="text-slate-900 font-extrabold tracking-tighter text-base md:text-[1.1rem] transition-transform inline-block group-hover:scale-105">
+                {publicoPrice}
+            </span>
+        </div>
+
+        <!-- Botón de Acción (Uso de ButtonElite) -->
+        <div class="mh-table-action-cell">
+            <ButtonElite 
+                variant="primary" 
+                size="icon" 
+                icon="plus" 
+                label="Añadir al pedido"
+                class="btn-add-cart w-full sm:w-10 h-12 sm:h-10"
+                id={cartData ? `btn-${cartData.price}` : undefined}
+            />
+        </div>
+    </div>
+</div>

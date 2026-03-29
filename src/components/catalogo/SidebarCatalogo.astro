@@ -1,31 +1,29 @@
 ---
 // src/components/catalogo/SidebarCatalogo.astro
 import { CATALOGO_DATA } from "../../data/catalogo";
+import SidebarSearch from "../shared/SidebarSearch.astro";
+import SidebarItem from "../shared/SidebarItem.astro";
 import Icons from "./Icons.astro";
-import StickyActionBox from "../shared/StickyActionBox.astro";
 
 const { } = Astro.props;
 ---
 
-<aside class="mh-sidebar">
+<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-full overflow-hidden shrink-0">
   
-  <!-- BUSCADOR STICKY UNIFICADO -->
-  <StickyActionBox 
-    id="catalogo-search" 
-    placeholder="Buscar productos..." 
-  />
+  <!-- BUSCADOR STICKY UNIFICADO (Lego) -->
+  <SidebarSearch id="catalogo-search" placeholder="Buscar productos..." />
 
-  <nav class="pb-20 mt-0 space-y-6" id="catalogo-scrollspy">
+  <nav class="flex-1 overflow-y-auto scrollbar-premium pb-20 mt-0 space-y-7 pt-7" id="catalogo-scrollspy">
     {CATALOGO_DATA.map((section) => (
-      <div class="space-y-2">
-        {/* Nivel 1: Título de Sección - Alineado al borde del buscador (pl-5) */}
-        <span class="block text-[12px] font-semibold text-body px-4 tracking-tight">{section.title}</span>
+      <div class="space-y-6">
+        {/* Nivel 1: Título de Sección */}
+        <SidebarItem level={1} label={section.title} />
         
-        <div class="flex flex-col gap-4">
+        <div class="space-y-6">
           {section.subsections.map((sub) => (
-            <div class="flex flex-col gap-0">
-              {/* Nivel 2: Título de Subsección - Alineado al borde del buscador (pl-5) */}
-                <span class="block text-[12px] font-medium text-muted px-4">{sub.title}</span>
+            <div class="space-y-4">
+              {/* Nivel 2: Título de Subsección */}
+              <SidebarItem level={2} label={sub.title} />
               
               <div class="flex flex-col gap-0.5">
                 {sub.groups.map((group) => {
@@ -33,43 +31,25 @@ const { } = Astro.props;
                   
                   return (
                     <div class="flex flex-col">
-                      {/* Nivel 3: Agrupador o Link Directo - Alineación Centralizada */}
-                      {hasSubLinks ? (
-                        <button 
-                          class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-body transition-colors rounded-xl hover:bg-surface-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30"
-                          data-target={group.name.toLowerCase().replace(/\s+/g, '-')}
-                        >
-                          <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                            <div class="w-[18px] h-[18px] flex items-center justify-center">
-                              <Icons type={group.iconType || ""} />
-                            </div>
-                          </div>
-                          <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">{group.name}</span>
-                          
-                          {/* Chevron Down unificado */}
-                          <div class="ml-auto w-4 h-4 text-muted transition-all duration-300 accordion-icon">
-                            <Icons type="chevron-down" />
-                          </div>
-                        </button>
-                      ) : (
-                        <a href={group.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-body hover:bg-surface-muted hover:text-body [&.is-active]:bg-surface-muted mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                          <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                            <div class="w-[18px] h-[18px] flex items-center justify-center">
-                              <Icons type={group.iconType || ""} />
-                            </div>
-                          </div>
-                          <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">{group.name}</span>
-                        </a>
-                      )}
+                      {/* Nivel 3: Agrupador o Link Directo */}
+                      <SidebarItem 
+                        level={3} 
+                        label={group.name} 
+                        icon={group.iconType} 
+                        href={hasSubLinks ? undefined : group.href}
+                        hasAccordion={hasSubLinks}
+                        accordionId={group.name.toLowerCase().replace(/\s+/g, '-')}
+                      />
 
                       {/* Nivel 4: Sub-links (Acordeón) */}
                       {hasSubLinks && group.links && (
                         <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                           {group.links.map((link) => (
-                            <a href={link.href} class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-body hover:bg-surface-muted hover:text-body [&.is-active]:bg-surface-muted mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                              <div class="w-8 flex-shrink-0"></div>
-                              <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">{link.name}</span>
-                            </a>
+                            <SidebarItem 
+                              level={4} 
+                              label={link.name} 
+                              href={link.href} 
+                            />
                           ))}
                         </div>
                       )}

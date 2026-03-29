@@ -1,4 +1,5 @@
 ---
+// src/components/vademecum/MedicalDetails.astro
 import Icons from '../catalogo/Icons.astro';
 
 interface Section {
@@ -25,68 +26,81 @@ interface Props {
 const { products = [] } = Astro.props;
 ---
 
-<!-- Columna Derecha: Panel de Ficha Técnica (Scroll independiente) -->
+<!-- Columna Derecha: Panel de Ficha Técnica (ADN Clon Elite) -->
 <aside 
     id="vademecum-aside" 
-    data-mobile-open="false"
-    class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto shrink-0 relative
+    data-mobile-open="false" 
+    class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto overflow-x-hidden scrollbar-premium shrink-0 relative p-0
            data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
 >
     
     {products.map((product) => (
         <div 
             id={`ficha-${product.id}`} 
-            class={`px-8 md:px-12 pt-8 pb-24 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
+            class={`pl-8 pr-12 md:pl-12 md:pr-12 pt-8 pb-24 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
             data-sheet-id={product.id}
         >
-            <!-- Encabezado de la Ficha -->
+            <!-- Encabezado de la Ficha (ADN Clon Elite) -->
             <div class="mb-8 relative">
-                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-muted hover:text-body bg-surface-muted rounded-full border border-subtle transition-colors">
-                    <div class="w-4 h-4">
-                        <Icons type="close-x" />
-                    </div>
+                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
-                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2 tracking-wider">
-                    <div class="w-[15px] flex justify-center shrink-0">
-                        <Icons type="file-text" />
-                    </div>
+
+                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 17H16"></path>
+                        <path d="M8 13H12"></path>
+                        <path d="M13 2.5V3C13 5.82843 13 7.24264 13.8787 8.12132C14.7574 9 16.1716 9 19 9H19.5M20 10.6569V14C20 17.7712 20 19.6569 18.8284 20.8284C17.6569 22 15.7712 22 12 22C8.22876 22 6.34315 22 5.17157 20.8284C4 19.6569 4 17.7712 4 14V9.45584C4 6.21082 4 4.58831 4.88607 3.48933C5.06508 3.26731 5.26731 3.06508 5.48933 2.88607C6.58831 2 8.21082 2 11.4558 2C12.1614 2 12.5141 2 12.8372 2.11401C12.9044 2.13772 12.9702 2.165 13.0345 2.19575C13.3436 2.34355 13.593 2.593 14.0919 3.09188L18.8284 7.82843C19.4065 8.40649 19.6955 8.69552 19.8478 9.06306C20 9.4306 20 9.83935 20 10.6569Z"></path>
+                    </svg>
                     Ficha técnica del producto
                 </div>
+
                 <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5">
                     {product.name} <span class="text-brand">{product.potency}</span>
                 </h2>
-                <div class="flex flex-wrap items-center gap-2 leading-none">
-                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">{product.scientificName}</span>
-                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">Potencia {product.potency}</span>
-                    <span class="inline-flex py-1.5 px-3.5 bg-surface-muted border border-subtle text-slate-700 text-[10px] font-medium rounded-full tracking-tight">{product.origin}</span>
+
+                <div class="flex flex-wrap gap-3">
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                        {product.scientificName}
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                        Potencia {product.potency}
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                        {product.origin}
+                    </span>
                 </div>
             </div>
 
-            <!-- Secciones de la Ficha -->
+            <!-- Secciones de la Ficha (ADN Clon Elite) -->
             <div class="space-y-8">
                 {product.sections.map((section) => (
                     <div class="border-t border-subtle pt-7">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2 tracking-wider">
-                            <div class="w-[15px] flex justify-center shrink-0">
-                                <Icons type={section.icon as any} />
+                        <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <div class="w-3.5 h-3.5 text-slate-900">
+                                <Icons type={section.icon} />
                             </div>
                             {section.title}
                         </h4>
+                        
                         <ul class="space-y-4">
-                            <li class="flex gap-2">
-                                <div class="w-[15px] flex justify-center shrink-0">
-                                    <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                </div>
-                                <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={section.content}>
-                                </p>
-                            </li>
+                            {!section.items && (
+                                <li class="flex gap-2">
+                                    <div class="w-[15px] flex justify-center shrink-0">
+                                        <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
+                                    </div>
+                                    <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={section.content} />
+                                </li>
+                            )}
                             {section.items && section.items.map((item) => (
                                 <li class="flex gap-2">
                                     <div class="w-[15px] flex justify-center shrink-0">
                                         <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
                                     </div>
-                                    <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={item}>
-                                    </p>
+                                    <div class="text-[13px] leading-relaxed" set:html={item} />
                                 </li>
                             ))}
                         </ul>
@@ -98,12 +112,45 @@ const { products = [] } = Astro.props;
 
     {products.length === 0 && (
         <div class="flex-1 flex flex-col items-center justify-center p-12 text-center">
-            <div class="w-12 h-12 text-subtle mb-4 opacity-20">
+            <div class="w-16 h-16 text-slate-200 mb-6">
                 <Icons type="file-text" />
             </div>
-            <p class="text-[14px] text-muted leading-relaxed">
-                Seleccione un producto para ver su <br/> ficha técnica detallada.
+            <p class="text-[15px] text-slate-500 max-w-[200px] leading-relaxed">
+                Seleccione un producto para ver su ficha técnica detallada.
             </p>
         </div>
     )}
 </aside>
+
+<script>
+    // Manejo de visibilidad de fichas
+    document.addEventListener('astro:page-load', () => {
+        const medicalItems = document.querySelectorAll('.medical-item-btn');
+        const sheets = document.querySelectorAll('.medical-sheet-container');
+        const aside = document.getElementById('vademecum-aside');
+        const closeBtns = document.querySelectorAll('.close-ficha-btn');
+
+        medicalItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const id = item.getAttribute('data-id');
+                
+                // Ocultar todas las fichas
+                sheets.forEach(sheet => sheet.classList.add('hidden'));
+                
+                // Mostrar la seleccionada
+                const activeSheet = document.getElementById(`ficha-${id}`);
+                if (activeSheet) {
+                    activeSheet.classList.remove('hidden');
+                    // Abrir aside en móvil
+                    aside?.setAttribute('data-mobile-open', 'true');
+                }
+            });
+        });
+
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                aside?.setAttribute('data-mobile-open', 'false');
+            });
+        });
+    });
+</script>

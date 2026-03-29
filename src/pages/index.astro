@@ -5,6 +5,7 @@ import Footer from '../components/shared/Footer.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
 import Icons from '../components/catalogo/Icons.astro';
 import InfoBanner from '../components/shared/InfoBanner.astro';
+import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
 ---
 
 <BaseLayout title="Catálogo de Productos | Mundo Homeopático" mostrarZoom={true}>
@@ -22,15 +23,15 @@ import InfoBanner from '../components/shared/InfoBanner.astro';
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] scroll-smooth" id="catalogo-main-scroll">
             
             <!-- Banner Informativo Modular -->
-            <div class="px-8 md:px-[72px] pt-4">
+            <div class="mh-layout-px pt-4">
                 <InfoBanner message="Dispensación limitada a usuarios con receta médica vigente. Validación de stock requerida." />
             </div>
 
-            <div class="px-8 md:px-[72px] pt-4 pb-24 flex-1 flex flex-col">
+            <div class="mh-layout-px pt-4 pb-24 flex-1 flex flex-col">
                 <div class="flex flex-col gap-8">
                     <!-- Sección: Oligoelementos -->
                 <section id="oligoelementos" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
+                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm mh-layout-px-neg mh-layout-px pt-0 pb-8 flex flex-col auto-animate-header">
                         <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted tracking-wider mb-2">
                             <span class="hover:text-body transition-colors cursor-pointer">De nuestra farmacia</span>
                             <div class="w-2.5 h-2.5 text-subtle">
@@ -56,101 +57,29 @@ import InfoBanner from '../components/shared/InfoBanner.astro';
                             </div>
                         </div>
 
-                        <!-- Fila de Producto 1 -->
-                        <div class="mh-table-row mh-table-grid group reveal">
-                            <!-- Información del Producto -->
-                            <div class="flex flex-col">
-                                <h3 class="text-body font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos individuales</h3>
-                                <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-secondary bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-subtle transition-colors">
-                                        <div class="w-2.5 h-2.5">
-                                            <Icons type="pill" />
-                                        </div>
-                                        Gotas / Spray
-                                    </span>
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-secondary bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-subtle transition-colors">
-                                        <div class="w-2.5 h-2.5">
-                                            <Icons type="shield-check" />
-                                        </div>
-                                        Glóbulos x 30g
-                                    </span>
-                                </div>
-                            </div>
+                    <div class="flex flex-col">
+                        <ProductRowElite 
+                            name="Oligoelementos individuales"
+                            badges={[
+                                { label: 'Gotas / Spray', icon: 'pill' },
+                                { label: 'Glóbulos x 30g', icon: 'shield-check' }
+                            ]}
+                            farmaciaPrice="$19.500"
+                            publicoPrice="$36.000"
+                            cartData={{ name: 'Oligoelementos individuales', price: '19500' }}
+                        />
 
-                            <!-- Precios y Acción: Estructura responsiva unificada -->
-                            <div class="sm:contents">
-                                <!-- Columna 2: Precio Farmacia -->
-                                <div class="mh-table-price-cell">
-                                    <span class="sm:hidden text-[10px] text-muted font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-                                    <span class="text-secondary font-medium group-hover:text-body transition-colors">$19.500</span>
-                                </div>
-                                
-                                <!-- Columna 3: Precio Público (Solo Desktop) -->
-                                <div class="mh-table-price-cell hidden sm:block">
-                                    <span class="text-body font-bold tracking-tight text-base md:text-[1.05rem] group-hover:scale-105 transition-transform inline-block">$36.000</span>
-                                </div>
-
-                                <!-- Columna 4: Botón de Acción -->
-                                <div class="mh-table-action-cell">
-                                    <button class="w-full sm:w-10 h-12 sm:h-10 flex items-center justify-center rounded-xl bg-brand-vibrant hover:bg-brand text-white hover:-translate-y-0.5 transition-all focus:ring-2 focus:ring-brand active:scale-95 btn-add-cart" data-name="Oligoelementos Individuales" data-price="19500" aria-label="Añadir Oligoelementos Individuales">
-                                        <div class="flex items-center justify-center mt-[-1px]">
-                                            <div class="w-4 h-4">
-                                                <Icons type="plus" />
-                                            </div>
-                                            <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Fila de Producto 2 -->
-                        <div class="mh-table-row mh-table-grid group reveal reveal-delay-200">
-                            <!-- Información del Producto -->
-                            <div class="flex flex-col">
-                                <h3 class="text-body font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos combinados (hasta 6 componentes)</h3>
-                                <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-secondary bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-subtle transition-colors">
-                                        <div class="w-2.5 h-2.5">
-                                            <Icons type="pill" />
-                                        </div>
-                                        Gotas / Spray
-                                    </span>
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-secondary bg-surface-white px-2 py-0.5 rounded border border-subtle group-hover:border-subtle transition-colors">
-                                        <div class="w-2.5 h-2.5">
-                                            <Icons type="shield-check" />
-                                        </div>
-                                        Glóbulos x 30g
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Precios y Acción: Estructura responsiva unificada -->
-                            <div class="sm:contents">
-                                <!-- Columna 2: Precio Farmacia -->
-                                <div class="mh-table-price-cell">
-                                    <span class="sm:hidden text-[10px] text-muted font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-                                    <span class="text-secondary font-medium group-hover:text-body transition-colors">$25.500</span>
-                                </div>
-                                
-                                <!-- Columna 3: Precio Público (Solo Desktop) -->
-                                <div class="mh-table-price-cell hidden sm:block">
-                                    <span class="text-body font-bold tracking-tight text-base md:text-[1.05rem] group-hover:scale-105 transition-transform inline-block">$44.000</span>
-                                </div>
-
-                                <!-- Columna 4: Botón de Acción -->
-                                <div class="mh-table-action-cell">
-                                    <button class="w-full sm:w-10 h-12 sm:h-10 flex items-center justify-center rounded-xl bg-brand-vibrant hover:bg-brand text-white hover:-translate-y-0.5 transition-all focus:ring-2 focus:ring-brand active:scale-95 btn-add-cart" data-name="Oligoelementos combinados" data-price="25500" aria-label="Añadir Oligoelementos combinados">
-                                        <div class="flex items-center justify-center mt-[-1px]">
-                                            <div class="w-4 h-4">
-                                                <Icons type="plus" />
-                                            </div>
-                                            <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <ProductRowElite 
+                            name="Oligoelementos combinados (hasta 6 componentes)"
+                            badges={[
+                                { label: 'Gotas / Spray', icon: 'pill' },
+                                { label: 'Glóbulos x 30g', icon: 'shield-check' }
+                            ]}
+                            farmaciaPrice="$25.500"
+                            publicoPrice="$44.000"
+                            cartData={{ name: 'Oligoelementos combinados', price: '25500' }}
+                        />
+                    </div>
                     </div>
                 </section>
 

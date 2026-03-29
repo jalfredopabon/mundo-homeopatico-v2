@@ -1,98 +1,99 @@
 ---
+// src/components/vademecum/SidebarVademecum.astro
 import Icons from "../catalogo/Icons.astro";
-import StickyActionBox from "../shared/StickyActionBox.astro";
+import SidebarSearch from "../shared/SidebarSearch.astro";
 ---
 
-<aside class="mh-sidebar">
-    <!-- BUSCADOR STICKY UNIFICADO -->
-    <StickyActionBox 
+<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-full overflow-hidden shrink-0">
+    <!-- BUSCADOR STICKY UNIFICADO (Lego) -->
+    <SidebarSearch 
         id="vademecum-search" 
         placeholder="Buscar..." 
     />
 
-    <div class="p-4 pt-0 space-y-7">
+    <nav class="flex-1 overflow-y-auto scrollbar-premium p-6 pt-7 space-y-7">
 
-        <section class="pl-[6px]">
-            <h4 class="text-[11px] font-bold text-body mb-4 flex items-center gap-3">
-                <div class="w-3.5 h-3.5 text-body">
+        <section class="pl-1">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                <div class="w-3.5 h-3.5 text-slate-900">
                     <Icons type="test-tube" />
                 </div>
                 Tipo de terapia
             </h4>
             <div class="space-y-3">
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Homeopatía compleja
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Terapia floral
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Oligoelementos
                 </label>
             </div>
         </section>
 
-        <section class="pl-[6px]">
-            <h4 class="text-[11px] font-bold text-body mb-4 flex items-center gap-3">
-                <div class="w-3.5 h-3.5 text-body">
+        <section class="pl-1">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                <div class="w-3.5 h-3.5 text-slate-900">
                     <Icons type="pulse" />
                 </div>
                 Sistema del cuerpo
             </h4>
             <div class="space-y-3">
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Digestivo
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Nervioso
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Cardiovascular
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Respiratorio
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Locomotor
                 </label>
             </div>
         </section>
 
-        <section class="pl-[6px]">
-            <h4 class="text-[11px] font-bold text-body mb-4 flex items-center gap-3">
-                <div class="w-3.5 h-3.5 text-body">
+        <section class="pl-1">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                <div class="w-3.5 h-3.5 text-slate-900">
                     <Icons type="pill" />
                 </div>
                 Forma farmacéutica
             </h4>
             <div class="space-y-3">
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Gotas
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Tabletas
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Spray
                 </label>
-                <label class="flex items-center gap-3 pl-[6px] text-[13px] text-secondary cursor-pointer hover:text-body has-[:checked]:text-body transition-colors">
-                    <input type="checkbox" class="size-3.5 rounded border-subtle accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+                <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                    <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
                     Crema
                 </label>
             </div>
         </section>
 
-    </div>
+    </nav>
 </aside>
 

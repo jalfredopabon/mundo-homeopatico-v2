@@ -88,6 +88,64 @@ const medicines = [
                 content: '<span class="font-bold text-body">Tropismo principal:</span> Mucosas, Sistema Venoso y Órganos genitales femeninos.'
             }
         ]
+    },
+    // Añadidos temporales para forzar scroll
+    {
+        id: 'aconitum',
+        name: 'Aconitum napellus',
+        potency: 'D6',
+        scientificName: 'Aconitum napellus',
+        origin: 'Origen vegetal',
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'list',
+                content: 'Procesos febriles de aparición repentina, astenia, angustia con miedo a morir tras un susto o exposición al frío seco.'
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'test-tube',
+                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Cardiovascular y Sistema Nervioso.'
+            }
+        ]
+    },
+    {
+        id: 'belladonna',
+        name: 'Belladonna',
+        potency: 'D4',
+        scientificName: 'Atropa belladonna',
+        origin: 'Origen vegetal',
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'list',
+                content: 'Inflamaciones agudas, rubor, calor, dolor pulsátil. Frecuente en amigdalitis aguda, otitis derecha, fiebre elevada con sudoración térmica.'
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'test-tube',
+                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso, Piel y Mucosas.'
+            }
+        ]
+    },
+    {
+        id: 'gelsemium',
+        name: 'Gelsemium',
+        potency: 'D12',
+        scientificName: 'Gelsemium sempervirens',
+        origin: 'Origen vegetal',
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'list',
+                content: 'Estados gripales con postración, pesadez palpebral, escalofríos en espalda. Ansiedad anticipatoria ante eventos.'
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'test-tube',
+                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso Central (Eje cerebroespinal).'
+            }
+        ]
     }
 ];
 ---
@@ -107,42 +165,77 @@ const medicines = [
         <SidebarVademecum />
 
         <!-- Columna Central: Listado de Productos (Scroll propio) -->
-        <div class="flex-1 bg-surface-muted border-subtle h-full overflow-y-auto scrollbar-premium">
-            <div class="px-8 md:px-[72px] pt-12 pb-24 flex-1">
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
+            <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1">
                 
-                <!-- Encabezado de Sección -->
-                <header class="mb-10 reveal">
-                       <div class="flex items-center gap-2 text-[11px] font-medium text-slate-500">
-                           <span>De nuestra farmacia</span>
-                           <div class="w-2.5 h-2.5 opacity-40">
-                               <Icons type="chevron-right" />
-                           </div>
-                           <span class="text-slate-900/40">Vademécum</span>
-                       </div>
-                   <h1 class="text-[2.5rem] font-black text-slate-900 tracking-tighter mb-3">Vademécum clínico</h1>
-                   <p class="text-slate-600 text-[15px] font-medium leading-relaxed max-w-2xl">Explore el catálogo de productos con indicaciones terapéuticas detalladas. Información farmacéutica de alta precisión.</p>
+                <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
+                <header class="md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header reveal">
+                    <div class="flex flex-col w-full">
+                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
+                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Profesionales</span>
+                        </nav>
+                        
+                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Vademécum clínico</h2>
+                        
+                        <p class="text-slate-700 text-[15px] font-medium leading-snug">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                    </div>
                 </header>
 
-                <!-- Grilla de Medicamentos (Buscables) -->
-                <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mb-20" id="meds-container">
+                <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
+                <div class="mb-5 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
+                        <path d="M6.5 2H17.5C18.4346 2 18.9019 2 19.25 2.20096C19.478 2.33261 19.6674 2.52197 19.799 2.75C20 3.09808 20 3.56538 20 4.5C20 5.43462 20 5.90192 19.799 6.25C19.6674 6.47803 19.478 6.66739 19.25 6.79904C18.9019 7 18.4346 7 17.5 7H6.5C5.56538 7 5.09808 7 4.75 6.79904C4.52197 6.66739 4.33261 6.47803 4.20096 6.25C4 5.90192 4 5.43462 4 4.5C4 3.56538 4 3.09808 4.20096 2.75C4.33261 2.52197 4.52197 2.33261 4.75 2.20096C5.09808 2 5.56538 2 6.5 2Z"></path>
+                        <path d="M18 16V7H6V16C6 18.8284 6 20.2426 6.87868 21.1213C7.75736 22 9.17157 22 12 22C14.8284 22 16.2426 22 17.1213 21.1213C18 20.2426 18 18.8284 18 16Z"></path>
+                        <path d="M6 11H10C10.9428 11 11.4142 11 11.7071 11.2929C12 11.5858 12 12.0572 12 13V15C12 15.9428 12 16.4142 11.7071 16.7071C11.4142 17 10.9428 17 10 17H6"></path>
+                    </svg>
+                    <span>{medicines.length} medicamentos en catálogo</span>
+                </div>
+
+                <!-- Listado de Tarjetas Clínicas -->
+                <div class="space-y-3.5 max-w-3xl" id="meds-container">
                     
                     {medicines.map((med, index) => (
                         <div 
-                            class={`bg-surface-white rounded-xl p-6 cursor-pointer border transition-all hover:border-brand/30 hover:shadow-md group reveal ${index % 2 === 0 ? 'reveal-delay-100' : 'reveal-delay-200'} ${med.isActive ? 'border-brand' : 'border-subtle'}`} 
+                            class={`bg-surface-white rounded-xl p-6 cursor-pointer transition-all reveal medical-item-btn ${med.isActive ? 'border border-brand border-brand/20' : 'border border-subtle hover:border-brand/30'}`} 
                             data-med={med.id}
+                            data-id={med.id}
                         >
                             <div class="flex items-baseline gap-2.5 mb-2">
-                                <h3 class={`text-[16px] font-bold group-hover:scale-[1.02] transition-all origin-left ${med.isActive ? 'text-brand' : 'text-slate-900'}`}>
+                                <h3 class={`text-[16px] font-bold ${med.isActive ? 'text-brand' : 'text-slate-900'}`}>
                                     {med.name}
                                 </h3>
                                 <span class="text-slate-700 text-xs font-medium">{med.potency}</span>
                             </div>
+                            
                             <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
-                                {med.sections[0].content.substring(0, 120)}...
+                                {med.sections[0].content}
                             </p>
+                            
                             <div class="flex items-center gap-3 flex-wrap">
-                                <span class="mh-pill">Homeopatía</span>
-                                <span class="mh-pill">Gotas</span>
+                                {med.isActive ? (
+                                    <>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                                            Digestivo
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                                            Nervioso
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                                            Gotas
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                                            Clínica general
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
+                                            Gotas
+                                        </span>
+                                    </>
+                                )}
                             </div>
                         </div>
                     ))}
@@ -224,13 +317,14 @@ const medicines = [
     // Funciones auxiliares para FichasManager
     function actualizarTarjetasActivas(allCards, selectedCard) {
         allCards.forEach(c => {
-            c.classList.remove('border-brand');
+            c.classList.remove('border-brand', 'shadow-sm');
             c.classList.add('border-subtle');
             const h3 = c.querySelector('h3');
             if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
         });
         
-        selectedCard.classList.add('border-brand');
+        selectedCard.classList.remove('border-subtle');
+        selectedCard.classList.add('border-brand', 'shadow-sm');
         const selectedH3 = selectedCard.querySelector('h3');
         if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
     }

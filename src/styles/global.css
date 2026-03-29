@@ -100,6 +100,33 @@ button,
   text-box-edge: cap alphabetic;
 }
 
+/* --- 🏛️ Layout Spacing Tokens (ADN Modular) --- */
+.mh-layout-px {
+  @apply px-8 md:px-[72px];
+}
+
+.mh-layout-px-neg {
+  @apply -mx-8 md:-mx-[72px];
+}
+
+.mh-layout-py {
+  @apply pt-8 pb-24 md:pt-12;
+}
+
+/* --- 🖱️ Scrollbar Premium (Estética Elite) --- */
+.scrollbar-premium::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-premium::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-premium::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full transition-colors duration-300;
+}
+.scrollbar-premium:hover::-webkit-scrollbar-thumb {
+  @apply bg-slate-300;
+}
+
 /* --- 🏛️ Sistema Maestro de Tablas (Estética Elite) --- */
 .mh-table-container {
   @apply w-full bg-surface-white border border-subtle shadow-sm overflow-hidden rounded-2xl;

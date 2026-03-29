@@ -1,0 +1,72 @@
+---
+// src/components/shared/ButtonElite.astro
+import Icons from "../catalogo/Icons.astro";
+
+interface Props {
+  label?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+  size?: 'sm' | 'md' | 'lg' | 'icon';
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  href?: string;
+  class?: string;
+  id?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const { 
+  label, 
+  variant = 'primary', 
+  size = 'md',
+  icon,
+  iconPosition = 'left',
+  href,
+  class: className = '',
+  id,
+  type = 'button'
+} = Astro.props;
+
+// Diccionario de Variantes Elite
+const variants = {
+  primary: "bg-brand text-white border-brand hover:bg-brand-dark shadow-sm hover:shadow-md",
+  secondary: "bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200 hover:border-slate-300",
+  outline: "bg-transparent text-slate-700 border-subtle hover:bg-slate-50 hover:border-brand/40 hover:text-brand",
+  ghost: "bg-transparent text-slate-500 border-transparent hover:bg-slate-100 hover:text-slate-900",
+  danger: "bg-red-50 text-red-600 border-red-100 hover:bg-red-100 hover:text-red-700"
+};
+
+const sizes = {
+  sm: "h-8 px-3 text-[12px] font-semibold gap-1.5",
+  md: "h-11 px-6 text-[14px] font-semibold gap-2.5",
+  lg: "h-14 px-8 text-[16px] font-bold gap-3.5",
+  icon: "h-10 w-10 flex items-center justify-center rounded-full"
+};
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag 
+  href={href}
+  id={id}
+  type={Tag === 'button' ? type : undefined}
+  class:list={[
+    "inline-flex items-center justify-center rounded-xl border transition-all duration-300 active:scale-[0.98] select-none text-trim",
+    variants[variant],
+    sizes[size],
+    className
+  ]}
+>
+  {icon && iconPosition === 'left' && (
+    <div class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110">
+      <Icons type={icon} />
+    </div>
+  )}
+  
+  {label && <span>{label}</span>}
+  
+  {icon && iconPosition === 'right' && (
+    <div class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110">
+      <Icons type={icon} />
+    </div>
+  )}
+</Tag>

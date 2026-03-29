@@ -45,9 +45,24 @@
 - **InfoBanner.astro:** Sistema modular de avisos para toda la aplicación.
 - **Limpieza Final:** `index.astro` y `vademecum.astro` ahora son orquestadores puros de componentes LEGO.
 
+### Hito 7: Arquitectura Atómica "Elite" (28/03/2026)
+- **Átomos Fundamentales:** Creación de `BadgeElite.astro` y `ButtonElite.astro` para estandarizar etiquetas y acciones en todo el sitio.
+- **Moléculas de Navegación:** Implementación de `SidebarItem.astro` (jerarquía de 4 niveles) y `SidebarSearch.astro` (buscador con backdrop-blur).
+- **Moléculas de Información:** Creación de `DataRowElite.astro` para unificar la presentación de datos técnicos en el Vademécum.
+- **Organismos del Catálogo:** Creación de `ProductRowElite.astro` para gestionar filas de productos responsivas.
+- **Refactorización de Vademécum:** Limpieza total de `MedicalDetails.astro` logrando paridad visual absoluta con el sitio online y 100% de modularidad.
+
+### Hito 8: Clonación Estricta y Paridad Visual Vademécum (28/03/2026)
+- **UI Parity 1:1:** Logro de simetría total en tarjetas, eliminando bordes asimétricos y unificando el diseño de badges.
+- **Scrollbar Premium:** Implementación de scrollbars estéticos (6px, redondeados, hover) integrados al sistema de diseño.
+- **Optimización de UX:** Reubicación estratégica del contador de medicamentos y refinamiento del sistema de migas de pan.
+- **Limpieza Técnica:** Ajuste de paddings y carril de scroll en `MedicalDetails.astro` para maximizar el área de visualización.
+
 ---
 
-## 🏗️ Deuda Técnica Pendiente (Fase 3: Datos)
+## 🏗️ Deuda Técnica Pendiente (Fase 4: Sincronización)
+- **Scrollbar Global:** Evaluar la implementación del scrollbar premium en el Catálogo y Contacto para paridad total del sitio.
+- **Migración de Catálogo:** Reemplazar el resto de las secciones estáticas de `index.astro` con el organismo `ProductRowElite`.
 - **Tipado de Props:** Implementar interfaces de TypeScript estrictas para todos los componentes de la tabla.
 - **Validación de Datos:** Preparación del esquema de datos para la ingesta de JSON real en el Catálogo.
 - **Optimización de Imágenes:** Sustituir placeholders por activos finales generados.

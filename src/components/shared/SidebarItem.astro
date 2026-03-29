@@ -1,0 +1,82 @@
+---
+// src/components/shared/SidebarItem.astro
+import Icons from "../catalogo/Icons.astro";
+
+interface Props {
+  level: 1 | 2 | 3 | 4;
+  label: string;
+  icon?: string;
+  href?: string;
+  isActive?: boolean;
+  hasAccordion?: boolean;
+  accordionId?: string;
+}
+
+const { 
+  level, 
+  label, 
+  icon, 
+  href, 
+  isActive = false, 
+  hasAccordion = false,
+  accordionId 
+} = Astro.props;
+
+// Clases base según el nivel (ADN Elite)
+const levelClasses = {
+  1: "text-[11px] font-bold text-slate-500 uppercase tracking-widest px-6 pt-4 mb-2 select-none",
+  2: "text-[11px] font-bold text-slate-400/80 uppercase tracking-wider px-6 mb-1 select-none",
+  3: "flex items-center gap-3 text-[13px] font-medium text-slate-700 hover:text-slate-900 px-6 py-2 rounded-xl transition-all group",
+  4: "flex items-center gap-3 text-[12px] font-normal text-slate-600 hover:text-slate-900 pl-14 py-1.5 transition-all group"
+};
+
+const activeClass = isActive ? "bg-slate-100 text-slate-900 font-bold" : "";
+---
+
+{level === 1 && (
+  <h4 class={levelClasses[1]}>{label}</h4>
+)}
+
+{level === 2 && (
+  <h5 class={levelClasses[2]}>{label}</h5>
+)}
+
+{level === 3 && (
+  hasAccordion ? (
+    <button 
+      class={`accordion-trigger ${levelClasses[3]} w-full text-left ${activeClass}`}
+      data-target={accordionId}
+    >
+      {icon && (
+        <div class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0">
+          <Icons type={icon} />
+        </div>
+      )}
+      <span class="flex-1 truncate">{label}</span>
+      <div class="w-3.5 h-3.5 text-slate-400 transition-transform duration-300 accordion-icon">
+        <Icons type="chevron-down" />
+      </div>
+    </button>
+  ) : (
+    <a 
+      href={href} 
+      class={`sidebar-link ${levelClasses[3]} ${activeClass}`}
+    >
+      {icon && (
+        <div class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0">
+          <Icons type={icon} />
+        </div>
+      )}
+      <span class="truncate">{label}</span>
+    </a>
+  )
+)}
+
+{level === 4 && (
+  <a 
+    href={href} 
+    class={`sidebar-link ${levelClasses[4]} ${activeClass}`}
+  >
+    <span class="truncate">{label}</span>
+  </a>
+)}

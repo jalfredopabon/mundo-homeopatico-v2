@@ -1,0 +1,30 @@
+---
+// src/components/shared/SidebarSearch.astro
+import Icons from "../catalogo/Icons.astro";
+
+interface Props {
+  id?: string;
+  placeholder?: string;
+}
+
+const { 
+  id = "sidebar-search", 
+  placeholder = "Buscar..."
+} = Astro.props;
+---
+
+<div class="sticky top-0 z-30 bg-surface-white/95 backdrop-blur-sm px-6 py-5 border-b border-subtle">
+  <div class="relative group">
+    <div class="absolute left-0 top-0 h-full w-4 flex items-center justify-center text-slate-400 group-focus-within:text-brand transition-colors pointer-events-none ml-3">
+      <div class="w-4 h-4">
+        <Icons type="search" />
+      </div>
+    </div>
+    <input 
+      type="search" 
+      id={id} 
+      placeholder={placeholder} 
+      class="w-full h-10 pl-10 pr-4 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 placeholder:text-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all mt-[-1px]"
+    />
+  </div>
+</div>

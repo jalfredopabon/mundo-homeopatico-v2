@@ -1,6 +1,6 @@
 ---
 // src/components/shared/SidebarSearch.astro
-import Icons from "../catalogo/Icons.astro";
+import Icons from "./Icons.astro";
 
 interface Props {
   id?: string;
@@ -16,9 +16,7 @@ const {
 <div class="sticky top-0 z-30 bg-surface-white/95 backdrop-blur-sm px-6 py-5 border-b border-subtle">
   <div class="relative group">
     <div class="absolute left-0 top-0 h-full w-4 flex items-center justify-center text-slate-400 group-focus-within:text-brand transition-colors pointer-events-none ml-3">
-      <div class="w-4 h-4">
-        <Icons type="search" />
-      </div>
+      <Icons type="search" class="w-4 h-4" />
     </div>
     <input 
       type="search" 

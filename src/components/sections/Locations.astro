@@ -3,6 +3,7 @@
  * Locations: Sección de sedes principales y distribuidores autorizados
  * Clonación Estricta: Se respeta el diseño visual idéntico al online.
  */
+import Icons from "../shared/Icons.astro";
 
 const branchDistributors = [
     { name: "Distribuidora occidente", city: "Medellín", email: "medellin@mundohomeo.co" },
@@ -24,12 +25,7 @@ const branchDistributors = [
                 <div>
                     <div class="inline-flex items-center gap-2 rounded-lg bg-brand/5 px-3 py-1 text-[11px] font-bold text-brand mb-6 border border-brand/20">
                         <!-- Icono Edificios (Hugeicons) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
-                            <path d="M15 2H9C5.69067 2 5 2.69067 5 6V22H19V6C19 2.69067 18.3093 2 15 2Z"></path>
-                            <path d="M3 22H21"></path>
-                            <path d="M15 22V19C15 17.3453 14.6547 17 13 17H11C9.34533 17 9 17.3453 9 19V22"></path>
-                            <path d="M13.5 6H10.5M13.5 9.5H10.5M13.5 13H10.5"></path>
-                        </svg>
+                        <Icons type="building" class="w-3.5 h-3.5" strokeWidth={2.2} />
                         Sede principal y laboratorio
                     </div>
                     <h3 class="text-secondary text-2xl font-extrabold mb-8 tracking-tight">Mundo homeopático Bogotá</h3>
@@ -37,10 +33,7 @@ const branchDistributors = [
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
                                 <!-- Icono Dirección/Ubicación (Hugeicons) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                    <path d="M13.6177 21.367C13.1841 21.773 12.6044 22 12.0011 22C11.3978 22 10.8182 21.773 10.3845 21.367C6.41302 17.626 1.09076 13.4469 3.68627 7.37966C5.08963 4.09916 8.45834 2 12.0011 2C15.5439 2 18.9126 4.09916 20.316 7.37966C22.9082 13.4393 17.599 17.6389 13.6177 21.367Z"></path>
-                                    <path d="M15.5 11C15.5 12.933 13.933 14.5 12 14.5C10.067 14.5 8.5 12.933 8.5 11C8.5 9.067 10.067 7.5 12 7.5C13.933 7.5 15.5 9.067 15.5 11Z"></path>
-                                </svg>
+                                <Icons type="map-pin" class="w-5 h-5" strokeWidth={2} />
                                 <span class="text-[11px] font-bold text-slate-700">Dirección</span>
                             </div>
                             <p class="text-body leading-relaxed font-semibold text-[15px]">Calle de la Salud 123<br>Edificio San Lucas, Piso 4<br>Bogotá D.C.</p>
@@ -48,10 +41,7 @@ const branchDistributors = [
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
                                 <!-- Icono Horarios (Hugeicons) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 8V12L14 14"></path>
-                                </svg>
+                                <Icons type="clock" class="w-5 h-5" strokeWidth={2} />
                                 <span class="text-[11px] font-bold text-slate-700">Horarios</span>
                             </div>
                             <p class="text-body leading-relaxed text-[15px]">
@@ -63,17 +53,12 @@ const branchDistributors = [
                 <div class="flex flex-col sm:flex-row gap-4 mt-10">
                     <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95 hover:-translate-y-0.5">
                         <!-- Icono WhatsApp (Hugeicons) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z"></path>
-                            <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118"></path>
-                        </svg>
+                        <Icons type="whatsapp" class="w-5 h-5" strokeWidth={2.1} />
                         WhatsApp
                     </button>
                     <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold hover:border-brand/50 hover:bg-surface-muted transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95">
                         <!-- Icono Teléfono (Hugeicons) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="w-5 h-5">
-                            <path d="M9.1585 5.71217L8.75584 4.80619C8.49256 4.21382 8.36092 3.91762 8.16405 3.69095C7.91732 3.40688 7.59571 3.19788 7.23592 3.08779C6.94883 2.99994 6.62244 2.99994 5.97645 2.99994C5.02815 2.99994 4.554 2.99994 4.15597 3.18223C3.68711 3.39696 3.26368 3.86322 3.09497 4.35054C2.95175 4.76423 2.99278 5.18937 3.07482 6.03964C3.94815 15.0901 8.91006 20.052 17.9605 20.9254C18.8108 21.0074 19.236 21.0484 19.6496 20.9052C20.137 20.7365 20.6032 20.3131 20.818 19.8442C21.0002 19.4462 21.0002 18.972 21.0002 18.0237C21.0002 17.3755 21.0002 17.0514 20.9124 16.7643C20.8023 16.4045 20.5933 16.0829 20.3092 15.8361C20.0826 15.6393 19.7864 15.5076 19.194 15.2443L18.288 14.8417C17.6465 14.5566 17.3257 14.414 16.9998 14.383C16.6878 14.3533 16.3733 14.3971 16.0813 14.5108C15.7762 14.6296 15.5066 14.8543 14.9672 15.3038C14.4304 15.7511 14.162 15.9748 13.834 16.0946C13.5432 16.2009 13.1588 16.2402 12.8526 16.1951C12.5071 16.1442 12.2426 16.0028 11.7135 15.7201C10.0675 14.8404 9.15977 13.9327 8.28011 12.2867C7.99738 11.7576 7.85602 11.4931 7.80511 11.1476C7.75998 10.8414 7.79932 10.457 7.90554 10.1662C8.02536 9.83822 8.24905 9.5698 8.69643 9.03294C9.14586 8.49362 9.37058 8.22396 9.48939 7.91885C9.60309 7.62688 9.64686 7.31234 9.61719 7.00042C9.58618 6.67446 9.44362 6.3537 9.1585 5.71217Z"></path>
-                        </svg>
+                        <Icons type="phone" class="w-5 h-5" strokeWidth={1.8} />
                         Llamadas
                     </button>
                 </div>
@@ -88,10 +73,7 @@ const branchDistributors = [
                         </div>
                         <div class="relative flex items-center justify-center h-12 w-12 bg-brand rounded-full text-surface-white border-4 border-surface-white">
                             <!-- Icono Ubicación/Pin (Hugeicons) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
-                                <path d="M13.6177 21.367C13.1841 21.773 12.6044 22 12.0011 22C11.3978 22 10.8182 21.773 10.3845 21.367C6.41302 17.626 1.09076 13.4469 3.68627 7.37966C5.08963 4.09916 8.45834 2 12.0011 2C15.5439 2 18.9126 4.09916 20.316 7.37966C22.9082 13.4393 17.599 17.6389 13.6177 21.367Z"></path>
-                                <path d="M15.5 11C15.5 12.933 13.933 14.5 12 14.5C10.067 14.5 8.5 12.933 8.5 11C8.5 9.067 10.067 7.5 12 7.5C13.933 7.5 15.5 9.067 15.5 11Z"></path>
-                            </svg>
+                            <Icons type="map-pin" class="w-6 h-6" strokeWidth={2.2} />
                         </div>
                     </div>
                 </div>
@@ -105,12 +87,7 @@ const branchDistributors = [
                     <div class="flex items-center gap-3.5 mb-5">
                         <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-colors duration-300">
                             <!-- Icono Edificios (Hugeicons) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                <path d="M15 2H9C5.69067 2 5 2.69067 5 6V22H19V6C19 2.69067 18.3093 2 15 2Z"></path>
-                                <path d="M3 22H21"></path>
-                                <path d="M15 22V19C15 17.3453 14.6547 17 13 17H11C9.34533 17 9 17.3453 9 19V22"></path>
-                                <path d="M13.5 6H10.5M13.5 9.5H10.5M13.5 13H10.5"></path>
-                            </svg>
+                            <Icons type="building" class="w-5 h-5" strokeWidth={2} />
                         </div>
                         <div>
                             <h4 class="text-[15px] font-bold text-secondary leading-tight">{distributor.name}</h4>
@@ -120,17 +97,12 @@ const branchDistributors = [
                     <div class="mt-auto space-y-3">
                         <div class="flex items-center gap-2 text-slate-700">
                             <!-- Icono Email (Hugeicons) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
-                                <path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6"></path>
-                                <path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z"></path>
-                            </svg>
+                            <Icons type="mail" class="w-3.5 h-3.5" strokeWidth={2} />
                             <span class="text-[13px] font-medium">{distributor.email}</span>
                         </div>
                         <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-surface-muted border border-strong px-4 py-2.5 text-body font-bold text-[13px] hover:bg-surface-muted transition-colors">
                             <!-- Icono Teléfono (Hugeicons) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="w-4 h-4">
-                                <path d="M9.1585 5.71217L8.75584 4.80619C8.49256 4.21382 8.36092 3.91762 8.16405 3.69095C7.91732 3.40688 7.59571 3.19788 7.23592 3.08779C6.94883 2.99994 6.62244 2.99994 5.97645 2.99994C5.02815 2.99994 4.554 2.99994 4.15597 3.18223C3.68711 3.39696 3.26368 3.86322 3.09497 4.35054C2.95175 4.76423 2.99278 5.18937 3.07482 6.03964C3.94815 15.0901 8.91006 20.052 17.9605 20.9254C18.8108 21.0074 19.236 21.0484 19.6496 20.9052C20.137 20.7365 20.6032 20.3131 20.818 19.8442C21.0002 19.4462 21.0002 18.972 21.0002 18.0237C21.0002 17.3755 21.0002 17.0514 20.9124 16.7643C20.8023 16.4045 20.5933 16.0829 20.3092 15.8361C20.0826 15.6393 19.7864 15.5076 19.194 15.2443L18.288 14.8417C17.6465 14.5566 17.3257 14.414 16.9998 14.383C16.6878 14.3533 16.3733 14.3971 16.0813 14.5108C15.7762 14.6296 15.5066 14.8543 14.9672 15.3038C14.4304 15.7511 14.162 15.9748 13.834 16.0946C13.5432 16.2009 13.1588 16.2402 12.8526 16.1951C12.5071 16.1442 12.2426 16.0028 11.7135 15.7201C10.0675 14.8404 9.15977 13.9327 8.28011 12.2867C7.99738 11.7576 7.85602 11.4931 7.80511 11.1476C7.75998 10.8414 7.79932 10.457 7.90554 10.1662C8.02536 9.83822 8.24905 9.5698 8.69643 9.03294C9.14586 8.49362 9.37058 8.22396 9.48939 7.91885C9.60309 7.62688 9.64686 7.31234 9.61719 7.00042C9.58618 6.67446 9.44362 6.3537 9.1585 5.71217Z"></path>
-                            </svg>
+                            <Icons type="phone" class="w-4 h-4" strokeWidth={1.8} />
                             Llamar sucursal
                         </button>
                     </div>

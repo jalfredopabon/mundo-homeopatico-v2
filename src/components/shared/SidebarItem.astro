@@ -1,6 +1,6 @@
 ---
 // src/components/shared/SidebarItem.astro
-import Icons from "../catalogo/Icons.astro";
+import Icons from "./Icons.astro";
 
 interface Props {
   level: 1 | 2 | 3 | 4;
@@ -48,14 +48,10 @@ const activeClass = isActive ? "bg-slate-100 text-slate-900 font-bold" : "";
       data-target={accordionId}
     >
       {icon && (
-        <div class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0">
-          <Icons type={icon} />
-        </div>
+        <Icons type={icon} class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0" />
       )}
       <span class="flex-1 truncate">{label}</span>
-      <div class="w-3.5 h-3.5 text-slate-400 transition-transform duration-300 accordion-icon">
-        <Icons type="chevron-down" />
-      </div>
+      <Icons type="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-300 accordion-icon shrink-0" />
     </button>
   ) : (
     <a 
@@ -63,9 +59,7 @@ const activeClass = isActive ? "bg-slate-100 text-slate-900 font-bold" : "";
       class={`sidebar-link ${levelClasses[3]} ${activeClass}`}
     >
       {icon && (
-        <div class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0">
-          <Icons type={icon} />
-        </div>
+        <Icons type={icon} class="w-4 h-4 text-slate-700 group-hover:text-brand transition-colors shrink-0" />
       )}
       <span class="truncate">{label}</span>
     </a>

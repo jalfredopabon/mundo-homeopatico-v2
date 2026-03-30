@@ -1,5 +1,6 @@
 ---
 // src/components/cart/CartDrawer.astro
+import Icons from "../shared/Icons.astro";
 ---
 <!-- Bloque 1 - Fase 2: Cimientos (Estructura Base) -->
 <aside id="cart-drawer" class="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-white z-50 flex flex-col translate-x-full transition-transform duration-300 ease-in-out border-l border-slate-200" aria-labelledby="cart-title">
@@ -9,14 +10,7 @@
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700">
                 <!-- Icono Carrito (Hugeicons) -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[22px] h-[22px]">
-                    <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" />
-                    <path d="M6 6H22" />
-                    <circle cx="6" cy="20" r="2" />
-                    <circle cx="17" cy="20" r="2" />
-                    <path d="M8 20L15 20" />
-                    <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" />
-                </svg>
+                <Icons type="shopping-cart" class="w-[22px] h-[22px]" strokeWidth={2} />
             </div>
             <div>
                 <h2 id="cart-title" class="text-lg font-bold text-slate-900 tracking-tight">Mi pedido</h2>
@@ -31,7 +25,7 @@
             </button>
             <!-- Botón Cerrar -->
             <button id="close-cart" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-700 hover:text-slate-900 transition-all" aria-label="Cerrar carrito">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <Icons type="x" class="w-5 h-5" strokeWidth={2.5} />
             </button>
         </div>
     </header>
@@ -44,14 +38,7 @@
              <div id="cart-empty-state" class="py-20 text-center space-y-3">
                 <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
                     <!-- Icono Carrito Vacío (Hugeicons) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
-                        <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" />
-                        <path d="M6 6H22" />
-                        <circle cx="6" cy="20" r="2" />
-                        <circle cx="17" cy="20" r="2" />
-                        <path d="M8 20L15 20" />
-                        <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" />
-                    </svg>
+                    <Icons type="shopping-cart" class="w-8 h-8" strokeWidth={2} />
                 </div>
                 <p class="text-slate-700 text-sm font-medium">Tu carrito está vacío</p>
              </div>
@@ -119,18 +106,12 @@
         <div class="grid grid-cols-1 gap-3">
             <button id="btn-order-medico" class="w-full bg-[#158C77] hover:bg-[#117060] text-white h-12 rounded-lg font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
                 <!-- Icono WhatsApp (Hugeicons) -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z" />
-                    <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" />
-                </svg>
+                <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
                 Pedido Médico WhatsApp
             </button>
             <button id="btn-order-farmacia" class="w-full bg-slate-900 hover:bg-black text-white h-12 rounded-lg font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
                 <!-- Icono WhatsApp (Hugeicons) -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z" />
-                    <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" />
-                </svg>
+                <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
                 Pedido Farmacia WhatsApp
             </button>
         </div>

@@ -1,5 +1,6 @@
 ---
 // src/components/shared/Header.astro
+import Icons from "./Icons.astro";
 /**
  * Header Global: Clonación Estricta 1:1 con lógica de navegación dinámica.
  * - Sincroniza estados activos según la ruta actual.
@@ -61,11 +62,7 @@ const showTextSize = isCatalog || isVademecum;
         >
           <span class="leading-none mt-[-1.5px]">Soy médico</span>
           <!-- Icono de Candado -->
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-90">
-            <path d="M12 16V14"></path>
-            <path d="M5 15C5 11.134 8.13401 8 12 8C15.866 8 19 11.134 19 15C19 18.866 15.866 22 12 22C8.13401 22 5 18.866 5 15Z"></path>
-            <path d="M16.5 9.5V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V9.5"></path>
-          </svg>
+          <Icons type="lock" class="w-3.5 h-3.5 opacity-90" strokeWidth={2} />
         </a>
       </div>
     </nav>
@@ -76,7 +73,7 @@ const showTextSize = isCatalog || isVademecum;
     <!-- Buscador Móvil -->
     <div class="md:hidden flex-1 px-2">
       <div class="h-10 w-full bg-surface-muted rounded-lg flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all cursor-pointer" id="mobile-search-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-muted"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <Icons type="search" class="w-4 h-4 text-muted" strokeWidth={2.5} />
         <span class="text-[13px] text-muted font-medium ml-2 select-none">Buscar...</span>
       </div>
     </div>
@@ -88,10 +85,7 @@ const showTextSize = isCatalog || isVademecum;
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer" id="text-size-btn">
           <button class="flex flex-col items-center justify-center p-2 min-w-[3.5rem] text-body hover:bg-surface-muted rounded-lg transition-colors" aria-label="Cambiar tamaño de texto">
             <div class="h-5 flex items-center justify-center text-body/90">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]">
-                <path d="M10.5714 18H5.42857M8 3V18M8 3C6.81082 3 5.28326 3.12265 4.06709 3.24346C3.55271 3.29456 3.29552 3.32011 3.06788 3.41021C2.59438 3.59763 2.21271 4.00855 2.06906 4.48556C2 4.71489 2 4.97659 2 5.5M8 3C9.18918 3 10.7167 3.12265 11.9329 3.24346C12.4473 3.29456 12.7045 3.32011 12.9321 3.41021C13.4056 3.59763 13.7873 4.00855 13.9309 4.48556C14 4.71489 14 4.97659 14 5.5"></path>
-                <path d="M19.7143 21H16.2857M18 12V21M18 12C17.2072 12 16.1888 12.0818 15.3781 12.1623C15.0351 12.1964 14.8637 12.2134 14.7119 12.2735C14.3963 12.3984 14.1418 12.6724 14.046 12.9904C14 13.1433 14 13.3177 14 13.6667M18 12C18.7928 12 19.8112 12.0818 20.6219 12.1623C20.9649 12.1964 21.1363 12.2134 21.2881 12.2735C21.6037 12.3984 21.8582 12.6724 21.954 12.9904C22 13.1433 22 13.3177 22 13.6667"></path>
-              </svg>
+              <Icons type="text-size" class="w-[18px] h-[18px]" strokeWidth={2} />
             </div>
             <span class="text-[10px] font-medium text-body mt-1">Texto</span>
           </button>
@@ -109,14 +103,7 @@ const showTextSize = isCatalog || isVademecum;
       <!-- Botón Carrito -->
       <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-2 min-w-[3rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
          <div class="h-5 flex items-center justify-center text-body/90 relative">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform">
-              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"></path>
-              <path d="M6 6H22"></path>
-              <circle cx="6" cy="20" r="2"></circle>
-              <circle cx="17" cy="20" r="2"></circle>
-              <path d="M8 20L15 20"></path>
-              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18"></path>
-            </svg>
+            <Icons type="shopping-cart" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform" strokeWidth={2.3} />
             <span id="cart-badge" class="absolute -top-1.5 -right-2 flex h-4 w-4 hidden">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span id="cart-counter" class="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold">0</span>
@@ -128,7 +115,7 @@ const showTextSize = isCatalog || isVademecum;
       <!-- Botón Menú Móvil -->
       <button id="mobile-menu-btn" class="md:hidden flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Abrir menú principal">
           <div class="h-5 flex items-center justify-center text-body/90">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+              <Icons type="menu" class="w-[22px] h-[22px] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
           </div>
       </button>
     </div>

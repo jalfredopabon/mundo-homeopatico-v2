@@ -79,14 +79,13 @@
 - **Navegación Dinámica:** Sincronización automática de estados activos (`active`) y subrayados según la ruta actual.
 - **Feedback Visual (UX):** Barra de progreso integrada para indicar carga de navegación y micro-interacciones en botones operativos.
 
-### Hito 14: Estandarización de Ritmo Vertical y Sistema de Iconos (30/03/2026)
-- **Armonización de Ritmo Vertical (4pt Grid):** Estandarización de paddings y gaps a 32px (`pb-8`) en `index.astro`, `vademecum.astro` y `contacto.astro` para lograr paridad sistémica absoluta.
-- **Unificación del Footer:** Centralización del pie de página en `Footer.astro` con branding interactivo (efectos de escala/brillo) y script de "Back to Top" resiliente que detecta automáticamente el carril de scroll.
-- **Refinamiento de Tablas y Badges:** Alineación central del icono del carrito, unificación cromática de precios (`slate-700`) y eliminación de iconos en badges para reducir ruido visual y mejorar la escaneabilidad.
-- **Estrategia Iconográfica Global:** Documentación del plan de refactorización en `iconos_ajustar.md` para convertir `Icons.astro` en un componente dinámico con props de `class` y `strokeWidth`, erradicando los SVGs inline del proyecto.
+### Hito 15: Finalización de la Estandarización Iconográfica Global (30/03/2026)
+- **Migración 100% SVG-Less:** Eliminación total de SVGs inline en componentes críticos (`Header`, `Footer`, `VideoSection`, `Locations`, `CartDrawer` y `MobileTabNav`).
+- **Arquitectura Dinámica de Iconos:** `Icons.astro` ahora soporta props de `class` y `strokeWidth`, permitiendo una paridad visual absoluta sin sacrificar la modularidad.
+- **Ampliación del Catálogo Global:** Adición de 15+ nuevos tipos de iconos clave (`whatsapp`, `grid`, `user`, `play`, `lock`, etc.) para cubrir todas las necesidades de la interfaz.
+- **Sincronización Sistémica:** Todos los elementos interactivos y de navegación ahora consumen el mismo SSoT (Single Source of Truth) iconográfico.
 
-- **Scrollbar Global:** Evaluar la implementación del scrollbar premium en el Catálogo y Contacto para paridad total del sitio.
-- **Migración de Catálogo:** Reemplazar el resto de las secciones estáticas de `index.astro` con el organismo `ProductRowElite`.
-- **Tipado de Props:** Implementar interfaces de TypeScript estrictas para todos los componentes de la tabla.
-- **Validación de Datos:** Preparación del esquema de datos para la ingesta de JSON real en el Catálogo.
-- **Optimización de Imágenes:** Sustituir placeholders por activos finales generados.
+## 🚀 Próximos Pasos (Deuda Técnica y Evolución)
+- **Ingesta de Datos (Fase 3):** Sustitución de datos estáticos por JSON real en Catálogo y Vademécum.
+- **Pulido de Assets:** Sustituir placeholders de imágenes por activos finales generados por IA o proporcionados por el cliente.
+- **Refuerzo de Tipado:** Implementar `interface` estrictas de TypeScript para los tipos de iconos en `Icons.astro`.

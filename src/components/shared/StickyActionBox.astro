@@ -1,5 +1,5 @@
 ---
-import Icons from "../catalogo/Icons.astro";
+import Icons from "./Icons.astro";
 
 interface Props {
   id?: string;
@@ -17,9 +17,7 @@ const {
     <slot>
       <!-- Input de Búsqueda por defecto -->
       <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted group-focus-within:text-brand transition-colors">
-        <div class="w-4 h-4">
-          <Icons type="search" />
-        </div>
+        <Icons type="search" class="w-4 h-4" />
       </div>
       <input 
         type="text" 

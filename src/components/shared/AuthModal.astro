@@ -1,5 +1,5 @@
 ---
-import Icons from '../catalogo/Icons.astro';
+import Icons from './Icons.astro';
 ---
 
 <!-- Modal de Autenticación (Capa sobre todo el Dashboard) -->
@@ -15,9 +15,7 @@ import Icons from '../catalogo/Icons.astro';
             
             <!-- Botón de Cerrar (X) Superior Derecha -->
             <a href="/" class="absolute top-6 right-6 p-2 rounded-full text-secondary hover:text-body hover:bg-surface-muted transition-colors focus:outline-none focus:ring-1 focus:ring-brand z-20" aria-label="Cerrar modal">
-                <div class="w-5 h-5">
-                    <Icons type="close-x" />
-                </div>
+                <Icons type="close-x" class="w-5 h-5" />
             </a>
 
             <!-- Encabezado del Modal -->
@@ -59,13 +57,9 @@ import Icons from '../catalogo/Icons.astro';
                                 class="w-full px-4 py-3 bg-surface-white border border-subtle focus:border-brand rounded-xl text-[15px] text-body placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-brand shadow-sm hover:border-strong transition-all pr-12 tracking-widest font-mono focus:placeholder:text-transparent"
                             />
                             <!-- Botón para mostrar/ocultar contraseña -->
-                            <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg text-secondary hover:text-body hover:bg-surface-muted transition-all" aria-label="Mostrar contraseña">
-                                <div id="icon-eye-open" class="w-[18px] h-[18px]">
-                                    <Icons type="eye" />
-                                </div>
-                                <div id="icon-eye-closed" class="w-[18px] h-[18px] hidden">
-                                    <Icons type="eye-off" />
-                                </div>
+                             <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg text-secondary hover:text-body hover:bg-surface-muted transition-all" aria-label="Mostrar contraseña">
+                                <Icons type="eye" id="icon-eye-open" class="w-[18px] h-[18px]" />
+                                <Icons type="eye-off" id="icon-eye-closed" class="w-[18px] h-[18px] hidden" />
                             </button>
                         </div>
                         <!-- Vía de escape -->
@@ -91,9 +85,7 @@ import Icons from '../catalogo/Icons.astro';
 
                     <!-- Mensaje de Error -->
                     <div id="auth-error" class="hidden items-center gap-2.5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-[13px] font-medium animate-shake">
-                        <div class="w-4 h-4 shrink-0">
-                            <Icons type="alert" />
-                        </div>
+                        <Icons type="alert-triangle" class="w-4 h-4 shrink-0" />
                         <span id="auth-error-text">Credenciales incorrectas</span>
                     </div>
 

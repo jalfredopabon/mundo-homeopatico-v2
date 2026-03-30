@@ -1,6 +1,6 @@
 ---
 // src/components/shared/ButtonElite.astro
-import Icons from "../catalogo/Icons.astro";
+import Icons from "./Icons.astro";
 
 interface Props {
   label?: string;
@@ -57,16 +57,12 @@ const Tag = href ? 'a' : 'button';
   ]}
 >
   {icon && iconPosition === 'left' && (
-    <div class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110">
-      <Icons type={icon} />
-    </div>
+    <Icons type={icon} class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" />
   )}
   
   {label && <span>{label}</span>}
   
   {icon && iconPosition === 'right' && (
-    <div class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110">
-      <Icons type={icon} />
-    </div>
+    <Icons type={icon} class="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" />
   )}
 </Tag>

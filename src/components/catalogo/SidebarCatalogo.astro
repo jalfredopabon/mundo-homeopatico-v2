@@ -5,6 +5,7 @@
  * Prioriza la fidelidad visual absoluta eliminando sobre-ingeniaría.
  * Mantiene la funcionalidad de buscador, acordeones y scrollspy.
  */
+import Icons from "../shared/Icons.astro";
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium">
@@ -14,10 +15,7 @@
     <div class="relative group">
       <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
         <div class="relative w-4 h-4 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-            <path d="M17 17L21 21"></path>
-            <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"></path>
-          </svg>
+          <Icons type="search" class="w-full h-full" />
         </div>
       </div>
       <input type="search" id="catalogo-search" placeholder="Buscar productos..." class="w-full h-10 pl-8 pr-4 bg-slate-50/70 border border-subtle rounded-lg text-[14px] text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-brand focus:border-brand transition-all placeholder:text-slate-700 mt-[-2.5px]">
@@ -37,19 +35,11 @@
               <button class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30" data-target="homeopáticos">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M4.96256 12H19.0374C20.0144 12 20.5028 12 20.8047 12.3753C21.1065 12.7506 21.0135 13.1617 20.8276 13.984C20.2864 16.3763 18.7876 18.408 16.7527 19.6599C16.3614 19.9006 16.1944 20.3975 16.4056 20.8042C16.689 21.3497 16.2909 22 15.6735 22H8.32647C7.70915 22 7.31104 21.3497 7.5944 20.8042C7.80561 20.3975 7.63863 19.9006 7.24729 19.6599C5.21237 18.408 3.71356 16.3763 3.17245 13.984C2.98645 13.1617 2.89345 12.7506 3.1953 12.3753C3.49715 12 3.98562 12 4.96256 12Z"></path>
-                        <path d="M17.4588 12L19.0095 8.28104C19.1841 7.86217 19.6148 7.65205 20.047 7.57994C20.4208 7.51758 20.7187 7.3415 20.8785 7.05278C21.2753 6.33534 20.6683 5.1941 19.5226 4.50374C18.3769 3.81338 17.1264 3.83534 16.7295 4.55278C16.5698 4.8415 16.5726 5.19885 16.7078 5.56783C16.864 5.99454 16.905 6.48886 16.6448 6.85615L13 12"></path>
-                        <path d="M6.50185 5.50185L10 9M8.60074 3.40297C10.1463 4.94854 9.75993 6.44156 8.60074 7.60074C7.44156 8.75993 5.94854 9.14632 4.40297 7.60074C2.85739 6.05516 3.00371 2.00371 3.00371 2.00371C3.00371 2.00371 7.05516 1.85739 8.60074 3.40297Z"></path>
-                      </svg>
-                    </div>
+                    <Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">Homeopáticos</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto transition-all duration-300 accordion-icon">
-                  <path d="M18 9L12 15L6 9"></path>
-                </svg>
+                <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
               </button>
               <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                 <a href="#oficinales" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
@@ -72,12 +62,7 @@
               <a href="#esencias-florales" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M14.4999 12.5C14.4999 13.8807 13.3807 15 11.9999 15C10.6192 15 9.49994 13.8807 9.49994 12.5C9.49994 11.1193 10.6192 10 11.9999 10C13.3807 10 14.4999 11.1193 14.4999 12.5Z"></path>
-                        <path d="M11.9999 3C14.2091 3 15.998 4.91739 15.998 7.12653C16.3182 7.04393 16.6539 7 16.9999 7C19.2091 7 20.9999 8.79086 20.9999 11C20.9999 12.5964 20.0647 13.9745 18.7122 14.616C19.2071 15.2818 19.4999 16.1067 19.4999 17C19.4999 19.2091 17.7091 21 15.4999 21C13.9939 21 12.6823 20.1677 11.9999 18.938C11.3176 20.1677 10.006 21 8.49994 21C6.2908 21 4.49994 19.2091 4.49994 17C4.49994 16.1067 4.79277 15.2818 5.28767 14.616C3.93518 13.9745 2.99994 12.5964 2.99994 11C2.99994 8.79086 4.7908 7 6.99994 7C7.34595 7 7.68169 7.04393 8.0019 7.12652C8.0019 4.91738 9.7908 3 11.9999 3Z"></path>
-                      </svg>
-                    </div>
+                    <Icons type="flower" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Esencias florales</span>
@@ -89,15 +74,7 @@
               <a href="#oligoelementos" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <circle cx="12" cy="13" r="4"></circle>
-                        <circle cx="12" cy="4" r="2"></circle>
-                        <circle cx="4" cy="20" r="2"></circle>
-                        <circle cx="20" cy="20" r="2"></circle>
-                        <path d="M12 9V6M18.5 18.5L15 16M5.5 18.5L9 16"></path>
-                      </svg>
-                    </div>
+                    <Icons type="molecules" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Oligoelementos</span>
@@ -115,19 +92,11 @@
               <button class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-9 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-slate-50 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30" data-target="homeopatia">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M4.96256 12H19.0374C20.0144 12 20.5028 12 20.8047 12.3753C21.1065 12.7506 21.0135 13.1617 20.8276 13.984C20.2864 16.3763 18.7876 18.408 16.7527 19.6599C16.3614 19.9006 16.1944 20.3975 16.4056 20.8042C16.689 21.3497 16.2909 22 15.6735 22H8.32647C7.70915 22 7.31104 21.3497 7.5944 20.8042C7.80561 20.3975 7.63863 19.9006 7.24729 19.6599C5.21237 18.408 3.71356 16.3763 3.17245 13.984C2.98645 13.1617 2.89345 12.7506 3.1953 12.3753C3.49715 12 3.98562 12 4.96256 12Z"></path>
-                        <path d="M17.4588 12L19.0095 8.28104C19.1841 7.86217 19.6148 7.65205 20.047 7.57994C20.4208 7.51758 20.7187 7.3415 20.8785 7.05278C21.2753 6.33534 20.6683 5.1941 19.5226 4.50374C18.3769 3.81338 17.1264 3.83534 16.7295 4.55278C16.5698 4.8415 16.5726 5.19885 16.7078 5.56783C16.864 5.99454 16.905 6.48886 16.6448 6.85615L13 12"></path>
-                        <path d="M6.50185 5.50185L10 9M8.60074 3.40297C10.1463 4.94854 9.75993 6.44156 8.60074 7.60074C7.44156 8.75993 5.94854 9.14632 4.40297 7.60074C2.85739 6.05516 3.00371 2.00371 3.00371 2.00371C3.00371 2.00371 7.05516 1.85739 8.60074 3.40297Z"></path>
-                      </svg>
-                    </div>
+                    <Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">Homeopatía</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto transition-all duration-300 accordion-icon">
-                  <path d="M18 9L12 15L6 9"></path>
-                </svg>
+                <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
               </button>
               <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                 <a href="#homeopaticos-esenciales" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
@@ -170,12 +139,7 @@
               <a href="#esencias-florales-lmh" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M14.4999 12.5C14.4999 13.8807 13.3807 15 11.9999 15C10.6192 15 9.49994 13.8807 9.49994 12.5C9.49994 11.1193 10.6192 10 11.9999 10C13.3807 10 14.4999 11.1193 14.4999 12.5Z"></path>
-                        <path d="M11.9999 3C14.2091 3 15.998 4.91739 15.998 7.12653C16.3182 7.04393 16.6539 7 16.9999 7C19.2091 7 20.9999 8.79086 20.9999 11C20.9999 12.5964 20.0647 13.9745 18.7122 14.616C19.2071 15.2818 19.4999 16.1067 19.4999 17C19.4999 19.2091 17.7091 21 15.4999 21C13.9939 21 12.6823 20.1677 11.9999 18.938C11.3176 20.1677 10.006 21 8.49994 21C6.2908 21 4.49994 19.2091 4.49994 17C4.49994 16.1067 4.79277 15.2818 5.28767 14.616C3.93518 13.9745 2.99994 12.5964 2.99994 11C2.99994 8.79086 4.7908 7 6.99994 7C7.34595 7 7.68169 7.04393 8.0019 7.12652C8.0019 4.91738 9.7908 3 11.9999 3Z"></path>
-                      </svg>
-                    </div>
+                    <Icons type="flower" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Esencias florales</span>
@@ -187,15 +151,7 @@
               <a href="#oligoelementos-k7" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <circle cx="12" cy="13" r="4"></circle>
-                        <circle cx="12" cy="4" r="2"></circle>
-                        <circle cx="4" cy="20" r="2"></circle>
-                        <circle cx="20" cy="20" r="2"></circle>
-                        <path d="M12 9V6M18.5 18.5L15 16M5.5 18.5L9 16"></path>
-                      </svg>
-                    </div>
+                    <Icons type="molecules" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Oligoelementos K7</span>
@@ -217,13 +173,7 @@
               <a href="#alimentos-funcionales" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M8 5C5.23858 5 3 8.0139 3 11.0278C3 14.544 3.5 17.0556 5.5 20.0695C7.02044 22.1062 9.05026 22.6168 11.2139 21.1903C11.6757 20.8859 12.3243 20.8859 12.7861 21.1903C14.9497 22.6168 16.9796 22.1062 18.5 20.0695C20.5 17.0556 21 14.544 21 11.0278C21 8.0139 18.7614 5 16 5C14.5746 5 13.2885 5.7849 12.3777 6.63254C12.166 6.82949 11.834 6.82949 11.6223 6.63254C10.7115 5.7849 9.42542 5 8 5Z"></path>
-                        <path d="M6 12C6 10.3665 6.82273 8.73298 8 8"></path>
-                        <path d="M12 6C12 4.66667 12.6 2 15 2"></path>
-                      </svg>
-                    </div>
+                    <Icons type="leaf" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Alimentos funcionales</span>
@@ -234,12 +184,7 @@
               <a href="#cbd" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M16.138 18.9493C14.4767 18.4529 13.0974 17.2428 12 16.1282C10.9026 17.2428 9.52326 18.4529 7.86201 18.9493C7.0273 19.1988 6.28877 18.4881 6.50754 17.6718C6.78501 16.6364 7.35923 15.5654 8.30824 14.6015C8.30824 14.6015 6.46081 14.9209 3.81791 14.0776C3.05617 13.8345 2.71706 13.0154 3.28083 12.4646C4.35383 11.4163 6.19616 10.5303 7.25345 10.5303C6.16951 9.79631 4.59663 8.05354 3.90726 6.41249C3.579 5.63107 4.27594 4.92255 5.13376 5.08315C6.99279 5.43119 8.77897 6.34797 9.89042 7.47689C9.89042 5.80231 10.2213 4.19236 10.9007 2.71887C11.3426 1.76038 12.6574 1.76038 13.0993 2.71887C13.7787 4.19236 14.1096 5.80231 14.1096 7.47689C15.221 6.34797 17.0072 5.43119 18.8662 5.08315C19.7241 4.92255 20.421 5.63107 20.0927 6.41249C19.4034 8.05354 17.8305 9.79631 16.7466 10.5303C17.8038 10.5303 19.6462 11.4163 20.7192 12.4646C21.2829 13.0154 20.9438 13.8345 20.1821 14.0776C17.5392 14.9209 15.6918 14.6015 15.6918 14.6015C16.6408 15.5654 17.215 16.6364 17.4925 17.6718C17.7112 18.4881 16.9727 19.1988 16.138 18.9493Z"></path>
-                        <path d="M12 16.5V22"></path>
-                      </svg>
-                    </div>
+                    <Icons type="cannabis" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">CBD</span>
@@ -250,12 +195,7 @@
               <a href="#aceites-esenciales" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                   <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <div class="w-full h-full relative group">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <path d="M11.2872 8.00018L4.68174 14.6057C4.05287 15.2345 3.72789 16.0522 3.70679 16.8762C3.67836 17.9861 3.66415 18.5411 3.57991 18.7373C3.49566 18.9336 3.30358 19.1257 2.91944 19.5098L2.32535 20.1039C1.89155 20.5377 1.89155 21.241 2.32535 21.6748C2.75915 22.1086 3.46247 22.1086 3.89627 21.6748L4.49036 21.0807C4.87451 20.6966 5.06658 20.5045 5.26283 20.4203C5.45909 20.336 6.01406 20.3218 7.12396 20.2934C7.94797 20.2723 8.76565 19.9473 9.39451 19.3184L11.3227 17.3903M14.4291 14.2839L16 12.713M14.4291 14.2839L12.8582 12.713M14.4291 14.2839L11.3227 17.3903M11.3227 17.3903L9.75177 15.8193"></path>
-                        <path d="M21.068 7.43213L19.5002 8.99992C18.6718 9.82837 18.6718 11.1715 19.5002 12L12 4.49979C12.8285 5.32824 14.1716 5.32824 15.0001 4.49979L16.5679 2.93201C17.8105 1.68933 19.8253 1.68933 21.068 2.93201C22.3107 4.17468 22.3107 6.18946 21.068 7.43213Z"></path>
-                      </svg>
-                    </div>
+                    <Icons type="droplet" class="w-full h-full" strokeWidth={1.5} />
                   </div>
                 </div>
                 <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Aceites esenciales</span>
@@ -279,9 +219,7 @@
         <span class="text-[12px] font-bold text-slate-900 leading-none group-hover:text-brand transition-colors">Alfredo Pabón</span>
       </div>
       <!-- Icono de salida externa sutil -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 ml-auto text-slate-300 group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all">
-        <path d="M7 17L17 7M17 7H7M17 7V17"></path>
-      </svg>
+      <Icons type="external-link" class="w-3 h-3 ml-auto text-slate-300 group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all" strokeWidth={2.5} />
     </a>
   </div>
 </aside>

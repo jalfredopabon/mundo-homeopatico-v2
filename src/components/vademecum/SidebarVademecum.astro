@@ -4,8 +4,8 @@ import Icons from "../catalogo/Icons.astro";
 import SidebarSearch from "../shared/SidebarSearch.astro";
 ---
 
-<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-full overflow-hidden shrink-0">
-    <!-- BUSCADOR STICKY UNIFICADO (Lego) -->
+<aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-66px)] sticky top-[66px] overflow-hidden shrink-0">
+    <!-- BUSCADOR STICKY (ADN Maestro - Lego) -->
     <SidebarSearch 
         id="vademecum-search" 
         placeholder="Buscar..." 
@@ -96,4 +96,3 @@ import SidebarSearch from "../shared/SidebarSearch.astro";
 
     </nav>
 </aside>
-

@@ -58,6 +58,12 @@
 - **Optimización de UX:** Reubicación estratégica del contador de medicamentos y refinamiento del sistema de migas de pan.
 - **Limpieza Técnica:** Ajuste de paddings y carril de scroll en `MedicalDetails.astro` para maximizar el área de visualización.
 
+### Hito 9: Estandarización de Superficies y "Branded Grays" (29/03/2026)
+- **Hallazgo UI Crítico:** Identificación de distorsión visual (tintes azulinos fríos) al usar grises neutros sobre el sistema de diseño.
+- **Técnica de Capas:** Implementación de la técnica de mezcla de marca (15-20% de opacidad del color primario sobre una base cremosa `#FCFCF9`).
+- **Standard Sage Green:** Establecimiento del tono `#EAF3F1` como el color oficial para fondos de paneles principales (Columna 2).
+- **Aislamiento Arquitectónico:** Uso de selectores de ID únicos y estilos locales para aplicar el fondo sin afectar a componentes globales (Header/Sidebar).
+
 ---
 
 ## 🏗️ Deuda Técnica Pendiente (Fase 4: Sincronización)

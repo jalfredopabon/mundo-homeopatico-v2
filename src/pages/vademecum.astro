@@ -166,7 +166,7 @@ const medicines = [
 
         <!-- Columna Central: Listado de Productos (Scroll propio) -->
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-[#EAF3F1] h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
-            <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1">
+            <div class="px-8 md:px-[72px] pt-8 pb-8 flex-1">
                 
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
                 <header class="md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header reveal">
@@ -184,7 +184,7 @@ const medicines = [
                 </header>
 
                 <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
-                <div class="mb-5 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
+                <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
                         <path d="M6.5 2H17.5C18.4346 2 18.9019 2 19.25 2.20096C19.478 2.33261 19.6674 2.52197 19.799 2.75C20 3.09808 20 3.56538 20 4.5C20 5.43462 20 5.90192 19.799 6.25C19.6674 6.47803 19.478 6.66739 19.25 6.79904C18.9019 7 18.4346 7 17.5 7H6.5C5.56538 7 5.09808 7 4.75 6.79904C4.52197 6.66739 4.33261 6.47803 4.20096 6.25C4 5.90192 4 5.43462 4 4.5C4 3.56538 4 3.09808 4.20096 2.75C4.33261 2.52197 4.52197 2.33261 4.75 2.20096C5.09808 2 5.56538 2 6.5 2Z"></path>
                         <path d="M18 16V7H6V16C6 18.8284 6 20.2426 6.87868 21.1213C7.75736 22 9.17157 22 12 22C14.8284 22 16.2426 22 17.1213 21.1213C18 20.2426 18 18.8284 18 16Z"></path>
@@ -194,16 +194,16 @@ const medicines = [
                 </div>
 
                 <!-- Listado de Tarjetas Clínicas -->
-                <div class="space-y-3.5 max-w-3xl" id="meds-container">
+                <div class="space-y-3 max-w-3xl" id="meds-container">
                     
                     {medicines.map((med, index) => (
                         <div 
-                            class={`bg-surface-white rounded-xl p-6 cursor-pointer transition-all reveal medical-item-btn ${med.isActive ? 'border border-brand border-brand/20' : 'border border-subtle hover:border-brand/30'}`} 
+                            class={`bg-surface-white rounded-xl p-6 cursor-pointer transition-all reveal medical-item-btn ${med.isActive ? 'border border-slate-300 shadow-sm ring-1 ring-slate-300' : 'border border-subtle hover:border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]'}`} 
                             data-med={med.id}
                             data-id={med.id}
                         >
                             <div class="flex items-baseline gap-2.5 mb-2">
-                                <h3 class={`text-[16px] font-bold ${med.isActive ? 'text-brand' : 'text-slate-900'}`}>
+                                <h3 class="text-[16px] font-bold text-slate-900">
                                     {med.name}
                                 </h3>
                                 <span class="text-slate-700 text-xs font-medium">{med.potency}</span>
@@ -242,6 +242,8 @@ const medicines = [
 
                 </div>
             </div>
+
+            <!-- Margen de cortesía inferior (32px / 8) -->
         </div>
 
         <!-- Columna Derecha: Panel de Ficha Técnica Modular -->

@@ -37,7 +37,7 @@ const { products = [] } = Astro.props;
     {products.map((product) => (
         <div 
             id={`ficha-${product.id}`} 
-            class={`pl-8 pr-12 md:pl-12 md:pr-12 pt-8 pb-24 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
+            class={`pl-8 pr-12 md:pl-12 md:pr-12 pt-8 pb-8 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
             data-sheet-id={product.id}
         >
             <!-- Encabezado de la Ficha (ADN Clon Elite) -->

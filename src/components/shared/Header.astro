@@ -20,8 +20,8 @@ const showTextSize = isCatalog || isVademecum;
   <div class="max-w-full mx-auto h-16 flex items-center justify-between">
     
     <!-- Lado Izquierdo: Identidad de Marca -->
-    <div class="w-auto flex-shrink-0 flex justify-start pl-4 md:pl-4">
-      <a href="/" class="no-underline inline-flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 group">
+    <div class="flex-1 flex justify-start pl-4 md:pl-4">
+      <a href="/" class="no-underline inline-flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 group">
         <!-- Logo MH -->
         <div class="w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all">
           MH
@@ -82,18 +82,18 @@ const showTextSize = isCatalog || isVademecum;
     </div>
 
     <!-- Lado Derecho: Controles Operativos -->
-    <div class="w-auto flex-shrink-0 flex items-center justify-end gap-6 pr-4 md:pr-4">
+    <div class="flex-1 flex items-center justify-end gap-4 pr-4 md:pr-4">
       
       {showTextSize && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer" id="text-size-btn">
-          <button class="flex flex-col items-center justify-center p-1.5 min-w-[3rem] text-body hover:bg-surface-muted rounded-lg transition-colors" aria-label="Cambiar tamaño de texto">
+          <button class="flex flex-col items-center justify-center p-2 min-w-[3.5rem] text-body hover:bg-surface-muted rounded-lg transition-colors" aria-label="Cambiar tamaño de texto">
             <div class="h-5 flex items-center justify-center text-body/90">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[18px] h-[18px]">
                 <path d="M10.5714 18H5.42857M8 3V18M8 3C6.81082 3 5.28326 3.12265 4.06709 3.24346C3.55271 3.29456 3.29552 3.32011 3.06788 3.41021C2.59438 3.59763 2.21271 4.00855 2.06906 4.48556C2 4.71489 2 4.97659 2 5.5M8 3C9.18918 3 10.7167 3.12265 11.9329 3.24346C12.4473 3.29456 12.7045 3.32011 12.9321 3.41021C13.4056 3.59763 13.7873 4.00855 13.9309 4.48556C14 4.71489 14 4.97659 14 5.5"></path>
                 <path d="M19.7143 21H16.2857M18 12V21M18 12C17.2072 12 16.1888 12.0818 15.3781 12.1623C15.0351 12.1964 14.8637 12.2134 14.7119 12.2735C14.3963 12.3984 14.1418 12.6724 14.046 12.9904C14 13.1433 14 13.3177 14 13.6667M18 12C18.7928 12 19.8112 12.0818 20.6219 12.1623C20.9649 12.1964 21.1363 12.2134 21.2881 12.2735C21.6037 12.3984 21.8582 12.6724 21.954 12.9904C22 13.1433 22 13.3177 22 13.6667"></path>
               </svg>
             </div>
-            <span class="text-[10px] font-medium text-body mt-[2px]">Texto</span>
+            <span class="text-[10px] font-medium text-body mt-1">Texto</span>
           </button>
           
           <!-- Tooltip -->
@@ -107,7 +107,7 @@ const showTextSize = isCatalog || isVademecum;
       )}
 
       <!-- Botón Carrito -->
-      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
+      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-2 min-w-[3rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
          <div class="h-5 flex items-center justify-center text-body/90 relative">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform">
               <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"></path>
@@ -122,7 +122,7 @@ const showTextSize = isCatalog || isVademecum;
               <span id="cart-counter" class="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold">0</span>
             </span>
           </div>
-        <span class="hidden sm:block text-[10px] font-medium text-body mt-[2px]">Pedidos</span>
+        <span class="hidden sm:block text-[10px] font-medium text-body mt-1">Pedidos</span>
       </button>
 
       <!-- Botón Menú Móvil -->

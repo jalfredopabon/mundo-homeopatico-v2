@@ -79,6 +79,12 @@
 - **Navegación Dinámica:** Sincronización automática de estados activos (`active`) y subrayados según la ruta actual.
 - **Feedback Visual (UX):** Barra de progreso integrada para indicar carga de navegación y micro-interacciones en botones operativos.
 
+### Hito 14: Estandarización de Ritmo Vertical y Sistema de Iconos (30/03/2026)
+- **Armonización de Ritmo Vertical (4pt Grid):** Estandarización de paddings y gaps a 32px (`pb-8`) en `index.astro`, `vademecum.astro` y `contacto.astro` para lograr paridad sistémica absoluta.
+- **Unificación del Footer:** Centralización del pie de página en `Footer.astro` con branding interactivo (efectos de escala/brillo) y script de "Back to Top" resiliente que detecta automáticamente el carril de scroll.
+- **Refinamiento de Tablas y Badges:** Alineación central del icono del carrito, unificación cromática de precios (`slate-700`) y eliminación de iconos en badges para reducir ruido visual y mejorar la escaneabilidad.
+- **Estrategia Iconográfica Global:** Documentación del plan de refactorización en `iconos_ajustar.md` para convertir `Icons.astro` en un componente dinámico con props de `class` y `strokeWidth`, erradicando los SVGs inline del proyecto.
+
 - **Scrollbar Global:** Evaluar la implementación del scrollbar premium en el Catálogo y Contacto para paridad total del sitio.
 - **Migración de Catálogo:** Reemplazar el resto de las secciones estáticas de `index.astro` con el organismo `ProductRowElite`.
 - **Tipado de Props:** Implementar interfaces de TypeScript estrictas para todos los componentes de la tabla.

@@ -1,11 +1,14 @@
 ---
+// c:\Users\Alfredo Pabón\Documents\Proyectos antigravity\mundo_homeopatico_v2\src\pages\index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SidebarCatalogo from '../components/catalogo/SidebarCatalogo.astro';
-import Footer from '../components/shared/Footer.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
-import Icons from '../components/catalogo/Icons.astro';
-import InfoBanner from '../components/shared/InfoBanner.astro';
-import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
+
+/**
+ * Página Principal (Catálogo): 
+ * Clonación Estricta del panel principal para paridad visual 1:1.
+ * Se aplica el estándar "Branded Gray" (#EAF3F1).
+ */
 ---
 
 <BaseLayout title="Catálogo de Productos | Mundo Homeopático" mostrarZoom={true}>
@@ -19,168 +22,236 @@ import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
         <!-- Columna Izquierda: Sidebar de Filtros (Fijo en Desktop) -->
         <SidebarCatalogo />
 
-        <!-- Columna Derecha: Contenedor Master de Data + Footer -->
-        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] scroll-smooth" id="catalogo-main-scroll">
+        <!-- Columna Derecha: Contenedor Master de Data + Footer (Standard Branded Gray) -->
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-[#EAF3F1] h-[calc(100vh-64px)] scroll-smooth" id="catalogo-main-scroll">
             
-            <!-- Banner Informativo Modular -->
-            <div class="mh-layout-px pt-4">
-                <InfoBanner message="Dispensación limitada a usuarios con receta médica vigente. Validación de stock requerida." />
+            <!-- Banner Informativo (Cinta de Alerta Frontal) -->
+            <div id="info-banner" class="w-full bg-surface-white border-b border-subtle px-4 md:px-16 py-3 sm:py-4 flex items-start justify-between gap-4 transition-all duration-300">
+                <div class="flex items-start gap-4">
+                    <div class="bg-brand text-white p-2 rounded-lg shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-slate-900 font-bold text-[14px]">Se informa al público</span>
+                        <span class="text-slate-700 text-[13px] leading-relaxed mt-0.5">Dispensación limitada a usuarios con receta médica vigente. Validación de stock: identifique si el artículo seleccionado cuenta con entrega inmediata o es de elaboración bajo pedido.</span>
+                    </div>
+                </div>
+                <button id="close-banner" class="text-slate-700 hover:text-body hover:bg-brand/10 p-1.5 rounded-lg transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1" aria-label="Cerrar aviso">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
             </div>
 
-            <div class="mh-layout-px pt-4 pb-24 flex-1 flex flex-col">
+            <div class="px-8 md:px-[72px] pt-8 pb-24 flex-1 flex flex-col">
                 <div class="flex flex-col gap-8">
                     <!-- Sección: Oligoelementos -->
-                <section id="oligoelementos" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm mh-layout-px-neg mh-layout-px pt-0 pb-8 flex flex-col auto-animate-header">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted tracking-wider mb-2">
-                            <span class="hover:text-body transition-colors cursor-pointer">De nuestra farmacia</span>
-                            <div class="w-2.5 h-2.5 text-subtle">
-                                <Icons type="chevron-right" />
+                    <section id="oligoelementos" class="scroll-mt-16">
+                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
+                                <span class="hover:text-slate-800 transition-colors cursor-pointer" onclick="window.location.hash='#top'">De nuestra farmacia</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <span class="hover:text-slate-800 transition-colors cursor-pointer">Según prescripción</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Oligoelementos</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Elaborados a la D7</p>
+                        </header>
+                        <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden">
+                            <!-- Encabezado de Tabla (Solo Desktop) -->
+                            <div class="hidden sm:grid grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-4 items-center bg-surface-muted/50 border-b border-subtle py-3.5 px-6 text-[12px] font-bold text-slate-700 tracking-wide">
+                                <div>Producto</div>
+                                <div class="text-right">Precio farmacia</div>
+                                <div class="text-right">Precio público</div>
+                                <div class="flex justify-center pr-1 md:pr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" class="w-4 h-4 text-slate-700">
+                                        <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"></path>
+                                        <path d="M6 6H22"></path>
+                                        <circle cx="6" cy="20" r="2"></circle>
+                                        <circle cx="17" cy="20" r="2"></circle>
+                                        <path d="M8 20L15 20"></path>
+                                        <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <span class="hover:text-body transition-colors cursor-pointer">Según prescripción</span>
-                        </nav>
-                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-2">Oligoelementos</h2>
-                        <p class="text-secondary text-[15px] font-medium leading-snug">Elaborados a la D7</p>
-                    </header>
-                    <div class="mh-table-container">
-                        <!-- Encabezado de Tabla (Solo Desktop) -->
-                        <div class="mh-table-header mh-table-grid">
-                            <div>Producto</div>
-                            <div class="text-right">Precio farmacia</div>
-                            <div class="text-right">Precio público</div>
-                            <div class="mh-table-action-cell">
-                                <div class="w-10 flex justify-center text-body">
-                                    <div class="w-4 h-4">
-                                        <Icons type="cart" />
+
+                            <!-- Fila de Producto 1 -->
+                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                                <div class="flex flex-col">
+                                    <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos individuales</h3>
+                                    <div class="flex flex-wrap items-center gap-2 mt-2">
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+                                            Gotas / Spray
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                            Glóbulos x 30g
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="sm:contents">
+                                    <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
+                                        <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
+                                        <span class="text-slate-700 font-medium">$19.500</span>
+                                    </div>
+                                    <div class="hidden sm:block text-right mt-1 sm:mt-0">
+                                        <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem]">$36.000</span>
+                                    </div>
+                                    <div class="flex justify-end sm:justify-center mt-3 sm:mt-0 md:pr-4">
+                                        <button class="w-full sm:w-10 h-12 sm:h-10 flex items-center justify-center rounded-lg bg-emerald-700 hover:bg-brand text-white hover:-translate-y-0.5 transition-all focus:ring-2 focus:ring-brand active:scale-95 btn-add-cart" data-name="Oligoelementos Individuales" data-price="19500" aria-label="Añadir Oligoelementos Individuales">
+                                            <div class="flex items-center justify-center mt-[-1px]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                                <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fila de Producto 2 -->
+                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                                <div class="flex flex-col">
+                                    <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos combinados (hasta 6 componentes)</h3>
+                                    <div class="flex flex-wrap items-center gap-2 mt-2">
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+                                            Gotas / Spray
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                            Glóbulos x 30g
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="sm:contents">
+                                    <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
+                                        <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
+                                        <span class="text-slate-700 font-medium">$25.500</span>
+                                    </div>
+                                    <div class="hidden sm:block text-right mt-1 sm:mt-0">
+                                        <span class="text-brand font-bold tracking-tight text-base md:text-[1.05rem]">$44.000</span>
+                                    </div>
+                                    <div class="flex justify-end sm:justify-center mt-3 sm:mt-0 md:pr-4">
+                                        <button class="w-full sm:w-10 h-12 sm:h-10 flex items-center justify-center rounded-lg bg-emerald-700 hover:bg-brand text-white hover:-translate-y-0.5 transition-all focus:ring-2 focus:ring-brand active:scale-95 btn-add-cart" data-name="Oligoelementos combinados" data-price="25500" aria-label="Añadir Oligoelementos combinados">
+                                            <div class="flex items-center justify-center mt-[-1px]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                                <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </section>
+                    
+                    <!-- Placeholder: Esencias florales -->
+                    <section id="esencias-florales" class="scroll-mt-16">
+                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                <span>De nuestra farmacia</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <span>Según prescripción</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Esencias florales</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Flores de Bach y otras esencias</p>
+                        </header>
+                        <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
+                            <span class="text-slate-700 text-sm font-medium">Tabla de esencias florales (datos reales en Fase 3)</span>
+                        </div>
+                    </section>
 
-                    <div class="flex flex-col">
-                        <ProductRowElite 
-                            name="Oligoelementos individuales"
-                            badges={[
-                                { label: 'Gotas / Spray', icon: 'pill' },
-                                { label: 'Glóbulos x 30g', icon: 'shield-check' }
-                            ]}
-                            farmaciaPrice="$19.500"
-                            publicoPrice="$36.000"
-                            cartData={{ name: 'Oligoelementos individuales', price: '19500' }}
-                        />
+                    <!-- Placeholder: Alimentos funcionales -->
+                    <section id="alimentos-funcionales" class="scroll-mt-16">
+                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                <span>Productos exclusivos</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Alimentos funcionales</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Suplementos y alimentos de alta calidad</p>
+                        </header>
+                        <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
+                            <span class="text-slate-700 text-sm font-medium">Tabla de alimentos funcionales (datos reales en Fase 3)</span>
+                        </div>
+                    </section>
 
-                        <ProductRowElite 
-                            name="Oligoelementos combinados (hasta 6 componentes)"
-                            badges={[
-                                { label: 'Gotas / Spray', icon: 'pill' },
-                                { label: 'Glóbulos x 30g', icon: 'shield-check' }
-                            ]}
-                            farmaciaPrice="$25.500"
-                            publicoPrice="$44.000"
-                            cartData={{ name: 'Oligoelementos combinados', price: '25500' }}
-                        />
-                    </div>
-                    </div>
-                </section>
+                    <!-- Placeholder: CBD -->
+                    <section id="cbd" class="scroll-mt-16">
+                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                <span>Productos exclusivos</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">CBD</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Productos de cannabidiol de grado farmacéutico</p>
+                        </header>
+                        <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
+                            <span class="text-slate-700 text-sm font-medium">Tabla de CBD (datos reales en Fase 3)</span>
+                        </div>
+                    </section>
 
-                <!-- Sección: Esencias florales -->
-                <section id="esencias-florales" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-wider mb-2">
-                            <span>De nuestra farmacia</span>
-                            <div class="w-2.5 h-2.5 text-subtle">
-                                <Icons type="chevron-right" />
-                            </div>
-                            <span>Según prescripción</span>
-                        </nav>
-                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-2">Esencias florales</h2>
-                        <p class="text-secondary text-[15px] font-medium leading-snug">Flores de Bach y otras esencias</p>
-                    </header>
-                    <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
-                        <span class="text-secondary text-sm font-medium">Tabla de esencias florales (datos reales en Fase 3)</span>
-                    </div>
-                </section>
-
-                <!-- Sección: Alimentos funcionales -->
-                <section id="alimentos-funcionales" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-wider mb-2">
-                            <span>Productos exclusivos</span>
-                        </nav>
-                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-2">Alimentos funcionales</h2>
-                        <p class="text-secondary text-[15px] font-medium leading-snug">Suplementos y alimentos de alta calidad</p>
-                    </header>
-                    <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
-                        <span class="text-secondary text-sm font-medium">Tabla de alimentos funcionales (datos reales en Fase 3)</span>
-                    </div>
-                </section>
-
-                <!-- Sección: CBD -->
-                <section id="cbd" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-wider mb-2">
-                            <span>Productos exclusivos</span>
-                        </nav>
-                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-2">CBD</h2>
-                        <p class="text-secondary text-[15px] font-medium leading-snug">Productos de cannabidiol de grado farmacéutico</p>
-                    </header>
-                    <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
-                        <span class="text-secondary text-sm font-medium">Tabla de CBD (datos reales en Fase 3)</span>
-                    </div>
-                </section>
-
-                <!-- Sección: Aceites esenciales -->
-                <section id="aceites-esenciales" class="scroll-mt-16">
-                    <header class="sticky top-0 md:static z-30 bg-surface-muted/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-wider mb-2">
-                            <span>Productos exclusivos</span>
-                        </nav>
-                        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-body tracking-tight mb-2">Aceites esenciales</h2>
-                        <p class="text-secondary text-[15px] font-medium leading-snug">Extractos puros de plantas medicinales</p>
-                    </header>
-                    <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
-                        <span class="text-secondary text-sm font-medium">Tabla de aceites esenciales (datos reales en Fase 3)</span>
-                    </div>
-                </section>
-
+                    <!-- Placeholder: Aceites esenciales -->
+                    <section id="aceites-esenciales" class="scroll-mt-16">
+                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                <span>Productos exclusivos</span>
+                            </nav>
+                            <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Aceites esenciales</h2>
+                            <p class="text-slate-700 text-[15px] font-medium leading-snug">Extractos puros de plantas medicinales</p>
+                        </header>
+                        <div class="w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden p-8 flex items-center justify-center min-h-[200px]">
+                            <span class="text-slate-700 text-sm font-medium">Tabla de aceites esenciales (datos reales en Fase 3)</span>
+                        </div>
+                    </section>
+                </div>
             </div>
+
+            <!-- Footer Corporativo -->
+            <footer class="bg-slate-900 py-12 md:py-[72px] px-8 md:px-[72px] mt-auto border-t border-slate-800">
+                <div class="max-w-full mx-auto flex flex-col md:flex-row gap-12 md:gap-12 items-start justify-between">
+                    <div class="space-y-4 md:w-1/3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded text-white font-bold tracking-widest">MH</div>
+                            <h2 class="text-[1.3rem] font-bold text-white tracking-tight">Mundo homeopático</h2>
+                        </div>
+                        <p class="text-[13px] text-slate-400 leading-relaxed font-light md:pr-4">Más de 20 años formulando soluciones magistrales con absoluta precisión y los más altos estándares de calidad internacional.</p>
+                    </div>
+                    <div class="space-y-4 flex flex-col md:items-start md:text-left md:w-1/3">
+                        <div class="h-10 flex items-center"><h3 class="text-[13px] font-bold text-slate-300 tracking-[0.1em]">Síguenos</h3></div>
+                        <div class="flex items-center justify-start gap-4">
+                            <!-- Instagram -->
+                            <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-pink-500 hover:text-white transition-all duration-300 group" aria-label="Instagram">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"></path><path d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"></path><path d="M17.5078 6.5L17.4988 6.5"></path></svg>
+                            </a>
+                            <!-- WhatsApp -->
+                            <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-emerald-500 hover:text-white transition-all duration-300 group" aria-label="WhatsApp">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z"></path><path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118"></path></svg>
+                            </a>
+                            <!-- Web Principal -->
+                            <a href="https://mhmundohomeopatico.com" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-300 group" aria-label="Sitio web principal">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="10"></ellipse><path d="M2 12H22"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-y-3 flex flex-col h-full md:items-end md:text-right md:w-1/3">
+                        <div class="h-10 flex items-center"><p class="text-[13px] font-semibold text-slate-300">© 2026 Mundo Homeopático.</p></div>
+                        <div class="mt-1 space-y-1">
+                            <p class="text-[12px] font-medium text-slate-500">Todos los derechos reservados.</p>
+                            <p class="text-[12px] text-slate-500 font-medium">Medellín, Colombia</p>
+                            <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="inline-block text-[12px] text-slate-500 font-medium hover:text-white transition-colors group">Creado por <span class="text-slate-300 group-hover:text-brand transition-colors">Alfredo Pabón</span></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
 
-        <!-- Footer incrustado al final de la columna derecha con mt-auto para anclaje inferior -->
-        <div class="mt-auto w-full border-t border-strong/60 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
-            <Footer />
-        </div>
+        <!-- Botón Back To Top -->
+        <button id="back-to-top" class="fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center shadow-xl translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-slate-100 focus:outline-none focus:ring-2 focus:ring-brand" aria-label="Volver arriba">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><polyline points="5 12 12 5 19 12"></polyline></svg>
+        </button>
 
     </div>
-
-</div>
-
 </BaseLayout>
 
-
-
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. Sistema de Scroll Reveal ---
-        const revealElements = document.querySelectorAll('.reveal');
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-
-        // --- 2. Lógica del Carrito con Micro-animaciones ---
+    document.addEventListener('astro:page-load', () => {
+        // --- 1. Lógica del Carrito con Micro-animaciones ---
         const btnAddCart = document.querySelectorAll('.btn-add-cart');
         
         btnAddCart.forEach(btn => {
@@ -189,45 +260,24 @@ import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
                 const name = button.getAttribute('data-name');
                 const price = button.getAttribute('data-price');
 
-                // Lanzar evento personalizado para CartDrawer.astro
-                const event = new CustomEvent('addToCart', {
+                // Lanzar evento para CartDrawer.astro
+                document.dispatchEvent(new CustomEvent('addToCart', {
                     detail: { name, price }
-                });
-                document.dispatchEvent(event);
+                }));
 
                 // Micro-animación: Mutación del botón (+ → ✓)
-                const originalSvg = button.innerHTML;
-                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                const originalContent = button.innerHTML;
+                button.innerHTML = '<div class="flex items-center justify-center shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>';
                 button.classList.add('bg-brand', 'scale-110');
+                
                 setTimeout(() => {
-                    button.innerHTML = originalSvg;
+                    button.innerHTML = originalContent;
                     button.classList.remove('bg-brand', 'scale-110');
                 }, 1200);
-
-                // Micro-animación: Flash verde sutil en la fila
-                const row = button.closest('[class*="grid"]') as HTMLElement | null;
-                if (row) {
-                    row.style.transition = 'background-color 0.15s ease';
-                    row.style.backgroundColor = 'rgba(16,185,129,0.08)';
-                    setTimeout(() => { row.style.backgroundColor = ''; }, 600);
-                }
-
-                // Micro-animación: Toast "+1" flotante
-                const toast = document.createElement('span');
-                toast.textContent = '+1';
-                toast.className = 'absolute -top-2 -right-2 text-[11px] font-extrabold text-white bg-brand px-1.5 py-0.5 rounded-full pointer-events-none';
-                toast.style.transition = 'all 0.6s ease-out';
-                button.style.position = 'relative';
-                button.appendChild(toast);
-                requestAnimationFrame(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(-18px) scale(0.8)';
-                });
-                setTimeout(() => toast.remove(), 700);
             });
         });
 
-        // --- 3. Lógica para cerrar el banner informativo (Scroll Continuo) ---
+        // --- 2. Cierre del Banner ---
         const btnCloseBanner = document.getElementById('close-banner');
         const infoBanner = document.getElementById('info-banner');
         
@@ -238,6 +288,24 @@ import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
                 setTimeout(() => {
                     infoBanner.style.display = 'none';
                 }, 300);
+            });
+        }
+
+        // --- 3. Back To Top Dinámico ---
+        const btnBackToTop = document.getElementById('back-to-top');
+        const scrollContainer = document.getElementById('catalogo-main-scroll');
+
+        if (btnBackToTop && scrollContainer) {
+            scrollContainer.addEventListener('scroll', () => {
+                if (scrollContainer.scrollTop > 400) {
+                    btnBackToTop.classList.remove('opacity-0', 'invisible', 'translate-y-20');
+                } else {
+                    btnBackToTop.classList.add('opacity-0', 'invisible', 'translate-y-20');
+                }
+            });
+
+            btnBackToTop.addEventListener('click', () => {
+                scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
     });

@@ -1,28 +1,29 @@
 ---
 // src/components/shared/Footer.astro
 const year = new Date().getFullYear();
+/**
+ * Footer: Pie de página institucional de 3 columnas
+ * Clonación Estricta: Se respeta el diseño visual idéntico al online.
+ */
 ---
 
 <footer class="bg-slate-900 py-12 md:py-[72px] px-8 md:px-[72px] mt-auto border-t border-slate-800">
   <div class="max-w-full mx-auto flex flex-col md:flex-row gap-12 md:gap-12 items-start justify-between">
     
-    <!-- Branding & Descripción (Columna Izquierda) -->
+    <!-- Branding & Descripción -->
     <div class="space-y-4 md:w-1/3">
       <div class="flex items-center gap-3">
-        <!-- Logo Icon MH -->
         <div class="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded text-white font-bold tracking-widest">
           MH
         </div>
-        <h2 class="text-[1.3rem] font-bold text-white tracking-tight">
-          Mundo homeopático
-        </h2>
+        <h2 class="text-[1.3rem] font-bold text-white tracking-tight">Mundo homeopático</h2>
       </div>
       <p class="text-[13px] text-slate-400 leading-relaxed font-light md:pr-4">
         Más de 20 años formulando soluciones magistrales con absoluta precisión y los más altos estándares de calidad internacional.
       </p>
     </div>
 
-    <!-- Redes Sociales y Links (Columna Central) -->
+    <!-- Redes Sociales y Links -->
     <div class="space-y-4 flex flex-col md:items-start md:text-left md:w-1/3">
       <div class="h-10 flex items-center">
         <h3 class="text-[13px] font-bold text-slate-300 tracking-[0.1em]">Síguenos</h3>
@@ -30,30 +31,28 @@ const year = new Date().getFullYear();
       <div class="flex items-center justify-start gap-4">
         <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-pink-500 hover:text-white transition-all duration-300 group" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
-              <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" />
-              <path d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z" />
-              <path d="M17.5078 6.5L17.4988 6.5" />
+              <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"></path>
+              <path d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"></path>
+              <path d="M17.5078 6.5L17.4988 6.5"></path>
           </svg>
         </a>
-        <!-- WhatsApp -->
         <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-emerald-500 hover:text-white transition-all duration-300 group" aria-label="WhatsApp">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
-              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z" />
-              <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" />
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z"></path>
+              <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118"></path>
           </svg>
         </a>
-        <!-- Web Principal -->
         <a href="https://mhmundohomeopatico.com" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-300 group" aria-label="Sitio web principal">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
-              <circle cx="12" cy="12" r="10" />
-              <ellipse cx="12" cy="12" rx="4" ry="10" />
-              <path d="M2 12H22" />
+              <circle cx="12" cy="12" r="10"></circle>
+              <ellipse cx="12" cy="12" rx="4" ry="10"></ellipse>
+              <path d="M2 12H22"></path>
           </svg>
         </a>
       </div>
     </div>
 
-    <!-- Copyright & Créditos (Columna Derecha) -->
+    <!-- Copyright & Créditos -->
     <div class="space-y-3 flex flex-col h-full md:items-end md:text-right md:w-1/3">
       <div class="h-10 flex items-center">
         <p class="text-[13px] font-semibold text-slate-300">
@@ -67,53 +66,36 @@ const year = new Date().getFullYear();
         <p class="text-[12px] text-slate-500 font-medium">
           Medellín, Colombia
         </p>
-        <a 
-          href="https://www.linkedin.com/in/jalfredopabon/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="inline-block text-[12px] text-slate-500 font-medium hover:text-white transition-colors group"
-        >
+        <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="inline-block text-[12px] text-slate-500 font-medium hover:text-white transition-colors group">
           Creado por <span class="text-slate-300 group-hover:text-brand transition-colors">Alfredo Pabón</span>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- Botón Back To Top (Se comporta fijo en pantalla cuando se hace scroll) -->
   <button id="back-to-top" class="fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-slate-100 focus:outline-none focus:ring-2 focus:ring-brand" aria-label="Volver arriba">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><polyline points="5 12 12 5 19 12"></polyline></svg>
   </button>
 </footer>
 
 <script>
-  // Lógica para mostrar/ocultar el botón "Back to Top"
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('astro:page-load', () => {
     const backToTopBtn = document.getElementById('back-to-top');
-    // Escuchamos el scroll de la columna derecha, que es donde ocurre si estamos en Dashboard mode
-    // (O el scroll del body si estamos en página normal)
     const scrollContainer = document.querySelector('.overflow-y-auto') || window;
     
     scrollContainer.addEventListener('scroll', () => {
-      // Necesitamos verificar cuánto se ha bajado en Y
       const scrollTop = (scrollContainer as HTMLElement).scrollTop || window.scrollY;
-      
       if (scrollTop > 300) {
-        // Mostrar botón flotante si se hace scroll más de 300px
         backToTopBtn?.classList.remove('translate-y-20', 'opacity-0', 'invisible');
         backToTopBtn?.classList.add('translate-y-0', 'opacity-100', 'visible');
       } else {
-        // Ocultar botón flotante
         backToTopBtn?.classList.add('translate-y-20', 'opacity-0', 'invisible');
         backToTopBtn?.classList.remove('translate-y-0', 'opacity-100', 'visible');
       }
     });
 
-    // Acción para subir al hacer click
     backToTopBtn?.addEventListener('click', () => {
-      scrollContainer.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 </script>

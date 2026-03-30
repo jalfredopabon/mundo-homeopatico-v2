@@ -64,9 +64,21 @@
 - **Standard Sage Green:** Establecimiento del tono `#EAF3F1` como el color oficial para fondos de paneles principales (Columna 2).
 - **Aislamiento Arquitectónico:** Uso de selectores de ID únicos y estilos locales para aplicar el fondo sin afectar a componentes globales (Header/Sidebar).
 
----
+### Hito 10: Unificación de Contacto y Sedes (30/03/2026)
+- **Clonación Estricta:** Replicación de la página de Sedes y Contacto bajo el estándar "Elite".
+- **Consistencia Visual:** Aplicación del "Branded Gray" (#EAF3F1) para mantener paridad con el Vademécum.
+- **Modularidad:** Integración de componentes reutilizables (Video, Locations, FAQ, Footer) para asegurar escalabilidad.
 
-## 🏗️ Deuda Técnica Pendiente (Fase 4: Sincronización)
+### Hito 11: Paridad Visual Total y Catálogo "Elite" (30/03/2026)
+- **Clonación Estricta Catálogo:** Reemplazo del panel principal de `index.astro` con el diseño premium online.
+- **Unificación Sistémica:** Aplicación del estándar "Branded Gray" (#EAF3F1) en todas las superficies maestras (Catálogo, Vademécum, Contacto).
+- **Interactividad:** Integración de la cinta de alerta (Banner informativo) y lógica de "Back to Top" personalizada para contenedores con scroll independiente.
+### Hito 13: Header Global y Accesibilidad Condicional (30/03/2026)
+- **Clonación Estricta Header:** Implementación 1:1 del encabezado principal con navegación rítmica.
+- **Botón de Accesibilidad Inteligente:** El control de "Tamaño de Texto" solo se muestra en Catálogo y Vademécum, optimizando la UI para el resto de las páginas.
+- **Navegación Dinámica:** Sincronización automática de estados activos (`active`) y subrayados según la ruta actual.
+- **Feedback Visual (UX):** Barra de progreso integrada para indicar carga de navegación y micro-interacciones en botones operativos.
+
 - **Scrollbar Global:** Evaluar la implementación del scrollbar premium en el Catálogo y Contacto para paridad total del sitio.
 - **Migración de Catálogo:** Reemplazar el resto de las secciones estáticas de `index.astro` con el organismo `ProductRowElite`.
 - **Tipado de Props:** Implementar interfaces de TypeScript estrictas para todos los componentes de la tabla.

@@ -1,79 +1,83 @@
 ---
-import StickyActionBox from "../shared/StickyActionBox.astro";
+// src/components/contacto/SidebarContacto.astro
+/**
+ * SidebarContacto: Navegación lateral para la página de Sedes y Contacto.
+ * - Versión Optimizada para Paridad Visual y Funcional.
+ * - Color Verdoso Sage Oscurecido (#D9E8E4) para estado activo.
+ * - Script robusto de ScrollSpy con soporte para ViewTransitions.
+ */
 ---
 
-<aside class="mh-sidebar w-full md:w-64 z-20">
+<aside class="hidden md:flex w-full md:w-64 bg-surface-white border-b md:border-b-0 md:border-r border-subtle flex-col z-20 sticky top-0 md:static shrink-0 overflow-y-auto h-[calc(100vh-64px)] md:h-[calc(100vh-64px)]">
     
-    <!-- HEADER UNIFICADO (Action Box) -->
-    <StickyActionBox>
-        <a href="#instagram" class="relative group block w-full">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted group-hover:text-brand transition-colors">
-                <div class="w-4 h-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
-                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+    <!-- Header del Sidebar (Card de Acción Rápida - Reemplaza al buscador) -->
+    <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
+        <a href="https://instagram.com/mundohomeopatico" target="_blank" class="relative group block w-full">
+            <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-hover:text-brand transition-colors pointer-events-none">
+                <div class="relative w-4 h-4 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+                        <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"></path>
+                        <path d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"></path>
+                        <path d="M17.5 6.5H17.509"></path>
                     </svg>
                 </div>
             </div>
-            <div class="w-full h-11 flex items-center pl-10 pr-4 bg-surface-muted/70 border border-subtle rounded-xl text-[14px] text-body group-hover:bg-surface-white group-hover:border-brand transition-all shadow-sm">
-                <span>Síguenos en Instagram</span>
+            <div class="h-10 flex items-center pl-8 pr-4 bg-surface-muted/70 border border-subtle rounded-lg text-[14px] text-slate-800 group-hover:bg-white group-hover:border-brand transition-all focus-visible:outline-none">
+                <span class="mt-[-2.5px]">Síguenos en Instagram</span>
             </div>
         </a>
-    </StickyActionBox>
-
-    <!-- Navegación ScrollSpy: Índice de la página -->
-    <nav class="flex-1 flex flex-col pb-20 mt-0 space-y-1" aria-label="Navegación de secciones" id="contacto-scrollspy">
-            
-            <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                    <div class="w-[18px] h-[18px] flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
-                            <path d="M4.5 9.5C4.5 13.6421 7.85786 17 12 17C16.1421 17 19.5 13.6421 19.5 9.5C19.5 5.35786 16.1421 2 12 2C7.85786 2 4.5 5.35786 4.5 9.5Z" />
-                            <path d="M9 10.1667C9 10.1667 9.75 10.1667 10.5 11.5C10.5 11.5 12.8824 8.16667 15 7.5" />
-                            <path d="M16.8825 15L17.5527 18.2099C17.9833 20.2723 18.1986 21.3035 17.7563 21.7923C17.3141 22.281 16.546 21.8606 15.0099 21.0198L12.7364 19.7753C12.3734 19.5766 12.1919 19.4773 12 19.4773C11.8081 19.4773 11.6266 19.5766 11.2636 19.7753L8.99008 21.0198C7.45397 21.8606 6.68592 22.281 6.24365 21.7923C5.80139 21.3035 6.01669 20.2723 6.44731 18.2099L7.11752 15" />
-                        </svg>
-                    </div>
-                </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 transition-colors group-hover:text-slate-900 group-[.is-active]:text-slate-900 leading-none mt-[-1px]">Excelencia homeopática</span>
-            </a>
-
-            <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                    <div class="w-[18px] h-[18px] flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
-                            <path d="M13.6177 21.367C13.1841 21.773 12.6044 22 12.0011 22C11.3978 22 10.8182 21.773 10.3845 21.367C6.41302 17.626 1.09076 13.4469 3.68627 7.37966C5.08963 4.09916 8.45834 2 12.0011 2C15.5439 2 18.9126 4.09916 20.316 7.37966C22.9082 13.4393 17.599 17.6389 13.6177 21.367Z" />
-                            <path d="M15.5 11C15.5 12.933 13.933 14.5 12 14.5C10.067 14.5 8.5 12.933 8.5 11C8.5 9.067 10.067 7.5 12 7.5C13.933 7.5 15.5 9.067 15.5 11Z" />
-                        </svg>
-                    </div>
-                </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 transition-colors group-hover:text-slate-900 group-[.is-active]:text-slate-900 leading-none mt-[-1px]">Sedes y distribuciones</span>
-            </a>
-
-            <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-xl transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 [&.is-active]:bg-slate-100 mx-4 focus:outline-none">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                    <div class="w-[18px] h-[18px] flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-600 group-[.is-active]:text-slate-900 transition-colors">
-                            <path d="M21.5 12C21.5 17.2467 17.2467 21.5 12 21.5C10.3719 21.5 8.8394 21.0904 7.5 20.3687C5.63177 19.362 4.37462 20.2979 3.26592 20.4658C3.09774 20.4913 2.93024 20.4302 2.80997 20.31C2.62741 20.1274 2.59266 19.8451 2.6935 19.6074C3.12865 18.5818 3.5282 16.6382 2.98341 15C2.6698 14.057 2.5 13.0483 2.5 12C2.5 6.75329 6.75329 2.5 12 2.5C17.2467 2.5 21.5 6.75329 21.5 12Z" />
-                            <path d="M9.5 9.5C9.5 8.11929 10.6193 7 12 7C13.3807 7 14.5 8.11929 14.5 9.5C14.5 10.3569 14.0689 11.1131 13.4117 11.5636C12.7283 12.0319 12 12.6716 12 13.5" />
-                            <path d="M12 16.5H12.009" />
-                        </svg>
-                    </div>
-                </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 transition-colors group-hover:text-slate-900 group-[.is-active]:text-slate-900 leading-none mt-[-1px]">Preguntas frecuentes</span>
-            </a>
-
-        </nav>
     </div>
 
+    <!-- Navegación ScrollSpy: Índice de la página -->
+    <nav class="flex-1 flex flex-col pb-4 mt-0 space-y-1 overflow-y-auto scrollbar-premium" id="contacto-scrollspy">
+        <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4 is-active">
+            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
+                <div class="w-[18px] h-[18px] flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-700 transition-colors">
+                        <path d="M4.5 9.5C4.5 13.6421 7.85786 17 12 17C16.1421 17 19.5 13.6421 19.5 9.5C19.5 5.35786 16.1421 2 12 2C7.85786 2 4.5 5.35786 4.5 9.5Z"></path>
+                        <path d="M9 10.1667C9 10.1667 9.75 10.1667 10.5 11.5C10.5 11.5 12.8824 8.16667 15 7.5"></path>
+                        <path d="M16.8825 15L17.5527 18.2099C17.9833 20.2723 18.1986 21.3035 17.7563 21.7923C17.3141 22.281 16.546 21.8606 15.0099 21.0198L12.7364 19.7753C12.3734 19.5766 12.1919 19.4773 12 19.4773C11.8081 19.4773 11.6266 19.5766 11.2636 19.7753L8.99008 21.0198C7.45397 21.8606 6.68592 22.281 6.24365 21.7923C5.80139 21.3035 6.01669 20.2723 6.44731 18.2099L7.11752 15"></path>
+                    </svg>
+                </div>
+            </div>
+            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Excelencia homeopática</span>
+        </a>
+
+        <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4">
+            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
+                <div class="w-[18px] h-[18px] flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-700 transition-colors">
+                        <path d="M13.6177 21.367C13.1841 21.773 12.6044 22 12.0011 22C11.3978 22 10.8182 21.773 10.3845 21.367C6.41302 17.626 1.09076 13.4469 3.68627 7.37966C5.08963 4.09916 8.45834 2 12.0011 2C15.5439 2 18.9126 4.09916 20.316 7.37966C22.9082 13.4393 17.599 17.6389 13.6177 21.367Z"></path>
+                        <path d="M15.5 11C15.5 12.933 13.933 14.5 12 14.5C10.067 14.5 8.5 12.933 8.5 11C8.5 9.067 10.067 7.5 12 7.5C13.933 7.5 15.5 9.067 15.5 11Z"></path>
+                    </svg>
+                </div>
+            </div>
+            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Sedes y distribuciones</span>
+        </a>
+
+        <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4">
+            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
+                <div class="w-[18px] h-[18px] flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-slate-700 transition-colors">
+                        <path d="M21.5 12C21.5 17.2467 17.2467 21.5 12 21.5C10.3719 21.5 8.8394 21.0904 7.5 20.3687C5.63177 19.362 4.37462 20.2979 3.26592 20.4658C3.09774 20.4913 2.93024 20.4302 2.80997 20.31C2.62741 20.1274 2.59266 19.8451 2.6935 19.6074C3.12865 18.5818 3.5282 16.6382 2.98341 15C2.6698 14.057 2.5 13.0483 2.5 12C2.5 6.75329 6.75329 2.5 12 2.5C17.2467 2.5 21.5 6.75329 21.5 12Z"></path>
+                        <path d="M9.5 9.5C9.5 8.11929 10.6193 7 12 7C13.3807 7 14.5 8.11929 14.5 9.5C14.5 10.3569 14.0689 11.1131 13.4117 11.5636C12.7283 12.0319 12 12.6716 12 13.5"></path>
+                        <path d="M12 16.5H12.009"></path>
+                    </svg>
+                </div>
+            </div>
+            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Preguntas frecuentes</span>
+        </a>
+    </nav>
+
     <!-- Contenedor Inferior: Información estática de soporte -->
-    <div class="px-4 py-5 mt-auto bg-surface-muted/50 border-t border-subtle hidden md:block">
+    <div class="px-4 py-4 mt-auto bg-surface-muted/50 border-t border-subtle hidden md:block">
         <div class="flex flex-col gap-2">
             <h4 class="text-[12px] font-bold text-slate-700">Atención al cliente</h4>
             <div class="flex items-start">
                 <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] mt-0.5">
-                    <!-- Icono Reloj (Hugeicons) -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-700 shrink-0">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 8V12L14 14" />
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 8V12L14 14"></path>
                     </svg>
                 </div>
                 <div>
@@ -83,25 +87,25 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
             </div>
         </div>
     </div>
-
 </aside>
 
 <style>
-    /* Estabilidad de Layout: Reserva espacio para el scrollbar para evitar saltos entre páginas */
+    /* Estabilidad de Layout */
     aside {
         scrollbar-gutter: stable;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Limpieza de foco nativo */
+    /* Limpieza de foco */
     .sidebar-link:focus {
         outline: none !important;
     }
 
-    /* Estado Activo: Cápsula Verde-Sage (Sincronizado con Catálogo) */
+    /* Estado Activo: Cápsula Verde Sage Oscurecido (#D9E8E4) */
+    /* Este color es ideal para paridad de oscuridad con slate-100 pero con matiz verde */
     .sidebar-link.is-active {
-        background-color: var(--bg-surface-hover) !important;
+        background-color: #D9E8E4 !important;
         color: inherit !important;
         font-weight: 700 !important;
         box-shadow: none !important;
@@ -118,35 +122,43 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
 <script>
     /**
      * Lógica de Auto-Anclaje y Resaltado Dinámico (ScrollSpy)
-     * Utiliza IntersectionObserver sobre el contenedor fluido de la columna derecha.
+     * Optimizada para precisión quirúrgica y soporte de clics.
      */
-    document.addEventListener('DOMContentLoaded', () => {
-        // Contenedor que tiene el scroll independiente
+    const initScrollSpy = () => {
         const scrollContainer = document.getElementById('contacto-main-scroll');
         const sections = document.querySelectorAll('section[id]');
+        const sidebarLinks = document.querySelectorAll('#contacto-scrollspy .sidebar-link');
         
-        if (!scrollContainer || sections.length === 0) return;
+        if (!scrollContainer || !sections.length || !sidebarLinks.length) return;
 
-        // Opciones del observador: la zona de activación (trigger) estará en el tercio superior de la pantalla
+        const clearActiveStates = () => {
+            sidebarLinks.forEach(link => link.classList.remove('is-active'));
+        };
+
+        // 1. Manejo de clics para respuesta inmediata
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                clearActiveStates();
+                link.classList.add('is-active');
+            });
+        });
+
+        // 2. Observer para seguimiento del scroll
         const observerOptions = {
             root: scrollContainer,
-            rootMargin: '-10% 0px -70% 0px',
+            rootMargin: '-30% 0px -60% 0px',
             threshold: 0
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                // Solo activamos si el elemento está entrando en la zona focal del viewport
                 if (entry.isIntersecting) {
                     const currentId = entry.target.getAttribute('id');
-                    
-                    // Resetear el estilo de todos los enlaces del sidebar
-                    document.querySelectorAll('#contacto-scrollspy a').forEach(link => {
-                        link.classList.remove('is-active');
-                    });
-
-                    // Aplicar estado 'Activo' ('Brand') al que corresponda
                     const activeLink = document.querySelector(`#contacto-scrollspy a[href="#${currentId}"]`);
+                    
                     if (activeLink) {
+                        clearActiveStates();
                         activeLink.classList.add('is-active');
                     }
                 }
@@ -154,5 +166,8 @@ import StickyActionBox from "../shared/StickyActionBox.astro";
         }, observerOptions);
 
         sections.forEach(section => observer.observe(section));
-    });
+    };
+
+    // Inicializar en carga inicial y navegaciones
+    document.addEventListener('astro:page-load', initScrollSpy);
 </script>

@@ -1,37 +1,38 @@
 ---
+// src/components/sections/VideoSection.astro
 import { Image } from 'astro:assets';
 /**
  * VideoSection: Sección de excelencia homeopática con video institucional
+ * Clonación Estricta: Se respeta el diseño visual idéntico al online.
  */
 ---
 
 <section id="excelencia" class="scroll-mt-10">
     <header class="mb-8 flex flex-col pt-0">
         <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-tight mb-2">
-            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Mundo Homeopático</span>
+            <span class="hover:text-slate-800 transition-colors cursor-pointer">Mundo Homeopático</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Institucional</span>
+            <span class="hover:text-slate-800 transition-colors cursor-pointer">Institucional</span>
         </nav>
         <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Excelencia homeopática</h2>
         <p class="text-slate-700 text-[15px] font-medium leading-snug">Nuestra promesa de calidad y procesos de manufactura.</p>
     </header>
+
     <!-- Contenedor vacío para Video/Imagen -->
     <div class="relative group aspect-[21/9] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl bg-secondary border border-strong/60 transition-all">
         <Image 
-            src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1200" 
+            src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1200&auto=format&fit=crop" 
             alt="Laboratorio farmacéutico clínico" 
             width={1200}
             height={675}
-            class="h-full w-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-70 transition-all duration-[2000ms]" 
+            class="h-full w-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-70 transition-all duration-[2000ms]"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent"></div>
-        
         <div class="absolute inset-0 flex items-center justify-center">
             <button class="flex h-20 w-20 items-center justify-center rounded-full bg-surface-white/10 backdrop-blur-md text-surface-white border border-surface-white/20 hover:bg-surface-white hover:text-brand transition-all duration-300 scale-95 hover:scale-105 active:scale-95 group/play" aria-label="Reproducir video">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"></path></svg>
             </button>
         </div>
-
         <div class="absolute bottom-0 left-0 w-full p-6 sm:p-8">
             <div class="bg-black/30 backdrop-blur-md border border-surface-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="flex flex-col gap-1.5">

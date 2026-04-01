@@ -22,13 +22,16 @@ const branchDistributors = [
         <!-- Tarjeta Sede Principal -->
         <div class="w-full bg-surface-white rounded-2xl border border-subtle/80 overflow-hidden flex flex-col lg:flex-row group hover:border-strong transition-all duration-500">
             <div class="flex flex-1 flex-col justify-between p-8 lg:p-12">
-                <div>
-                    <div class="inline-flex items-center gap-2 rounded-lg bg-brand/5 px-3 py-1 text-[11px] font-bold text-brand mb-6 border border-brand/20">
+                <div class="flex items-center gap-6 mb-10">
+                    <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shadow-sm shrink-0">
                         <!-- Icono Edificios (Hugeicons) -->
-                        <Icons type="building" class="w-3.5 h-3.5" strokeWidth={2.2} />
-                        Sede principal y laboratorio
+                        <Icons type="building" class="w-5 h-5" strokeWidth={2} />
                     </div>
-                    <h3 class="text-secondary text-2xl font-extrabold mb-8 tracking-tight">Mundo homeopático Bogotá</h3>
+                    <div>
+                        <h3 class="text-[15px] font-bold text-secondary leading-tight">Sede principal y laboratorio</h3>
+                        <p class="text-slate-700 text-[11px] font-bold">Bogotá D.C.</p>
+                    </div>
+                </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
@@ -36,7 +39,7 @@ const branchDistributors = [
                                 <Icons type="map-pin" class="w-5 h-5" strokeWidth={2} />
                                 <span class="text-[11px] font-bold text-slate-700">Dirección</span>
                             </div>
-                            <p class="text-body leading-relaxed font-semibold text-[15px]">Calle de la Salud 123<br>Edificio San Lucas, Piso 4<br>Bogotá D.C.</p>
+                            <p class="text-body leading-relaxed font-semibold text-[15px]">Calle Ficticia 123<br>Edificio de Ejemplo, Piso 0<br>Bogotá D.C.</p>
                         </div>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
@@ -49,17 +52,16 @@ const branchDistributors = [
                             </p>
                         </div>
                     </div>
-                </div>
                 <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95 hover:-translate-y-0.5">
+                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95">
                         <!-- Icono WhatsApp (Hugeicons) -->
                         <Icons type="whatsapp" class="w-5 h-5" strokeWidth={2.1} />
-                        WhatsApp
+                        310 000 0000
                     </button>
-                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold hover:border-brand/50 hover:bg-surface-muted transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95">
+                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95 cursor-default">
                         <!-- Icono Teléfono (Hugeicons) -->
                         <Icons type="phone" class="w-5 h-5" strokeWidth={1.8} />
-                        Llamadas
+                        320 000 0000
                     </button>
                 </div>
             </div>
@@ -94,16 +96,14 @@ const branchDistributors = [
                             <p class="text-slate-700 text-[11px] font-bold">{distributor.city}</p>
                         </div>
                     </div>
-                    <div class="mt-auto space-y-3">
-                        <div class="flex items-center gap-2 text-slate-700">
-                            <!-- Icono Email (Hugeicons) -->
-                            <Icons type="mail" class="w-3.5 h-3.5" strokeWidth={2} />
-                            <span class="text-[13px] font-medium">{distributor.email}</span>
-                        </div>
-                        <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-surface-muted border border-strong px-4 py-2.5 text-body font-bold text-[13px] hover:bg-surface-muted transition-colors">
-                            <!-- Icono Teléfono (Hugeicons) -->
+                    <div class="mt-auto space-y-2">
+                        <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-brand-vibrant px-4 py-2 text-surface-white font-bold text-[13px] hover:bg-brand transition-colors">
+                            <Icons type="whatsapp" class="w-4 h-4" strokeWidth={2.1} />
+                            310 000 0000
+                        </button>
+                        <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-surface-white border border-strong px-4 py-2 text-body font-bold text-[13px] transition-colors cursor-default">
                             <Icons type="phone" class="w-4 h-4" strokeWidth={1.8} />
-                            Llamar sucursal
+                            300 000 0000
                         </button>
                     </div>
                 </div>

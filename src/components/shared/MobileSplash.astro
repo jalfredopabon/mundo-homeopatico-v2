@@ -30,14 +30,14 @@
         const splash = document.getElementById('mobile-splash');
         if (!splash) return;
         
-        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash_v2');
 
         if (!hasSeenSplash) {
             // Tiempo total de la coreografía (5 segundos para lectura completa y apreciación)
             setTimeout(() => {
                 splash.style.opacity = '0';
                 splash.style.transform = 'translateY(-20px)';
-                sessionStorage.setItem('hasSeenSplash', 'true');
+                sessionStorage.setItem('hasSeenSplash_v2', 'true');
                 
                 setTimeout(() => {
                     splash.style.display = 'none';

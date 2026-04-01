@@ -129,7 +129,7 @@ button,
 
 /* --- 🏛️ Sistema Maestro de Tablas (Estética Elite) --- */
 .mh-table-container {
-  @apply w-full bg-surface-white border border-subtle shadow-sm overflow-hidden rounded-2xl;
+  @apply w-full bg-surface-white border border-subtle overflow-hidden rounded-2xl;
 }
 
 /* El grid maestro: 1fr para producto, y anchos fijos para precios y acción */

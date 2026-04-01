@@ -23,13 +23,13 @@ const branchDistributors = [
         <div class="w-full bg-surface-white rounded-2xl border border-subtle/80 overflow-hidden flex flex-col lg:flex-row group hover:border-strong transition-all duration-500">
             <div class="flex flex-1 flex-col justify-between p-8 lg:p-12">
                 <div class="flex items-center gap-6 mb-10">
-                    <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shadow-sm shrink-0">
+                        <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shrink-0">
                         <!-- Icono Edificios (Hugeicons) -->
                         <Icons type="building" class="w-5 h-5" strokeWidth={2} />
                     </div>
                     <div>
-                        <h3 class="text-[15px] font-bold text-secondary leading-tight">Sede principal y laboratorio</h3>
-                        <p class="text-slate-700 text-[11px] font-bold">Bogotá D.C.</p>
+                        <h3 class="text-[17px] font-bold text-secondary leading-snug">Sede principal y laboratorio</h3>
+                        <p class="text-slate-700 text-[12px] font-bold mt-0.5">Bogotá D.C.</p>
                     </div>
                 </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -53,12 +53,12 @@ const branchDistributors = [
                         </div>
                     </div>
                 <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95">
+                    <button class="flex-1 flex items-center justify-center gap-3 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold text-[15px] tracking-wide hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95">
                         <!-- Icono WhatsApp (Hugeicons) -->
                         <Icons type="whatsapp" class="w-5 h-5" strokeWidth={2.1} />
                         310 000 0000
                     </button>
-                    <button class="flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95 cursor-default">
+                    <button class="flex-1 flex items-center justify-center gap-3 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold text-[15px] tracking-wide transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95 cursor-default">
                         <!-- Icono Teléfono (Hugeicons) -->
                         <Icons type="phone" class="w-5 h-5" strokeWidth={1.8} />
                         320 000 0000
@@ -91,17 +91,24 @@ const branchDistributors = [
                             <!-- Icono Edificios (Hugeicons) -->
                             <Icons type="building" class="w-5 h-5" strokeWidth={2} />
                         </div>
-                        <div>
-                            <h4 class="text-[15px] font-bold text-secondary leading-tight">{distributor.name}</h4>
-                            <p class="text-slate-700 text-[11px] font-bold">{distributor.city}</p>
+                        <div class="flex flex-col gap-0.5">
+                            <h4 class="text-[16px] font-bold text-secondary leading-snug">{distributor.name}</h4>
+                            <p class="text-slate-700 text-[12px] font-bold">{distributor.city}</p>
                         </div>
                     </div>
-                    <div class="mt-auto space-y-2">
-                        <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-brand-vibrant px-4 py-2 text-surface-white font-bold text-[13px] hover:bg-brand transition-colors">
+                    <div class="mb-5 space-y-1.5">
+                        <div class="flex items-center gap-2.5 text-brand">
+                            <Icons type="map-pin" class="w-3.5 h-3.5" strokeWidth={2} />
+                            <span class="text-[11px] font-bold text-slate-700">Dirección</span>
+                        </div>
+                        <p class="text-slate-500 text-[13px] font-medium leading-relaxed">Calle Ficticia 123<br>Bogotá D.C.</p>
+                    </div>
+                    <div class="mt-auto space-y-2.5">
+                        <button class="w-full flex items-center justify-center gap-2.5 rounded-lg bg-brand-vibrant px-4 py-2.5 text-surface-white font-bold text-[14px] tracking-wide hover:bg-brand transition-colors">
                             <Icons type="whatsapp" class="w-4 h-4" strokeWidth={2.1} />
                             310 000 0000
                         </button>
-                        <button class="w-full flex items-center justify-center gap-2 rounded-lg bg-surface-white border border-strong px-4 py-2 text-body font-bold text-[13px] transition-colors cursor-default">
+                        <button class="w-full flex items-center justify-center gap-2.5 rounded-lg bg-surface-white border border-strong px-4 py-2.5 text-body font-bold text-[14px] tracking-wide transition-colors cursor-default">
                             <Icons type="phone" class="w-4 h-4" strokeWidth={1.8} />
                             300 000 0000
                         </button>

@@ -4,6 +4,7 @@ import CartDrawer from '../components/cart/CartDrawer.astro';
 import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 import AuthModal from '../components/shared/AuthModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
+import MedicalCard from '../components/vademecum/MedicalCard.astro';
 import Icons from '../components/shared/Icons.astro';
 
 const medicines = [
@@ -290,32 +291,13 @@ const medicines = [
                 <!-- Listado de Tarjetas Clínicas -->
                 <div class="space-y-3 max-w-3xl" id="meds-container">
                     
-                    {medicines.map((med, index) => (
-                        <div 
-                            class="group bg-surface-white rounded-xl p-6 cursor-pointer transition-colors reveal medical-item-btn border border-subtle hover:border-brand shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
-                            data-med={med.id}
-                            data-id={med.id}
-                        >
-                            <div class="flex items-baseline gap-2.5 mb-2">
-                                <h3 class="text-[16px] font-bold text-slate-900">
-                                    {med.name}
-                                </h3>
-                                <span class="text-slate-700 text-xs font-medium">{med.potency}</span>
-                            </div>
-                            
-                            <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
-                                {med.shortDesc}
-                            </p>
-                            
-                                 <div class="flex items-center gap-3 flex-wrap">
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
-                                        Clínica general
-                                    </span>
-                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
-                                        Gotas
-                                    </span>
-                                </div>
-                        </div>
+                    {medicines.map((med) => (
+                        <MedicalCard 
+                            id={med.id}
+                            name={med.name}
+                            potency={med.potency}
+                            shortDesc={med.shortDesc}
+                        />
                     ))}
 
                 </div>

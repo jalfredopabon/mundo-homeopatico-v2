@@ -2,6 +2,7 @@
 // src/components/catalogo/ProductRowElite.astro
 import BadgeElite from "../shared/BadgeElite.astro";
 import ButtonElite from "../shared/ButtonElite.astro";
+import Icons from "../shared/Icons.astro";
 
 interface Badge {
   label: string;
@@ -28,10 +29,10 @@ const {
 } = Astro.props;
 ---
 
-<div class="mh-table-row mh-table-grid group">
+<div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-[1.15rem] px-6 border-b border-subtle transition-all relative z-0 hover:z-10 group/row cursor-pointer hover:bg-surface-muted hover:ring-2 hover:ring-inset hover:ring-white">
     <!-- Información del Producto (Nivel 3 Lego) -->
-    <div class="flex flex-col">
-        <h3 class="text-body font-bold text-base md:text-[1.05rem] leading-tight transition-colors group-hover:text-brand">
+    <div class="flex flex-col pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
+        <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight group-hover/row:text-brand-dark transition-colors duration-500 line-clamp-2">
             {name}
         </h3>
         <div class="flex flex-wrap items-center gap-2 mt-2">
@@ -40,6 +41,7 @@ const {
                   label={badge.label} 
                   variant={badge.variant || 'outline'} 
                   size="xs" 
+                  class="group-hover/row:bg-white group-hover/row:border-slate-300 transition-all duration-300"
                 />
             ))}
         </div>
@@ -48,30 +50,34 @@ const {
     <!-- Precios y Acción (Estructura responsiva Elite) -->
     <div class="sm:contents">
         <!-- Farmacia -->
-        <div class="mh-table-price-cell">
-            <span class="sm:hidden text-[10px] text-slate-400 font-bold mb-1">Farmacia</span>
-            <span class="text-slate-500 font-medium group-hover:text-slate-900 transition-colors tracking-tight">
+        <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
+            <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
+            <span class="text-slate-700 font-medium group-hover/row:text-slate-900 transition-colors">
                 {farmaciaPrice}
             </span>
         </div>
         
         <!-- Público (Desktop) -->
-        <div class="mh-table-price-cell hidden sm:block">
-            <span class="text-slate-900 font-extrabold tracking-tighter text-base md:text-[1.1rem] transition-transform inline-block group-hover:scale-105">
+        <div class="hidden sm:block text-right mt-1 sm:mt-0">
+            <span class="text-slate-700 font-medium group-hover/row:text-slate-900 transition-colors">
                 {publicoPrice}
             </span>
         </div>
 
         <!-- Botón de Acción (Uso de ButtonElite) -->
-        <div class="mh-table-action-cell">
-            <ButtonElite 
-                variant="primary" 
-                size="icon" 
-                icon="plus" 
-                label="Añadir al pedido"
-                class="btn-add-cart w-full sm:w-10 h-12 sm:h-10"
+        <div class="flex justify-end sm:justify-center mt-3 sm:mt-0">
+            <button 
+                class="w-full sm:w-10 h-10 flex items-center justify-center rounded-lg bg-surface-muted group-hover/row:bg-white hover:!bg-brand-dark text-brand-dark hover:!text-white transition-all focus:ring-2 focus:ring-brand active:scale-95 btn-add-cart border border-subtle/50" 
+                data-name={cartData?.name || name} 
+                data-price={cartData?.price || farmaciaPrice.replace(/[^0-9]/g, '')}
+                aria-label={`Añadir ${name}`}
                 id={cartData ? `btn-${cartData.price}` : undefined}
-            />
+            >
+                <div class="flex items-center justify-center mt-[-1px]">
+                    <Icons type="plus" class="w-[18px] h-[18px] transition-colors" strokeWidth={3} />
+                    <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
+                </div>
+            </button>
         </div>
     </div>
 </div>

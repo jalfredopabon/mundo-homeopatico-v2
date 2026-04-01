@@ -31,34 +31,34 @@ const faqs = [
 ---
 
 <section id="faq" class="scroll-mt-10">
-    <header class="mb-10 flex flex-col gap-1.5">
-        <h2 class="text-[2.25rem] leading-tight font-extrabold text-secondary tracking-tight">Preguntas frecuentes</h2>
-        <p class="text-slate-700 text-base font-medium">Respondemos a las inquietudes más comunes.</p>
+    <header class="faq-section-header">
+        <h2 class="faq-main-title">Preguntas frecuentes</h2>
+        <p class="faq-main-sub">Respondemos a las inquietudes más comunes.</p>
     </header>
-    <div class="w-full border-t border-slate-600 mt-4">
+    <div class="faq-container">
             {faqs.map((faq) => (
-                <div class={`group transition-all duration-300 overflow-hidden faq-item border-b border-slate-600 ${faq.isOpen ? 'is-open' : ''}`}>
-                <button class="faq-header flex w-full items-center justify-between py-6 sm:py-7 pr-2 text-left focus:outline-none transition-colors">
-                    <span class="faq-title text-[17px] font-bold transition-colors pr-8">{faq.question}</span>
-                    <div class="faq-icon-box flex items-center justify-center transition-all duration-300 shrink-0">
-                        <Icons type="chevron-down" class="w-[22px] h-[22px] icon-closed" strokeWidth={2} />
-                        <Icons type="chevron-up" class="w-[22px] h-[22px] icon-opened" strokeWidth={2} />
+                <div class={`faq-item ${faq.isOpen ? 'is-open' : ''}`}>
+                <button class="faq-header">
+                    <span class="faq-title">{faq.question}</span>
+                    <div class="faq-icon-box">
+                        <Icons type="chevron-down" class="icon-closed" strokeWidth={2} />
+                        <Icons type="chevron-up" class="icon-opened" strokeWidth={2} />
                     </div>
                 </button>
-                <div class="faq-content-wrapper transition-all duration-500 ease-in-out">
+                <div class="faq-content-wrapper">
                     <div class="overflow-hidden">
-                        <div class="faq-content-inner pb-6 sm:pb-7 text-body leading-relaxed text-[15px] pr-8 sm:pr-12">
+                        <div class="faq-content-inner">
                             {faq.paragraphs && faq.paragraphs.map(p => (
                                 <p class={faq.list ? "mb-4" : ""}>{p}</p>
                             ))}
                             {faq.list && (
-                                <ul class="space-y-3.5 mt-2">
+                                <ul class="faq-list">
                                     {faq.list.map(item => (
-                                        <li class="flex items-start gap-3">
-                                            <div class="bg-brand/5 p-1 rounded-full text-brand mt-0.5 shrink-0">
+                                        <li class="faq-list-item">
+                                            <div class="faq-check-box">
                                                 <Icons type="check" class="w-3.5 h-3.5" strokeWidth={3} />
                                             </div>
-                                            <span class="text-[14.5px] font-medium text-body">{item}</span>
+                                            <span class="faq-list-text">{item}</span>
                                         </li>
                                     ))}
                                 </ul>
@@ -72,19 +72,30 @@ const faqs = [
 </section>
 
 <style>
+    .faq-section-header {
+        @apply mb-10 flex flex-col gap-1.5;
+    }
+    .faq-main-title {
+        @apply text-[2.25rem] leading-tight font-extrabold text-secondary tracking-tight;
+    }
+    .faq-main-sub {
+        @apply text-slate-700 text-base font-medium;
+    }
+    .faq-container {
+        @apply w-full border-t border-slate-600 mt-4;
+    }
     /* Estado Cerrado (Default) */
     .faq-item {
-        @apply bg-transparent transition-all duration-300;
+        @apply bg-transparent transition-all duration-300 overflow-hidden border-b border-slate-600;
     }
     .faq-title {
-        @apply text-secondary transition-colors;
+        @apply text-[17px] font-bold text-secondary transition-colors pr-8;
     }
     .faq-header {
-        @apply flex w-full items-center justify-between py-6 sm:py-7 text-left focus:outline-none transition-colors cursor-pointer;
+        @apply flex w-full items-center justify-between py-6 sm:py-7 pr-2 text-left focus:outline-none transition-colors cursor-pointer;
     }
-    /* Hover sutil sobre el título e icono sin agregar background a las barras */
     .faq-icon-box {
-        @apply text-slate-700 transition-all duration-300;
+        @apply text-slate-700 transition-all duration-300 flex items-center justify-center shrink-0 w-[22px] h-[22px];
     }
     :global(.icon-opened) {
         display: none;
@@ -93,10 +104,26 @@ const faqs = [
         @apply overflow-hidden transition-all duration-500 ease-in-out opacity-0;
         max-height: 0;
     }
+    .faq-content-inner {
+        @apply pb-6 sm:pb-7 text-body leading-relaxed text-[15px] pr-8 sm:pr-12;
+    }
+    .faq-list {
+        @apply space-y-3.5 mt-2;
+    }
+    .faq-list-item {
+        @apply flex items-start gap-3;
+    }
+    .faq-check-box {
+        @apply p-1 rounded-full text-brand mt-0.5 shrink-0;
+        background-color: rgba(10, 92, 78, 0.05);
+    }
+    .faq-list-text {
+        @apply text-[14.5px] font-medium text-body;
+    }
 
     /* Estado Abierto */
-    .faq-item.is-open .faq-icon-box {
-        @apply text-slate-700;
+    .faq-item.is-open .faq-title {
+        @apply text-brand-dark;
     }
     :global(.faq-item.is-open .icon-closed) {
         display: none;

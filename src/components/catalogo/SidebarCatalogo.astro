@@ -240,11 +240,15 @@ import Icons from "../shared/Icons.astro";
             sidebarLinks.forEach(link => link.classList.remove('is-active'));
         };
 
-        // 1. Manejo de clics para respuesta inmediata (Culpable de que no se moviera al elegir)
+        // 1. Manejo de clics para respuesta inmediata y cierre de acordeones ajenos
         sidebarLinks.forEach(link => {
             link.addEventListener('click', () => {
                 clearActiveStates();
                 link.classList.add('is-active');
+
+                // Si selecciono un ítem, cerramos los acordeones que NO sean el padre de este ítem
+                const parentAccordion = link.closest('.accordion-content') as HTMLElement;
+                closeAllAccordions(parentAccordion);
             });
         });
 
@@ -326,17 +330,7 @@ import Icons from "../shared/Icons.astro";
         border: none !important;
     }
 
-    /* Indicador visual de línea a la izquierda para el estado activo */
-    .sidebar-link.is-active::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 22.5%;
-        height: 55%;
-        width: 3.5px;
-        background-color: #0A5C4E; /* MH Brand Color */
-        @apply rounded-r-full;
-    }
+
 
     /* Hover: Sutil, igual que en Contacto */
     .sidebar-link:hover:not(.is-active) {
@@ -351,5 +345,32 @@ import Icons from "../shared/Icons.astro";
 
     .accordion-trigger.is-expanded {
         @apply bg-slate-50 text-slate-900 font-bold;
+    }
+
+    /* Línea Maestra Jerárquica */
+    .accordion-content {
+        position: relative;
+    }
+
+    .accordion-content::before {
+        content: "";
+        position: absolute;
+        left: 31px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        @apply bg-slate-200;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* Ajuste de Z-index para las cápsulas de Nivel 4 */
+    .sidebar-link {
+        position: relative;
+        z-index: 5; /* Por debajo de la línea maestra (z-10) */
+    }
+
+    .sidebar-link.is-active, .sidebar-link:hover {
+        z-index: 5;
     }
 </style>

@@ -14,7 +14,12 @@ const medicines = [
         potency: 'D4',
         scientificName: 'Strychnos nux-vomica',
         origin: 'Origen vegetal',
-        shortDesc: 'Tratamiento eficaz para la digestión lenta con sensación de pesadez, migrañas digestivas matutinas y estreñimiento espasmódico. Especialmente indicado para personas con un estilo de vida sedentario bajo estrés laboral continuo.',
+        shortDesc: 'Tratamiento eficaz para la digestión lenta con sensación de pesadez, migrañas digestivas matutinas y estreñimiento espasmódico.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Digestivo', 'Nervioso'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
@@ -28,7 +33,7 @@ const medicines = [
                 title: 'Perfil farmacológico',
                 icon: 'gotas',
                 items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Digestivo y Sistema Nervioso Central (médula espinal).',
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Digestivo y Sistema Nervioso Central.',
                     '<span class="font-bold text-body">Mecanismo:</span> Regulación de la hipersensibilidad de las transmisiones nerviosas.'
                 ]
             },
@@ -36,8 +41,8 @@ const medicines = [
                 title: 'Protocolo de posología',
                 icon: 'edit',
                 items: [
-                    'Disolver <span class="font-bold text-body">5 glóbulos bajo la lengua</span>, 3 veces al día.',
-                    '<span class="font-bold text-body">Fase crónica:</span> Mantener la dosis durante 3 semanas o según criterio médico.'
+                    'Disolver 5 glóbulos bajo la lengua, 3 veces al día.',
+                    'Fase crónica: Mantener la dosis durante 3 semanas.'
                 ]
             }
         ]
@@ -48,30 +53,35 @@ const medicines = [
         potency: 'D6',
         scientificName: 'Arnica montana L.',
         origin: 'Origen vegetal',
-        shortDesc: 'Alivio inmediato y profundo para traumatismos, contusiones y dolores musculares derivados de un sobreesfuerzo físico intenso. Favorece la reabsorción de hematomas y acelera la recuperación en procesos post-operatorios.',
+        shortDesc: 'Alivio inmediato para traumatismos, contusiones y dolores musculares derivados de sobreesfuerzo físico.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Locomotor', 'Cardiovascular'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
-                    'Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo.',
-                    'Coadyuvante en la recuperación post-operatoria y reabsorción de hematomas.'
+                    'Tratamiento de traumatismos, contusiones y dolores musculares.',
+                    'Coadyuvante en la recuperación post-operatoria.'
                 ]
             },
             {
                 title: 'Perfil farmacológico',
                 icon: 'gotas',
                 items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Muscular, Capilares sanguíneos y Tejido Celular.',
-                    '<span class="font-bold text-body">Acción:</span> Hemostático y antiinflamatorio de tejidos blandos.'
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Muscular y Capilares sanguíneos.',
+                    '<span class="font-bold text-body">Acción:</span> Hemostático y antiinflamatorio.'
                 ]
             },
             {
                 title: 'Protocolo de posología',
                 icon: 'edit',
                 items: [
-                    'En phase aguda, <span class="font-bold text-body">5 glóbulos cada 30 minutos</span> durante las primeras 2 horas.',
-                    'Luego continuar con 5 glóbulos, 3 veces al día por 10 días.'
+                    'En fase aguda, 5 glóbulos cada 30 minutos durante las primeras 2 horas.',
+                    'Luego continuar con 5 glóbulos, 3 veces al día.'
                 ]
             }
         ]
@@ -82,30 +92,35 @@ const medicines = [
         potency: 'D12',
         scientificName: 'Strychnos ignatii',
         origin: 'Origen vegetal',
-        shortDesc: 'Solución terapéutica para trastornos emocionales agudos, ansiedad con espasmos físicos y labilidad afectiva. Indicado ante la sensación de nudo en la garganta y bloqueos nerviosos causados por situaciones de duelo o estrés emocional.',
+        shortDesc: 'Solución para trastornos emocionales agudos, ansiedad con espasmos físicos y labilidad afectiva.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Nervioso'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
                     'Trastornos emocionales, ansiedad con espasmos y labilidad afectiva.',
-                    'Sensación de "nudo en la garganta" y suspiros frecuentes debidos a pena moral.'
+                    'Sensación de nudo en la garganta y suspiros frecuentes.'
                 ]
             },
             {
                 title: 'Perfil farmacológico',
                 icon: 'gotas',
                 items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso (Eje cerebroespinal). Sensibilidad extrema.',
-                    '<span class="font-bold text-body">Mecanismo:</span> Modulador de la respuesta paradójica ante el estrés.'
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso (Eje cerebroespinal).',
+                    '<span class="font-bold text-body">Mecanismo:</span> Modulador de la respuesta ante el estrés emocional.'
                 ]
             },
             {
                 title: 'Protocolo de posología',
                 icon: 'edit',
                 items: [
-                    'Disolver <span class="font-bold text-body">5 glóbulos</span> alejado de las comidas principales.',
-                    'Preferiblemente administrar al atardecer o antes de dormir.'
+                    'Disolver 5 glóbulos alejado de las comidas principales.',
+                    'Preferiblemente administrar al atardecer.'
                 ]
             }
         ]
@@ -116,30 +131,27 @@ const medicines = [
         potency: 'D6',
         scientificName: 'Anemone pulsatilla',
         origin: 'Origen vegetal',
-        shortDesc: 'Medicamento de elección para afecciones respiratorias con secreciones blandas y síntomas cambiantes. Útil en trastornos circulatorios venosos, congestión pasiva y cuadros emocionales de timidez con necesidad de acompañamiento.',
+        shortDesc: 'Medicamento para afecciones respiratorias con secreciones blandas y síntomas cambiantes.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio', 'Cardiovascular'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
-                    'Afecciones de mucosas con secreciones blandas y variabilidad de síntomas.',
-                    'Útil en trastornos venosos, congestión pasiva y estados de timidez o abandono.'
+                    'Afecciones de mucosas con secreciones blandas.',
+                    'Útil en trastornos venosos y congestión pasiva.'
                 ]
             },
             {
                 title: 'Perfil farmacológico',
                 icon: 'gotas',
                 items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Mucosas, Sistema Venoso y Órganos genitales femeninos.',
-                    '<span class="font-bold text-body">Acción:</span> Descongestionante y regulador hormonal básico.'
-                ]
-            },
-            {
-                title: 'Protocolo de posología',
-                icon: 'edit',
-                items: [
-                    'Tomar <span class="font-bold text-body">5 glóbulos</span>, 2 a 3 veces al día según la cronicidad.',
-                    'Evitar el contacto con sustancias de olor fuerte (alcanfor, mentoles).'
+                    '<span class="font-bold text-body">Tropismo principal:</span> Mucosas y Sistema Venoso.',
+                    '<span class="font-bold text-body">Acción:</span> Descongestionante y regulador hormonal.'
                 ]
             }
         ]
@@ -150,30 +162,19 @@ const medicines = [
         potency: 'D6',
         scientificName: 'Aconitum napellus',
         origin: 'Origen vegetal',
-        shortDesc: 'Intervención de choque ante procesos febriles de aparición brusca y violenta tras una exposición al frío seco o un susto intenso. Calma la angustia aguda, la agitación y las primeras etapas de procesos gripales congestivos.',
+        shortDesc: 'Intervención de choque ante procesos febriles bruscos tras exposición al frío seco.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Cardiovascular', 'Nervioso'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
-                    'Procesos febriles de aparición repentina, astenia y angustia aguda.',
-                    'Primer medicamento ante síntomas de gripe tras exposición al frío seco.'
-                ]
-            },
-            {
-                title: 'Perfil farmacológico',
-                icon: 'gotas',
-                items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Cardiovascular y Sistema Nervioso.',
-                    '<span class="font-bold text-body">Acción:</span> Sedante nervioso y regulador de la microcirculación febril.'
-                ]
-            },
-            {
-                title: 'Protocolo de posología',
-                icon: 'edit',
-                items: [
-                    'Administrar <span class="font-bold text-body">5 glóbulos cada hora</span> durante el pico febril inicial.',
-                    'Espaciar la dosis a medida que la sudoración aparezca.'
+                    'Procesos febriles de aparición repentina y angustia aguda.',
+                    'Primer medicamento ante síntomas de gripe.'
                 ]
             }
         ]
@@ -184,30 +185,19 @@ const medicines = [
         potency: 'D4',
         scientificName: 'Atropa belladonna',
         origin: 'Origen vegetal',
-        shortDesc: 'Indicada en estados inflamatorios agudos caracterizados por calor local, rubor intenso y dolor de carácter pulsátil. Eficaz en el tratamiento de amigdalitis aguda, otitis derecha inicial y cefaleas congestivas que empeoran con la luz.',
+        shortDesc: 'Indicada en estados inflamatorios agudos con calor local, rubor y dolor pulsátil.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
-                    'Inflamaciones agudas, rubor, calor y dolor pulsátil intenso.',
-                    'Tratamiento de amigdalitis aguda, otitis derecha y cefaleas congestivas.'
-                ]
-            },
-            {
-                title: 'Perfil farmacológico',
-                icon: 'gotas',
-                items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso, Piel y Mucosas.',
-                    '<span class="font-bold text-body">Efecto:</span> Control de la hiperemia inflamatoria de instauración brusca.'
-                ]
-            },
-            {
-                title: 'Protocolo de posología',
-                icon: 'edit',
-                items: [
-                    'Disolver <span class="font-bold text-body">5 glóbulos</span>, 3 veces al día.',
-                    'En dolores pulsátiles, repetir la dosis cada 30 minutos hasta mejoría.'
+                    'Inflamaciones agudas, rubor y calor.',
+                    'Tratamiento de amigdalitis aguda y otitis.'
                 ]
             }
         ]
@@ -218,30 +208,134 @@ const medicines = [
         potency: 'D12',
         scientificName: 'Gelsemium sempervirens',
         origin: 'Origen vegetal',
-        shortDesc: 'Auxiliar terapéutico en estados gripales con gran postración física, temblores y pesadez de párpados. Actúa eficazmente sobre la ansiedad anticipatoria ante exámenes, eventos públicos o noticias estresantes inminentes.',
+        shortDesc: 'Auxiliar en estados gripales con gran postración física y ansiedad anticipatoria.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Nervioso'],
+            forma: 'Gotas'
+        },
         sections: [
             {
                 title: 'Indicaciones clínicas',
                 icon: 'task-list',
                 items: [
-                    'Estados gripales con postración, pesadez palpebral y temblores.',
-                    'Ansiedad anticipatoria por exámenes, eventos o noticias estresantes.'
+                    'Estados gripales con postración y temblores.',
+                    'Ansiedad anticipatoria por eventos estresantes.'
                 ]
-            },
+            }
+        ]
+    },
+    {
+        id: 'rescue-remedy',
+        name: 'Rescue Remedy',
+        potency: 'Bach',
+        scientificName: 'Combinado Floral',
+        origin: 'Esencias florales',
+        shortDesc: 'Fórmula de rescate para situaciones de crisis emocional, shock o estrés agudo.',
+        tags: {
+            terapia: 'Terapia floral',
+            sistema: ['Nervioso'],
+            forma: 'Gotas'
+        },
+        sections: [
             {
-                title: 'Perfil farmacológico',
-                icon: 'gotas',
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
                 items: [
-                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso Central (Eje cerebroespinal).',
-                    '<span class="font-bold text-body">Acción:</span> Especializado en la respuesta motora y sensorial ante el miedo.'
+                    'Momentos de pánico, estrés elevado o noticias impactantes.',
+                    'Estabilizador emocional inmediato.'
                 ]
-            },
+            }
+        ]
+    },
+    {
+        id: 'zinc-oligoelemento',
+        name: 'Zinc-Nic-Co',
+        potency: 'Oligo',
+        scientificName: 'Oligoelemento',
+        origin: 'Mineral',
+        shortDesc: 'Regulador enzimático para el equilibrio del sistema nervioso y metabólico.',
+        tags: {
+            terapia: 'Oligoelementos',
+            sistema: ['Nervioso'],
+            forma: 'Gotas'
+        },
+        sections: [
             {
-                title: 'Protocolo de posología',
-                icon: 'edit',
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
                 items: [
-                    'Tomar <span class="font-bold text-body">5 glóbulos</span> la noche anterior a un evento estresante.',
-                    'Repetir 5 glóbulos una hora antes de la exposición al estrés.'
+                    'Disfunciones metabólicas menores.',
+                    'Apoyo en fatiga nerviosa y estrés.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'girasol-esencia',
+        name: 'Girasol (Helianthus)',
+        potency: 'Esencia',
+        scientificName: 'Helianthus annuus',
+        origin: 'Origen vegetal',
+        shortDesc: 'Esencia floral para el equilibrio de la identidad y la armonía digestiva.',
+        tags: {
+            terapia: 'Terapia floral',
+            sistema: ['Digestivo'],
+            forma: 'Tabletas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Problemas de auto-percepción.',
+                    'Coadyuvante en molestias digestivas por origen nervioso.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'arnica-spray',
+        name: 'Arnica Spray',
+        potency: 'D2',
+        scientificName: 'Arnica montana L.',
+        origin: 'Origen vegetal',
+        shortDesc: 'Formato práctico para aplicación tópica inmediata en golpes y dolores musculares.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Locomotor'],
+            forma: 'Spray'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Contusiones deportivas y dolores localizados.',
+                    'Rápida absorción sin contacto directo.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'calendula-crema',
+        name: 'Calendula Crema',
+        potency: 'MT',
+        scientificName: 'Calendula officinalis',
+        origin: 'Origen vegetal',
+        shortDesc: 'Protección y cicatrización de tejidos blandos con base cremosa hidratante.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Locomotor'],
+            forma: 'Crema'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Cicatrización de heridas superficiales.',
+                    'Dermatitis y alivio de inflamación externa.'
                 ]
             }
         ]
@@ -285,20 +379,47 @@ const medicines = [
                 <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
                     <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
-                    <span>{medicines.length} medicamentos en catálogo</span>
+                    <span id="results-counter">{medicines.length} medicamentos en catálogo</span>
                 </div>
 
                 <!-- Listado de Tarjetas Clínicas -->
                 <div class="space-y-3 max-w-3xl" id="meds-container">
                     
-                    {medicines.map((med) => (
-                        <MedicalCard 
-                            id={med.id}
-                            name={med.name}
-                            potency={med.potency}
-                            shortDesc={med.shortDesc}
-                        />
+                    {medicines
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((med) => (
+                        <div 
+                            class="med-item reveal" 
+                            data-terapia={med.tags.terapia} 
+                            data-sistema={med.tags.sistema.join(',')}
+                            data-forma={med.tags.forma}
+                            data-name={med.name.toLowerCase()}
+                        >
+                            <MedicalCard 
+                                id={med.id}
+                                name={med.name}
+                                potency={med.potency}
+                                shortDesc={med.shortDesc}
+                                tags={med.tags}
+                            />
+                        </div>
                     ))}
+
+                    <!-- Estado Vacío (Hidden by default) -->
+                    <div id="empty-state" class="hidden py-20 text-center reveal">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                                <Icons type="search" class="w-8 h-8" strokeWidth={1.5} />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-slate-900 font-bold text-lg">Sin resultados</h3>
+                                <p class="text-slate-500 text-sm max-w-[280px]">No encontramos medicamentos que coincidan con estos filtros.</p>
+                            </div>
+                            <button id="clear-filters-btn" class="mt-2 text-brand font-bold text-sm hover:underline cursor-pointer">
+                                Limpiar todos los filtros
+                            </button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -313,19 +434,16 @@ const medicines = [
 
 </BaseLayout>
 
-
-
-
 <script>
     document.addEventListener('astro:page-load', () => {
         initReveal();
         initFichasManager();
         initMobileDrawer();
+        initFilters();
     });
 
     /**
      * --- 1. SISTEMA DE REVEAL (ANIMACIONES) ---
-     * Gestiona la aparición suave de los elementos al hacer scroll.
      */
     function initReveal() {
         const revealElements = document.querySelectorAll('.reveal');
@@ -338,7 +456,6 @@ const medicines = [
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -347,8 +464,71 @@ const medicines = [
     }
 
     /**
-     * --- 2. GESTIÓN DE FICHAS TÉCNICAS ---
-     * Controla la selección de medicamentos y la visualización de su ficha técnica.
+     * --- 2. GESTIÓN DE FILTROS (ADN ELITE) ---
+     * Motor booleano AND/OR para filtrado de Vademécum masivo.
+     */
+    function initFilters() {
+        const filterInputs = document.querySelectorAll('.vademecum-filter');
+        const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
+        const medItems = document.querySelectorAll('.med-item');
+        const counter = document.getElementById('results-counter');
+        const emptyState = document.getElementById('empty-state');
+        const clearBtn = document.getElementById('clear-filters-btn');
+
+        function applyFilters() {
+            // 1. Recolectar filtros activos por grupo
+            const activeFilters = {
+                terapia: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                sistema: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                forma: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                search: searchInput?.value.toLowerCase().trim() || ''
+            };
+
+            let visibleCount = 0;
+
+            medItems.forEach(item => {
+                const itemTerapia = item.getAttribute('data-terapia');
+                const itemSistemas = item.getAttribute('data-sistema').split(',');
+                const itemForma = item.getAttribute('data-forma');
+                const itemName = item.getAttribute('data-name');
+
+                // Lógica de validación por grupo (OR interno)
+                const matchesTerapia = activeFilters.terapia.length === 0 || activeFilters.terapia.includes(itemTerapia);
+                const matchesSistema = activeFilters.sistema.length === 0 || activeFilters.sistema.some(s => itemSistemas.includes(s));
+                const matchesForma = activeFilters.forma.length === 0 || activeFilters.forma.includes(itemForma);
+                const matchesSearch = !activeFilters.search || itemName.includes(activeFilters.search);
+
+                // Intersección final (AND entre grupos)
+                const isVisible = matchesTerapia && matchesSistema && matchesForma && matchesSearch;
+
+                if (isVisible) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Actualizar UI
+            if (counter) counter.innerText = `${visibleCount} medicamentos en catálogo`;
+            if (emptyState) {
+                if (visibleCount === 0) emptyState.classList.remove('hidden');
+                else emptyState.classList.add('hidden');
+            }
+        }
+
+        // Listeners
+        filterInputs.forEach(input => input.addEventListener('change', applyFilters));
+        searchInput?.addEventListener('input', applyFilters);
+        clearBtn?.addEventListener('click', () => {
+            (document.querySelectorAll('.vademecum-filter:checked') as NodeListOf<HTMLInputElement>).forEach(i => i.checked = false);
+            if (searchInput) searchInput.value = '';
+            applyFilters();
+        });
+    }
+
+    /**
+     * --- 3. GESTIÓN DE FICHAS TÉCNICAS ---
      */
     function initFichasManager() {
         const medCards = document.querySelectorAll('[data-med]');
@@ -358,25 +538,14 @@ const medicines = [
         medCards.forEach(card => {
             card.addEventListener('click', () => {
                 const medId = card.getAttribute('data-med');
-
-                // 2.1 Actualizar estado visual de las tarjetas
-                actualizarTarjetasActivas(medCards, card);
-
-                // 2.2 Cambiar contenido de la ficha (ID dinámico)
+                actualizarTarjetasActivas(medCards, (card as HTMLElement));
                 cambiarFichaTecnica(sheets, medId);
-
-                // 2.3 Reset de scroll en el Aside (UX)
-                if (vademecumAside) {
-                    vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-
-                // 2.4 Abrir en móvil si estamos en resolución reducida
+                if (vademecumAside) vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
                 abrirDrawerMovil(vademecumAside);
             });
         });
     }
 
-    // Funciones auxiliares para FichasManager
     function actualizarTarjetasActivas(allCards, selectedCard) {
         allCards.forEach(c => {
             c.classList.remove('border-brand', 'shadow-sm');
@@ -384,7 +553,6 @@ const medicines = [
             const h3 = c.querySelector('h3');
             if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
         });
-        
         selectedCard.classList.remove('border-subtle');
         selectedCard.classList.add('border-brand', 'shadow-sm');
         const selectedH3 = selectedCard.querySelector('h3');
@@ -393,13 +561,12 @@ const medicines = [
 
     function cambiarFichaTecnica(allSheets, id) {
         allSheets.forEach(sheet => {
-            if (sheet.getAttribute('data-sheet-id') === id) {
-                sheet.classList.remove('hidden');
-            } else {
-                sheet.classList.add('hidden');
-            }
+            if (sheet.getAttribute('data-sheet-id') === id) sheet.classList.remove('hidden');
+            else sheet.classList.add('hidden');
         });
     }
+
+
 
     /**
      * --- 3. INTERFAZ MÓVIL (DRAWER) ---

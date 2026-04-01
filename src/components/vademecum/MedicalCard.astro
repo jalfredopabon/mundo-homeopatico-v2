@@ -6,9 +6,14 @@ interface Props {
     name: string;
     potency: string;
     shortDesc: string;
+    tags?: {
+        terapia: string;
+        sistema: string[];
+        forma: string;
+    };
 }
 
-const { id, name, potency, shortDesc } = Astro.props;
+const { id, name, potency, shortDesc, tags } = Astro.props;
 ---
 
 <div 
@@ -27,13 +32,21 @@ const { id, name, potency, shortDesc } = Astro.props;
         {shortDesc}
     </p>
     
-    <div class="flex items-center gap-3 flex-wrap">
-        <!-- TODO: Hacer dinámicos estos badges en el futuro -->
-        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
-            Clínica general
-        </span>
-        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
-            Gotas
-        </span>
+    <div class="flex items-center gap-2 flex-wrap">
+        {tags && (
+            <>
+                <span class="inline-flex items-center text-[10px] font-bold text-indigo-700 bg-indigo-100/60 px-2.5 py-0.5 rounded-full">
+                    {tags.terapia}
+                </span>
+                {tags.sistema.map(s => (
+                    <span class="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-100/60 px-2.5 py-0.5 rounded-full">
+                        {s}
+                    </span>
+                ))}
+                <span class="inline-flex items-center text-[10px] font-bold text-amber-700 bg-amber-100/60 px-2.5 py-0.5 rounded-full">
+                    {tags.forma}
+                </span>
+            </>
+        )}
     </div>
 </div>

@@ -7,7 +7,7 @@ import Icons from "../shared/Icons.astro";
     <!-- BUSCADOR STICKY (ADN Maestro) -->
     <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
         <div class="relative group">
-            <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
+            <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
                     <Icons type="search" class="w-full h-full" strokeWidth={1.5} />
             </div>
             <input 
@@ -19,17 +19,22 @@ import Icons from "../shared/Icons.astro";
         </div>
     </div>
 
-    <div class="p-6 pt-0 space-y-7">
+    <div class="px-4 pb-6 pt-0 space-y-7">
         <!-- SECCIÓN 1: TIPO DE TERAPIA -->
-        <section class="pl-1">
+        <section class="pl-[8px]">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
-                <Icons type="mortero" class="w-3.5 h-3.5 text-slate-900" strokeWidth={1.8} />
+                <Icons type="mortero" class="w-4 h-4 text-slate-900" strokeWidth={1.8} />
                 Tipo de terapia
             </h4>
-            <div class="space-y-3">
-                {["Homeopatía compleja", "Terapia floral", "Oligoelementos"].map((filter) => (
-                    <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
-                        <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+            <div class="space-y-4">
+                {["Homeopatía compleja", "Oligoelementos", "Terapia floral"].map((filter) => (
+                    <label class="flex items-center gap-2.5 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                        <input 
+                            type="checkbox" 
+                            class="vademecum-filter size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" 
+                            data-filter-group="terapia"
+                            data-filter-value={filter}
+                        />
                         {filter}
                     </label>
                 ))}
@@ -37,15 +42,20 @@ import Icons from "../shared/Icons.astro";
         </section>
 
         <!-- SECCIÓN 2: SISTEMA DEL CUERPO -->
-        <section class="pl-1">
+        <section class="pl-[8px]">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
-                <Icons type="user-circle-alt" class="w-3.5 h-3.5 text-slate-900" strokeWidth={1.5} />
+                <Icons type="user-circle-alt" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Sistema del cuerpo
             </h4>
-            <div class="space-y-3">
-                {["Digestivo", "Nervioso", "Cardiovascular", "Respiratorio", "Locomotor"].map((filter) => (
-                    <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
-                        <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+            <div class="space-y-4">
+                {["Cardiovascular", "Digestivo", "Locomotor", "Nervioso", "Respiratorio"].map((filter) => (
+                    <label class="flex items-center gap-2.5 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                        <input 
+                            type="checkbox" 
+                            class="vademecum-filter size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" 
+                            data-filter-group="sistema"
+                            data-filter-value={filter}
+                        />
                         {filter}
                     </label>
                 ))}
@@ -53,15 +63,20 @@ import Icons from "../shared/Icons.astro";
         </section>
 
         <!-- SECCIÓN 3: FORMA FARMACÉUTICA -->
-        <section class="pl-1">
+        <section class="pl-[8px]">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
-                <Icons type="pill" class="w-3.5 h-3.5 text-slate-900" strokeWidth={1.5} />
+                <Icons type="pill" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Forma farmacéutica
             </h4>
-            <div class="space-y-3">
-                {["Gotas", "Tabletas", "Spray", "Crema"].map((filter) => (
-                    <label class="flex items-center gap-3 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
-                        <input type="checkbox" class="size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" />
+            <div class="space-y-4">
+                {["Crema", "Gotas", "Spray", "Tabletas"].map((filter) => (
+                    <label class="flex items-center gap-2.5 text-[13px] text-slate-700 cursor-pointer hover:text-slate-900 has-[:checked]:text-slate-900 transition-colors">
+                        <input 
+                            type="checkbox" 
+                            class="vademecum-filter size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-brand/20 cursor-pointer" 
+                            data-filter-group="forma"
+                            data-filter-value={filter}
+                        />
                         {filter}
                     </label>
                 ))}

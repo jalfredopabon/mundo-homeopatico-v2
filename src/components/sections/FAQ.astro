@@ -25,7 +25,38 @@ const faqs = [
             "Resolución de funcionamiento de la secretaría de salud.",
             "Certificación de estándares de almacenamiento técnico."
         ],
-        isOpen: true
+        isOpen: false
+    },
+    {
+        id: "faq-3",
+        question: "¿En qué horarios puedo realizar mis pedidos o recibir asesoría técnica?",
+        paragraphs: [
+            "Nuestro equipo administrativo y técnico está disponible para atenderle de Lunes a Viernes de 8:00 AM a 6:00 PM (jornada continua) y los Sábados de 8:00 AM a 12:00 PM.",
+            "Para asesorías magistrales urgentes fuera de estos horarios, puede contactar a su asesor de cuenta asignado."
+        ],
+        isOpen: false
+    },
+    {
+        id: "faq-4",
+        question: "¿Qué medios de pago aceptan para compras mayoristas?",
+        paragraphs: [
+            "Para su comodidad, aceptamos los siguientes métodos de pago:"
+        ],
+        list: [
+            "Transferencias electrónicas (Bancolombia, Banco de Occidente).",
+            "Portal de pagos PSE integrado en nuestra plataforma.",
+            "Línea de crédito comercial a 30 días (Sujeto a estudio y aprobación de cupo)."
+        ],
+        isOpen: false
+    },
+    {
+        id: "faq-5",
+        question: "¿Cuál es el tiempo estimado de entrega para pedidos nacionales?",
+        paragraphs: [
+            "El tiempo estimado de entrega depende de la ubicación de su farmacia o centro médico:",
+            "Para ciudades principales es de 24 a 48 horas hábiles tras la confirmación del pedido, y sedes intermedias y poblaciones de 3 a 5 días hábiles, garantizando siempre las condiciones de almacenamiento durante el tránsito."
+        ],
+        isOpen: false
     }
 ];
 ---
@@ -122,8 +153,8 @@ const faqs = [
     }
 
     /* Estado Abierto */
-    .faq-item.is-open .faq-title {
-        @apply text-brand-dark;
+    .is-open .icon-closed {
+        display: none;
     }
     :global(.faq-item.is-open .icon-closed) {
         display: none;

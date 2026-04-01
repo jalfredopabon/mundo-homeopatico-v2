@@ -14,7 +14,7 @@ import Icons from "../shared/Icons.astro";
     <!-- Header del Sidebar (Card de Acción Rápida - Reemplaza al buscador) -->
     <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
         <a href="https://instagram.com/mundohomeopatico" target="_blank" class="relative group block w-full">
-            <div class="absolute left-[6px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-hover:text-brand transition-colors pointer-events-none">
+            <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-hover:text-brand transition-colors pointer-events-none">
                 <div class="relative w-4 h-4 flex items-center justify-center">
                     <Icons type="instagram" class="w-full h-full" strokeWidth={1.5} />
                 </div>
@@ -27,7 +27,7 @@ import Icons from "../shared/Icons.astro";
 
     <!-- Navegación ScrollSpy: Índice de la página -->
     <nav class="flex-1 flex flex-col pb-4 mt-0 space-y-1 overflow-y-auto scrollbar-premium" id="contacto-scrollspy">
-        <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 is-active">
+        <a href="#excelencia" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 is-active">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="award" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -36,7 +36,7 @@ import Icons from "../shared/Icons.astro";
             <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Excelencia homeopática</span>
         </a>
 
-        <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
+        <a href="#sedes" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="map-pin" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -45,7 +45,7 @@ import Icons from "../shared/Icons.astro";
             <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Sedes y distribuciones</span>
         </a>
 
-        <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
+        <a href="#faq" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="help-circle" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -95,9 +95,11 @@ import Icons from "../shared/Icons.astro";
         border: none !important;
     }
 
+
+
     /* Estado Hover: Solo negrita, mantiene color original */
     .sidebar-link:hover:not(.is-active) {
-        background-color: rgba(0, 0, 0, 0.02);
+        @apply bg-slate-50;
         font-weight: 700;
     }
 </style>

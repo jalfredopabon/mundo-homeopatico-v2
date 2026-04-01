@@ -85,7 +85,36 @@
 - **Ampliación del Catálogo Global:** Adición de 15+ nuevos tipos de iconos clave (`whatsapp`, `grid`, `user`, `play`, `lock`, etc.) para cubrir todas las necesidades de la interfaz.
 - **Sincronización Sistémica:** Todos los elementos interactivos y de navegación ahora consumen el mismo SSoT (Single Source of Truth) iconográfico.
 
+### Hito 16: Estandarización de Sidebars "Elite" (01/04/2026)
+- **Verticalidad Rítmica:** Incremento de altura a `h-11` (44px) en todos los sidebars para una navegación espaciosa y premium.
+- **Plomadas de Precisión:** Unificación matemática de ejes visuales en Catálogo, Sedes y Vademécum (Iconos a 31px / Texto a 48px del borde).
+- **Indicadores de Estado:** Implementación del indicador de línea vertical `brand` para feedback visual inmediato en el ítem activo.
+- **Balance Funcional Vademécum:** Ajuste de espaciado (`space-y-4`) para optimizar la visibilidad de filtros sin sacrificar el aire del diseño.
+### Hito 17: Hoja de Ruta para Vademécum Masivo (01/04/2026)
+- **Arquitectura de Datos (SSoT):** Plan de migración a `src/data/medicines.json` para gestionar 150+ registros de forma modular.
+- **Lógica Multi-Filtro (Boolean Logic):** 
+    - **OR (Mismo Grupo):** Selección múltiple dentro de una categoría (ej. Digestivo + Nervioso).
+    - **AND (Grupos Cruzados):** Filtrado intersectivo entre categorías (ej. Sistema: Digestivo + Forma: Gotas).
+- **Performance "Elite" (Hybrid UI):** Implementación de paginación o carga diferida (20-25 tarjetas por vista) para evitar saturación del DOM y mantener la fluidez.
+- **Feedback Dinámico:** Implementación de contador de resultados reactivo ("12 de 155 encontrados") y estado vacío con botón de "Limpiar Filtros".
+- **Sincronización de Búsqueda:** Integración del buscador del sidebar con la lógica de filtros activos para una experiencia de usuario sin fisuras.
+
+#### 📝 Plan de Ejecución por Bloques (Prototipo 12 Tarjetas COMPLETADO)
+- [x] **Bloque 1 — Datos (vademecum.astro):** Enriquecer 7 tarjetas y crear 5 nuevas con objeto `tags` cruzados.
+- [x] **Bloque 2 — Sidebar Reactivo (SidebarVademecum.astro):** Inyectar `data-filter` a checkboxes y conectar listeners.
+- [x] **Bloque 3 — Lógica Booleana (vademecum.astro script):** Programar filtrado OR (mismo grupo) y AND (cruce) + Contador reactivo.
+- [x] **Bloque 4 — Tags Visibles (MedicalCard.astro):** Renderizado de badges de categorías en las tarjetas para validación visual.
+
 ## 🚀 Próximos Pasos (Deuda Técnica y Evolución)
-- **Ingesta de Datos (Fase 3):** Sustitución de datos estáticos por JSON real en Catálogo y Vademécum.
+- **Panel de Carrito (Auditoría Crítica - Pendiente de Ejecución):**
+    *   **Unificación de Tokens:** Reemplazar `emerald-500/700` por tokens `brand` / `brand-vibrant`.
+    *   **Iconografía Centralizada:** Sustituir SVGs inline en JS por el componente `<Icons />`.
+    *   **Dinamización de Botones:** Aplicar estilos "Elite" a los botones de pedido (WhatsApp).
+    *   **Formulario de Facturación:** Refinar diseño de campos (limpieza visual y estados de foco).
+    *   **Tipografía Técnica:** Aplicar *Sentence Case* en etiquetas de formulario y badges internos.
+- **Splash Screen Móvil (Propuesta "Gran Empresa"):** Implementación de una pantalla de bienvenida ligera con desvanecimiento suave para elevar el estatus de la App Web en dispositivos móviles.
+- **Ingesta de Datos (Prioridad Alta):** Procesamiento del Excel de 150 medicamentos a formato JSON.
+- **Iconografía Hugeicons (Prioridad Mañana):** Reemplazo total del sistema de iconos.
+- **Refinamiento de Cápsulas L4 (Prioridad Mañana):** Ajuste de estilo y alineación de sub-ítems.
 - **Pulido de Assets:** Sustituir placeholders de imágenes por activos finales generados por IA o proporcionados por el cliente.
 - **Refuerzo de Tipado:** Implementar `interface` estrictas de TypeScript para los tipos de iconos en `Icons.astro`.

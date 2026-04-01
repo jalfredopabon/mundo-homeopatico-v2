@@ -6,6 +6,7 @@ import Header from '../components/shared/Header.astro';
 import Footer from '../components/shared/Footer.astro';
 import MobileTabNav from '../components/shared/MobileTabNav.astro';
 import MobileMenuDrawer from '../components/shared/MobileMenuDrawer.astro';
+import MobileSplash from '../components/shared/MobileSplash.astro';
 import { ViewTransitions } from 'astro:transitions';
 ---
 
@@ -20,6 +21,7 @@ import { ViewTransitions } from 'astro:transitions';
 		<title>{title}</title>
 	</head>
 	<body class="bg-surface-white text-body font-sans antialiased flex flex-col md:h-screen md:overflow-hidden">
+        <MobileSplash />
         <Header mostrarZoom={mostrarZoom} />
         <MobileTabNav />
 		<main class="flex-1 w-full flex flex-col">

@@ -1,0 +1,79 @@
+---
+// src/components/shared/MobileSplash.astro
+---
+<!-- Fuente para el Logo de Animación -->
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="mobile-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#158C77] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden">
+    
+    <div class="relative flex flex-row items-baseline text-white font-serif tracking-tighter">
+        <!-- Parte: M [undo] -->
+        <div class="flex items-baseline overflow-hidden">
+            <span class="text-5xl sm:text-6xl font-bold animate-expand-m">M</span>
+            <span class="text-3xl sm:text-4xl opacity-0 animate-reveal-suffix ml-2">undo</span>
+        </div>
+
+        <!-- Espacio entre palabras (se expande) -->
+        <div class="w-3 sm:w-6"></div>
+
+        <!-- Parte: H [omeopático] -->
+        <div class="flex items-baseline overflow-hidden">
+            <span class="text-5xl sm:text-6xl font-bold animate-expand-h">H</span>
+            <span class="text-3xl sm:text-4xl opacity-0 animate-reveal-suffix ml-2">omeopático</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const splash = document.getElementById('mobile-splash');
+        if (!splash) return;
+        
+        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+
+        if (!hasSeenSplash) {
+            // Tiempo total de la coreografía (5 segundos para lectura completa y apreciación)
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                splash.style.transform = 'translateY(-20px)';
+                sessionStorage.setItem('hasSeenSplash', 'true');
+                
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 700);
+            }, 5000); 
+        } else {
+            splash.style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    /* 1. La M comienza en el centro y se mueve a su lugar */
+    @keyframes expandM {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(0); }
+    }
+    .animate-expand-m {
+        animation: expandM 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+    }
+
+    /* 2. La H comienza en el centro (traslapada con M) y se mueve a la derecha */
+    @keyframes expandH {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(0); }
+    }
+    .animate-expand-h {
+        animation: expandH 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+    }
+
+    /* 3. Revelar el resto de las palabras (undo, omeopático) */
+    @keyframes revealSuffix {
+        0% { opacity: 0; transform: translateY(5px); filter: blur(5px); }
+        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .animate-reveal-suffix {
+        animation: revealSuffix 1.5s ease-out 1.5s forwards;
+    }
+</style>

@@ -13,22 +13,31 @@ const medicines = [
         potency: 'D4',
         scientificName: 'Strychnos nux-vomica',
         origin: 'Origen vegetal',
-        isActive: true,
+        shortDesc: 'Tratamiento eficaz para la digestión lenta con sensación de pesadez, migrañas digestivas matutinas y estreñimiento espasmódico. Especialmente indicado para personas con un estilo de vida sedentario bajo estrés laboral continuo.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Coadyuvante en el tratamiento de dispepsias, flatulencia, estreñimiento espasmódico e irritabilidad vinculada al estilo de vida sedentario.'
+                icon: 'task-list',
+                items: [
+                    'Coadyuvante en el tratamiento de dispepsias, flatulencia y estreñimiento espasmódico.',
+                    'Útil en migrañas digestivas matutinas y periodos de estrés laboral intenso.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Digestivo y Sistema Nervioso Central (médula espinal).'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Digestivo y Sistema Nervioso Central (médula espinal).',
+                    '<span class="font-bold text-body">Mecanismo:</span> Regulación de la hipersensibilidad de las transmisiones nerviosas.'
+                ]
             },
             {
                 title: 'Protocolo de posología',
-                icon: 'book-open',
-                content: 'Disolver <span class="font-bold text-body">5 glóbulos bajo la lengua</span>, 3 veces al día. Evitar café y menta durante el tratamiento.'
+                icon: 'edit',
+                items: [
+                    'Disolver <span class="font-bold text-body">5 glóbulos bajo la lengua</span>, 3 veces al día.',
+                    '<span class="font-bold text-body">Fase crónica:</span> Mantener la dosis durante 3 semanas o según criterio médico.'
+                ]
             }
         ]
     },
@@ -38,16 +47,31 @@ const medicines = [
         potency: 'D6',
         scientificName: 'Arnica montana L.',
         origin: 'Origen vegetal',
+        shortDesc: 'Alivio inmediato y profundo para traumatismos, contusiones y dolores musculares derivados de un sobreesfuerzo físico intenso. Favorece la reabsorción de hematomas y acelera la recuperación en procesos post-operatorios.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo físico o trauma.'
+                icon: 'task-list',
+                items: [
+                    'Tratamiento de traumatismos, contusiones y dolores musculares por sobreesfuerzo.',
+                    'Coadyuvante en la recuperación post-operatoria y reabsorción de hematomas.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Muscular, Capilares sanguíneos y Tejido Celular.'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Muscular, Capilares sanguíneos y Tejido Celular.',
+                    '<span class="font-bold text-body">Acción:</span> Hemostático y antiinflamatorio de tejidos blandos.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'En phase aguda, <span class="font-bold text-body">5 glóbulos cada 30 minutos</span> durante las primeras 2 horas.',
+                    'Luego continuar con 5 glóbulos, 3 veces al día por 10 días.'
+                ]
             }
         ]
     },
@@ -57,16 +81,31 @@ const medicines = [
         potency: 'D12',
         scientificName: 'Strychnos ignatii',
         origin: 'Origen vegetal',
+        shortDesc: 'Solución terapéutica para trastornos emocionales agudos, ansiedad con espasmos físicos y labilidad afectiva. Indicado ante la sensación de nudo en la garganta y bloqueos nerviosos causados por situaciones de duelo o estrés emocional.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Trastornos emocionales, ansiedad con espasmos, labilidad afectiva y efectos de duelos recientes.'
+                icon: 'task-list',
+                items: [
+                    'Trastornos emocionales, ansiedad con espasmos y labilidad afectiva.',
+                    'Sensación de "nudo en la garganta" y suspiros frecuentes debidos a pena moral.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso (Eje cerebroespinal). Sensibilidad extrema.'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso (Eje cerebroespinal). Sensibilidad extrema.',
+                    '<span class="font-bold text-body">Mecanismo:</span> Modulador de la respuesta paradójica ante el estrés.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Disolver <span class="font-bold text-body">5 glóbulos</span> alejado de las comidas principales.',
+                    'Preferiblemente administrar al atardecer o antes de dormir.'
+                ]
             }
         ]
     },
@@ -76,36 +115,65 @@ const medicines = [
         potency: 'D6',
         scientificName: 'Anemone pulsatilla',
         origin: 'Origen vegetal',
+        shortDesc: 'Medicamento de elección para afecciones respiratorias con secreciones blandas y síntomas cambiantes. Útil en trastornos circulatorios venosos, congestión pasiva y cuadros emocionales de timidez con necesidad de acompañamiento.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Afecciones de mucosas con secreciones blandas, variabilidad de síntomas y timidez.'
+                icon: 'task-list',
+                items: [
+                    'Afecciones de mucosas con secreciones blandas y variabilidad de síntomas.',
+                    'Útil en trastornos venosos, congestión pasiva y estados de timidez o abandono.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Mucosas, Sistema Venoso y Órganos genitales femeninos.'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Mucosas, Sistema Venoso y Órganos genitales femeninos.',
+                    '<span class="font-bold text-body">Acción:</span> Descongestionante y regulador hormonal básico.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Tomar <span class="font-bold text-body">5 glóbulos</span>, 2 a 3 veces al día según la cronicidad.',
+                    'Evitar el contacto con sustancias de olor fuerte (alcanfor, mentoles).'
+                ]
             }
         ]
     },
-    // Añadidos temporales para forzar scroll
     {
         id: 'aconitum',
         name: 'Aconitum napellus',
         potency: 'D6',
         scientificName: 'Aconitum napellus',
         origin: 'Origen vegetal',
+        shortDesc: 'Intervención de choque ante procesos febriles de aparición brusca y violenta tras una exposición al frío seco o un susto intenso. Calma la angustia aguda, la agitación y las primeras etapas de procesos gripales congestivos.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Procesos febriles de aparición repentina, astenia, angustia con miedo a morir tras un susto o exposición al frío seco.'
+                icon: 'task-list',
+                items: [
+                    'Procesos febriles de aparición repentina, astenia y angustia aguda.',
+                    'Primer medicamento ante síntomas de gripe tras exposición al frío seco.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Cardiovascular y Sistema Nervioso.'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Cardiovascular y Sistema Nervioso.',
+                    '<span class="font-bold text-body">Acción:</span> Sedante nervioso y regulador de la microcirculación febril.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Administrar <span class="font-bold text-body">5 glóbulos cada hora</span> durante el pico febril inicial.',
+                    'Espaciar la dosis a medida que la sudoración aparezca.'
+                ]
             }
         ]
     },
@@ -115,16 +183,31 @@ const medicines = [
         potency: 'D4',
         scientificName: 'Atropa belladonna',
         origin: 'Origen vegetal',
+        shortDesc: 'Indicada en estados inflamatorios agudos caracterizados por calor local, rubor intenso y dolor de carácter pulsátil. Eficaz en el tratamiento de amigdalitis aguda, otitis derecha inicial y cefaleas congestivas que empeoran con la luz.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Inflamaciones agudas, rubor, calor, dolor pulsátil. Frecuente en amigdalitis aguda, otitis derecha, fiebre elevada con sudoración térmica.'
+                icon: 'task-list',
+                items: [
+                    'Inflamaciones agudas, rubor, calor y dolor pulsátil intenso.',
+                    'Tratamiento de amigdalitis aguda, otitis derecha y cefaleas congestivas.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso, Piel y Mucosas.'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso, Piel y Mucosas.',
+                    '<span class="font-bold text-body">Efecto:</span> Control de la hiperemia inflamatoria de instauración brusca.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Disolver <span class="font-bold text-body">5 glóbulos</span>, 3 veces al día.',
+                    'En dolores pulsátiles, repetir la dosis cada 30 minutos hasta mejoría.'
+                ]
             }
         ]
     },
@@ -134,16 +217,31 @@ const medicines = [
         potency: 'D12',
         scientificName: 'Gelsemium sempervirens',
         origin: 'Origen vegetal',
+        shortDesc: 'Auxiliar terapéutico en estados gripales con gran postración física, temblores y pesadez de párpados. Actúa eficazmente sobre la ansiedad anticipatoria ante exámenes, eventos públicos o noticias estresantes inminentes.',
         sections: [
             {
                 title: 'Indicaciones clínicas',
-                icon: 'list',
-                content: 'Estados gripales con postración, pesadez palpebral, escalofríos en espalda. Ansiedad anticipatoria ante eventos.'
+                icon: 'task-list',
+                items: [
+                    'Estados gripales con postración, pesadez palpebral y temblores.',
+                    'Ansiedad anticipatoria por exámenes, eventos o noticias estresantes.'
+                ]
             },
             {
                 title: 'Perfil farmacológico',
-                icon: 'test-tube',
-                content: '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso Central (Eje cerebroespinal).'
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso Central (Eje cerebroespinal).',
+                    '<span class="font-bold text-body">Acción:</span> Especializado en la respuesta motora y sensorial ante el miedo.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Tomar <span class="font-bold text-body">5 glóbulos</span> la noche anterior a un evento estresante.',
+                    'Repetir 5 glóbulos una hora antes de la exposición al estrés.'
+                ]
             }
         ]
     }
@@ -165,11 +263,11 @@ const medicines = [
         <SidebarVademecum />
 
         <!-- Columna Central: Listado de Productos (Scroll propio) -->
-        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-[#EAF3F1] h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
             <div class="px-8 md:px-[72px] pt-8 pb-8 flex-1">
                 
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
-                <header class="md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header reveal">
+                <header class="md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header reveal">
                     <div class="flex flex-col w-full">
                         <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                             <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
@@ -185,7 +283,7 @@ const medicines = [
 
                 <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
-                    <Icons type="list" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
+                    <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
                     <span>{medicines.length} medicamentos en catálogo</span>
                 </div>
 
@@ -194,7 +292,7 @@ const medicines = [
                     
                     {medicines.map((med, index) => (
                         <div 
-                            class={`bg-surface-white rounded-xl p-6 cursor-pointer transition-all reveal medical-item-btn ${med.isActive ? 'border border-slate-300 shadow-sm ring-1 ring-slate-300' : 'border border-subtle hover:border-slate-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]'}`} 
+                            class="group bg-surface-white rounded-xl p-6 cursor-pointer transition-colors reveal medical-item-btn border border-subtle hover:border-brand shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]" 
                             data-med={med.id}
                             data-id={med.id}
                         >
@@ -206,33 +304,17 @@ const medicines = [
                             </div>
                             
                             <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
-                                {med.sections[0].content}
+                                {med.shortDesc}
                             </p>
                             
-                            <div class="flex items-center gap-3 flex-wrap">
-                                {med.isActive ? (
-                                    <>
-                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
-                                            Digestivo
-                                        </span>
-                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
-                                            Nervioso
-                                        </span>
-                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
-                                            Gotas
-                                        </span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
-                                            Clínica general
-                                        </span>
-                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle">
-                                            Gotas
-                                        </span>
-                                    </>
-                                )}
-                            </div>
+                                 <div class="flex items-center gap-3 flex-wrap">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
+                                        Clínica general
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-700 bg-surface-muted transition-colors px-2.5 py-1 rounded-md border border-subtle">
+                                        Gotas
+                                    </span>
+                                </div>
                         </div>
                     ))}
 

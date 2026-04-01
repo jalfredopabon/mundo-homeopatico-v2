@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
   --text-body: #334155;
   --text-muted: #64748b;
   --bg-surface: #ffffff;
-  --bg-muted: #f4f7f6; /* Sage Gray Saturado (10% Brand) */
+  --bg-muted: #E7EDE3; /* Sage Green Real (Corregido de #EAF3F1) */
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
   --bg-surface-hover: #e6efed;

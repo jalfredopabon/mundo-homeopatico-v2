@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icons from '../../components/shared/Icons.astro';
+
+// Lista extraída de la interface Props de Icons.astro
+const allIcons = [
+    "test-tube", "flower", "molecules", "leaf", "cannabis", "droplet", 
+    "chevron-down", "chevron-right", "pill", "mortero", "jarabe", "gotas", "edit", "eye", "eye-off", 
+    "file-text", "info", "close-x", 
+    "external-link", "search", "cart", "menu", "plus", 
+    "minus", "x", "trash", "grid", "user", "user-circle-alt", "task-list", "alert-triangle", "check", 
+    "lock", "text-size", "pulse", "list", "instagram", "whatsapp", 
+    "phone", "mail", "play", "globe", "award", "map-pin", "help-circle", 
+    "clock", "building", "arrow-up", "select-card", "chevron-up"
+];
+---
+
+<BaseLayout title="Iconography Showcase | Dev" mostrarZoom={false}>
+    <div class="min-h-screen bg-surface-muted py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            
+            <header class="mb-10 flex flex-col items-center text-center">
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Iconography Showcase</h1>
+                <p class="mt-2 text-slate-600 font-medium">Librería de íconos locales del proyecto Mundo Homeopático.</p>
+                <div class="mt-4 px-3 py-1 bg-surface-white border border-subtle rounded-full text-xs font-bold text-brand shadow-sm">
+                    {allIcons.length} íconos disponibles
+                </div>
+            </header>
+
+            <div class="h-[calc(100vh-280px)] overflow-y-auto pr-2 scrollbar-premium">
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                    {allIcons.map((icon) => (
+                        <div class="flex flex-col items-center justify-center p-4 bg-surface-white rounded-xl border border-subtle hover:border-brand hover:shadow-md transition-all group cursor-pointer">
+                            
+                            <!-- El Ícono -->
+                            <div class="w-12 h-12 flex items-center justify-center bg-surface-muted rounded-lg text-slate-700 group-hover:text-brand transition-colors mb-3">
+                                <Icons type={icon} class="w-6 h-6" strokeWidth={2} />
+                            </div>
+                            
+                            <!-- El Código (Nombre) -->
+                            <code class="text-[10px] font-mono font-bold text-slate-500 bg-slate-50 px-2 py-1 rounded truncate max-w-full group-hover:bg-green-50 group-hover:text-brand transition-colors">
+                                {icon}
+                            </code>
+                            
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</BaseLayout>

@@ -9,7 +9,7 @@ import Icons from '../components/shared/Icons.astro';
 /**
  * Página Principal (Catálogo): 
  * Clonación Estricta del panel principal para paridad visual 1:1.
- * Se aplica el estándar "Branded Gray" (#EAF3F1).
+ * Se aplica el estándar "Sage Green Real" (#E7EDE3).
  */
 ---
 
@@ -25,7 +25,7 @@ import Icons from '../components/shared/Icons.astro';
         <SidebarCatalogo />
 
         <!-- Columna Derecha: Contenedor Master de Data + Footer (Standard Branded Gray) -->
-        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-[#EAF3F1] h-[calc(100vh-64px)] scroll-smooth" id="catalogo-main-scroll">
+        <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] scroll-smooth" id="catalogo-main-scroll">
             
             <!-- Banner Informativo (Cinta de Alerta Frontal) -->
             <div id="info-banner" class="w-full bg-surface-white border-b border-subtle px-4 md:px-16 py-3 sm:py-4 flex items-start justify-between gap-4 transition-all duration-300">
@@ -47,7 +47,7 @@ import Icons from '../components/shared/Icons.astro';
                 <div class="flex flex-col gap-8">
                     <!-- Sección: Oligoelementos -->
                     <section id="oligoelementos" class="scroll-mt-16">
-                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
+                        <header class="sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col auto-animate-header">
                             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                                 <span class="hover:text-slate-800 transition-colors cursor-pointer" onclick="window.location.hash='#top'">De nuestra farmacia</span>
                                 <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" strokeWidth={3} />
@@ -68,14 +68,14 @@ import Icons from '../components/shared/Icons.astro';
                             </div>
 
                             <!-- Fila de Producto 1 -->
-                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-surface-muted transition-all relative z-0 hover:z-10 group">
                                 <div class="flex flex-col pl-0">
                                     <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos individuales</h3>
                                     <div class="flex flex-wrap items-center gap-2 mt-2">
-                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-muted group-hover:bg-surface-white group-hover:border-slate-300 transition-colors px-2.5 py-1 rounded-md border border-subtle">
                                             Gotas / Spray
                                         </span>
-                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-muted group-hover:bg-surface-white group-hover:border-slate-300 transition-colors px-2.5 py-1 rounded-md border border-subtle">
                                             Glóbulos x 30g
                                         </span>
                                     </div>
@@ -100,14 +100,14 @@ import Icons from '../components/shared/Icons.astro';
                             </div>
 
                             <!-- Fila de Producto 2 -->
-                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-slate-50 transition-all relative z-0 hover:z-10 group">
+                            <div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-5 px-6 border-b border-subtle cursor-pointer hover:bg-surface-muted transition-all relative z-0 hover:z-10 group">
                                 <div class="flex flex-col pl-0">
                                     <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight transition-colors">Oligoelementos combinados (hasta 6 componentes)</h3>
                                     <div class="flex flex-wrap items-center gap-2 mt-2">
-                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-muted group-hover:bg-surface-white group-hover:border-slate-300 transition-colors px-2.5 py-1 rounded-md border border-subtle">
                                             Gotas / Spray
                                         </span>
-                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-white px-2 py-0.5 rounded border border-subtle">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-slate-700 bg-surface-muted group-hover:bg-surface-white group-hover:border-slate-300 transition-colors px-2.5 py-1 rounded-md border border-subtle">
                                             Glóbulos x 30g
                                         </span>
                                     </div>
@@ -135,8 +135,8 @@ import Icons from '../components/shared/Icons.astro';
                     
                     <!-- Placeholder: Esencias florales -->
                     <section id="esencias-florales" class="scroll-mt-16">
-                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        <header class="sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                                 <span>De nuestra farmacia</span>
                                 <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" strokeWidth={3} />
                                 <span>Según prescripción</span>
@@ -151,8 +151,8 @@ import Icons from '../components/shared/Icons.astro';
 
                     <!-- Placeholder: Alimentos funcionales -->
                     <section id="alimentos-funcionales" class="scroll-mt-16">
-                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        <header class="sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                                 <span>Productos exclusivos</span>
                             </nav>
                             <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Alimentos funcionales</h2>
@@ -165,8 +165,8 @@ import Icons from '../components/shared/Icons.astro';
 
                     <!-- Placeholder: CBD -->
                     <section id="cbd" class="scroll-mt-16">
-                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        <header class="sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                                 <span>Productos exclusivos</span>
                             </nav>
                             <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">CBD</h2>
@@ -179,8 +179,8 @@ import Icons from '../components/shared/Icons.astro';
 
                     <!-- Placeholder: Aceites esenciales -->
                     <section id="aceites-esenciales" class="scroll-mt-16">
-                        <header class="sticky top-0 md:static z-30 bg-[#EAF3F1]/95 backdrop-blur-sm -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
-                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        <header class="sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col">
+                            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2">
                                 <span>Productos exclusivos</span>
                             </nav>
                             <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Aceites esenciales</h2>

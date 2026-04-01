@@ -58,20 +58,20 @@
 - **Optimización de UX:** Reubicación estratégica del contador de medicamentos y refinamiento del sistema de migas de pan.
 - **Limpieza Técnica:** Ajuste de paddings y carril de scroll en `MedicalDetails.astro` para maximizar el área de visualización.
 
-### Hito 9: Estandarización de Superficies y "Branded Grays" (29/03/2026)
+### Hito 9: Estandarización de Superficies y "Sage Green Reals" (29/03/2026)
 - **Hallazgo UI Crítico:** Identificación de distorsión visual (tintes azulinos fríos) al usar grises neutros sobre el sistema de diseño.
 - **Técnica de Capas:** Implementación de la técnica de mezcla de marca (15-20% de opacidad del color primario sobre una base cremosa `#FCFCF9`).
-- **Standard Sage Green:** Establecimiento del tono `#EAF3F1` como el color oficial para fondos de paneles principales (Columna 2).
+- **Standard Sage Green:** Establecimiento del tono `#E7EDE3` como el color oficial para fondos de paneles principales (Columna 2).
 - **Aislamiento Arquitectónico:** Uso de selectores de ID únicos y estilos locales para aplicar el fondo sin afectar a componentes globales (Header/Sidebar).
 
 ### Hito 10: Unificación de Contacto y Sedes (30/03/2026)
 - **Clonación Estricta:** Replicación de la página de Sedes y Contacto bajo el estándar "Elite".
-- **Consistencia Visual:** Aplicación del "Branded Gray" (#EAF3F1) para mantener paridad con el Vademécum.
+- **Consistencia Visual:** Aplicación del "Sage Green Real" (#E7EDE3) para mantener paridad con el Vademécum.
 - **Modularidad:** Integración de componentes reutilizables (Video, Locations, FAQ, Footer) para asegurar escalabilidad.
 
 ### Hito 11: Paridad Visual Total y Catálogo "Elite" (30/03/2026)
 - **Clonación Estricta Catálogo:** Reemplazo del panel principal de `index.astro` con el diseño premium online.
-- **Unificación Sistémica:** Aplicación del estándar "Branded Gray" (#EAF3F1) en todas las superficies maestras (Catálogo, Vademécum, Contacto).
+- **Unificación Sistémica:** Aplicación del estándar "Sage Green Real" (#E7EDE3) en todas las superficies maestras (Catálogo, Vademécum, Contacto).
 - **Interactividad:** Integración de la cinta de alerta (Banner informativo) y lógica de "Back to Top" personalizada para contenedores con scroll independiente.
 ### Hito 13: Header Global y Accesibilidad Condicional (30/03/2026)
 - **Clonación Estricta Header:** Implementación 1:1 del encabezado principal con navegación rítmica.

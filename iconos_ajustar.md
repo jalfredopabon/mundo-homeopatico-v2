@@ -3,6 +3,8 @@
 ## Objetivo
 Centralizar todos los iconos del proyecto en `src/components/catalogo/Icons.astro` para eliminar el código SVG redundante, facilitar el mantenimiento y asegurar la consistencia visual.
 
+> **Regla Inquebrantable:** Todos los iconos nuevos que se agreguen y los que ya existen DEBEN ser exclusivamente de **Hugeicons**. Se debe realizar un barrido para reemplazar absolutamente todos los iconos actuales (Lucide, genéricos, etc.) por su equivalente exacto en Hugeicons SVG dentro del archivo `Icons.astro`.
+
 ## Propuesta Técnica: Nueva Estructura de `Icons.astro`
 Refactorizaremos el componente para que sea más flexible:
 

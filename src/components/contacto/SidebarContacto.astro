@@ -27,7 +27,7 @@ import Icons from "../shared/Icons.astro";
 
     <!-- Navegación ScrollSpy: Índice de la página -->
     <nav class="flex-1 flex flex-col pb-4 mt-0 space-y-1 overflow-y-auto scrollbar-premium" id="contacto-scrollspy">
-        <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4 is-active">
+        <a href="#excelencia" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 is-active">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="award" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -36,7 +36,7 @@ import Icons from "../shared/Icons.astro";
             <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Excelencia homeopática</span>
         </a>
 
-        <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4">
+        <a href="#sedes" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="map-pin" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -45,7 +45,7 @@ import Icons from "../shared/Icons.astro";
             <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Sedes y distribuciones</span>
         </a>
 
-        <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-slate-50 hover:text-slate-800 mx-4">
+        <a href="#faq" class="sidebar-link group relative flex items-center h-9 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
             <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                     <Icons type="help-circle" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
@@ -88,7 +88,7 @@ import Icons from "../shared/Icons.astro";
     /* Estado Activo: Cápsula Verde Sage Oscurecido (#D9E8E4) */
     /* Este color es ideal para paridad de oscuridad con slate-100 pero con matiz verde */
     .sidebar-link.is-active {
-        background-color: #D9E8E4 !important;
+        background-color: var(--bg-muted) !important;
         color: inherit !important;
         font-weight: 700 !important;
         box-shadow: none !important;

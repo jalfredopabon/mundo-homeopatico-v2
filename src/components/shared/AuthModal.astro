@@ -105,45 +105,57 @@ import Icons from './Icons.astro';
 </div>
 
 <script>
-    const TEMP_USER = 'invitado';
-    const TEMP_PASS = '1234';
+    function initAuth() {
+        const TEMP_USER = 'invitado';
+        const TEMP_PASS = '1234';
 
-    const overlay = document.getElementById('auth-modal-overlay');
-    const form = document.getElementById('auth-form') as HTMLFormElement | null;
-    const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
-    const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
-    const errorBox = document.getElementById('auth-error');
-    const errorText = document.getElementById('auth-error-text');
-    const toggleBtn = document.getElementById('toggle-password');
-    const iconOpen = document.getElementById('icon-eye-open');
-    const iconClosed = document.getElementById('icon-eye-closed');
+        const overlay = document.getElementById('auth-modal-overlay');
+        const form = document.getElementById('auth-form') as HTMLFormElement | null;
+        const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
+        const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
+        const errorBox = document.getElementById('auth-error');
+        const errorText = document.getElementById('auth-error-text');
+        const toggleBtn = document.getElementById('toggle-password');
+        const iconOpen = document.getElementById('icon-eye-open');
+        const iconClosed = document.getElementById('icon-eye-closed');
+        const submitBtn = document.getElementById('auth-submit');
 
-    form?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const user = inputNit?.value.trim();
-        const pass = inputPass?.value;
+        if (!form) return;
 
-        if (user === TEMP_USER && pass === TEMP_PASS) {
-            overlay?.classList.add('opacity-0');
-            setTimeout(() => {
-                overlay?.classList.add('hidden');
-                document.body.style.overflow = '';
-            }, 300);
-        } else {
-            errorBox?.classList.remove('hidden');
-            errorBox?.classList.add('flex');
-            if (errorText) errorText.textContent = 'Credenciales incorrectas.';
-            inputPass?.focus();
-        }
-    });
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = inputNit?.value.trim().toLowerCase(); // Normalización a minúsculas
+            const pass = inputPass?.value;
 
-    toggleBtn?.addEventListener('click', () => {
-        if (!inputPass) return;
-        const isPassword = inputPass.type === 'password';
-        inputPass.type = isPassword ? 'text' : 'password';
-        iconOpen?.classList.toggle('hidden');
-        iconClosed?.classList.toggle('hidden');
-    });
+            if (user === TEMP_USER && pass === TEMP_PASS) {
+                if (submitBtn) submitBtn.textContent = 'Ingresando...';
+                overlay?.classList.add('opacity-0');
+                
+                setTimeout(() => {
+                    overlay?.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            } else {
+                errorBox?.classList.remove('hidden');
+                errorBox?.classList.add('flex');
+                if (errorText) errorText.textContent = 'Credenciales incorrectas.';
+                inputPass?.focus();
+            }
+        });
+
+        toggleBtn?.addEventListener('click', () => {
+            if (!inputPass) return;
+            const isPassword = inputPass.type === 'password';
+            inputPass.type = isPassword ? 'text' : 'password';
+            iconOpen?.classList.toggle('hidden');
+            iconClosed?.classList.toggle('hidden');
+        });
+    }
+
+    // Asegura funcionamiento en cada carga de página (Soporte ViewTransitions)
+    document.addEventListener('astro:page-load', initAuth);
+    // Ejecutar inmediatamente por si ya cargó
+    initAuth();
 </script>
 
 <style>

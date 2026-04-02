@@ -3,16 +3,15 @@
 import Icons from "../shared/Icons.astro";
 /**
  * SidebarContacto: Navegación lateral para la página de Sedes y Contacto.
- * - Versión Optimizada para Paridad Visual y Funcional.
- * - Color Verdoso Sage Oscurecido (#D9E8E4) para estado activo.
- * - Script robusto de ScrollSpy con soporte para ViewTransitions.
+ * Usa clases atómicas de global.css (.sidebar-capsule, .sidebar-icon-slot, etc.)
+ * Plomadas sincronizadas con SidebarCatalogo: borde=16px, icono=~22px, texto=48px.
  */
 ---
 
 <aside class="hidden md:flex w-full md:w-64 bg-surface-white border-b md:border-b-0 md:border-r border-subtle flex-col z-20 sticky top-0 md:static shrink-0 overflow-y-auto h-[calc(100vh-64px)] md:h-[calc(100vh-64px)]">
     
     <!-- Header del Sidebar (Card de Acción Rápida - Reemplaza al buscador) -->
-    <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
+    <div class="sidebar-search-header">
         <a href="https://instagram.com/mundohomeopatico" target="_blank" class="relative group block w-full">
             <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-hover:text-brand transition-colors pointer-events-none">
                 <div class="relative w-4 h-4 flex items-center justify-center">
@@ -27,31 +26,25 @@ import Icons from "../shared/Icons.astro";
 
     <!-- Navegación ScrollSpy: Índice de la página -->
     <nav class="flex-1 flex flex-col pb-4 mt-0 space-y-1 overflow-y-auto scrollbar-premium" id="contacto-scrollspy">
-        <a href="#excelencia" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 is-active">
-            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="award" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
-                </div>
+        <a href="#excelencia" class="sidebar-link sidebar-capsule group is-active">
+            <div class="sidebar-icon-slot">
+                <div><Icons type="award" class="w-full h-full" strokeWidth={1.5} /></div>
             </div>
-            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Excelencia homeopática</span>
+            <span class="sidebar-label group-[.is-active]:font-bold">Excelencia homeopática</span>
         </a>
 
-        <a href="#sedes" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
-            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="map-pin" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
-                </div>
+        <a href="#sedes" class="sidebar-link sidebar-capsule group">
+            <div class="sidebar-icon-slot">
+                <div><Icons type="map-pin" class="w-full h-full" strokeWidth={1.5} /></div>
             </div>
-            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Sedes y distribuciones</span>
+            <span class="sidebar-label group-[.is-active]:font-bold">Sedes y distribuciones</span>
         </a>
 
-        <a href="#faq" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4">
-            <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="help-circle" class="w-full h-full text-slate-700 transition-colors" strokeWidth={2.2} />
-                </div>
+        <a href="#faq" class="sidebar-link sidebar-capsule group">
+            <div class="sidebar-icon-slot">
+                <div><Icons type="help-circle" class="w-full h-full" strokeWidth={1.5} /></div>
             </div>
-            <span class="text-[14px] font-normal group-[.is-active]:font-bold text-slate-700 group-hover:text-slate-800 leading-none mt-[-1px] transition-colors">Preguntas frecuentes</span>
+            <span class="sidebar-label group-[.is-active]:font-bold">Preguntas frecuentes</span>
         </a>
     </nav>
 
@@ -60,8 +53,8 @@ import Icons from "../shared/Icons.astro";
         <div class="flex flex-col gap-2">
             <h4 class="text-[12px] font-bold text-slate-700">Atención al cliente</h4>
             <div class="flex items-start">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] mt-0.5">
-                    <Icons type="clock" class="w-4 h-4 text-slate-700 shrink-0" strokeWidth={2.2} />
+                <div class="sidebar-icon-slot mt-0.5">
+                    <div><Icons type="clock" class="w-full h-full text-slate-700" strokeWidth={1.5} /></div>
                 </div>
                 <div>
                     <p class="text-[13px] font-medium text-body leading-tight">Lunes a sábado</p>
@@ -73,34 +66,9 @@ import Icons from "../shared/Icons.astro";
 </aside>
 
 <style>
-    /* Estabilidad de Layout */
     aside {
-        scrollbar-gutter: stable;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Limpieza de foco */
-    .sidebar-link:focus {
-        outline: none !important;
-    }
-
-    /* Estado Activo: Cápsula Verde Sage Oscurecido (#D9E8E4) */
-    /* Este color es ideal para paridad de oscuridad con slate-100 pero con matiz verde */
-    .sidebar-link.is-active {
-        background-color: var(--bg-muted) !important;
-        color: inherit !important;
-        font-weight: 700 !important;
-        box-shadow: none !important;
-        border: none !important;
-    }
-
-
-
-    /* Estado Hover: Solo negrita, mantiene color original */
-    .sidebar-link:hover:not(.is-active) {
-        @apply bg-slate-50;
-        font-weight: 700;
     }
 </style>
 
@@ -137,7 +105,6 @@ import Icons from "../shared/Icons.astro";
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Solo activamos si el elemento está entrando en la zona focal del viewport
                 if (entry.isIntersecting) {
                     const currentId = entry.target.getAttribute('id');
                     const activeLink = document.querySelector(`#contacto-scrollspy a[href="#${currentId}"]`);

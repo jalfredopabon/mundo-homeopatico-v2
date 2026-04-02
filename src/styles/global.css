@@ -113,19 +113,7 @@ button,
   @apply pt-8 pb-24 md:pt-12;
 }
 
-/* --- 🖱️ Scrollbar Premium (Estética Elite) --- */
-.scrollbar-premium::-webkit-scrollbar {
-  width: 6px;
-}
-.scrollbar-premium::-webkit-scrollbar-track {
-  background: transparent;
-}
-.scrollbar-premium::-webkit-scrollbar-thumb {
-  @apply bg-slate-200 rounded-full transition-colors duration-300;
-}
-.scrollbar-premium:hover::-webkit-scrollbar-thumb {
-  @apply bg-slate-300;
-}
+
 
 /* --- 🏛️ Sistema Maestro de Tablas (Estética Elite) --- */
 .mh-table-container {
@@ -192,9 +180,81 @@ button,
 }
 
 @layer components {
-  /* --- 🏛️ Estilos de Navegación Lateral (Jerarquía Lego) --- */
-  
-  /* Sistema de Línea Maestra (Tronco Único) para Acordeones */
+  /* --- 🧩 Sistema Atómico de Sidebar --- */
+
+  /* Cápsula base: geometría compartida por todos los ítems de navegación lateral */
+  .sidebar-capsule {
+    @apply relative flex items-center h-11 mx-4 rounded-lg;
+    @apply text-slate-700 transition-all;
+    @apply focus:outline-none;
+  }
+
+  .sidebar-capsule:focus-visible {
+    box-shadow: 0 0 0 1px rgba(10, 92, 78, 0.3);
+  }
+
+  /* Contenedor del icono: mantiene la plomada a ~22px del borde */
+  .sidebar-icon-slot {
+    @apply w-8 flex-shrink-0 flex items-center justify-start;
+    padding-left: 6px;
+  }
+
+  .sidebar-icon-slot > * {
+    @apply w-[18px] h-[18px] flex items-center justify-center;
+  }
+
+  /* Espaciador ciego para sub-ítems (mantiene plomada del texto a 48px) */
+  .sidebar-icon-spacer {
+    @apply w-8 flex-shrink-0;
+  }
+
+  /* Tipografía: nivel 3 (ítems principales con icono) */
+  .sidebar-label {
+    @apply text-[14px] font-normal leading-none;
+    margin-top: -1px;
+  }
+
+  /* Tipografía: nivel 4 (sub-ítems dentro de acordeón) */
+  .sidebar-label--sub {
+    @apply text-[13px] font-normal leading-none;
+    margin-top: -0.5px;
+  }
+
+  /* Header sticky (buscador / CTA) */
+  .sidebar-search-header {
+    @apply sticky top-0 z-30 bg-surface-white px-4 py-4;
+  }
+
+  /* --- Estados de Interacción (Fuente Única de Verdad) --- */
+
+  .sidebar-capsule:hover:not(.is-active),
+  .sidebar-link:hover:not(.is-active) {
+    @apply bg-slate-50;
+    font-weight: 700;
+  }
+
+  .sidebar-capsule.is-active,
+  .sidebar-link.is-active {
+    background-color: var(--bg-muted) !important;
+    color: inherit !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .sidebar-capsule:focus,
+  .sidebar-link:focus,
+  .accordion-trigger:focus {
+    outline: none !important;
+  }
+
+  .sidebar-capsule,
+  .sidebar-link {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- Acordeones (Línea Maestra Jerárquica) --- */
+
   .accordion-content {
     position: relative;
   }
@@ -202,54 +262,23 @@ button,
   .accordion-content::before {
     content: "";
     position: absolute;
-    left: 31px; /* Eje central del icono */
+    left: 31px;
     top: -8px;
     bottom: 16px;
     border-left: 1.5px solid #64748b;
     z-index: 0;
   }
 
-  /* Ajuste óptico: Alineación perfecta con el texto de nivel 4 */
+  .accordion-content .sidebar-capsule span,
   .accordion-content .sidebar-link span {
     position: relative;
     z-index: 1;
   }
 
-  /* Rotación del Chevron en Acordeones */
   .accordion-trigger.is-expanded .accordion-icon {
     transform: rotate(180deg);
     color: var(--brand);
     opacity: 1;
-  }
-
-  /* Estado Activo y Foco Unificado (Cápsula Premium) */
-  .sidebar-link.is-active,
-  .sidebar-link:focus,
-  .accordion-trigger:focus {
-    outline: none !important;
-  }
-  
-  .sidebar-link.is-active {
-    background-color: var(--bg-surface-hover);
-    color: inherit;
-    font-weight: 700 !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  .sidebar-link.is-active .icon-container {
-    color: var(--primary);
-  }
-
-  .sidebar-link:hover:not(.is-active) {
-    background-color: rgba(0, 0, 0, 0.02);
-    font-weight: 700;
-  }
-
-  .sidebar-link {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

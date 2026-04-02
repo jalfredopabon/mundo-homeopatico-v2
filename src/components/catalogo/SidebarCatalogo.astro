@@ -2,8 +2,8 @@
 // src/components/catalogo/SidebarCatalogo.astro
 /**
  * Sidebar de Catálogo: Clonación Estricta 1:1 con la versión online.
- * Prioriza la fidelidad visual absoluta eliminando sobre-ingeniaría.
- * Mantiene la funcionalidad de buscador, acordeones y scrollspy.
+ * Usa clases atómicas de global.css (.sidebar-capsule, .sidebar-icon-slot, etc.)
+ * Plomadas: borde=16px, icono=~22px, texto=48px.
  */
 import Icons from "../shared/Icons.astro";
 ---
@@ -11,7 +11,7 @@ import Icons from "../shared/Icons.astro";
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100vh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium">
   
   <!-- BUSCADOR STICKY -->
-  <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
+  <div class="sidebar-search-header">
     <div class="relative group">
       <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
         <div class="relative w-4 h-4 flex items-center justify-center">
@@ -32,52 +32,46 @@ import Icons from "../shared/Icons.astro";
           <div class="flex flex-col gap-0.5">
             <!-- Acordeón: Homeopáticos -->
             <div class="flex flex-col">
-              <button class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-11 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-surface-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30" data-target="homeopáticos">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target="homeopáticos">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">Homeopáticos</span>
+                <span class="sidebar-label">Homeopáticos</span>
                 <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
               </button>
               <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
-                <a href="#oficinales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Oficinales</span>
+                <a href="#oficinales" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Oficinales</span>
                 </a>
-                <a href="#multipotencias" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Multipotencias</span>
+                <a href="#multipotencias" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Multipotencias</span>
                 </a>
-                <a href="#magistrales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Magistrales</span>
+                <a href="#magistrales" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Magistrales</span>
                 </a>
               </div>
             </div>
 
             <!-- Item: Esencias florales -->
             <div class="flex flex-col">
-              <a href="#esencias-florales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="flower" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#esencias-florales" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="flower" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Esencias florales</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Esencias florales</span>
               </a>
             </div>
 
             <!-- Item: Oligoelementos -->
             <div class="flex flex-col">
-              <a href="#oligoelementos" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="molecules" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#oligoelementos" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="molecules" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Oligoelementos</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Oligoelementos</span>
               </a>
             </div>
           </div>
@@ -89,72 +83,66 @@ import Icons from "../shared/Icons.astro";
           <div class="flex flex-col gap-0.5">
             <!-- Acordeón: Homeopatía -->
             <div class="flex flex-col">
-              <button class="accordion-trigger group relative flex items-center w-[calc(100%-2rem)] ml-4 pr-4 h-11 mt-1 text-slate-700 transition-colors rounded-lg hover:bg-surface-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30" data-target="homeopatia">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target="homeopatia">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal leading-none mt-[-1px] transition-transform">Homeopatía</span>
+                <span class="sidebar-label">Homeopatía</span>
                 <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
               </button>
               <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
-                <a href="#homeopaticos-esenciales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Homeopáticos esenciales</span>
+                <a href="#homeopaticos-esenciales" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Homeopáticos esenciales</span>
                 </a>
-                <a href="#homeopaticos-especiales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Homeopáticos especiales</span>
+                <a href="#homeopaticos-especiales" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Homeopáticos especiales</span>
                 </a>
-                <a href="#cuidado-capilar" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Cuidado capilar</span>
+                <a href="#cuidado-capilar" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cuidado capilar</span>
                 </a>
-                <a href="#capsulas" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Cápsulas</span>
+                <a href="#capsulas" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cápsulas</span>
                 </a>
-                <a href="#cremas" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Cremas</span>
+                <a href="#cremas" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cremas</span>
                 </a>
-                <a href="#geles" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Geles</span>
+                <a href="#geles" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Geles</span>
                 </a>
-                <a href="#unguentos" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Ungüentos</span>
+                <a href="#unguentos" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Ungüentos</span>
                 </a>
-                <a href="#elixires" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                  <div class="w-8 flex-shrink-0"></div>
-                  <span class="text-[13px] font-normal group-[.is-active]:font-bold leading-none mt-[-0.5px] transition-transform">Elíxires</span>
+                <a href="#elixires" class="sidebar-link sidebar-capsule group">
+                  <div class="sidebar-icon-spacer"></div>
+                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Elíxires</span>
                 </a>
               </div>
             </div>
 
             <!-- Item: Esencias florales LMH -->
             <div class="flex flex-col">
-              <a href="#esencias-florales-lmh" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="flower" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#esencias-florales-lmh" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="flower" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Esencias florales</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Esencias florales</span>
               </a>
             </div>
 
             <!-- Item: Oligoelementos K7 -->
             <div class="flex flex-col">
-              <a href="#oligoelementos-k7" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="molecules" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#oligoelementos-k7" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="molecules" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Oligoelementos K7</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Oligoelementos K7</span>
               </a>
             </div>
           </div>
@@ -170,35 +158,29 @@ import Icons from "../shared/Icons.astro";
           <span class="block text-[12px] font-medium text-slate-600 px-4">Complementarios</span>
           <div class="flex flex-col gap-0.5">
             <div class="flex flex-col">
-              <a href="#alimentos-funcionales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="leaf" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#alimentos-funcionales" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="leaf" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Alimentos funcionales</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Alimentos funcionales</span>
               </a>
             </div>
             
             <div class="flex flex-col">
-              <a href="#cbd" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="cannabis" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#cbd" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="cannabis" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">CBD</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">CBD</span>
               </a>
             </div>
 
             <div class="flex flex-col">
-              <a href="#aceites-esenciales" class="sidebar-link group relative flex items-center h-11 rounded-lg transition-all text-slate-700 hover:bg-surface-muted hover:text-slate-800 mx-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand/30">
-                <div class="w-8 flex-shrink-0 flex items-center justify-start pl-[6px] transition-colors">
-                  <div class="w-[18px] h-[18px] flex items-center justify-center">
-                    <Icons type="droplet" class="w-full h-full" strokeWidth={1.5} />
-                  </div>
+              <a href="#aceites-esenciales" class="sidebar-link sidebar-capsule group">
+                <div class="sidebar-icon-slot">
+                  <div><Icons type="droplet" class="w-full h-full" strokeWidth={1.5} /></div>
                 </div>
-                <span class="text-[14px] font-normal group-[.is-active]:font-bold leading-none mt-[-1px] transition-transform">Aceites esenciales</span>
+                <span class="sidebar-label group-[.is-active]:font-bold">Aceites esenciales</span>
               </a>
             </div>
           </div>
@@ -207,10 +189,9 @@ import Icons from "../shared/Icons.astro";
     </div>
   </nav>
 
-  <!-- FIRMA DE AUTOR (Crédito de Autor persistente) -->
+  <!-- FIRMA DE AUTOR -->
   <div class="mt-auto px-4 py-4 border-t border-subtle bg-surface-white">
     <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface-muted/50 hover:shadow-sm ring-1 ring-transparent hover:ring-slate-200">
-      <!-- Avatar / Iniciales AP -->
       <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-[10px] font-bold text-white transition-transform group-hover:scale-110">
         AP
       </div>
@@ -218,7 +199,6 @@ import Icons from "../shared/Icons.astro";
         <span class="text-[10px] text-slate-500 font-bold leading-none mb-1">Creado por</span>
         <span class="text-[12px] font-bold text-slate-900 leading-none group-hover:text-brand transition-colors">Alfredo Pabón</span>
       </div>
-      <!-- Icono de salida externa sutil -->
       <Icons type="external-link" class="w-3 h-3 ml-auto text-slate-300 group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all" strokeWidth={2.5} />
     </a>
   </div>
@@ -316,38 +296,12 @@ import Icons from "../shared/Icons.astro";
 </script>
 
 <style>
-    /* Limpieza de foco global */
-    .sidebar-link:focus, .accordion-trigger:focus {
-        outline: none !important;
-    }
-
-    /* Estado Activo: Identical to Sedes y Contacto (#D9E8E4) */
-    .sidebar-link.is-active {
-        background-color: var(--bg-muted) !important;
-        color: inherit !important;
-        font-weight: 700 !important;
-        box-shadow: none !important;
-        border: none !important;
-    }
-
-
-
-    /* Hover: Sutil, igual que en Contacto */
-    .sidebar-link:hover:not(.is-active) {
-        @apply bg-slate-50;
-        font-weight: 700;
-    }
-  
-    /* Acordeones */
-    .accordion-trigger.is-expanded .accordion-icon {
-        @apply rotate-180 text-brand;
-    }
-
+    /* Sobrecargas de geometría exclusivas del acordeón (no generalizables) */
     .accordion-trigger.is-expanded {
         @apply bg-slate-50 text-slate-900 font-bold;
     }
 
-    /* Línea Maestra Jerárquica */
+    /* Línea maestra local (complementa la global) */
     .accordion-content {
         position: relative;
     }
@@ -364,10 +318,10 @@ import Icons from "../shared/Icons.astro";
         pointer-events: none;
     }
 
-    /* Ajuste de Z-index para las cápsulas de Nivel 4 */
+    /* Z-index para que las cápsulas queden bajo la línea */
     .sidebar-link {
         position: relative;
-        z-index: 5; /* Por debajo de la línea maestra (z-10) */
+        z-index: 5;
     }
 
     .sidebar-link.is-active, .sidebar-link:hover {

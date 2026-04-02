@@ -1,12 +1,13 @@
 # Filosofía de Construcción: Mundo Homeopático v2
 
-> **REGLA DE ORO:** Este proyecto se construye bajo el paradigma de "Lego-Architecture". Todo elemento visual o lógico debe ser modular, escalable y basado estrictamente en estándares de desarrollo de software moderno.
+> **REGLA DE ORO:** Este proyecto se rige por la **Arquitectura Atómica** y el paradigma de "Lego-Architecture". Todo elemento debe ser modular, escalable y basado en estándares de desarrollo de software moderno, erradicando el **Código Espagueti**.
 
-## 🛡️ Principios Innegociables
-1. **Modularización:** Ninguna página maestra (`.astro`) debe contener lógica compleja o bloques extensos de HTML. Todo debe extraerse a componentes (`src/components/`).
-2. **Tokenización:** Prohibido el uso de colores hexadecimales o valores mágicos (dimensiones inline) fuera de `tailwind.config.mjs` y `:root`.
-3. **Estandarización Iconográfica:** Uso exclusivo y obligatorio del componente centralizado `Icons.astro`. No se permiten SVGs inline en el código.
-4. **Respeto a las Buenas Prácticas:** Se prioriza la legibilidad, mantenibilidad y el rendimiento por encima de la velocidad de entrega. Si un patrón se repite 3 veces, se globaliza en `global.css`.
+## 🛡️ Pilares del Proyecto
+1. **Arquitectura Atómica:** Segmentación de la UI en unidades mínimas reutilizables (átomos, moléculas, organismos) para garantizar integridad visual.
+2. **Modularización:** Ninguna página maestra (`.astro`) debe contener lógica compleja o bloques extensos de HTML. Todo debe extraerse a componentes (`src/components/`).
+3. **Tokenización:** Prohibido el uso de colores hexadecimales o valores mágicos (dimensiones inline) fuera de `tailwind.config.mjs` y `:root`.
+4. **Estandarización:** Uso obligatorio de SSoT (Single Source of Truth) para iconos (`Icons.astro`), tipografía y geometría. 
+5. **Anti-Espagueti:** Si un patrón se repite 3 veces, se globaliza en `global.css`. Se prohíbe la redundancia de estilos inline que dificultan el mantenimiento.
 
 ---
 
@@ -97,7 +98,11 @@
     - **AND (Grupos Cruzados):** Filtrado intersectivo entre categorías (ej. Sistema: Digestivo + Forma: Gotas).
 - **Performance "Elite" (Hybrid UI):** Implementación de paginación o carga diferida (20-25 tarjetas por vista) para evitar saturación del DOM y mantener la fluidez.
 - **Feedback Dinámico:** Implementación de contador de resultados reactivo ("12 de 155 encontrados") y estado vacío con botón de "Limpiar Filtros".
-- **Sincronización de Búsqueda:** Integración del buscador del sidebar con la lógica de filtros activos para una experiencia de usuario sin fisuras.
+### Hito 18: Refactorización Atómica de Sidebars (02/04/2026)
+- **Migración a Sistema Atómico:** Eliminación de 23+ instancias de cápsulas hardcoded y reemplazo por clases centralizadas en `global.css` (`.sidebar-capsule`, `.sidebar-icon-slot`).
+- **Limpieza de Cascada:** Unificación de estados active/hover en una única fuente de verdad (global), resolviendo conflictos de especificidad.
+- **Reducción de Deuda Técnica:** Mejora en la mantenibilidad al permitir cambios geométricos globales desde una sola regla CSS en lugar de ediciones multicomponenciales.
+- **Consistencia Visual Sincronizada:** Estandarización de `strokeWidth` a 1.5 y alineación milimétrica de plomadas en Catálogo y Contacto.
 
 #### 📝 Plan de Ejecución por Bloques (Prototipo 12 Tarjetas COMPLETADO)
 - [x] **Bloque 1 — Datos (vademecum.astro):** Enriquecer 7 tarjetas y crear 5 nuevas con objeto `tags` cruzados.

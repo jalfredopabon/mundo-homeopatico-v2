@@ -47,7 +47,16 @@
 - **Filosofía Rectangular:** Ajuste de geometría (`rounded-xl`) en el pin del mapa y botón de reproducción de video para consistencia "Elite".
 - **Corrección PostCSS:** Se evitó el uso de `group` dentro de `@apply` para cumplir con las restricciones técnicas de Tailwind.
 
+### Hito 28: Vademécum Elite - Datos y Columna Central (03/04/2026)
+- **Capa de Datos (Data Layer):** Externalización de 333 líneas de medicamentos *hardcoded* hacia `src/data/medicines.ts` con tipado estricto (`Medicine` interface).
+- **Limpieza de Deuda:** Reducción del archivo `vademecum.astro` de 696 a 363 líneas (~48% de ahorro en ruido visual).
+- **Átomos de Layout:** 
+    - Aplicación de `.page-section` para estandarizar el contenedor de contenido.
+    - Implementación de `.catalog-section-header`, `.catalog-breadcrumb` y `.catalog-title` para paridad visual 1:1 con el Catálogo.
+- **Lógica Declarativa:** Creación del átomo `.medical-card.is-selected` en `global.css`, eliminando la manipulación manual de bordes y sombras desde JavaScript.
+- **Consistencia Elite:** Estandarización de espaciados, tipografías y jerarquías visuales en la columna central del Dashboard.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 28 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+- [ ] **Hito 29 (Vademécum - Columna 3)**: Refactorización de `MedicalDetails.astro` para usar átomos globales y mejorar el responsive.
 
 

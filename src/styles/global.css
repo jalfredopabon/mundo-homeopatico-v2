@@ -432,7 +432,7 @@ button,
   }
 
   .cart-input {
-    @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all outline-none appearance-none;
+    @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-brand focus:border-brand transition-all outline-none appearance-none;
   }
 
   .btn-whatsapp-elite {
@@ -448,7 +448,7 @@ button,
   }
 
   .cart-item-card {
-    @apply bg-slate-50/50 border border-slate-100 p-4 rounded-2xl space-y-3 relative group transition-all hover:border-slate-200 hover:bg-white animate-fade-in;
+    @apply bg-slate-50/50 border border-slate-100 p-4 rounded-2xl space-y-3 relative transition-all hover:border-slate-200 hover:bg-white animate-fade-in;
   }
 
   .cart-qty-btn {
@@ -456,7 +456,11 @@ button,
   }
 
   .cart-input-error {
-    @apply border-red-400 bg-red-50/30 focus:ring-red-400/20 focus:border-red-400;
+    @apply border-red-400 bg-red-50/30 focus:border-red-400;
+  }
+
+  .cart-input-error:focus {
+    --tw-ring-color: rgba(248, 113, 113, 0.2); /* red-400/20 */
   }
 
   .cart-note-input {
@@ -493,24 +497,24 @@ button,
     @apply absolute bottom-0 left-0 w-full h-0.5 bg-brand rounded-full;
   }
 
-  .header-cta-btn {
-    @apply px-5 h-10 bg-slate-900 hover:bg-black text-white text-[13px] font-bold rounded-full flex items-center gap-2 transition-all active:scale-95 group shadow-sm;
-  }
-
-  .header-cta-btn.is-active {
-    @apply bg-brand ring-4 ring-brand/10;
-  }
-
   .header-tool-btn {
     @apply flex flex-col items-center justify-center cursor-pointer transition-all active:scale-95 text-slate-700 hover:text-brand px-2;
   }
 
   .header-icon-wrap {
-    @apply w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100/50 group-hover:bg-brand/10 transition-colors relative;
+    @apply w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100/50 transition-colors relative;
+  }
+
+  .group:hover .header-icon-wrap {
+    background-color: rgba(10, 92, 78, 0.1); /* brand/10 */
   }
 
   .header-search-trigger {
-    @apply h-10 w-full bg-slate-50 rounded-lg flex items-center px-4 border border-slate-100 focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all cursor-pointer;
+    @apply h-10 w-full bg-slate-50 rounded-lg flex items-center px-4 border border-slate-100 focus-within:bg-white focus-within:border-brand focus-within:ring-2 transition-all cursor-pointer;
+  }
+
+  .header-search-trigger:focus-within {
+    --tw-ring-color: rgba(10, 92, 78, 0.2); /* brand/20 */
   }
 
   .header-progress-track {
@@ -519,6 +523,90 @@ button,
 
   .header-progress-bar {
     @apply h-full bg-brand w-0 rounded-r-full transition-all duration-500 ease-out;
+  }
+
+  /* --- 📄 Main Content & Page Atoms --- */
+  .main-content-scroll {
+    @apply flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100vh-64px)] scroll-smooth;
+  }
+
+  .page-section {
+    @apply px-8 md:px-[72px] pt-8 pb-12 flex-1 flex flex-col max-w-[1600px] mx-auto w-full;
+  }
+
+  .banner-info {
+    @apply w-full bg-white border-b border-slate-100 px-4 md:px-16 py-3 sm:py-4 flex items-start justify-between gap-4 transition-all duration-300;
+  }
+
+  .banner-info-icon {
+    @apply bg-brand text-white p-2 rounded-lg shrink-0 shadow-sm shadow-[rgba(10,92,78,0.2)];
+  }
+
+  .banner-info-close {
+    @apply text-slate-400 hover:text-slate-900 hover:bg-slate-100 p-1.5 rounded-lg transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-slate-100;
+  }
+
+  /* Feedback de Botón Añadir */
+  .btn-add-cart.is-success {
+    @apply bg-brand scale-110 border-transparent shadow-lg shadow-[rgba(10,92,78,0.2)];
+  }
+
+  /* --- 🧪 Vademécum Atoms --- */
+  /* NOTA: class 'group' debe ir directamente en el HTML del componente, no aquí */
+  .medical-card {
+    @apply bg-white rounded-xl p-6 cursor-pointer transition-all border border-slate-100 hover:border-brand shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[rgba(10,92,78,0.05)];
+  }
+
+  .medical-aside {
+    @apply hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-slate-100 bg-white h-[calc(100vh-64px)] overflow-y-auto overflow-x-hidden scrollbar-premium shrink-0 relative p-0;
+    @apply data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none;
+  }
+
+  .medical-sheet {
+    @apply pl-8 pr-12 md:pl-12 md:pr-12 pt-8 pb-8 flex-1 animate-fade-in;
+  }
+
+  .medical-title {
+    @apply text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5;
+  }
+
+  .medical-section-title {
+    @apply text-[11px] font-bold text-slate-900 border-b border-slate-100 pb-2 mb-4 flex items-center gap-2 uppercase tracking-wider;
+  }
+
+  .medical-list-item {
+    @apply flex gap-3 text-[13px] text-slate-700 leading-relaxed py-1;
+  }
+
+  .medical-bullet {
+    @apply w-[15px] flex justify-center shrink-0 pt-[7px];
+    &::before {
+      content: "";
+      @apply size-1.5 rounded-full bg-slate-700;
+    }
+  }
+
+  .medical-empty-state {
+    @apply flex-1 flex flex-col items-center justify-center p-12 text-center;
+  }
+
+  /* --- 🔍 Sidebar Vademécum Filter Atoms --- */
+  .sidebar-filter-section {
+    @apply pl-2;
+  }
+
+  .sidebar-filter-label {
+    @apply flex items-center gap-2.5 text-[13px] text-slate-700 cursor-pointer transition-colors;
+    &:hover {
+      @apply text-slate-900;
+    }
+    &:has(input:checked) {
+      @apply text-slate-900 font-medium;
+    }
+  }
+
+  .sidebar-filter-checkbox {
+    @apply size-3.5 rounded border-slate-300 accent-brand text-brand focus:ring-1 focus:ring-brand cursor-pointer shrink-0;
   }
 }
 

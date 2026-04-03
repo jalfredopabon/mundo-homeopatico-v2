@@ -30,28 +30,27 @@ const { products = [] } = Astro.props;
 <aside 
     id="vademecum-aside" 
     data-mobile-open="false" 
-    class="hidden lg:flex flex-col w-[420px] xl:w-[460px] border-l border-subtle bg-surface-white h-[calc(100vh-64px)] md:h-[calc(100vh-72px)] overflow-y-auto overflow-x-hidden scrollbar-premium shrink-0 relative p-0
-           data-[mobile-open=true]:flex data-[mobile-open=true]:fixed data-[mobile-open=true]:inset-0 data-[mobile-open=true]:z-50 data-[mobile-open=true]:w-full data-[mobile-open=true]:max-w-none"
+    class="medical-aside"
 >
     
     {products.map((product) => (
         <div 
             id={`ficha-${product.id}`} 
-            class={`pl-8 pr-12 md:pl-12 md:pr-12 pt-8 pb-8 flex-1 medical-sheet-container ${product.isActive ? '' : 'hidden'}`}
+            class={`medical-sheet ${product.isActive ? '' : 'hidden'}`}
             data-sheet-id={product.id}
         >
-            <!-- Encabezado de la Ficha (ADN Clon Elite) -->
+            <!-- Encabezado de la Ficha -->
             <div class="mb-8 relative">
-                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-500 hover:text-slate-900 bg-slate-50 rounded-full border border-subtle">
+                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
                     <Icons type="close-x" class="w-4 h-4" />
                 </button>
 
-                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-700 mb-2">
-                    <Icons type="file-text" class="w-3.5 h-3.5" strokeWidth={1.5} />
+                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">
+                    <Icons type="file-text" class="w-3.5 h-3.5" strokeWidth={2} />
                     Ficha técnica del producto
                 </div>
 
-                <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5">
+                <h2 class="medical-title">
                     {product.name} <span class="text-brand">{product.potency}</span>
                 </h2>
 
@@ -68,30 +67,26 @@ const { products = [] } = Astro.props;
                 </div>
             </div>
 
-            <!-- Secciones de la Ficha (ADN Clon Elite) -->
+            <!-- Secciones de la Ficha -->
             <div class="space-y-8">
                 {product.sections.map((section) => (
-                    <div class="border-t border-subtle pt-7">
-                        <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2">
-                            <Icons type={section.icon} class="w-3.5 h-3.5 text-slate-900" />
+                    <div class="pt-2">
+                        <h4 class="medical-section-title">
+                            <Icons type={section.icon} class="w-3.5 h-3.5" />
                             {section.title}
                         </h4>
                         
                         <ul class="space-y-4">
                             {!section.items && (
-                                <li class="flex gap-2">
-                                    <div class="w-[15px] flex justify-center shrink-0">
-                                        <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                    </div>
-                                    <p class="text-[13px] text-slate-700 leading-[1.8]" set:html={section.content} />
+                                <li class="medical-list-item">
+                                    <div class="medical-bullet"></div>
+                                    <p class="leading-[1.8]" set:html={section.content} />
                                 </li>
                             )}
                             {section.items && section.items.map((item) => (
-                                <li class="flex gap-2">
-                                    <div class="w-[15px] flex justify-center shrink-0">
-                                        <div class="size-1.5 rounded-full bg-slate-700 mt-[9px]"></div>
-                                    </div>
-                                    <div class="text-[13px] leading-relaxed" set:html={item} />
+                                <li class="medical-list-item">
+                                    <div class="medical-bullet"></div>
+                                    <div class="flex-1" set:html={item} />
                                 </li>
                             ))}
                         </ul>
@@ -102,25 +97,25 @@ const { products = [] } = Astro.props;
     ))}
 
     {products.length > 0 && (
-        <div id="vademecum-empty-state" class="flex-1 flex flex-col items-center justify-center p-12 text-center reveal">
-            <div class="mb-8 flex justify-center">
-                <Icons type="select-card" class="w-20 h-20 text-slate-800" strokeWidth={1.25} />
+        <div id="vademecum-empty-state" class="medical-empty-state">
+            <div class="mb-8 flex justify-center text-slate-200">
+                <Icons type="select-card" class="w-20 h-20" strokeWidth={1} />
             </div>
             <h3 class="text-[16px] font-bold text-slate-900 mb-2">Selecciona un medicamento</h3>
-            <p class="text-[13px] text-slate-500 max-w-[240px] mb-1">
-                Haz clic en una tarjeta del listado para consultar su ficha técnica.
+            <p class="text-[13px] text-slate-500 max-w-[240px] mb-1 leading-relaxed">
+                Haz clic en una tarjeta del listado para consultar su ficha técnica detallada.
             </p>
-            <p class="text-[11px] font-bold text-brand tracking-tighter opacity-80">
-                Fórmula, posología y aplicaciones clínicas.
+            <p class="text-[11px] font-bold text-brand tracking-tighter uppercase mt-4">
+                Fórmula • Posología • Aplicaciones
             </p>
         </div>
     )}
 
     {products.length === 0 && (
-        <div class="flex-1 flex flex-col items-center justify-center p-12 text-center">
-            <Icons type="file-text" class="w-16 h-16 text-slate-200 mb-6" />
-            <p class="text-[15px] text-slate-500 max-w-[200px] leading-relaxed">
-                Seleccione un producto para ver su ficha técnica detallada.
+        <div class="medical-empty-state">
+            <Icons type="file-text" class="w-16 h-16 text-slate-100 mb-6" />
+            <p class="text-[15px] text-slate-400 max-w-[200px] leading-relaxed">
+                Cargando vademécum corporativo...
             </p>
         </div>
     )}
@@ -130,7 +125,7 @@ const { products = [] } = Astro.props;
     // Manejo de visibilidad de fichas
     document.addEventListener('astro:page-load', () => {
         const medicalItems = document.querySelectorAll('.medical-item-btn');
-        const sheets = document.querySelectorAll('.medical-sheet-container');
+        const sheets = document.querySelectorAll('.medical-sheet');
         const aside = document.getElementById('vademecum-aside');
         const emptyState = document.getElementById('vademecum-empty-state');
         const closeBtns = document.querySelectorAll('.close-ficha-btn');

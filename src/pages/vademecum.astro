@@ -448,6 +448,7 @@ const medicines = [
     function initReveal() {
         const revealElements = document.querySelectorAll('.reveal');
         const observerOptions = {
+            root: null, // Viewport para detectar elementos en listado y paneles laterales
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
@@ -487,10 +488,11 @@ const medicines = [
             let visibleCount = 0;
 
             medItems.forEach(item => {
-                const itemTerapia = item.getAttribute('data-terapia');
-                const itemSistemas = item.getAttribute('data-sistema').split(',');
-                const itemForma = item.getAttribute('data-forma');
-                const itemName = item.getAttribute('data-name');
+                const itemTerapia = item.getAttribute('data-terapia') || '';
+                const itemSistemasRaw = item.getAttribute('data-sistema') || '';
+                const itemSistemas = itemSistemasRaw ? itemSistemasRaw.split(',') : [];
+                const itemForma = item.getAttribute('data-forma') || '';
+                const itemName = item.getAttribute('data-name') || '';
 
                 // Lógica de validación por grupo (OR interno)
                 const matchesTerapia = activeFilters.terapia.length === 0 || activeFilters.terapia.includes(itemTerapia);
@@ -525,6 +527,9 @@ const medicines = [
             if (searchInput) searchInput.value = '';
             applyFilters();
         });
+
+        // Inicializar filtros al cargar para sincronizar contador y visibilidad
+        applyFilters();
     }
 
     /**
@@ -533,7 +538,7 @@ const medicines = [
     function initFichasManager() {
         const medCards = document.querySelectorAll('[data-med]');
         const vademecumAside = document.getElementById('vademecum-aside');
-        const sheets = document.querySelectorAll('.medical-sheet-container');
+        const sheets = document.querySelectorAll('.medical-sheet');
 
         medCards.forEach(card => {
             card.addEventListener('click', () => {

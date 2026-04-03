@@ -22,6 +22,8 @@
 - **Limpieza Técnica:** Eliminación de ~70 clases inline.
 - **UX Premium:** Unificación de tooltips "Elite" y barra de progreso global.
 
+### Hito 24: Página Principal Atómica (04/04/2026)
+- **Refactorización de `index.astro`:** Implementación de átomos para contenedores de scroll (`.main-content-scroll`), banners de información (`.banner-info`) y feedback de compra (`.is-success`).
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 24 (Limpieza de index.astro)**: Migración de secciones de hero y banners a átomos.
 - [ ] **Hito 25 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.

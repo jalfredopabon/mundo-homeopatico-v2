@@ -3,13 +3,12 @@
 import Icons from "../shared/Icons.astro";
 ---
 <!-- Bloque 1 - Fase 2: Cimientos (Estructura Base) -->
-<aside id="cart-drawer" class="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-white z-50 flex flex-col translate-x-full transition-transform duration-300 ease-in-out border-l border-slate-200" aria-labelledby="cart-title">
+<aside id="cart-drawer" class="drawer-panel" aria-labelledby="cart-title">
     
     <!-- Piso 1: Header Fijo -->
-    <header class="h-[72px] px-6 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+    <header class="drawer-header">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700">
-                <!-- Icono Carrito (Hugeicons) -->
+            <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center text-brand">
                 <Icons type="shopping-cart" class="w-[22px] h-[22px]" strokeWidth={2} />
             </div>
             <div>
@@ -36,8 +35,7 @@ import Icons from "../shared/Icons.astro";
         <div id="cart-items-container" class="p-6 space-y-4">
             <!-- Los items se inyectarán aquí vía JS -->
              <div id="cart-empty-state" class="py-20 text-center space-y-3">
-                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
-                    <!-- Icono Carrito Vacío (Hugeicons) -->
+                <div class="cart-empty-icon">
                     <Icons type="shopping-cart" class="w-8 h-8" strokeWidth={2} />
                 </div>
                 <p class="text-slate-700 text-sm font-medium">Tu carrito está vacío</p>
@@ -49,33 +47,33 @@ import Icons from "../shared/Icons.astro";
         <div id="checkout-form-container" class="p-6 pt-0 space-y-6">
             <div class="h-px bg-slate-100 w-full"></div>
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-slate-700 tracking-widest text-center">Información de facturación</h3>
+                <h3 class="text-xs font-bold text-slate-700 tracking-widest text-center uppercase">Información de facturación</h3>
                 
                 <div class="grid grid-cols-1 gap-3">
                     <div class="space-y-1">
-                        <label for="bill-name" class="text-[11px] font-bold text-slate-700 ml-1">Nombre completo *</label>
-                        <input id="bill-name" type="text" placeholder="Ej: Dr. Alejandro Ruiz" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" />
+                        <label for="bill-name" class="cart-label">Nombre completo *</label>
+                        <input id="bill-name" type="text" placeholder="Ej: Dr. Alejandro Ruiz" class="cart-input" />
                     </div>
                     
                     <div class="grid grid-cols-2 gap-3">
                         <div class="space-y-1">
-                            <label for="bill-id" class="text-[11px] font-bold text-slate-700 ml-1">Cédula o NIT *</label>
-                            <input id="bill-id" type="text" inputmode="numeric" placeholder="1234567-8" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" />
+                            <label for="bill-id" class="cart-label">Cédula o NIT *</label>
+                            <input id="bill-id" type="text" inputmode="numeric" placeholder="1234567-8" class="cart-input" />
                         </div>
                         <div class="space-y-1">
-                            <label for="bill-whatsapp" class="text-[11px] font-bold text-slate-700 ml-1">WhatsApp *</label>
-                            <input id="bill-whatsapp" type="tel" inputmode="tel" placeholder="320 000 0000" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" />
+                            <label for="bill-whatsapp" class="cart-label">WhatsApp *</label>
+                            <input id="bill-whatsapp" type="tel" inputmode="tel" placeholder="320 000 0000" class="cart-input" />
                         </div>
                     </div>
 
                     <div class="space-y-1">
-                        <label for="bill-address" class="text-[11px] font-bold text-slate-700 ml-1">Dirección de entrega (Opcional)</label>
-                        <input id="bill-address" type="text" placeholder="Calle 123 # 45-67" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" />
+                        <label for="bill-address" class="cart-label">Dirección de entrega (Opcional)</label>
+                        <input id="bill-address" type="text" placeholder="Calle 123 # 45-67" class="cart-input" />
                     </div>
 
                     <div class="space-y-1">
-                        <label for="bill-payment" class="text-[11px] font-bold text-slate-700 ml-1">Método de pago</label>
-                        <select id="bill-payment" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none appearance-none cursor-pointer">
+                        <label for="bill-payment" class="cart-label">Método de pago</label>
+                        <select id="bill-payment" class="cart-input cursor-pointer">
                             <option value="transferencia">Transferencia Bancaria</option>
                             <option value="nequi">Nequi / Daviplata</option>
                             <option value="efectivo">Efectivo contra entrega</option>
@@ -93,7 +91,7 @@ import Icons from "../shared/Icons.astro";
                 <span class="text-slate-700 font-medium">Subtotal</span>
                 <span id="cart-subtotal" class="text-slate-900 font-bold">$0</span>
             </div>
-            <div class="flex justify-between items-center text-[13px] text-emerald-600 font-medium">
+            <div class="flex justify-between items-center text-[13px] text-brand-vibrant font-medium">
                 <span>Descuento aplicado</span>
                 <span id="cart-discount">-$0</span>
             </div>
@@ -104,13 +102,11 @@ import Icons from "../shared/Icons.astro";
         </div>
 
         <div class="grid grid-cols-1 gap-3">
-            <button id="btn-order-medico" class="w-full bg-[#158C77] hover:bg-[#117060] text-white h-12 rounded-lg font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-                <!-- Icono WhatsApp (Hugeicons) -->
+            <button id="btn-order-medico" class="btn-whatsapp-elite" data-variant="medico">
                 <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
                 Pedido Médico WhatsApp
             </button>
-            <button id="btn-order-farmacia" class="w-full bg-slate-900 hover:bg-black text-white h-12 rounded-lg font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-                <!-- Icono WhatsApp (Hugeicons) -->
+            <button id="btn-order-farmacia" class="btn-whatsapp-elite" data-variant="farmacia">
                 <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
                 Pedido Farmacia WhatsApp
             </button>
@@ -120,7 +116,7 @@ import Icons from "../shared/Icons.astro";
 </aside>
 
 <!-- Fondo Oscuro Overlay -->
-<div id="cart-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[45] hidden opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+<div id="cart-overlay" class="drawer-overlay"></div>
 
 <script>
     // Lógica del Carrito (Bloque 2 y 3)
@@ -191,10 +187,10 @@ import Icons from "../shared/Icons.astro";
         requiredFields.forEach(field => {
             if (!field) return;
             if (!field.value.trim()) {
-                field.classList.add('border-red-400', 'bg-red-50/30');
+                field.classList.add('cart-input-error');
                 isValid = false;
             } else {
-                field.classList.remove('border-red-400', 'bg-red-50/30');
+                field.classList.remove('cart-input-error');
             }
         });
 
@@ -204,7 +200,6 @@ import Icons from "../shared/Icons.astro";
     // --- LÓGICA DE ENVÍO A WHATSAPP ---
     function sendOrder(type: 'medico' | 'farmacia') {
         if (!validateForm()) {
-            // Animación de Shake al contenedor de botones o al botón específico
             const btn = type === 'medico' ? btnOrderMedico : btnOrderFarmacia;
             if (btn) {
                 btn.classList.add('animate-shake');
@@ -220,7 +215,6 @@ import Icons from "../shared/Icons.astro";
 
         const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         
-        // Construcción del mensaje de texto
         let message = `*NUEVO PEDIDO (${type.toUpperCase()})*\n\n`;
         message += `*CLIENTE:* ${inputName?.value || ''}\n`;
         message += `*ID/NIT:* ${inputId?.value || ''}\n`;
@@ -240,7 +234,7 @@ import Icons from "../shared/Icons.astro";
         message += `\n_Enviado desde el Catálogo Digital de Mundo Homeopático_`;
 
         const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = "573226154623"; // Reemplazar con el número real de la farmacia
+        const whatsappNumber = "573226154623";
         const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
         
         window.open(url, '_blank');
@@ -249,7 +243,7 @@ import Icons from "../shared/Icons.astro";
     btnOrderMedico?.addEventListener('click', () => sendOrder('medico'));
     btnOrderFarmacia?.addEventListener('click', () => sendOrder('farmacia'));
 
-    // --- LÓGICA DE RENDERIZADO (REUTILIZADA DEL BLOQUE 2) ---
+    // --- LÓGICA DE RENDERIZADO ---
     function renderCart() {
         if (cart.length === 0) {
             if (cartEmptyState) cartEmptyState.style.display = 'block';
@@ -258,35 +252,35 @@ import Icons from "../shared/Icons.astro";
             if (cartEmptyState) cartEmptyState.style.display = 'none';
             if (cartItemsList) {
                 cartItemsList.innerHTML = cart.map((item, index) => `
-                    <div class="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl space-y-3 relative group transition-all hover:border-slate-200 hover:bg-white animate-fade-in">
-                        <button class="absolute top-4 right-4 text-slate-700 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}">
+                    <div class="cart-item-card">
+                        <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}" title="Eliminar ítem">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
                         </button>
                         
                         <div class="pr-8">
                             <h4 class="text-sm font-bold text-slate-900 leading-tight">${item.name}</h4>
-                            <p class="text-xs text-slate-700 mt-0.5">${formatCurrency(item.price)} unitario</p>
+                            <p class="text-xs text-slate-500 mt-0.5">${formatCurrency(item.price)} unitario</p>
                         </div>
     
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-1">
-                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-minus" data-index="${index}">
+                                <button class="cart-qty-btn btn-qty-minus" data-index="${index}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 </button>
                                 <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
-                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty-plus" data-index="${index}">
+                                <button class="cart-qty-btn btn-qty-plus" data-index="${index}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 </button>
                             </div>
                             <div class="text-right">
-                                <span class="text-sm font-extrabold text-[#158C77]">${formatCurrency(item.price * item.quantity)}</span>
+                                <span class="text-sm font-extrabold text-brand">${formatCurrency(item.price * item.quantity)}</span>
                             </div>
                         </div>
     
                         <div class="pt-2 border-t border-slate-100/50">
                             ${item.hasNote ? 
-                                `<textarea class="w-full bg-white border border-slate-200 rounded-lg p-3 text-xs focus:ring-1 focus:ring-emerald-500 outline-none mt-1 input-note animate-slide-down" data-index="${index}" placeholder="Especifique diluciones o cambios...">${item.note || ''}</textarea>` : 
-                                `<button class="flex items-center gap-1.5 text-[10px] font-bold text-slate-700 hover:text-emerald-700 transition-colors btn-add-note" data-index="${index}">
+                                `<textarea class="cart-note-input input-note" data-index="${index}" placeholder="Especifique diluciones o cambios...">${item.note || ''}</textarea>` : 
+                                `<button class="btn-cart-note btn-add-note" data-index="${index}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     Añadir nota o especificación
                                 </button>`
@@ -299,7 +293,6 @@ import Icons from "../shared/Icons.astro";
         updateTotals();
         attachEventListeners();
 
-        // Notificar al Header del cambio
         const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
         document.dispatchEvent(new CustomEvent('cartUpdated', { 
             detail: { totalItems } 
@@ -308,7 +301,7 @@ import Icons from "../shared/Icons.astro";
 
     function updateTotals() {
         const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        const discount = 0; // Descuento cero por ahora
+        const discount = 0;
         const total = subtotal - discount;
 
         if (cartSubtotalEl) cartSubtotalEl.innerText = formatCurrency(subtotal);
@@ -321,47 +314,35 @@ import Icons from "../shared/Icons.astro";
             const button = btn as HTMLButtonElement;
             button.onclick = () => { 
                 const index = parseInt(button.dataset.index || '0');
-                if (cart[index]) {
-                    cart[index].quantity++; 
-                    renderCart(); 
-                }
+                if (cart[index]) { cart[index].quantity++; renderCart(); }
             };
         });
         document.querySelectorAll('.btn-qty-minus').forEach(btn => {
             const button = btn as HTMLButtonElement;
             button.onclick = () => { 
                 const index = parseInt(button.dataset.index || '0');
-                if (cart[index] && cart[index].quantity > 1) { 
-                    cart[index].quantity--; 
-                    renderCart(); 
-                } 
+                if (cart[index] && cart[index].quantity > 1) { cart[index].quantity--; renderCart(); } 
             };
         });
         document.querySelectorAll('.btn-remove-item').forEach(btn => {
             const button = btn as HTMLButtonElement;
             button.onclick = () => { 
                 const index = parseInt(button.dataset.index || '0');
-                cart.splice(index, 1); 
-                renderCart(); 
+                cart.splice(index, 1); renderCart(); 
             };
         });
         document.querySelectorAll('.btn-add-note').forEach(btn => {
             const button = btn as HTMLButtonElement;
             button.onclick = () => { 
                 const index = parseInt(button.dataset.index || '0');
-                if (cart[index]) {
-                    cart[index].hasNote = true; 
-                    renderCart(); 
-                }
+                if (cart[index]) { cart[index].hasNote = true; renderCart(); }
             };
         });
         document.querySelectorAll('.input-note').forEach(textarea => {
             const area = textarea as HTMLTextAreaElement;
             area.oninput = (e) => { 
                 const index = parseInt(area.dataset.index || '0');
-                if (cart[index]) {
-                    cart[index].note = (e.target as HTMLTextAreaElement).value; 
-                }
+                if (cart[index]) { cart[index].note = (e.target as HTMLTextAreaElement).value; }
             };
         });
     }
@@ -370,9 +351,7 @@ import Icons from "../shared/Icons.astro";
         const customEvent = e as CustomEvent;
         const { name, price } = customEvent.detail;
         const existing = cart.find(item => item.name === name);
-        if (existing) { 
-            existing.quantity++; 
-        } else { 
+        if (existing) { existing.quantity++; } else { 
             cart.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); 
         }
         renderCart();
@@ -384,36 +363,9 @@ import Icons from "../shared/Icons.astro";
         if(confirm('¿Deseas vaciar todo el pedido?')) { cart = []; renderCart(); }
     });
 
-    // Escucha el evento global del botón de Pedidos del Header
     document.addEventListener('toggleCart', () => {
         document.body.classList.toggle('cart-open');
     });
 
-    // Sincronización inicial
     renderCart();
 </script>
-
-<style>
-    :global(.cart-open) #cart-drawer { transform: translateX(0); }
-    :global(.cart-open) #cart-overlay { display: block; opacity: 1; pointer-events: auto; }
-
-    /* --- ANIMACIONES PREMIUM (BLOQUE 3) --- */
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-4px); }
-        75% { transform: translateX(4px); }
-    }
-    .animate-shake { animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both; }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in { animation: fadeIn 0.3s ease-out both; }
-
-    @keyframes slideDown {
-        from { opacity: 0; max-height: 0; }
-        to { opacity: 1; max-height: 200px; }
-    }
-    .animate-slide-down { animation: slideDown 0.4s ease-out forwards; overflow: hidden; }
-</style>

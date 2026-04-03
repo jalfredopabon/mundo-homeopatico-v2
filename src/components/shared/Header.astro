@@ -17,17 +17,14 @@ const isVademecum = currentPath === '/vademecum';
 const showTextSize = isCatalog || isVademecum;
 ---
 
-<header class="sticky top-0 z-50 w-full bg-surface-white border-b border-subtle transition-all duration-300">
-  <div class="max-w-full mx-auto h-16 flex items-center justify-between">
+<header class="header-main">
+  <div class="header-container">
     
     <!-- Lado Izquierdo: Identidad de Marca -->
     <div class="flex-1 flex justify-start pl-4">
       <a href="/" class="no-underline inline-flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 group">
-        <!-- Logo MH -->
-        <div class="logo-box-brand">
-          MH
-        </div>
-        <h1 class="hidden md:block text-lg font-bold text-body tracking-tight whitespace-nowrap">
+        <div class="logo-box-brand">MH</div>
+        <h1 class="hidden md:block text-lg font-bold text-slate-900 tracking-tight whitespace-nowrap">
           Mundo homeopático
         </h1>
       </a>
@@ -38,28 +35,17 @@ const showTextSize = isCatalog || isVademecum;
 
     <!-- Centro: Navegación Principal -->
     <nav class="hidden md:flex flex-shrink-0 self-stretch items-center gap-10">
-      <a 
-        href="/" 
-        class={`header-nav-link ${isCatalog ? 'is-active' : ''}`}
-      >
+      <a href="/" class={`header-nav-link ${isCatalog ? 'is-active' : ''}`}>
         Lista de precios
       </a>
       
-      <a 
-        href="/contacto" 
-        class={`header-nav-link ${isContact ? 'is-active' : ''}`}
-      >
+      <a href="/contacto" class={`header-nav-link ${isContact ? 'is-active' : ''}`}>
         Sedes y contacto
       </a>
 
-      <!-- Botón Soy Médico -->
       <div class="flex items-center">
-        <a 
-          href="/vademecum" 
-          class={`header-cta-btn ${isVademecum ? 'is-active' : ''}`}
-        >
+        <a href="/vademecum" class={`header-cta-btn ${isVademecum ? 'is-active' : ''}`}>
           <span class="leading-none mt-[-1.5px]">Soy médico</span>
-          <!-- Icono de Candado -->
           <Icons type="lock" class="w-3.5 h-3.5 opacity-90" strokeWidth={2} />
         </a>
       </div>
@@ -70,9 +56,9 @@ const showTextSize = isCatalog || isVademecum;
 
     <!-- Buscador Móvil -->
     <div class="md:hidden flex-1 px-2">
-      <div class="h-10 w-full bg-surface-muted rounded-lg flex items-center px-3 border border-transparent focus-within:bg-white focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition-all cursor-pointer" id="mobile-search-trigger">
-        <Icons type="search" class="w-4 h-4 text-muted" strokeWidth={2.5} />
-        <span class="text-[13px] text-muted font-medium ml-2 select-none">Buscar...</span>
+      <div class="header-search-trigger" id="mobile-search-trigger">
+        <Icons type="search" class="w-4 h-4 text-slate-400" strokeWidth={2.5} />
+        <span class="text-[13px] text-slate-400 font-medium ml-2 select-none">Buscar...</span>
       </div>
     </div>
 
@@ -80,38 +66,38 @@ const showTextSize = isCatalog || isVademecum;
     <div class="flex-1 flex items-center justify-end gap-4 pr-4">
       
       {showTextSize && (
-        <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer" id="text-size-btn">
-          <button class="header-tool-btn p-2 min-w-[3.5rem]" aria-label="Cambiar tamaño de texto">
+        <div class="relative group hidden sm:flex flex-col items-center justify-center" id="text-size-btn">
+          <button class="header-tool-btn min-w-[3.5rem]" aria-label="Cambiar tamaño de texto">
             <div class="header-icon-wrap">
               <Icons type="text-size" class="w-[18px] h-[18px]" strokeWidth={2} />
             </div>
-            <span class="text-[10px] font-medium text-body mt-1">Texto</span>
+            <span class="text-[10px] font-medium mt-1">Texto</span>
           </button>
           
-          <!-- Tooltip -->
+          <!-- Tooltip "Elite" -->
           <div class="absolute top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-1 group-hover:translate-y-0 z-50">
-            <div class="bg-body text-surface-white text-xs font-medium py-1.5 px-3 rounded whitespace-nowrap relative text-center">
+            <div class="bg-slate-900 text-white text-[10px] font-bold py-1.5 px-3 rounded whitespace-nowrap relative text-center uppercase tracking-widest shadow-xl">
               Tamaño normal
-              <div class="absolute -top-1 left-1/2 -translate-x-1/2 border-solid border-b-body border-b-[6px] border-x-transparent border-x-[5px] border-t-0"></div>
+              <div class="absolute -top-1 left-1/2 -translate-x-1/2 border-solid border-b-slate-900 border-b-[6px] border-x-transparent border-x-[5px] border-t-0"></div>
             </div>
           </div>
         </div>
       )}
 
       <!-- Botón Carrito -->
-      <button id="header-cart-btn" class="header-tool-btn p-2 min-w-[3rem] group" aria-label="Ver carrito de pedidos">
-          <div class="header-icon-wrap relative">
+      <button id="header-cart-btn" class="header-tool-btn min-w-[3rem] group" aria-label="Ver carrito de pedidos">
+          <div class="header-icon-wrap">
             <Icons type="cart" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform" strokeWidth={2.3} />
-            <span id="cart-badge" class="absolute -top-1.5 -right-2 flex h-4 w-4 hidden">
+            <span id="cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 hidden">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span id="cart-counter" class="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold">0</span>
             </span>
           </div>
-        <span class="hidden sm:block text-[10px] font-medium text-body mt-1">Pedidos</span>
+        <span class="hidden sm:block text-[10px] font-medium mt-1">Pedidos</span>
       </button>
 
       <!-- Botón Menú Móvil -->
-      <button id="mobile-menu-btn" class="md:hidden header-tool-btn p-1.5 min-w-[2.75rem] group" aria-label="Abrir menú principal">
+      <button id="mobile-menu-btn" class="md:hidden header-tool-btn min-w-[2.75rem] group" aria-label="Abrir menú principal">
           <div class="header-icon-wrap">
               <Icons type="menu" class="w-[22px] h-[22px] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
           </div>
@@ -119,9 +105,9 @@ const showTextSize = isCatalog || isVademecum;
     </div>
   </div>
 
-  <!-- Barra de progreso -->
-  <div class="w-full h-[2px] bg-surface-muted relative overflow-hidden">
-    <div class="h-full bg-brand w-0 rounded-r-full transition-all duration-500 ease-out" id="global-progress-bar"></div>
+  <!-- Barra de progreso (Feedback UX) -->
+  <div class="header-progress-track">
+    <div class="header-progress-bar" id="global-progress-bar"></div>
   </div>
 </header>
 

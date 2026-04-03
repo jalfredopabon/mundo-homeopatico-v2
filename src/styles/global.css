@@ -280,6 +280,70 @@ button,
     color: var(--brand);
     opacity: 1;
   }
+
+  /* --- 🏷️ Sistema de Badges Atómicos --- */
+  .badge-elite {
+    @apply inline-flex items-center text-[10px] font-medium px-2.5 py-0.5 transition-all;
+  }
+
+  .badge-elite--indigo { @apply text-indigo-700 bg-indigo-100/60 rounded-full; }
+  .badge-elite--emerald { @apply text-emerald-700 bg-emerald-100/60 rounded-full; }
+  .badge-elite--amber { @apply text-amber-700 bg-amber-100/60 rounded-full; }
+  
+  .badge-elite--slate { 
+    @apply text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle gap-1.5; 
+  }
+
+  /* --- 🏛️ Sistema Atómico de Header --- */
+  .header-tool-btn {
+    @apply flex flex-col items-center justify-center rounded-lg transition-colors text-body hover:bg-surface-muted;
+  }
+
+  .header-icon-wrap {
+    @apply h-5 flex items-center justify-center text-body opacity-90 relative;
+  }
+
+  .header-nav-link {
+    @apply no-underline text-sm font-semibold relative h-full flex items-center transition-colors text-body;
+  }
+
+  .header-nav-link::after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-[3px] bg-brand rounded-t-full transition-all duration-300 ease-out w-0;
+  }
+
+  .header-nav-link.is-active {
+    @apply text-brand;
+  }
+
+  .header-nav-link.is-active::after {
+    @apply w-full;
+  }
+
+  .header-nav-link:not(.is-active):hover {
+    @apply text-brand;
+  }
+
+  .header-nav-link:not(.is-active):hover::after {
+    @apply w-full;
+  }
+
+  /* --- 🧱 Componentes Especiales de Header --- */
+  .header-cta-btn {
+    @apply no-underline relative flex items-center gap-2 text-sm font-semibold px-5 h-12 rounded-lg transition-all border;
+  }
+
+  .header-cta-btn:not(.is-active) {
+    @apply bg-brand text-white border-transparent hover:bg-brand-dark;
+  }
+
+  .header-cta-btn.is-active {
+    @apply bg-transparent text-brand border-brand hover:bg-brand/5;
+  }
+
+  .logo-box-brand {
+    @apply w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all;
+  }
 }
 
 @layer utilities {

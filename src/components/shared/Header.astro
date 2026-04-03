@@ -21,10 +21,10 @@ const showTextSize = isCatalog || isVademecum;
   <div class="max-w-full mx-auto h-16 flex items-center justify-between">
     
     <!-- Lado Izquierdo: Identidad de Marca -->
-    <div class="flex-1 flex justify-start pl-4 md:pl-4">
+    <div class="flex-1 flex justify-start pl-4">
       <a href="/" class="no-underline inline-flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 group">
         <!-- Logo MH -->
-        <div class="w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all">
+        <div class="logo-box-brand">
           MH
         </div>
         <h1 class="hidden md:block text-lg font-bold text-body tracking-tight whitespace-nowrap">
@@ -40,25 +40,23 @@ const showTextSize = isCatalog || isVademecum;
     <nav class="hidden md:flex flex-shrink-0 self-stretch items-center gap-10">
       <a 
         href="/" 
-        class={`no-underline text-sm font-semibold relative h-full flex items-center transition-colors group ${isCatalog ? 'text-brand' : 'text-body hover:text-brand'}`}
+        class={`header-nav-link ${isCatalog ? 'is-active' : ''}`}
       >
         Lista de precios
-        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand rounded-t-full transition-all duration-300 ease-out ${isCatalog ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
       </a>
       
       <a 
         href="/contacto" 
-        class={`no-underline text-sm font-semibold relative h-full flex items-center transition-colors group ${isContact ? 'text-brand' : 'text-body hover:text-brand'}`}
+        class={`header-nav-link ${isContact ? 'is-active' : ''}`}
       >
         Sedes y contacto
-        <span class={`absolute bottom-0 left-0 h-[3px] bg-brand rounded-t-full transition-all duration-300 ease-out ${isContact ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
       </a>
 
       <!-- Botón Soy Médico -->
       <div class="flex items-center">
         <a 
           href="/vademecum" 
-          class={`no-underline relative group flex items-center gap-2 text-sm font-semibold px-5 h-12 rounded-lg transition-all border ${isVademecum ? 'bg-transparent text-brand border-brand hover:bg-brand/5' : 'bg-brand text-white border-transparent hover:bg-brand-dark'}`}
+          class={`header-cta-btn ${isVademecum ? 'is-active' : ''}`}
         >
           <span class="leading-none mt-[-1.5px]">Soy médico</span>
           <!-- Icono de Candado -->
@@ -79,12 +77,12 @@ const showTextSize = isCatalog || isVademecum;
     </div>
 
     <!-- Lado Derecho: Controles Operativos -->
-    <div class="flex-1 flex items-center justify-end gap-4 pr-4 md:pr-4">
+    <div class="flex-1 flex items-center justify-end gap-4 pr-4">
       
       {showTextSize && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center cursor-pointer" id="text-size-btn">
-          <button class="flex flex-col items-center justify-center p-2 min-w-[3.5rem] text-body hover:bg-surface-muted rounded-lg transition-colors" aria-label="Cambiar tamaño de texto">
-            <div class="h-5 flex items-center justify-center text-body/90">
+          <button class="header-tool-btn p-2 min-w-[3.5rem]" aria-label="Cambiar tamaño de texto">
+            <div class="header-icon-wrap">
               <Icons type="text-size" class="w-[18px] h-[18px]" strokeWidth={2} />
             </div>
             <span class="text-[10px] font-medium text-body mt-1">Texto</span>
@@ -101,8 +99,8 @@ const showTextSize = isCatalog || isVademecum;
       )}
 
       <!-- Botón Carrito -->
-      <button id="header-cart-btn" class="relative flex flex-col items-center justify-center p-2 min-w-[3rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Ver carrito de pedidos">
-          <div class="h-5 flex items-center justify-center text-body/90 relative">
+      <button id="header-cart-btn" class="header-tool-btn p-2 min-w-[3rem] group" aria-label="Ver carrito de pedidos">
+          <div class="header-icon-wrap relative">
             <Icons type="cart" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform" strokeWidth={2.3} />
             <span id="cart-badge" class="absolute -top-1.5 -right-2 flex h-4 w-4 hidden">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -113,8 +111,8 @@ const showTextSize = isCatalog || isVademecum;
       </button>
 
       <!-- Botón Menú Móvil -->
-      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-center justify-center p-1.5 min-w-[2.75rem] text-body hover:bg-surface-muted rounded-lg transition-colors group" aria-label="Abrir menú principal">
-          <div class="h-5 flex items-center justify-center text-body/90">
+      <button id="mobile-menu-btn" class="md:hidden header-tool-btn p-1.5 min-w-[2.75rem] group" aria-label="Abrir menú principal">
+          <div class="header-icon-wrap">
               <Icons type="menu" class="w-[22px] h-[22px] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
           </div>
       </button>

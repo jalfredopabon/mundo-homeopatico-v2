@@ -348,6 +348,22 @@ button,
   .logo-box-brand {
     @apply w-11 h-11 bg-brand flex items-center justify-center rounded text-white text-base font-bold tracking-widest transition-all;
   }
+
+  /* --- 🧱 Campos y Botones "Elite" (Buscadores e Instagram) --- */
+  .input-elite-field {
+    @apply w-full h-10 bg-slate-50/70 border border-subtle rounded-lg transition-all outline-none text-[14px] text-slate-800 placeholder:text-slate-700;
+  }
+
+  .input-elite-field:hover,
+  .group:hover .input-elite-field {
+    @apply border-brand;
+  }
+
+  .input-elite-field:focus,
+  .input-elite-field:focus-within,
+  .group:focus-within .input-elite-field {
+    @apply bg-white border-brand ring-1 ring-brand ring-offset-0;
+  }
 }
 
 @layer utilities {

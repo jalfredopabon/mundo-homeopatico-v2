@@ -650,13 +650,9 @@ const medicines = [
         allCards.forEach(c => {
             c.classList.remove('border-brand', 'shadow-sm');
             c.classList.add('border-subtle');
-            const h3 = c.querySelector('h3');
-            if (h3) { h3.classList.remove('text-brand'); h3.classList.add('text-slate-900'); }
         });
         selectedCard.classList.remove('border-subtle');
         selectedCard.classList.add('border-brand', 'shadow-sm');
-        const selectedH3 = selectedCard.querySelector('h3');
-        if (selectedH3) { selectedH3.classList.remove('text-slate-900'); selectedH3.classList.add('text-brand'); }
     }
 
     function cambiarFichaTecnica(allSheets, id) {

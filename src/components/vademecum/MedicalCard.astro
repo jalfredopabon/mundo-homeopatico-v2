@@ -13,6 +13,8 @@ interface Props {
     };
 }
 
+import BadgeElite from '../shared/BadgeElite.astro';
+
 const { id, name, potency, shortDesc, tags } = Astro.props;
 ---
 
@@ -21,11 +23,10 @@ const { id, name, potency, shortDesc, tags } = Astro.props;
     data-med={id}
     data-id={id}
 >
-    <div class="flex items-baseline gap-2.5 mb-2">
-        <h3 class="text-[16px] font-bold text-slate-900">
-            {name}
+    <div class="mb-2">
+        <h3 class="text-[16px] font-bold text-slate-900 leading-tight">
+            {name} {potency}
         </h3>
-        <span class="text-slate-700 text-xs font-medium">{potency}</span>
     </div>
     
     <p class="text-[13px] text-slate-700 leading-relaxed mb-4">
@@ -35,17 +36,11 @@ const { id, name, potency, shortDesc, tags } = Astro.props;
     <div class="flex items-center gap-2 flex-wrap">
         {tags && (
             <>
-                <span class="badge-elite badge-elite--indigo">
-                    {tags.terapia}
-                </span>
+                <BadgeElite label={tags.terapia} variant="info" size="xs" />
                 {tags.sistema.map(s => (
-                    <span class="badge-elite badge-elite--emerald">
-                        {s}
-                    </span>
+                    <BadgeElite label={s} variant="success" size="xs" />
                 ))}
-                <span class="badge-elite badge-elite--amber">
-                    {tags.forma}
-                </span>
+                <BadgeElite label={tags.forma} variant="warning" size="xs" />
             </>
         )}
     </div>

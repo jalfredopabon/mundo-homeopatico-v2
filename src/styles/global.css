@@ -281,17 +281,34 @@ button,
     opacity: 1;
   }
 
-  /* --- 🏷️ Sistema de Badges Atómicos --- */
+  /* --- 🏷️ Sistema de Badges Atómicos (Solid Subtle) --- */
   .badge-elite {
-    @apply inline-flex items-center text-[10px] font-medium px-2.5 py-0.5 transition-all;
+    @apply inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-md transition-all select-none;
   }
 
-  .badge-elite--indigo { @apply text-indigo-700 bg-indigo-100/60 rounded-full; }
-  .badge-elite--emerald { @apply text-emerald-700 bg-emerald-100/60 rounded-full; }
-  .badge-elite--amber { @apply text-amber-700 bg-amber-100/60 rounded-full; }
-  
-  .badge-elite--slate { 
-    @apply text-slate-700 bg-surface-muted px-2.5 py-1 rounded-md border border-subtle gap-1.5; 
+  .badge-elite--indigo  { 
+    @apply bg-indigo-50; 
+    color: color-mix(in srgb, theme('colors.indigo.700') 80%, transparent); 
+  }
+  .badge-elite--emerald { 
+    @apply bg-emerald-50; 
+    color: color-mix(in srgb, theme('colors.emerald-700') 80%, transparent); 
+  }
+  .badge-elite--amber   { 
+    @apply bg-amber-50; 
+    color: color-mix(in srgb, theme('colors.amber.700') 80%, transparent); 
+  }
+  .badge-elite--neutral { 
+    @apply bg-surface-muted; 
+    color: color-mix(in srgb, theme('colors.slate.700') 80%, transparent); 
+  }
+  .badge-elite--brand   { 
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: color-mix(in srgb, var(--primary) 80%, transparent);
+  }
+  .badge-elite--slate   { 
+    background-color: color-mix(in srgb, theme('colors.slate.100') 50%, transparent);
+    @apply text-slate-600; 
   }
 
   /* --- 🏛️ Sistema Atómico de Header --- */
@@ -544,6 +561,58 @@ button,
 
   .banner-info-close {
     @apply text-slate-400 hover:text-slate-900 hover:bg-slate-100 p-1.5 rounded-lg transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-slate-100;
+  }
+
+  /* --- 🛒 Catalog Atoms --- */
+  .catalog-section-header {
+    @apply sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col;
+  }
+
+  .catalog-breadcrumb {
+    @apply flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider mb-2;
+  }
+
+  .catalog-title {
+    @apply text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2;
+  }
+
+  .catalog-table-shell {
+    @apply w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden;
+  }
+
+  .catalog-table-header {
+    @apply hidden sm:grid grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-4 items-center bg-white border-b border-subtle py-3.5 px-6 text-[12px] font-bold text-slate-700 tracking-wide;
+  }
+
+  .catalog-row {
+    @apply flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-[1.15rem] px-6 border-b border-subtle transition-all relative z-0 hover:z-10 cursor-pointer hover:bg-surface-muted hover:ring-2 hover:ring-inset hover:ring-white;
+  }
+
+  .catalog-cell-price {
+    @apply text-slate-700 font-medium transition-colors;
+  }
+  
+  .catalog-row:hover .catalog-cell-price {
+    @apply text-slate-900;
+  }
+
+  .catalog-btn-add {
+    @apply w-full sm:w-10 h-10 flex items-center justify-center rounded-lg bg-slate-50 text-slate-400 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand active:scale-95 border;
+    border-color: color-mix(in srgb, var(--border-light) 50%, transparent);
+  }
+  
+  .catalog-row:hover .catalog-btn-add {
+    @apply bg-white text-brand-dark shadow-sm;
+    border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  /* --- 🧪 UX Contextual Overrides --- */
+  .catalog-row:hover .badge-elite--neutral {
+    @apply bg-white shadow-sm;
+  }
+
+  .catalog-row .catalog-btn-add:hover {
+    @apply bg-brand-dark text-white border-brand-dark;
   }
 
   /* Feedback de Botón Añadir */

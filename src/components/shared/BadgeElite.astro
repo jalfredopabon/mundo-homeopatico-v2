@@ -14,25 +14,27 @@ const {
   class: className = '' 
 } = Astro.props;
 
-// Diccionario de Estrictos Estilos Elite
+// Diccionario de Estrictos Estilos Elite (Sincronizados con global.css)
 const variants = {
-  primary: "bg-brand/10 text-brand border-brand/20",
-  secondary: "bg-slate-100 text-slate-600 border-slate-200",
-  outline: "bg-transparent text-slate-500 border-subtle",
-  ghost: "bg-slate-50/50 text-slate-400 border-transparent",
-  success: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  warning: "bg-amber-50 text-amber-700 border-amber-100"
+  primary: "badge-elite--brand",
+  secondary: "badge-elite--slate",
+  outline: "badge-elite--neutral", // Para el catálogo (Gris/Gris)
+  ghost: "badge-elite--slate opacity-50",
+  success: "badge-elite--emerald",
+  warning: "badge-elite--amber",
+  info: "badge-elite--indigo",
+  neutral: "badge-elite--neutral"
 };
 
 const sizes = {
-  xs: "px-1.5 py-0.5 text-[10px] font-bold tracking-tight",
-  sm: "px-2.5 py-1 text-[11px] font-semibold tracking-normal",
-  md: "px-3 py-1.5 text-[12px] font-semibold"
+  xs: "px-1.5 py-0.5 text-[9px] font-medium tracking-tight",
+  sm: "px-2 py-0.5 text-[10px] font-medium tracking-normal",
+  md: "px-2.5 py-1 text-[11px] font-medium"
 };
 ---
 
 <span class:list={[
-  "inline-flex items-center justify-center rounded-full border transition-all select-none",
+  "badge-elite",
   variants[variant],
   sizes[size],
   className

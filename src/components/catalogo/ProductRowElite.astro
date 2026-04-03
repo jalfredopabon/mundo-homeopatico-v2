@@ -29,7 +29,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-[1.15rem] px-6 border-b border-subtle transition-all relative z-0 hover:z-10 group/row cursor-pointer hover:bg-surface-muted hover:ring-2 hover:ring-inset hover:ring-white">
+<div class="catalog-row group/row">
     <!-- Información del Producto (Nivel 3 Lego) -->
     <div class="flex flex-col pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
         <h3 class="text-slate-900 font-bold text-base md:text-[1.05rem] leading-tight line-clamp-2">
@@ -41,7 +41,6 @@ const {
                   label={badge.label} 
                   variant={badge.variant || 'outline'} 
                   size="xs" 
-                  class="group-hover/row:bg-white group-hover/row:border-slate-300 transition-all duration-300"
                 />
             ))}
         </div>
@@ -52,14 +51,14 @@ const {
         <!-- Farmacia -->
         <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
             <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-            <span class="text-slate-700 font-medium group-hover/row:text-slate-900 transition-colors">
+            <span class="catalog-cell-price">
                 {farmaciaPrice}
             </span>
         </div>
         
         <!-- Público (Desktop) -->
         <div class="hidden sm:block text-right mt-1 sm:mt-0">
-            <span class="text-slate-700 font-medium group-hover/row:text-slate-900 transition-colors">
+            <span class="catalog-cell-price">
                 {publicoPrice}
             </span>
         </div>
@@ -67,7 +66,7 @@ const {
         <!-- Botón de Acción (Uso de ButtonElite) -->
         <div class="flex justify-end sm:justify-center mt-3 sm:mt-0">
             <button 
-                class="w-full sm:w-10 h-10 flex items-center justify-center rounded-lg bg-slate-50 group-hover/row:bg-white hover:!bg-brand-dark text-slate-400 group-hover/row:text-brand-dark hover:!text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand active:scale-95 btn-add-cart border border-subtle/50" 
+                class="catalog-btn-add btn-add-cart" 
                 data-name={cartData?.name || name} 
                 data-price={cartData?.price || farmaciaPrice.replace(/[^0-9]/g, '')}
                 aria-label={`Añadir ${name}`}

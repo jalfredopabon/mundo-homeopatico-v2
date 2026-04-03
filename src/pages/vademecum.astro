@@ -376,15 +376,16 @@ const medicines = [
                 <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
                     <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
-                    <span id="results-counter">{medicines.length} medicamentos en catálogo</span>
+                    <span id="results-counter">{[...medicines, ...medicines].length} medicamentos en catálogo</span>
                 </div>
 
                 <!-- Listado de Tarjetas Clínicas -->
                 <div class="space-y-3 max-w-3xl" id="meds-container">
                     
-                    {medicines
+                    {[...medicines, ...medicines]
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .map((med) => (
+
                         <div 
                             class="med-item reveal" 
                             data-terapia={med.tags.terapia} 
@@ -419,6 +420,12 @@ const medicines = [
                     </div>
 
                 </div>
+
+                <!-- Paginador Elite -->
+                <nav class="pagination-wrap" id="pagination-nav" aria-label="Paginación del vademécum">
+                    <span class="pagination-info" id="pagination-info">Mostrando 1–10 de 24</span>
+                    <div class="pagination-controls" id="pagination-controls"></div>
+                </nav>
             </div>
 
             <!-- Margen de cortesía inferior (32px / 8) -->
@@ -466,54 +473,145 @@ const medicines = [
      * Motor booleano AND/OR para filtrado de Vademécum masivo.
      */
     function initFilters() {
-        const filterInputs = document.querySelectorAll('.vademecum-filter');
-        const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
-        const medItems = document.querySelectorAll('.med-item');
-        const counter = document.getElementById('results-counter');
-        const emptyState = document.getElementById('empty-state');
-        const clearBtn = document.getElementById('clear-filters-btn');
+        // ── Configuración de paginación (cambia este valor en el futuro) ──
+        const ITEMS_PER_PAGE = 10;
+        let currentPage = 1;
 
-        function applyFilters() {
-            // 1. Recolectar filtros activos por grupo
+        const filterInputs  = document.querySelectorAll('.vademecum-filter');
+        const searchInput   = document.getElementById('vademecum-search') as HTMLInputElement;
+        const allMedItems   = Array.from(document.querySelectorAll('.med-item')) as HTMLElement[];
+        const counter       = document.getElementById('results-counter');
+        const emptyState    = document.getElementById('empty-state');
+        const clearBtn      = document.getElementById('clear-filters-btn');
+        const paginationNav = document.getElementById('pagination-nav');
+        const paginationInfo= document.getElementById('pagination-info');
+        const paginationCtrl= document.getElementById('pagination-controls');
+        const scrollTarget  = document.getElementById('vademecum-main-scroll');
+
+        // ── Motor de filtrado: devuelve los items que pasan el filtro ──
+        function getFilteredItems(): HTMLElement[] {
             const activeFilters = {
-                terapia: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value')),
-                sistema: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value')),
-                forma: Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value')),
-                search: searchInput?.value.toLowerCase().trim() || ''
+                terapia : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                sistema : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                forma   : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value')),
+                search  : searchInput?.value.toLowerCase().trim() || ''
             };
 
-            let visibleCount = 0;
+            return allMedItems.filter(item => {
+                const t  = item.getAttribute('data-terapia') || '';
+                const ss = (item.getAttribute('data-sistema') || '').split(',');
+                const f  = item.getAttribute('data-forma') || '';
+                const n  = item.getAttribute('data-name') || '';
 
-            medItems.forEach(item => {
-                const itemTerapia = item.getAttribute('data-terapia') || '';
-                const itemSistemasRaw = item.getAttribute('data-sistema') || '';
-                const itemSistemas = itemSistemasRaw ? itemSistemasRaw.split(',') : [];
-                const itemForma = item.getAttribute('data-forma') || '';
-                const itemName = item.getAttribute('data-name') || '';
+                const okTerapia = activeFilters.terapia.length === 0 || activeFilters.terapia.includes(t);
+                const okSistema = activeFilters.sistema.length === 0 || activeFilters.sistema.some(s => ss.includes(s));
+                const okForma   = activeFilters.forma.length === 0   || activeFilters.forma.includes(f);
+                const okSearch  = !activeFilters.search || n.includes(activeFilters.search);
 
-                // Lógica de validación por grupo (OR interno)
-                const matchesTerapia = activeFilters.terapia.length === 0 || activeFilters.terapia.includes(itemTerapia);
-                const matchesSistema = activeFilters.sistema.length === 0 || activeFilters.sistema.some(s => itemSistemas.includes(s));
-                const matchesForma = activeFilters.forma.length === 0 || activeFilters.forma.includes(itemForma);
-                const matchesSearch = !activeFilters.search || itemName.includes(activeFilters.search);
+                return okTerapia && okSistema && okForma && okSearch;
+            });
+        }
 
-                // Intersección final (AND entre grupos)
-                const isVisible = matchesTerapia && matchesSistema && matchesForma && matchesSearch;
+        // ── Renderiza la página actual sobre el conjunto filtrado ──
+        function renderPage(filtered: HTMLElement[], page: number) {
+            const total      = filtered.length;
+            const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
+            currentPage      = Math.min(page, totalPages);
 
-                if (isVisible) {
-                    item.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    item.classList.add('hidden');
-                }
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const end   = Math.min(start + ITEMS_PER_PAGE, total);
+
+            // Ocultar todos → mostrar sólo la página
+            allMedItems.forEach(item => {
+                item.classList.add('hidden');
+                item.classList.remove('page-visible');
             });
 
-            // Actualizar UI
-            if (counter) counter.innerText = `${visibleCount} medicamentos en catálogo`;
+            filtered.slice(start, end).forEach((item, idx) => {
+                item.classList.remove('hidden');
+                // Escalonar animación por ítem
+                setTimeout(() => item.classList.add('page-visible'), idx * 30);
+            });
+
+            // Actualizar contador superior
+            if (counter) counter.innerText = `${total} medicamentos en catálogo`;
+
+            // Estado vacío
             if (emptyState) {
-                if (visibleCount === 0) emptyState.classList.remove('hidden');
-                else emptyState.classList.add('hidden');
+                emptyState.classList.toggle('hidden', total > 0);
             }
+
+            // Ocultar paginador si no hay páginas
+            if (paginationNav) {
+                paginationNav.style.display = total === 0 ? 'none' : '';
+            }
+
+            // Info contextual
+            if (paginationInfo) {
+                paginationInfo.textContent = `Mostrando ${start + 1}–${end} de ${total}`;
+            }
+
+            // Construir botones
+            renderPageButtons(currentPage, totalPages);
+
+            // Auto-scroll suave al principio de la lista
+            if (scrollTarget) {
+                scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ── Genera los botones de paginación con ellipsis ──
+        function renderPageButtons(current: number, total: number) {
+            if (!paginationCtrl) return;
+            paginationCtrl.innerHTML = '';
+
+            const btn = (label: string, page: number | null, active = false, disabled = false) => {
+                const el = document.createElement('button');
+                el.className = 'pagination-btn' + (active ? ' is-active' : '') + (disabled ? ' is-disabled' : '');
+                el.textContent = label;
+                if (page !== null && !disabled) {
+                    el.addEventListener('click', () => {
+                        renderPage(getFilteredItems(), page);
+                    });
+                }
+                paginationCtrl.appendChild(el);
+            };
+
+            const ellipsis = () => {
+                const el = document.createElement('span');
+                el.className = 'pagination-ellipsis';
+                el.textContent = '…';
+                paginationCtrl?.appendChild(el);
+            };
+
+            // Botón Anterior
+            btn('‹', current - 1, false, current === 1);
+
+            // Números de página con ellipsis
+            const pages: (number | '...')[] = [];
+            if (total <= 7) {
+                for (let i = 1; i <= total; i++) pages.push(i);
+            } else {
+                pages.push(1);
+                if (current > 3) pages.push('...');
+                for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) pages.push(i);
+                if (current < total - 2) pages.push('...');
+                pages.push(total);
+            }
+
+            pages.forEach(p => {
+                if (p === '...') ellipsis();
+                else btn(String(p), p, p === current);
+            });
+
+            // Botón Siguiente
+            btn('›', current + 1, false, current === total);
+        }
+
+        // ── Aplicar filtros (resetea a página 1) ──
+        function applyFilters() {
+            currentPage = 1;
+            renderPage(getFilteredItems(), 1);
         }
 
         // Listeners
@@ -525,7 +623,7 @@ const medicines = [
             applyFilters();
         });
 
-        // Inicializar filtros al cargar para sincronizar contador y visibilidad
+        // Inicializar
         applyFilters();
     }
 

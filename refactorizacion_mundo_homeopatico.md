@@ -25,5 +25,11 @@
 ### Hito 24: Página Principal Atómica (04/04/2026)
 - **Refactorización de `index.astro`:** Implementación de átomos para contenedores de scroll (`.main-content-scroll`), banners de información (`.banner-info`) y feedback de compra (`.is-success`).
 
+### Hito 25: Auditoría Visual y Consistencia de Iconografía (04/04/2026)
+- **Control de Calidad:** Revisión exhaustiva del panel de carrito local para lograr paridad visual 1:1 con la versión online.
+- **Filosofía Proyectual:** Refactorización de todos los paneles principales del sitio bajo el sistema atómico de "Lego-Architecture".
+- **Estandarización Hugeicons:** Descarga unificada de toda la librería de iconos para asegurar consistencia en pesos visuales y estilos.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 25 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+- [ ] **Hito 26 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+

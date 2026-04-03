@@ -8,8 +8,8 @@ import Icons from "../shared/Icons.astro";
     <!-- Piso 1: Header Fijo -->
     <header class="drawer-header">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center text-brand">
-                <Icons type="shopping-cart" class="w-[22px] h-[22px]" strokeWidth={2} />
+            <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700">
+                <Icons type="cart" class="w-[22px] h-[22px]" strokeWidth={2} />
             </div>
             <div>
                 <h2 id="cart-title" class="text-lg font-bold text-slate-900 tracking-tight">Mi pedido</h2>
@@ -35,8 +35,8 @@ import Icons from "../shared/Icons.astro";
         <div id="cart-items-container" class="p-6 space-y-4">
             <!-- Los items se inyectarán aquí vía JS -->
              <div id="cart-empty-state" class="py-20 text-center space-y-3">
-                <div class="cart-empty-icon">
-                    <Icons type="shopping-cart" class="w-8 h-8" strokeWidth={2} />
+                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
+                    <Icons type="cart" class="w-8 h-8" strokeWidth={2} />
                 </div>
                 <p class="text-slate-700 text-sm font-medium">Tu carrito está vacío</p>
              </div>
@@ -47,7 +47,7 @@ import Icons from "../shared/Icons.astro";
         <div id="checkout-form-container" class="p-6 pt-0 space-y-6">
             <div class="h-px bg-slate-100 w-full"></div>
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-slate-700 tracking-widest text-center uppercase">Información de facturación</h3>
+                <h3 class="text-xs font-bold text-slate-700 tracking-widest text-center">Información de facturación</h3>
                 
                 <div class="grid grid-cols-1 gap-3">
                     <div class="space-y-1">
@@ -178,12 +178,24 @@ import Icons from "../shared/Icons.astro";
                             <p class="text-[10px] text-slate-500 mt-1">$${item.price.toLocaleString()}</p>
                         </div>
                         <div class="flex items-center justify-between mt-3">
-                            <div class="flex items-center gap-2 bg-slate-50 rounded-md p-1 border border-slate-100">
-                                <button class="w-6 h-6 flex items-center justify-center hover:bg-white rounded btn-qty" data-index="${index}" data-action="minus">-</button>
-                                <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-                                <button class="w-6 h-6 flex items-center justify-center hover:bg-white rounded btn-qty" data-index="${index}" data-action="plus">+</button>
+                            <div class="flex items-center gap-1">
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="minus">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                                <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="plus">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
                             </div>
-                            <span class="text-xs font-bold text-brand">$${(item.price * item.quantity).toLocaleString()}</span>
+                            <span class="text-sm font-extrabold text-brand">$${ (item.price * item.quantity).toLocaleString()}</span>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100">
+                            <button class="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 hover:text-brand transition-colors btn-add-note" data-index="${index}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                ${item.hasNote ? 'Editar nota' : 'Añadir nota o especificación'}
+                            </button>
+                            ${item.hasNote ? `<textarea class="mt-2 w-full text-[11px] text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 resize-none focus:outline-none focus:border-brand transition-colors cart-item-note" data-index="${index}" rows="2" placeholder="Ej: Sin alcohol, concentración especial...">${item.note}</textarea>` : ''}
                         </div>
                     </div>
                 `).join('');
@@ -208,7 +220,29 @@ import Icons from "../shared/Icons.astro";
                         renderCart();
                     });
                 });
+
+                // Toggle nota por ítem
+                cartItemsList.querySelectorAll('.btn-add-note').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const b = btn as HTMLElement;
+                        const idx = parseInt(b.dataset.index!);
+                        items[idx].hasNote = !items[idx].hasNote;
+                        if (!items[idx].hasNote) items[idx].note = '';
+                        renderCart();
+                    });
+                });
+
+                // Guardar nota sin re-renderizar (evita perder foco)
+                cartItemsList.querySelectorAll('.cart-item-note').forEach(textarea => {
+                    textarea.addEventListener('input', (e) => {
+                        const t = e.currentTarget as HTMLTextAreaElement;
+                        const idx = parseInt(t.dataset.index!);
+                        items[idx].note = t.value;
+                        localStorage.setItem('cart', JSON.stringify(items));
+                    });
+                });
             }
+
 
             const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
             if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;

@@ -502,8 +502,9 @@ button,
   }
 
   .header-icon-wrap {
-    @apply w-9 h-9 flex items-center justify-center relative mb-0.5;
+    @apply w-7 h-7 flex items-center justify-center relative;
   }
+
 
 
 
@@ -651,4 +652,50 @@ button,
     to { opacity: 1; max-height: 200px; }
   }
   .animate-slide-down { animation: elite-slideDown 0.4s ease-out forwards; overflow: hidden; }
+
+  /* --- 📄 Paginador Vademécum --- */
+  .pagination-wrap {
+    @apply flex items-center justify-between gap-4 pt-6 pb-2 max-w-3xl;
+  }
+
+  .pagination-info {
+    @apply text-[11px] font-bold text-slate-500 whitespace-nowrap;
+  }
+
+  .pagination-controls {
+    @apply flex items-center gap-1;
+  }
+
+  .pagination-btn {
+    @apply h-8 min-w-[2rem] px-2.5 flex items-center justify-center rounded-lg
+           text-[12px] font-bold text-slate-600 bg-white border border-slate-200
+           hover:border-brand hover:text-brand
+           transition-all duration-150 cursor-pointer select-none;
+  }
+
+  .pagination-btn:hover:not(.is-active):not(.is-disabled) {
+    background-color: rgba(10, 92, 78, 0.05); /* brand/5 */
+  }
+
+  .pagination-btn.is-active {
+    @apply bg-brand text-white border-brand shadow-sm;
+  }
+
+  .pagination-btn:disabled,
+  .pagination-btn.is-disabled {
+    @apply opacity-30 cursor-not-allowed pointer-events-none;
+  }
+
+  .pagination-ellipsis {
+    @apply h-8 w-6 flex items-center justify-center text-[12px] font-bold text-slate-400 select-none;
+  }
+
+  @keyframes page-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .med-item.page-visible {
+    animation: page-fade-in 0.25s ease-out both;
+  }
 }

@@ -338,7 +338,11 @@ button,
   }
 
   .header-cta-btn.is-active {
-    @apply bg-transparent text-brand border-brand hover:bg-brand/5;
+    @apply bg-transparent text-brand border-brand;
+  }
+
+  .header-cta-btn.is-active:hover {
+    background-color: rgba(10, 92, 78, 0.05); /* 5% de --primary (#0A5C4E) */
   }
 
   .logo-box-brand {

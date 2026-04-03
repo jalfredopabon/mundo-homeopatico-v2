@@ -8,15 +8,13 @@ const year = new Date().getFullYear();
  */
 ---
 
-<footer class="bg-slate-900 py-12 md:py-[72px] px-8 md:px-[72px] mt-auto border-t border-slate-800">
-  <div class="max-w-full mx-auto flex flex-col md:flex-row gap-12 md:gap-12 items-start justify-between">
-    
+<footer class="footer-main">
+  <div class="max-w-full mx-auto flex flex-col md:flex-row gap-12 items-start justify-between">
+
     <!-- Branding & Descripción -->
     <div class="space-y-4 md:w-1/3 group cursor-default">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded text-white font-bold tracking-widest group-hover:scale-110 group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-500">
-          MH
-        </div>
+        <div class="footer-logo-box">MH</div>
         <h2 class="text-[1.3rem] font-bold text-white tracking-tight group-hover:text-brand transition-colors duration-500">Mundo homeopático</h2>
       </div>
       <p class="text-[13px] text-slate-400 leading-relaxed font-light md:pr-4 group-hover:text-slate-300 transition-colors duration-500">
@@ -24,19 +22,19 @@ const year = new Date().getFullYear();
       </p>
     </div>
 
-    <!-- Redes Sociales y Links -->
-    <div class="space-y-4 flex flex-col md:items-start md:text-left md:w-1/3">
+    <!-- Redes Sociales -->
+    <div class="space-y-4 flex flex-col md:items-start md:w-1/3">
       <div class="h-10 flex items-center">
-        <h3 class="text-[13px] font-bold text-slate-300 tracking-[0.1em]">Síguenos</h3>
+        <h3 class="footer-title">Síguenos</h3>
       </div>
       <div class="flex items-center justify-start gap-4">
-        <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-pink-500 hover:text-white transition-all duration-300 group" aria-label="Instagram">
+        <a href="#/" class="footer-social-link group" data-brand="instagram" aria-label="Instagram">
           <Icons type="instagram" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={1.5} />
         </a>
-        <a href="#/" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-emerald-500 hover:text-white transition-all duration-300 group" aria-label="WhatsApp">
+        <a href="#/" class="footer-social-link group" data-brand="whatsapp" aria-label="WhatsApp">
           <Icons type="whatsapp" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={2} />
         </a>
-        <a href="https://mhmundohomeopatico.com" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-300 group" aria-label="Sitio web principal">
+        <a href="https://mhmundohomeopatico.com" target="_blank" rel="noopener noreferrer" class="footer-social-link group" data-brand="web" aria-label="Sitio web principal">
           <Icons type="globe" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={2} />
         </a>
       </div>
@@ -45,26 +43,21 @@ const year = new Date().getFullYear();
     <!-- Copyright & Créditos -->
     <div class="space-y-3 flex flex-col h-full md:items-end md:text-right md:w-1/3">
       <div class="h-10 flex items-center">
-        <p class="text-[13px] font-semibold text-slate-300">
-          &copy; {year} Mundo Homeopático.
-        </p>
+        <p class="footer-title font-semibold">&copy; {year} Mundo Homeopático.</p>
       </div>
       <div class="mt-1 space-y-1">
-        <p class="text-[12px] font-medium text-slate-500">
-          Todos los derechos reservados.
-        </p>
-        <p class="text-[12px] text-slate-500 font-medium">
-          Medellín, Colombia
-        </p>
-        <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="inline-block text-[12px] text-slate-500 font-medium hover:text-white transition-colors group">
+        <p class="footer-text">Todos los derechos reservados.</p>
+        <p class="footer-text">Medellín, Colombia</p>
+        <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="inline-block footer-text hover:text-white transition-colors group">
           Creado por <span class="text-slate-300 group-hover:text-brand transition-colors">Alfredo Pabón</span>
         </a>
       </div>
     </div>
+
   </div>
 
-  <button id="back-to-top" class="fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-brand" aria-label="Volver arriba">
-    <Icons type="arrow-up" class="w-5 h-5 flex items-center justify-center" strokeWidth={2.5} />
+  <button id="back-to-top" class="btn-back-to-top" aria-label="Volver arriba">
+    <Icons type="arrow-up" class="w-5 h-5" strokeWidth={2.5} />
   </button>
 </footer>
 

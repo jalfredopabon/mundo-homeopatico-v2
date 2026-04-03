@@ -364,6 +364,49 @@ button,
   .group:focus-within .input-elite-field {
     @apply bg-white border-brand ring-1 ring-brand ring-offset-0;
   }
+
+  /* --- 🦶 Footer --- */
+  .footer-main {
+    @apply bg-slate-900 py-12 md:py-[72px] px-8 md:px-[72px] mt-auto border-t border-slate-800;
+  }
+
+  .footer-logo-box {
+    @apply w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded text-white font-bold tracking-widest transition-all duration-500;
+  }
+
+  .group:hover .footer-logo-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  .footer-title {
+    @apply text-[13px] font-bold text-slate-300 tracking-[0.1em];
+  }
+
+  .footer-text {
+    @apply text-[12px] font-medium text-slate-500;
+  }
+
+  .footer-social-link {
+    @apply w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:text-white transition-all duration-300;
+  }
+
+  .footer-social-link[data-brand="instagram"]:hover {
+    background-color: #ec4899;
+  }
+
+  .footer-social-link[data-brand="whatsapp"]:hover {
+    background-color: #10b981;
+  }
+
+  .footer-social-link[data-brand="web"]:hover {
+    @apply bg-slate-700;
+  }
+
+  .btn-back-to-top {
+    @apply fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-brand;
+  }
 }
 
 @layer utilities {

@@ -244,10 +244,7 @@ const catalogSections = [
             <Footer />
         </div>
 
-        <!-- Botón Back To Top -->
-        <button id="back-to-top" class="fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center shadow-xl translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-slate-100 focus:outline-none focus:ring-2 focus:ring-brand" aria-label="Volver arriba">
-            <Icons type="arrow-up" class="w-5 h-5" />
-        </button>
+
 
     </div>
 </BaseLayout>
@@ -294,22 +291,6 @@ const catalogSections = [
             });
         }
 
-        // --- 3. Back To Top Dinámico ---
-        const btnBackToTop = document.getElementById('back-to-top');
-        const scrollContainer = document.getElementById('catalogo-main-scroll');
 
-        if (btnBackToTop && scrollContainer) {
-            scrollContainer.addEventListener('scroll', () => {
-                if (scrollContainer.scrollTop > 400) {
-                    btnBackToTop.classList.remove('opacity-0', 'invisible', 'translate-y-20');
-                } else {
-                    btnBackToTop.classList.add('opacity-0', 'invisible', 'translate-y-20');
-                }
-            });
-
-            btnBackToTop.addEventListener('click', () => {
-                scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
     });
 </script>

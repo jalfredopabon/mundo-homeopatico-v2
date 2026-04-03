@@ -1,6 +1,7 @@
 ---
 // src/components/vademecum/MedicalDetails.astro
 import Icons from '../shared/Icons.astro';
+import BadgeElite from '../shared/BadgeElite.astro';
 
 interface Section {
     title: string;
@@ -45,7 +46,7 @@ const { products = [] } = Astro.props;
                     <Icons type="close-x" class="w-4 h-4" />
                 </button>
 
-                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">
+                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
                     <Icons type="file-text" class="w-3.5 h-3.5" strokeWidth={2} />
                     Ficha técnica del producto
                 </div>
@@ -55,15 +56,9 @@ const { products = [] } = Astro.props;
                 </h2>
 
                 <div class="flex flex-wrap gap-3">
-                    <span class="badge-elite badge-elite--slate">
-                        {product.scientificName}
-                    </span>
-                    <span class="badge-elite badge-elite--slate">
-                        Potencia {product.potency}
-                    </span>
-                    <span class="badge-elite badge-elite--slate">
-                        {product.origin}
-                    </span>
+                    <BadgeElite label={product.scientificName} variant="slate" size="sm" />
+                    <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />
+                    <BadgeElite label={product.origin} variant="slate" size="sm" />
                 </div>
             </div>
 
@@ -121,39 +116,4 @@ const { products = [] } = Astro.props;
     )}
 </aside>
 
-<script>
-    // Manejo de visibilidad de fichas
-    document.addEventListener('astro:page-load', () => {
-        const medicalItems = document.querySelectorAll('.medical-item-btn');
-        const sheets = document.querySelectorAll('.medical-sheet');
-        const aside = document.getElementById('vademecum-aside');
-        const emptyState = document.getElementById('vademecum-empty-state');
-        const closeBtns = document.querySelectorAll('.close-ficha-btn');
 
-        medicalItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const id = item.getAttribute('data-id');
-                
-                // Ocultar todas las fichas y el empty state
-                sheets.forEach(sheet => sheet.classList.add('hidden'));
-                if (emptyState) emptyState.classList.add('hidden');
-                
-                // Mostrar la seleccionada
-                const activeSheet = document.getElementById(`ficha-${id}`);
-                if (activeSheet) {
-                    activeSheet.classList.remove('hidden');
-                    // Abrir aside en móvil solamente (lg:1024px)
-                    if (window.innerWidth < 1024) {
-                        aside?.setAttribute('data-mobile-open', 'true');
-                    }
-                }
-            });
-        });
-
-        closeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                aside?.setAttribute('data-mobile-open', 'false');
-            });
-        });
-    });
-</script>

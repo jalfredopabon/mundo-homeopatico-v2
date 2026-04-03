@@ -56,7 +56,14 @@
 - **Lógica Declarativa:** Creación del átomo `.medical-card.is-selected` en `global.css`, eliminando la manipulación manual de bordes y sombras desde JavaScript.
 - **Consistencia Elite:** Estandarización de espaciados, tipografías y jerarquías visuales en la columna central del Dashboard.
 
+### Hito 29: Vademécum Elite - Columna 3 y Centralización (03/04/2026)
+- **Centralización "Lego":** Eliminación completa del bloqueo `<script>` en `MedicalDetails.astro`. La orquestación ahora recae 100% en el archivo de página principal.
+- **Delegación de Eventos:** Refactorización de `initFichasManager` para usar delegación en `#meds-container`, garantizando que la interactividad funcione incluso tras la paginación dinámica.
+- **Estandarización de Badges:** Migración de etiquetas manuales al componente `BadgeElite.astro` (variante `slate`, tamaño `sm`).
+- **Limpieza UI:** Remoción de casing `uppercase` en el encabezado de detalles para total coherencia con el diseño "Sentence Case" del proyecto.
+- **Gestión de Estados:** Implementación de visibilidad coordinada para el `empty-state` de detalles.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 29 (Vademécum - Columna 3)**: Refactorización de `MedicalDetails.astro` para usar átomos globales y mejorar el responsive.
+- [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 
 

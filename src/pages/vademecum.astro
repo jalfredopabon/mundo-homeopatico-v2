@@ -298,18 +298,25 @@ import { medicines } from '../data/medicines.ts';
      * --- 3. GESTIÓN DE FICHAS TÉCNICAS ---
      */
     function initFichasManager() {
-        const medCards = document.querySelectorAll('[data-med]');
+        const medsContainer = document.getElementById('meds-container');
         const vademecumAside = document.getElementById('vademecum-aside');
         const sheets = document.querySelectorAll('.medical-sheet');
+        const emptySheetState = document.getElementById('vademecum-empty-state');
 
-        medCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const medId = card.getAttribute('data-med');
-                actualizarTarjetasActivas(medCards, (card as HTMLElement));
-                cambiarFichaTecnica(sheets, medId);
-                if (vademecumAside) vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
-                abrirDrawerMovil(vademecumAside);
-            });
+        medsContainer?.addEventListener('click', (e) => {
+            const card = (e.target as HTMLElement).closest('[data-med]');
+            if (!card) return;
+
+            const medId = card.getAttribute('data-med');
+            const allCards = document.querySelectorAll('[data-med]');
+            
+            actualizarTarjetasActivas(allCards, (card as HTMLElement));
+            cambiarFichaTecnica(sheets, medId);
+            
+            if (emptySheetState) emptySheetState.classList.add('hidden');
+            if (vademecumAside) vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            abrirDrawerMovil(vademecumAside);
         });
     }
 

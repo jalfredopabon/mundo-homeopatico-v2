@@ -62,9 +62,9 @@ const faqs = [
 ---
 
 <section id="faq" class="scroll-mt-10">
-    <header class="faq-section-header">
-        <h2 class="faq-main-title">Preguntas frecuentes</h2>
-        <p class="faq-main-sub">Respondemos a las inquietudes más comunes.</p>
+    <header class="section-header">
+        <h2 class="section-title">Preguntas frecuentes</h2>
+        <p class="section-subtitle">Respondemos a las inquietudes más comunes.</p>
     </header>
     <div class="faq-container">
             {faqs.map((faq) => (
@@ -102,74 +102,6 @@ const faqs = [
     </div>
 </section>
 
-<style>
-    .faq-section-header {
-        @apply mb-10 flex flex-col gap-1.5;
-    }
-    .faq-main-title {
-        @apply text-[2.25rem] leading-tight font-extrabold text-secondary tracking-tight;
-    }
-    .faq-main-sub {
-        @apply text-slate-700 text-base font-medium;
-    }
-    .faq-container {
-        @apply w-full border-t border-slate-600 mt-4;
-    }
-    /* Estado Cerrado (Default) */
-    .faq-item {
-        @apply bg-transparent transition-all duration-300 overflow-hidden border-b border-slate-600;
-    }
-    .faq-title {
-        @apply text-[17px] font-bold text-secondary transition-colors pr-8;
-    }
-    .faq-header {
-        @apply flex w-full items-center justify-between py-6 sm:py-7 pr-2 text-left focus:outline-none transition-colors cursor-pointer;
-    }
-    .faq-icon-box {
-        @apply text-slate-700 transition-all duration-300 flex items-center justify-center shrink-0 w-[22px] h-[22px];
-    }
-    :global(.icon-opened) {
-        display: none;
-    }
-    .faq-content-wrapper {
-        @apply overflow-hidden transition-all duration-500 ease-in-out opacity-0;
-        max-height: 0;
-    }
-    .faq-content-inner {
-        @apply pb-6 sm:pb-7 text-body leading-relaxed text-[15px] pr-8 sm:pr-12;
-    }
-    .faq-list {
-        @apply space-y-3.5 mt-2;
-    }
-    .faq-list-item {
-        @apply flex items-start gap-3;
-    }
-    .faq-check-box {
-        @apply p-1 rounded-full text-brand mt-0.5 shrink-0;
-        background-color: rgba(10, 92, 78, 0.05);
-    }
-    .faq-list-text {
-        @apply text-[14.5px] font-medium text-body;
-    }
-
-    /* Estado Abierto */
-    .is-open .icon-closed {
-        display: none;
-    }
-    :global(.faq-item.is-open .icon-closed) {
-        display: none;
-    }
-    :global(.faq-item.is-open .icon-opened) {
-        display: block;
-    }
-    .faq-item.is-open .faq-content-wrapper {
-        @apply opacity-100;
-        max-height: 1000px;
-    }
-    .faq-item.is-open .faq-content-inner {
-        @apply opacity-100 visible;
-    }
-</style>
 
 <script>
     /**

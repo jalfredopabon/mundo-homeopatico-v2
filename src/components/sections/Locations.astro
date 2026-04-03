@@ -4,7 +4,9 @@
  * Clonación Estricta: Se respeta el diseño visual idéntico al online.
  */
 import Icons from "../shared/Icons.astro";
+import ButtonElite from "../shared/ButtonElite.astro";
 
+// TODO: migrar a data layer / CMS
 const branchDistributors = [
     { name: "Distribuidora occidente", city: "Medellín", email: "medellin@mundohomeo.co" },
     { name: "Sede valle del Cauca", city: "Cali", email: "cali@mundohomeo.co" },
@@ -13,14 +15,14 @@ const branchDistributors = [
 ---
 
 <section id="sedes" class="scroll-mt-10">
-    <header class="mb-8 flex flex-col gap-1.5">
-        <h2 class="text-[2.25rem] leading-tight font-extrabold text-secondary tracking-tight">Sedes y distribuciones</h2>
-        <p class="text-slate-700 text-base font-medium">Encuentra nuestra sede clínica y puntos autorizados.</p>
+    <header class="section-header">
+        <h2 class="section-title">Sedes y distribuciones</h2>
+        <p class="section-subtitle">Encuentra nuestra sede clínica y puntos autorizados.</p>
     </header>
 
     <div class="flex flex-col gap-8">
         <!-- Tarjeta Sede Principal -->
-        <div class="w-full bg-surface-white rounded-2xl border border-subtle/80 overflow-hidden flex flex-col lg:flex-row group hover:border-strong transition-all duration-500">
+        <div class="location-card group flex flex-col lg:flex-row overflow-hidden">
             <div class="flex flex-1 flex-col justify-between p-8 lg:p-12">
                 <div class="flex items-center gap-6 mb-10">
                         <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shrink-0">
@@ -53,16 +55,8 @@ const branchDistributors = [
                         </div>
                     </div>
                 <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                    <button class="flex-1 flex items-center justify-center gap-3 rounded-xl bg-brand-vibrant px-6 py-4 text-surface-white font-bold text-[15px] tracking-wide hover:bg-brand transition-all focus:ring-2 focus:ring-brand focus:ring-offset-1 active:scale-95">
-                        <!-- Icono WhatsApp (Hugeicons) -->
-                        <Icons type="whatsapp" class="w-5 h-5" strokeWidth={2.1} />
-                        310 000 0000
-                    </button>
-                    <button class="flex-1 flex items-center justify-center gap-3 rounded-xl bg-surface-white border border-strong px-6 py-4 text-body font-bold text-[15px] tracking-wide transition-all focus:ring-2 focus:ring-strong focus:ring-offset-1 active:scale-95 cursor-default">
-                        <!-- Icono Teléfono (Hugeicons) -->
-                        <Icons type="phone" class="w-5 h-5" strokeWidth={1.8} />
-                        320 000 0000
-                    </button>
+                    <ButtonElite variant="primary" size="lg" icon="whatsapp" label="310 000 0000" />
+                    <ButtonElite variant="outline" size="lg" icon="phone" label="320 000 0000" />
                 </div>
             </div>
             <div class="relative w-full lg:w-[40%] min-h-[300px] lg:min-h-0 bg-surface-muted overflow-hidden border-l border-subtle/50">
@@ -73,7 +67,7 @@ const branchDistributors = [
                             <p class="text-[13px] font-bold text-secondary">Sede principal MH</p>
                             <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-surface-white border-r border-b border-subtle rotate-45"></div>
                         </div>
-                        <div class="relative flex items-center justify-center h-12 w-12 bg-brand rounded-full text-surface-white border-4 border-surface-white">
+                        <div class="relative flex items-center justify-center h-12 w-12 bg-brand rounded-xl text-surface-white border-4 border-surface-white">
                             <!-- Icono Ubicación/Pin (Hugeicons) -->
                             <Icons type="map-pin" class="w-6 h-6" strokeWidth={2.2} />
                         </div>
@@ -104,14 +98,8 @@ const branchDistributors = [
                         <p class="text-slate-500 text-[13px] font-medium leading-relaxed">Calle Ficticia 123<br>Bogotá D.C.</p>
                     </div>
                     <div class="mt-auto space-y-2.5">
-                        <button class="w-full flex items-center justify-center gap-2.5 rounded-lg bg-brand-vibrant px-4 py-2.5 text-surface-white font-bold text-[14px] tracking-wide hover:bg-brand transition-colors">
-                            <Icons type="whatsapp" class="w-4 h-4" strokeWidth={2.1} />
-                            310 000 0000
-                        </button>
-                        <button class="w-full flex items-center justify-center gap-2.5 rounded-lg bg-surface-white border border-strong px-4 py-2.5 text-body font-bold text-[14px] tracking-wide transition-colors cursor-default">
-                            <Icons type="phone" class="w-4 h-4" strokeWidth={1.8} />
-                            300 000 0000
-                        </button>
+                        <ButtonElite variant="primary" size="md" icon="whatsapp" label="310 000 0000" />
+                        <ButtonElite variant="outline" size="md" icon="phone" label="300 000 0000" />
                     </div>
                 </div>
             ))}

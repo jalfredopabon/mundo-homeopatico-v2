@@ -38,7 +38,16 @@
     - Eliminación de anillos de foco persistentes (`focus-visible`).
     - Reducción del tiempo de feedback visual (+ → ✓) a 700ms para mayor agilidad percibida.
 
+### Hito 27: Sedes y Contacto Atómico (03/04/2026)
+- **Átomos Globales:** Creación de `.section-header`, `.section-title`, `.section-subtitle`, `.location-card` y el ecosistema completo `.faq-*`.
+- **Estandarización de Componentes:** Migración de 4 botones manuales al sistema centralizado `ButtonElite` (variantes primary/outline).
+- **Limpieza de Deuda:** 
+    - Eliminación completa (~70 líneas) del bloque `<style>` en `FAQ.astro`.
+    - Centralización del layout en `contacto.astro` mediante el átomo `.page-section`.
+- **Filosofía Rectangular:** Ajuste de geometría (`rounded-xl`) en el pin del mapa y botón de reproducción de video para consistencia "Elite".
+- **Corrección PostCSS:** Se evitó el uso de `group` dentro de `@apply` para cumplir con las restricciones técnicas de Tailwind.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 27 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+- [ ] **Hito 28 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
 
 

@@ -9,14 +9,14 @@ import Icons from "../shared/Icons.astro";
 ---
 
 <section id="excelencia" class="scroll-mt-10">
-    <header class="mb-8 flex flex-col pt-0">
-        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-tight mb-2">
+    <header class="section-header">
+        <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
             <span class="hover:text-slate-800 transition-colors cursor-pointer">Mundo Homeopático</span>
             <Icons type="chevron-right" class="w-[10px] h-[10px] text-slate-400" strokeWidth={3} />
             <span class="hover:text-slate-800 transition-colors cursor-pointer">Institucional</span>
         </nav>
-        <h2 class="text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-2">Excelencia homeopática</h2>
-        <p class="text-slate-700 text-[15px] font-medium leading-snug">Nuestra promesa de calidad y procesos de manufactura.</p>
+        <h2 class="section-title mb-2">Excelencia homeopática</h2>
+        <p class="section-subtitle">Nuestra promesa de calidad y procesos de manufactura.</p>
     </header>
 
     <!-- Contenedor vacío para Video/Imagen -->
@@ -30,7 +30,7 @@ import Icons from "../shared/Icons.astro";
         />
         <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent"></div>
         <div class="absolute inset-0 flex items-center justify-center">
-            <button class="flex h-20 w-20 items-center justify-center rounded-full bg-surface-white/10 backdrop-blur-md text-surface-white border border-surface-white/20 hover:bg-surface-white hover:text-brand transition-all duration-300 scale-95 hover:scale-105 active:scale-95 group/play" aria-label="Reproducir video">
+            <button class="flex h-20 w-20 items-center justify-center rounded-xl bg-surface-white/10 backdrop-blur-md text-surface-white border border-surface-white/20 hover:bg-surface-white hover:text-brand transition-all duration-300 scale-95 hover:scale-105 active:scale-95 group/play" aria-label="Reproducir video">
                 <Icons type="play" class="w-[36px] h-[36px]" />
             </button>
         </div>

@@ -6,6 +6,7 @@ import Header from '../components/shared/Header.astro';
 import Footer from '../components/shared/Footer.astro';
 import MobileTabNav from '../components/shared/MobileTabNav.astro';
 import MobileMenuDrawer from '../components/shared/MobileMenuDrawer.astro';
+import CartDrawer from '../components/cart/CartDrawer.astro';
 import MobileSplash from '../components/shared/MobileSplash.astro';
 import { ViewTransitions } from 'astro:transitions';
 ---
@@ -28,5 +29,6 @@ import { ViewTransitions } from 'astro:transitions';
 			<slot />
 		</main>
         <MobileMenuDrawer />
+        <CartDrawer />
 	</body>
 </html>

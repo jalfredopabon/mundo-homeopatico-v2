@@ -422,8 +422,8 @@ button,
   }
 
   /* Estado Abierto (Body class) */
-  :global(.cart-open) .drawer-panel { transform: translateX(0); }
-  :global(.cart-open) .drawer-overlay { 
+  .cart-open .drawer-panel { transform: translateX(0); }
+  .cart-open .drawer-overlay { 
     @apply block opacity-100 pointer-events-auto;
   }
 
@@ -498,16 +498,15 @@ button,
   }
 
   .header-tool-btn {
-    @apply flex flex-col items-center justify-center cursor-pointer transition-all active:scale-95 text-slate-700 hover:text-brand px-2;
+    @apply flex flex-col items-center justify-center cursor-pointer transition-all active:scale-95 text-slate-700 px-3 py-1.5 rounded-xl hover:bg-slate-100/80 hover:text-brand;
   }
 
   .header-icon-wrap {
-    @apply w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100/50 transition-colors relative;
+    @apply w-9 h-9 flex items-center justify-center relative mb-0.5;
   }
 
-  .group:hover .header-icon-wrap {
-    background-color: rgba(10, 92, 78, 0.1); /* brand/10 */
-  }
+
+
 
   .header-search-trigger {
     @apply h-10 w-full bg-slate-50 rounded-lg flex items-center px-4 border border-slate-100 focus-within:bg-white focus-within:border-brand focus-within:ring-2 transition-all cursor-pointer;

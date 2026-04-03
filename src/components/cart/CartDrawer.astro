@@ -119,253 +119,119 @@ import Icons from "../shared/Icons.astro";
 <div id="cart-overlay" class="drawer-overlay"></div>
 
 <script>
-    // Lógica del Carrito (Bloque 2 y 3)
-    interface CartItem {
-        name: string;
-        price: number;
-        quantity: number;
-        hasNote: boolean;
-        note: string;
+    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES) ---
+    // Estas funciones y estado viven a nivel de módulo, por lo que no se duplican.
+    if (!(window as any).cartInitialized) {
+        (window as any).cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+        // El handler de toggle DEBE ser estable
+        (window as any).handleToggleCart = () => {
+            document.body.classList.toggle('cart-open');
+        };
+
+        // El handler de añadir DEBE ser estable
+        (window as any).handleAddToCart = (e: any) => {
+            const { name, price } = e.detail;
+            const items = (window as any).cartItems;
+            const existing = items.find((i: any) => i.name === name);
+            if (existing) { 
+                existing.quantity++; 
+            } else { 
+                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); 
+            }
+            // Disparar renderizado en el componente activo
+            document.dispatchEvent(new CustomEvent('renderCartInternal'));
+            // Abrir automáticamente
+            document.body.classList.add('cart-open');
+        };
+
+        document.addEventListener('toggleCart', (window as any).handleToggleCart);
+        document.addEventListener('addToCart', (window as any).handleAddToCart);
+        
+        (window as any).cartInitialized = true;
     }
 
-    let cart: CartItem[] = [];
+    document.addEventListener('astro:page-load', () => {
+        // --- SELECTORES LOCALES (SE ACTUALIZAN EN CADA CARGA) ---
+        const cartItemsList = document.getElementById('cart-items-list');
+        const cartEmptyState = document.getElementById('cart-empty-state');
+        const cartTotalEl = document.getElementById('cart-total');
+        const cartSubtotalEl = document.getElementById('cart-subtotal');
+        const cartDiscountEl = document.getElementById('cart-discount');
 
-    const cartDrawer = document.getElementById('cart-drawer');
-    const cartOverlay = document.getElementById('cart-overlay');
-    const cartItemsList = document.getElementById('cart-items-list');
-    const cartEmptyState = document.getElementById('cart-empty-state');
-    const cartSubtotalEl = document.getElementById('cart-subtotal');
-    const cartDiscountEl = document.getElementById('cart-discount');
-    const cartTotalEl = document.getElementById('cart-total');
+        const renderCart = () => {
+            const items = (window as any).cartItems || [];
+            if (!cartItemsList || !cartEmptyState) return;
 
-    // Elementos del formulario
-    const inputName = document.getElementById('bill-name') as HTMLInputElement | null;
-    const inputId = document.getElementById('bill-id') as HTMLInputElement | null;
-    const inputWhatsapp = document.getElementById('bill-whatsapp') as HTMLInputElement | null;
-    const inputAddress = document.getElementById('bill-address') as HTMLInputElement | null;
-    const inputPayment = document.getElementById('bill-payment') as HTMLSelectElement | null;
-    const btnOrderMedico = document.getElementById('btn-order-medico');
-    const btnOrderFarmacia = document.getElementById('btn-order-farmacia');
-    
-    // Función para formatear moneda colombiana
-    const formatCurrency = (val: number) => new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        maximumFractionDigits: 0
-    }).format(val);
-
-    // --- BLOQUE 3: MÁSCARAS Y VALIDACIONES ---
-
-    // Filtro estricto para Cédula/NIT (Solo números y guiones)
-    inputId?.addEventListener('input', (e) => {
-        const target = e.target as HTMLInputElement;
-        const val = target.value;
-        target.value = val.replace(/[^0-9-]/g, '');
-    });
-
-    // Formateo visual de WhatsApp (Chunking: 300 000 00 00)
-    inputWhatsapp?.addEventListener('input', (e) => {
-        const target = e.target as HTMLInputElement;
-        let val = target.value.replace(/\D/g, ''); // Solo números
-        if (val.length > 10) val = val.substring(0, 10);
-        
-        // Aplicamos el formato 320 123 45 67
-        let formatted = '';
-        if (val.length > 0) formatted += val.substring(0, 3);
-        if (val.length > 3) formatted += ' ' + val.substring(3, 6);
-        if (val.length > 6) formatted += ' ' + val.substring(6, 8);
-        if (val.length > 8) formatted += ' ' + val.substring(8, 10);
-        
-        target.value = formatted;
-    });
-
-    // Validación de campos obligatorios con feedback visual
-    function validateForm() {
-        let isValid = true;
-        const requiredFields = [inputName, inputId, inputWhatsapp];
-
-        requiredFields.forEach(field => {
-            if (!field) return;
-            if (!field.value.trim()) {
-                field.classList.add('cart-input-error');
-                isValid = false;
+            if (items.length === 0) {
+                cartEmptyState.style.display = 'block';
+                cartItemsList.innerHTML = '';
             } else {
-                field.classList.remove('cart-input-error');
-            }
-        });
-
-        return isValid;
-    }
-
-    // --- LÓGICA DE ENVÍO A WHATSAPP ---
-    function sendOrder(type: 'medico' | 'farmacia') {
-        if (!validateForm()) {
-            const btn = type === 'medico' ? btnOrderMedico : btnOrderFarmacia;
-            if (btn) {
-                btn.classList.add('animate-shake');
-                setTimeout(() => btn.classList.remove('animate-shake'), 500);
-            }
-            return;
-        }
-
-        if (cart.length === 0) {
-            alert('Agregue al menos un producto al pedido');
-            return;
-        }
-
-        const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        
-        let message = `*NUEVO PEDIDO (${type.toUpperCase()})*\n\n`;
-        message += `*CLIENTE:* ${inputName?.value || ''}\n`;
-        message += `*ID/NIT:* ${inputId?.value || ''}\n`;
-        message += `*WHA:* ${inputWhatsapp?.value || ''}\n`;
-        if(inputAddress?.value) message += `*DIR:* ${inputAddress.value}\n`;
-        if(inputPayment) {
-            message += `*PAGO:* ${inputPayment.options[inputPayment.selectedIndex].text}\n\n`;
-        }
-        
-        message += `*PRODUCTOS:*\n`;
-        cart.forEach(item => {
-            message += `• ${item.name} (x${item.quantity}) - ${formatCurrency(item.price * item.quantity)}\n`;
-            if(item.note) message += `   _Nota: ${item.note}_\n`;
-        });
-        
-        message += `\n*TOTAL ESTIMADO: ${formatCurrency(total)}*\n`;
-        message += `\n_Enviado desde el Catálogo Digital de Mundo Homeopático_`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = "573226154623";
-        const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        
-        window.open(url, '_blank');
-    }
-
-    btnOrderMedico?.addEventListener('click', () => sendOrder('medico'));
-    btnOrderFarmacia?.addEventListener('click', () => sendOrder('farmacia'));
-
-    // --- LÓGICA DE RENDERIZADO ---
-    function renderCart() {
-        if (cart.length === 0) {
-            if (cartEmptyState) cartEmptyState.style.display = 'block';
-            if (cartItemsList) cartItemsList.innerHTML = '';
-        } else {
-            if (cartEmptyState) cartEmptyState.style.display = 'none';
-            if (cartItemsList) {
-                cartItemsList.innerHTML = cart.map((item, index) => `
+                cartEmptyState.style.display = 'none';
+                cartItemsList.innerHTML = items.map((item: any, index: number) => `
                     <div class="cart-item-card group">
-                        <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}" title="Eliminar ítem">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                        <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         </button>
-                        
-                        <div class="pr-8">
-                            <h4 class="text-sm font-bold text-slate-900 leading-tight">${item.name}</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">${formatCurrency(item.price)} unitario</p>
+                        <div class="pr-6">
+                            <h4 class="text-xs font-bold text-slate-800 leading-tight">${item.name}</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">$${item.price.toLocaleString()}</p>
                         </div>
-    
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-1">
-                                <button class="cart-qty-btn btn-qty-minus" data-index="${index}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                </button>
-                                <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
-                                <button class="cart-qty-btn btn-qty-plus" data-index="${index}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                </button>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="flex items-center gap-2 bg-slate-50 rounded-md p-1 border border-slate-100">
+                                <button class="w-6 h-6 flex items-center justify-center hover:bg-white rounded btn-qty" data-index="${index}" data-action="minus">-</button>
+                                <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+                                <button class="w-6 h-6 flex items-center justify-center hover:bg-white rounded btn-qty" data-index="${index}" data-action="plus">+</button>
                             </div>
-                            <div class="text-right">
-                                <span class="text-sm font-extrabold text-brand">${formatCurrency(item.price * item.quantity)}</span>
-                            </div>
-                        </div>
-    
-                        <div class="pt-2 border-t border-slate-100/50">
-                            ${item.hasNote ? 
-                                `<textarea class="cart-note-input input-note" data-index="${index}" placeholder="Especifique diluciones o cambios...">${item.note || ''}</textarea>` : 
-                                `<button class="btn-cart-note btn-add-note" data-index="${index}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    Añadir nota o especificación
-                                </button>`
-                            }
+                            <span class="text-xs font-bold text-brand">$${(item.price * item.quantity).toLocaleString()}</span>
                         </div>
                     </div>
                 `).join('');
+
+                // Click events for qty
+                cartItemsList.querySelectorAll('.btn-qty').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const b = e.currentTarget as HTMLElement;
+                        const idx = parseInt(b.dataset.index!);
+                        const action = b.dataset.action;
+                        if (action === 'plus') items[idx].quantity++;
+                        else if (items[idx].quantity > 1) items[idx].quantity--;
+                        else items.splice(idx, 1);
+                        renderCart();
+                    });
+                });
+
+                cartItemsList.querySelectorAll('.btn-remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const b = e.currentTarget as HTMLElement;
+                        items.splice(parseInt(b.dataset.index!), 1);
+                        renderCart();
+                    });
+                });
             }
-        }
-        updateTotals();
-        attachEventListeners();
 
-        const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-        document.dispatchEvent(new CustomEvent('cartUpdated', { 
-            detail: { totalItems } 
-        }));
-    }
+            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;
+            if (cartTotalEl) cartTotalEl.innerText = `$${subtotal.toLocaleString()}`;
+            
+            localStorage.setItem('cart', JSON.stringify(items));
+            
+            document.dispatchEvent(new CustomEvent('cartUpdated', { 
+                detail: { totalItems: items.reduce((acc: number, i: any) => acc + i.quantity, 0) } 
+            }));
+        };
 
-    function updateTotals() {
-        const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        const discount = 0;
-        const total = subtotal - discount;
+        // Escuchar orden de re-renderizado
+        document.removeEventListener('renderCartInternal', renderCart);
+        document.addEventListener('renderCartInternal', renderCart);
 
-        if (cartSubtotalEl) cartSubtotalEl.innerText = formatCurrency(subtotal);
-        if (cartDiscountEl) cartDiscountEl.innerText = `-${formatCurrency(discount)}`;
-        if (cartTotalEl) cartTotalEl.innerText = formatCurrency(total);
-    }
+        // UI Listeners
+        document.getElementById('close-cart')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
+        document.getElementById('cart-overlay')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
+        document.getElementById('clear-cart')?.addEventListener('click', () => {
+            if(confirm('¿Vaciar pedido?')) { (window as any).cartItems = []; renderCart(); }
+        });
 
-    function attachEventListeners() {
-        document.querySelectorAll('.btn-qty-plus').forEach(btn => {
-            const button = btn as HTMLButtonElement;
-            button.onclick = () => { 
-                const index = parseInt(button.dataset.index || '0');
-                if (cart[index]) { cart[index].quantity++; renderCart(); }
-            };
-        });
-        document.querySelectorAll('.btn-qty-minus').forEach(btn => {
-            const button = btn as HTMLButtonElement;
-            button.onclick = () => { 
-                const index = parseInt(button.dataset.index || '0');
-                if (cart[index] && cart[index].quantity > 1) { cart[index].quantity--; renderCart(); } 
-            };
-        });
-        document.querySelectorAll('.btn-remove-item').forEach(btn => {
-            const button = btn as HTMLButtonElement;
-            button.onclick = () => { 
-                const index = parseInt(button.dataset.index || '0');
-                cart.splice(index, 1); renderCart(); 
-            };
-        });
-        document.querySelectorAll('.btn-add-note').forEach(btn => {
-            const button = btn as HTMLButtonElement;
-            button.onclick = () => { 
-                const index = parseInt(button.dataset.index || '0');
-                if (cart[index]) { cart[index].hasNote = true; renderCart(); }
-            };
-        });
-        document.querySelectorAll('.input-note').forEach(textarea => {
-            const area = textarea as HTMLTextAreaElement;
-            area.oninput = (e) => { 
-                const index = parseInt(area.dataset.index || '0');
-                if (cart[index]) { cart[index].note = (e.target as HTMLTextAreaElement).value; }
-            };
-        });
-    }
-
-    document.addEventListener('addToCart', (e) => {
-        const customEvent = e as CustomEvent;
-        const { name, price } = customEvent.detail;
-        const existing = cart.find(item => item.name === name);
-        if (existing) { existing.quantity++; } else { 
-            cart.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); 
-        }
         renderCart();
     });
-
-    document.getElementById('close-cart')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
-    document.getElementById('cart-overlay')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
-    document.getElementById('clear-cart')?.addEventListener('click', () => {
-        if(confirm('¿Deseas vaciar todo el pedido?')) { cart = []; renderCart(); }
-    });
-
-    document.addEventListener('toggleCart', () => {
-        document.body.classList.toggle('cart-open');
-    });
-
-    renderCart();
 </script>

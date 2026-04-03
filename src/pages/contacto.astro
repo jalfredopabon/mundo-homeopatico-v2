@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SidebarContacto from '../components/contacto/SidebarContacto.astro';
 import Footer from '../components/shared/Footer.astro';
-import CartDrawer from '../components/cart/CartDrawer.astro';
 
 // Importación de Secciones Modulares
 import VideoSection from '../components/sections/VideoSection.astro';
@@ -11,9 +10,6 @@ import FAQ from '../components/sections/FAQ.astro';
 ---
 
 <BaseLayout title="Sedes y contacto | Mundo homeopático" mostrarZoom={false}>
-    
-    <!-- Carrito Lateral (Drawer) -->
-    <CartDrawer />
     
     <!-- Contenedor Principal de 2 columnas (Aísla el scroll) -->
     <div class="flex flex-col md:flex-row w-full flex-1 h-[calc(100vh-66px)] md:h-[calc(100vh-66px)]">

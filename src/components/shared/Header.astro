@@ -88,8 +88,8 @@ const showTextSize = isCatalog || isVademecum;
       <button id="header-cart-btn" class="header-tool-btn min-w-[3rem] group" aria-label="Ver carrito de pedidos">
           <div class="header-icon-wrap">
             <Icons type="cart" class="w-[18px] h-[18px] group-hover:-rotate-3 transition-transform" strokeWidth={2.3} />
-            <span id="cart-badge" class="absolute -top-0.5 -right-1 flex h-4 w-4 hidden">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span id="cart-badge" class="absolute -top-0.5 -right-1 flex h-4 w-4 hidden transition-all">
+              <span id="cart-ping" class="absolute inset-0 rounded-full bg-red-400 opacity-0 pointer-events-none"></span>
               <span id="cart-counter" class="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold">0</span>
             </span>
           </div>
@@ -170,6 +170,26 @@ const showTextSize = isCatalog || isVademecum;
 
       if (badge && counter) {
         if (totalItems > 0) {
+          // Si el número cambió, lanzamos el "Pop" y las "3 Palpitaciones"
+          if (counter.textContent !== String(totalItems)) {
+            // 1. Animación Pop (Badge principal)
+            badge.classList.remove('animate-pop');
+            void badge.offsetWidth; 
+            badge.classList.add('animate-pop');
+
+            // 2. Animación Eco (3 Palpitaciones)
+            const ping = document.getElementById('cart-ping');
+            if (ping) {
+              ping.classList.remove('animate-ping-3', 'opacity-75');
+              void ping.offsetWidth;
+              ping.classList.add('animate-ping-3', 'opacity-75');
+              // Limpiar opacidad después de las 3 palpitaciones (3s aprox)
+              setTimeout(() => {
+                ping.classList.remove('opacity-75');
+              }, 3000);
+            }
+          }
+          
           badge.classList.remove('hidden');
           counter.textContent = totalItems;
         } else {

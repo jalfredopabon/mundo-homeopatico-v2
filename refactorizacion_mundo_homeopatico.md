@@ -30,6 +30,15 @@
 - **Filosofía Proyectual:** Refactorización de todos los paneles principales del sitio bajo el sistema atómico de "Lego-Architecture".
 - **Estandarización Hugeicons:** Descarga unificada de toda la librería de iconos para asegurar consistencia en pesos visuales y estilos.
 
+### Hito 26: Optimización de UX y Confirmación "Power User" (03/04/2026)
+- **Workflow Silent Add:** Eliminación de la apertura automática del `CartDrawer` para no interrumpir el flujo de navegación.
+- **Header Echo System:** Implementación de `.animate-ping-3` (3 palpitaciones) y `.animate-pop` en el badge del Header para confirmación global asíncrona.
+- **Refinamiento de Tablas:** 
+    - Neutralización del botón `.btn-add-cart` (base slate-50/400).
+    - Eliminación de anillos de foco persistentes (`focus-visible`).
+    - Reducción del tiempo de feedback visual (+ → ✓) a 700ms para mayor agilidad percibida.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Hito 26 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+- [ ] **Hito 27 (Vademécum Atoms)**: Refactorización de `MedicalCard.astro` para usar átomos globales.
+
 

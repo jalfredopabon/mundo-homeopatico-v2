@@ -1,0 +1,201 @@
+---
+import Icons from "./Icons.astro";
+
+interface Option {
+    value: string;
+    label: string;
+}
+
+export interface Props {
+    id: string;
+    options: Option[];
+    placeholder?: string;
+}
+
+const { id, options, placeholder = "Selecciona una opción..." } = Astro.props;
+---
+
+<div class="relative w-full elite-select-container" data-id={id}>
+    <!-- Input oculto para que funcione con formularios tradiconales y lectores JS -->
+    <input type="hidden" id={id} name={id} value="" data-elite-select-input />
+
+    <!-- Disparador -->
+    <button 
+        type="button" 
+        class="cart-input w-full flex items-center justify-between text-left cursor-pointer group"
+        data-elite-select-trigger
+        aria-haspopup="listbox"
+        aria-expanded="false"
+    >
+        <span class="text-slate-500 truncate" data-elite-select-text>
+            {placeholder}
+        </span>
+        <Icons type="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform duration-200" data-elite-select-icon />
+    </button>
+
+    <!-- Menú Desplegable -->
+    <ul 
+        class="absolute z-50 w-full mt-1 bg-white border border-slate-100 rounded-xl shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 overflow-y-auto max-h-56 hidden"
+        role="listbox"
+        tabindex="-1"
+        data-elite-select-menu
+    >
+        {options.map((option, index) => (
+            <li 
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 cursor-pointer transition-colors duration-150 hover:bg-surface-muted hover:text-slate-900 aria-selected:bg-brand/10 aria-selected:text-brand-strong"
+                role="option"
+                data-value={option.value}
+                data-index={index}
+                aria-selected="false"
+            >
+                {option.label}
+            </li>
+        ))}
+    </ul>
+</div>
+
+<script>
+    // Lógica encapsulada para Elite Select
+    class EliteSelect {
+        container: HTMLElement;
+        trigger: HTMLButtonElement;
+        menu: HTMLUListElement;
+        input: HTMLInputElement;
+        textSpan: HTMLSpanElement;
+        icon: HTMLElement;
+        options: NodeListOf<HTMLLIElement>;
+        isOpen: boolean = false;
+        selectedIndex: number = -1;
+
+        constructor(container: HTMLElement) {
+            this.container = container;
+            this.trigger = container.querySelector('[data-elite-select-trigger]')!;
+            this.menu = container.querySelector('[data-elite-select-menu]')!;
+            this.input = container.querySelector('[data-elite-select-input]')!;
+            this.textSpan = container.querySelector('[data-elite-select-text]')!;
+            this.icon = container.querySelector('[data-elite-select-icon]')!;
+            this.options = container.querySelectorAll('li[role="option"]');
+
+            this.init();
+        }
+
+        init() {
+            // Eventos del disparador
+            this.trigger.addEventListener('click', () => this.toggle());
+            this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
+
+            // Eventos de opciones
+            this.options.forEach(option => {
+                option.addEventListener('click', () => this.selectOption(option));
+            });
+
+            // Cerrar al hacer clic fuera
+            document.addEventListener('click', (e) => {
+                if (!this.container.contains(e.target as Node)) {
+                    this.close();
+                }
+            });
+        }
+
+        toggle() {
+            this.isOpen ? this.close() : this.open();
+        }
+
+        open() {
+            // Cerrar otros menús si están abiertos
+            document.querySelectorAll('.elite-select-container').forEach(c => {
+                if (c !== this.container) {
+                    const inst = (c as any).__eliteSelectInstance;
+                    if (inst && inst.isOpen) inst.close();
+                }
+            });
+
+            this.isOpen = true;
+            this.trigger.setAttribute('aria-expanded', 'true');
+            
+            // Primero remover hidden para que el navegador lo renderice
+            this.menu.classList.remove('hidden');
+            
+            // Un micro-segundo después, aplicar clases de animación
+            setTimeout(() => {
+                this.menu.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+                // Auto-scroll para garantizar visibilidad al usuario sin esfuerzo
+                this.menu.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 10);
+            
+            this.icon.classList.add('rotate-180');
+        }
+
+        close() {
+            if (!this.isOpen) return;
+            this.isOpen = false;
+            this.trigger.setAttribute('aria-expanded', 'false');
+            this.menu.classList.add('opacity-0', 'invisible', 'translate-y-2');
+            this.icon.classList.remove('rotate-180');
+            
+            // Reajustar la vista al campo para eliminar el espacio fantasma
+            this.trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Esperar a que acabe la animación (200ms) y luego ocular del layout
+            setTimeout(() => {
+                if (!this.isOpen) this.menu.classList.add('hidden');
+            }, 200);
+        }
+
+        selectOption(option: HTMLLIElement) {
+            const value = option.dataset.value!;
+            const label = option.textContent?.trim() || '';
+
+            // Actualizar vista
+            this.textSpan.textContent = label;
+            this.textSpan.classList.remove('text-slate-500');
+            this.textSpan.classList.add('text-slate-900');
+
+            // Actualizar input oculto y disparar evento de cambio
+            this.input.value = value;
+            this.input.dispatchEvent(new Event('change', { bubbles: true }));
+
+            // Actualizar estilos seleccionados
+            this.options.forEach(opt => opt.setAttribute('aria-selected', 'false'));
+            option.setAttribute('aria-selected', 'true');
+            this.selectedIndex = parseInt(option.dataset.index!);
+
+            this.close();
+        }
+
+        handleTriggerKeydown(e: KeyboardEvent) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggle();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (!this.isOpen) this.open();
+                this.navigateOptions(1);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (!this.isOpen) this.open();
+                this.navigateOptions(-1);
+            } else if (e.key === 'Escape') {
+                this.close();
+            }
+        }
+
+        navigateOptions(direction: number) {
+            if (this.options.length === 0) return;
+            
+            let newIndex = this.selectedIndex + direction;
+            if (newIndex < 0) newIndex = 0;
+            if (newIndex >= this.options.length) newIndex = this.options.length - 1;
+
+            this.selectOption(this.options[newIndex]);
+        }
+    }
+
+    // Inicializar todos los componentes SelectElite en la página
+    document.addEventListener('DOMContentLoaded', () => {
+        const selects = document.querySelectorAll('.elite-select-container');
+        selects.forEach(container => {
+            (container as any).__eliteSelectInstance = new EliteSelect(container as HTMLElement);
+        });
+    });
+</script>

@@ -354,5 +354,281 @@ export const medicines: Medicine[] = [
                 ]
             }
         ]
+    },
+    {
+        id: 'hypericum',
+        name: 'Hypericum',
+        potency: 'D12',
+        scientificName: 'Hypericum perforatum',
+        origin: 'Origen vegetal',
+        shortDesc: 'Específico para dolores en terminaciones nerviosas y traumatismos en zonas ricamente inervadas.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Nervioso'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Dolores por aplastamiento de dedos o lesiones en columna.',
+                    'Coadyuvante en neuralgias post-herpéticas.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'rhus-tox',
+        name: 'Rhus tox',
+        potency: 'D6',
+        scientificName: 'Rhus toxicodendron',
+        origin: 'Origen vegetal',
+        shortDesc: 'Tratamiento para Dolores que mejoran con el movimiento continuo y empeoran con el reposo.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Locomotor'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Reumatismo articular y dolores musculares por humedad.',
+                    'Esguinces y distensiones ligamentosas.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'bryonia',
+        name: 'Bryonia',
+        potency: 'D6',
+        scientificName: 'Bryonia alba',
+        origin: 'Origen vegetal',
+        shortDesc: 'Indicada en dolores punzantes que empeoran con el más mínimo movimiento y mejoran con la presión fuerte.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Locomotor', 'Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Pleuresía y tos seca dolorosa.',
+                    'Inflamación articular con derrame.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'apis',
+        name: 'Apis mellifica',
+        potency: 'D8',
+        scientificName: 'Apis mellifica',
+        origin: 'Animal',
+        shortDesc: 'Acción rápida en edemas rosáceos, picaduras de insectos y dolores ardientes que mejoran con frío.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Edemas repentinos en párpados o garganta.',
+                    'Reacciones alérgicas agudas con hinchazón.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'hepar-sulphur',
+        name: 'Hepar sulphur',
+        potency: 'D12',
+        scientificName: 'Hepar sulphuris calcareum',
+        origin: 'Mineral',
+        shortDesc: 'Regulador de procesos supurativos y sensibilidad extrema al frío y al contacto.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Infecciones agudas de garganta con sensación de espina.',
+                    'Abscesos y procesos purulentos incipientes.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'chamomilla',
+        name: 'Chamomilla',
+        potency: 'D6',
+        scientificName: 'Matricaria chamomilla',
+        origin: 'Origen vegetal',
+        shortDesc: 'Medicamento pediátrico por excelencia para la irritabilidad y el dolor durante la dentición.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Nervioso', 'Digestivo'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Dolores de muelas infantiles e irritabilidad extrema.',
+                    'Cólicos flatulentos en bebés.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'nux-moschata',
+        name: 'Nux moschata',
+        potency: 'D6',
+        scientificName: 'Myristica fragrans',
+        origin: 'Origen vegetal',
+        shortDesc: 'Tratamiento para la somnolencia excesiva, sequedad de mucosas y distensión abdominal.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Nervioso', 'Digestivo'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Somnolencia irresistible en periodos digestivos.',
+                    'Sequedad extrema de boca sin sed.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'thuja',
+        name: 'Thuja occidentalis',
+        potency: 'D12',
+        scientificName: 'Thuja occidentalis L.',
+        origin: 'Origen vegetal',
+        shortDesc: 'Medicamento de terreno para afecciones cutáneas proliferativas (verrugas) y detoxificación post-vacunal.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Tratamiento de verrugas y papilomas.',
+                    'Limpieza del terreno sicótico orgánico.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'berberis',
+        name: 'Berberis vulgaris',
+        potency: 'D4',
+        scientificName: 'Berberis vulgaris',
+        origin: 'Origen vegetal',
+        shortDesc: 'Drenador renal y hepático, eficaz en dolores punzantes que irradian desde la zona lumbar.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Digestivo'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Coadyuvante en litiasis renal y biliar.',
+                    'Dolores lumbares de origen urinario.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'chamomilla-crema',
+        name: 'Chamomilla Crema',
+        potency: 'MT',
+        scientificName: 'Matricaria chamomilla',
+        origin: 'Origen vegetal',
+        shortDesc: 'Calmante tópico para pieles sensibles, irritaciones infantiles y rozaduras.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Digestivo'],
+            forma: 'Crema'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Alivio de prurito y enrojecimiento cutáneo.',
+                    'Cuidado de la piel del bebé.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'euphrasia',
+        name: 'Euphrasia',
+        potency: 'D4',
+        scientificName: 'Euphrasia officinalis',
+        origin: 'Origen vegetal',
+        shortDesc: 'Acción específica sobre la mucosa ocular, aliviando el lagrimeo irritante y la fotofobia.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Conjuntivitis alérgica e infecciosa incipiente.',
+                    'Fatiga ocular por pantallas.'
+                ]
+            }
+        ]
+    },
+    {
+        id: 'allium-cepa',
+        name: 'Allium cepa',
+        potency: 'D6',
+        scientificName: 'Allium cepa L.',
+        origin: 'Origen vegetal',
+        shortDesc: 'Tratamiento para el resfriado común con lagrimeo suave y secreción nasal acuosa irritante.',
+        tags: {
+            terapia: 'Homeopatía compleja',
+            sistema: ['Respiratorio'],
+            forma: 'Gotas'
+        },
+        sections: [
+            {
+                title: 'Indicaciones clínicas',
+                icon: 'task-list',
+                items: [
+                    'Rinitis alérgica estacional.',
+                    'Resfriados con estornudos frecuentes.'
+                ]
+            }
+        ]
     }
 ];

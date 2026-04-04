@@ -288,15 +288,19 @@ button,
 
   .badge-elite--indigo  { 
     @apply bg-indigo-50; 
-    color: color-mix(in srgb, theme('colors.indigo.700') 80%, transparent); 
+    color: color-mix(in srgb, theme('colors.indigo.700') 95%, transparent); 
   }
   .badge-elite--emerald { 
     @apply bg-emerald-50; 
-    color: color-mix(in srgb, theme('colors.emerald-700') 80%, transparent); 
+    color: color-mix(in srgb, theme('colors.emerald.700') 95%, transparent); 
   }
   .badge-elite--amber   { 
     @apply bg-amber-50; 
-    color: color-mix(in srgb, theme('colors.amber.700') 80%, transparent); 
+    color: color-mix(in srgb, theme('colors.amber.700') 95%, transparent); 
+  }
+  .badge-elite--rose    { 
+    @apply bg-rose-50; 
+    color: color-mix(in srgb, theme('colors.rose.700') 95%, transparent); 
   }
   .badge-elite--neutral { 
     @apply bg-surface-muted; 

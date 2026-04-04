@@ -168,6 +168,14 @@ export const medicines: Medicine[] = [
                     '<span class="font-bold text-body">Tropismo principal:</span> Mucosas y Sistema Venoso.',
                     '<span class="font-bold text-body">Acción:</span> Descongestionante y regulador hormonal.'
                 ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Disolver 5 glóbulos alejado de las comidas principales.',
+                    'Dosis de mantenimiento: 3 veces al día o según criterio médico.'
+                ]
             }
         ]
     },
@@ -190,6 +198,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Procesos febriles de aparición repentina y angustia aguda.',
                     'Primer medicamento ante síntomas de gripe.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Cardiovascular y Nervioso.',
+                    '<span class="font-bold text-body">Mecanismo:</span> Modulación de la respuesta inflamatoria aguda.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'En fase aguda, 5 unidades cada 15-30 minutos durante la primera hora.',
+                    'Luego espaciar las aplicaciones según mejoría.'
                 ]
             }
         ]
@@ -214,6 +238,22 @@ export const medicines: Medicine[] = [
                     'Inflamaciones agudas, rubor y calor.',
                     'Tratamiento de amigdalitis aguda y otitis.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Respiratorio y Mucosas.',
+                    '<span class="font-bold text-body">Acción:</span> Antiinflamatorio y antiespasmódico agudo.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Administrar 5 unidades cada 2 horas en fase activa de inflamación.',
+                    'Consultar dosis pediátrica con su especialista médico.'
+                ]
             }
         ]
     },
@@ -236,6 +276,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Estados gripales con postración y temblores.',
                     'Ansiedad anticipatoria por eventos estresantes.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Sistema Nervioso y Motor.',
+                    '<span class="font-bold text-body">Acción:</span> Sedante suave y regulador de la fatiga gripal.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Disolver 5 unidades bajo la lengua en situaciones de estrés.',
+                    'Fase gripal: 3-4 tomas diarias según intensidad de la postración.'
                 ]
             }
         ]
@@ -260,6 +316,22 @@ export const medicines: Medicine[] = [
                     'Momentos de pánico, estrés elevado o noticias impactantes.',
                     'Estabilizador emocional inmediato.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Composición:</span> Combinado de 5 esencias florales de Bach.',
+                    '<span class="font-bold text-body">Efecto:</span> Restablecimiento del equilibrio somático post-shock.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '4 gotas directas en la lengua o disueltas en un poco de agua.',
+                    'Repetir según necesidad hasta sentir alivio emocional.'
+                ]
             }
         ]
     },
@@ -282,6 +354,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Disfunciones metabólicas menores.',
                     'Apoyo en fatiga nerviosa y estrés.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Componentes:</span> Zn, Ni, Co en dilución biofisiológica.',
+                    '<span class="font-bold text-body">Función:</span> Catalizador enzimático del eje suprarrenal.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '1-2 ampollas o dosis equivalentes en ayunas.',
+                    'Mantener en boca 1 minuto antes de ingerir para absorción mucosa.'
                 ]
             }
         ]
@@ -306,6 +394,22 @@ export const medicines: Medicine[] = [
                     'Problemas de auto-percepción.',
                     'Coadyuvante en molestias digestivas por origen nervioso.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Propiedades:</span> Armonizador de la identidad solar-plexo.',
+                    '<span class="font-bold text-body">Acción:</span> Equilibrio del eje emocional-entérico.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '2 tabletas o 4 gotas antes de las situaciones de estrés.',
+                    'Uso prolongado según necesidades evolutivas del paciente.'
+                ]
             }
         ]
     },
@@ -328,6 +432,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Contusiones deportivas y dolores localizados.',
                     'Rápida absorción sin contacto directo.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Formato:</span> Solución hidroalcohólica de Arnica montana.',
+                    '<span class="font-bold text-body">Efecto:</span> Altamente anti-equimótico y analgésico tópico.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Aplicar 2-3 atomizaciones sobre la zona afectada.',
+                    'No aplicar sobre heridas abiertas o mucosas.'
                 ]
             }
         ]
@@ -352,6 +472,22 @@ export const medicines: Medicine[] = [
                     'Cicatrización de heridas superficiales.',
                     'Dermatitis y alivio de inflamación externa.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Activo:</span> Tintura madre de Calendula officinalis.',
+                    '<span class="font-bold text-body">Labor:</span> Regenerador epitelial y antiséptico natural.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Extender una capa fina sobre la piel limpia.',
+                    'Repetir la aplicación 2 a 3 veces al día según evolución.'
+                ]
             }
         ]
     },
@@ -374,6 +510,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Dolores por aplastamiento de dedos o lesiones en columna.',
                     'Coadyuvante en neuralgias post-herpéticas.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Terminaciones nerviosas periféricas.',
+                    '<span class="font-bold text-body">Acción:</span> Reparador del tejido nervioso traumatizado.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 gotas cada hora en situaciones de dolor agudo neurálgico.',
+                    'Reducir frecuencia tras la remisión de los síntomas.'
                 ]
             }
         ]
@@ -398,6 +550,22 @@ export const medicines: Medicine[] = [
                     'Reumatismo articular y dolores musculares por humedad.',
                     'Esguinces y distensiones ligamentosas.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Tejidos fibrosos y tendinosos.',
+                    '<span class="font-bold text-body">Mejoría:</span> Con el movimiento continuo y calor.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 gotas, 3 veces al día para procesos crónicos.',
+                    'En crisis reumáticas, aumentar gradualmente la frecuencia.'
+                ]
             }
         ]
     },
@@ -420,6 +588,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Pleuresía y tos seca dolorosa.',
                     'Inflamación articular con derrame.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo principal:</span> Serosas y Membranas sinoviales.',
+                    '<span class="font-bold text-body">Acción:</span> Reducción de la sequedad y el dolor punzante.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Administrar 5 unidades cada 4 horas.',
+                    'Imprenscindible reposo absoluto del órgano afectado.'
                 ]
             }
         ]
@@ -444,6 +628,22 @@ export const medicines: Medicine[] = [
                     'Edemas repentinos en párpados o garganta.',
                     'Reacciones alérgicas agudas con hinchazón.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Tejido celular subcutáneo y riñones.',
+                    '<span class="font-bold text-body">Efecto:</span> Desinflamatorio rápido del edema rosáceo.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 glóbulos cada 15 minutos en reacciones alérgicas leves.',
+                    'Reducir a 3 veces al día al disminuir la hinchazón.'
+                ]
             }
         ]
     },
@@ -466,6 +666,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Infecciones agudas de garganta con sensación de espina.',
                     'Abscesos y procesos purulentos incipientes.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Sistema linfático y mucosas respiratorias.',
+                    '<span class="font-bold text-body">Mecanismo:</span> Control de la supuración aguda.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Consultar potencia (D6/D12) para favorecer o detener supuración.',
+                    'Dosis habitual: 5 unidades, 3 veces al día.'
                 ]
             }
         ]
@@ -490,6 +706,22 @@ export const medicines: Medicine[] = [
                     'Dolores de muelas infantiles e irritabilidad extrema.',
                     'Cólicos flatulentos en bebés.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Sistema Nervioso Periférico.',
+                    '<span class="font-bold text-body">Efecto:</span> Analgésico y tranquilizante pediátrico.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 glóbulos disueltos en un poco de agua o directos.',
+                    'Administrar ante crisis de llanto o dolor agudo.'
+                ]
             }
         ]
     },
@@ -512,6 +744,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Somnolencia irresistible en periodos digestivos.',
                     'Sequedad extrema de boca sin sed.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Sistema Digestivo y Centro del sueño.',
+                    '<span class="font-bold text-body">Mecanismo:</span> Estimulante de las secreciones mucosas.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 unidades, 2 veces al día antes de las comidas.',
+                    'Evitar dosis nocturnas si hay hipersensibilidad.'
                 ]
             }
         ]
@@ -536,6 +784,22 @@ export const medicines: Medicine[] = [
                     'Tratamiento de verrugas y papilomas.',
                     'Limpieza del terreno sicótico orgánico.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Acción:</span> Antiséptica profunda y anti-proliferativa.',
+                    '<span class="font-bold text-body">Labor:</span> Modificador del terreno crónico profundo.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 glóbulos, 1 vez al día (preferiblemente mañana).',
+                    'Tratamiento a largo plazo (mínimo 3 meses).'
+                ]
             }
         ]
     },
@@ -558,6 +822,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Coadyuvante en litiasis renal y biliar.',
                     'Dolores lumbares de origen urinario.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Tracto urinario y conductos biliares.',
+                    '<span class="font-bold text-body">Acción:</span> Drenador y antiespasmódico de vías excretoras.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '10 gotas en medio vaso de agua, 3 veces al día.',
+                    'Aumentar ingesta de líquidos durante el tratamiento.'
                 ]
             }
         ]
@@ -582,6 +862,22 @@ export const medicines: Medicine[] = [
                     'Alivio de prurito y enrojecimiento cutáneo.',
                     'Cuidado de la piel del bebé.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Presentación:</span> Crema base de alta absorción.',
+                    '<span class="font-bold text-body">Efecto:</span> Calmante dérmico inmediato.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Aplicar tópicamente sobre el área irritada.',
+                    'Uso seguro en lactantes y pieles sensibles.'
+                ]
             }
         ]
     },
@@ -605,6 +901,22 @@ export const medicines: Medicine[] = [
                     'Conjuntivitis alérgica e infecciosa incipiente.',
                     'Fatiga ocular por pantallas.'
                 ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Mucosa ocular y lagrimal.',
+                    '<span class="font-bold text-body">Acción:</span> Antiinflamatorio ocular específico.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    'Administrar 5 unidades vía oral o según prescripción.',
+                    'No instilar directamente en el ojo si es dilución oral.'
+                ]
             }
         ]
     },
@@ -627,6 +939,22 @@ export const medicines: Medicine[] = [
                 items: [
                     'Rinitis alérgica estacional.',
                     'Resfriados con estornudos frecuentes.'
+                ]
+            },
+            {
+                title: 'Perfil farmacológico',
+                icon: 'gotas',
+                items: [
+                    '<span class="font-bold text-body">Tropismo:</span> Mucosa nasal y conjuntival.',
+                    '<span class="font-bold text-body">Acción:</span> Reducción de la rinorrea acuosa irritante.'
+                ]
+            },
+            {
+                title: 'Protocolo de posología',
+                icon: 'edit',
+                items: [
+                    '5 glóbulos ante los primeros ataques de estornudos.',
+                    'Repetir 3-5 veces al día durante el periodo alérgico.'
                 ]
             }
         ]

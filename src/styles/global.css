@@ -287,20 +287,24 @@ button,
   }
 
   .badge-elite--indigo  { 
-    @apply bg-indigo-50; 
-    color: color-mix(in srgb, theme('colors.indigo.700') 95%, transparent); 
+    @apply bg-indigo-50/80; 
+    color: #004A8F; 
   }
-  .badge-elite--emerald { 
-    @apply bg-emerald-50; 
-    color: color-mix(in srgb, theme('colors.emerald.700') 95%, transparent); 
+  .badge-elite--violet  { 
+    @apply bg-violet-50/80; 
+    color: #4A008F; 
   }
-  .badge-elite--amber   { 
+  .badge-elite--cyan    { 
+    @apply bg-cyan-100; 
+    color: theme('colors.cyan.950'); 
+  }
+  .badge-elite--bronze  { 
     @apply bg-amber-50; 
-    color: color-mix(in srgb, theme('colors.amber.700') 95%, transparent); 
+    color: #8F5700; 
   }
   .badge-elite--rose    { 
-    @apply bg-rose-50; 
-    color: color-mix(in srgb, theme('colors.rose.700') 95%, transparent); 
+    @apply bg-rose-100; 
+    color: theme('colors.rose.950'); 
   }
   .badge-elite--neutral { 
     @apply bg-surface-muted; 
@@ -311,8 +315,8 @@ button,
     color: color-mix(in srgb, var(--primary) 80%, transparent);
   }
   .badge-elite--slate   { 
-    background-color: color-mix(in srgb, theme('colors.slate.100') 50%, transparent);
-    @apply text-slate-600; 
+    @apply bg-slate-100;
+    @apply text-slate-700; 
   }
 
   /* --- 🏛️ Sistema Atómico de Header --- */
@@ -643,11 +647,22 @@ button,
   }
 
   .medical-title {
-    @apply text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight mb-5;
+    @apply text-[1.75rem] leading-[1.1] font-extrabold text-slate-900 tracking-tight mb-5;
+  }
+ 
+  .medical-section-container {
+    @apply border-t border-subtle pt-8 mb-8;
+  }
+  .medical-section-container:last-child {
+    @apply mb-0;
+  }
+  .medical-section-container:first-child {
+    @apply border-t-0 pt-0;
   }
 
   .medical-section-title {
-    @apply text-[11px] font-bold text-slate-900 border-b border-slate-100 pb-2 mb-4 flex items-center gap-2 uppercase tracking-wider;
+    @apply text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-3 tracking-wider;
+    & > svg { @apply w-4 h-4; }
   }
 
   .medical-list-item {
@@ -655,7 +670,7 @@ button,
   }
 
   .medical-bullet {
-    @apply w-[15px] flex justify-center shrink-0 pt-[7px];
+    @apply w-4 flex justify-center shrink-0 pt-[7px];
     &::before {
       content: "";
       @apply size-1.5 rounded-full bg-slate-700;

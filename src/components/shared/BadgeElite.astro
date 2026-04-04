@@ -2,7 +2,7 @@
 // src/components/shared/BadgeElite.astro
 interface Props {
   label: string;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'success' | 'warning';
+  variant?: 'primary' | 'secondary' | 'outline' | 'slate' | 'ghost' | 'success' | 'warning' | 'info' | 'indigo' | 'neutral' | 'rose' | 'violet' | 'sky' | 'cyan' | 'bronze';
   size?: 'xs' | 'sm' | 'md';
   class?: string;
 }
@@ -18,13 +18,19 @@ const {
 const variants = {
   primary: "badge-elite--brand",
   secondary: "badge-elite--slate",
-  outline: "badge-elite--neutral", // Para el catálogo (Gris/Gris)
+  slate: "badge-elite--slate",
+  outline: "badge-elite--neutral",
   ghost: "badge-elite--slate opacity-50",
   success: "badge-elite--emerald",
   warning: "badge-elite--amber",
   info: "badge-elite--indigo",
+  indigo: "badge-elite--indigo",
   neutral: "badge-elite--neutral",
-  rose: "badge-elite--rose"
+  rose: "badge-elite--rose",
+  violet: "badge-elite--violet",
+  sky: "badge-elite--sky",
+  cyan: "badge-elite--cyan",
+  bronze: "badge-elite--bronze"
 };
 
 const sizes = {

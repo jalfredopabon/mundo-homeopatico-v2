@@ -46,16 +46,16 @@ const { products = [] } = Astro.props;
                     <Icons type="close-x" class="w-4 h-4" />
                 </button>
 
-                <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
-                    <Icons type="file-text" class="w-3.5 h-3.5" strokeWidth={2} />
+                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+                    <Icons type="file-text" class="w-4 h-4" strokeWidth={2} />
                     Ficha técnica del producto
                 </div>
 
                 <h2 class="medical-title">
-                    {product.name} <span class="text-brand">{product.potency}</span>
+                    {product.name} {product.potency}
                 </h2>
 
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
                     <BadgeElite label={product.scientificName} variant="slate" size="sm" />
                     <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />
                     <BadgeElite label={product.origin} variant="slate" size="sm" />
@@ -63,9 +63,9 @@ const { products = [] } = Astro.props;
             </div>
 
             <!-- Secciones de la Ficha -->
-            <div class="space-y-8">
+            <div class="flex flex-col">
                 {product.sections.map((section) => (
-                    <div class="pt-2">
+                    <div class="medical-section-container">
                         <h4 class="medical-section-title">
                             <Icons type={section.icon} class="w-3.5 h-3.5" />
                             {section.title}
@@ -100,7 +100,7 @@ const { products = [] } = Astro.props;
             <p class="text-[13px] text-slate-500 max-w-[240px] mb-1 leading-relaxed">
                 Haz clic en una tarjeta del listado para consultar su ficha técnica detallada.
             </p>
-            <p class="text-[11px] font-bold text-brand tracking-tighter uppercase mt-4">
+            <p class="text-[11px] font-bold text-brand tracking-tighter mt-4">
                 Fórmula • Posología • Aplicaciones
             </p>
         </div>

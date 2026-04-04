@@ -68,7 +68,9 @@
 - **Versión Stroked bajo demanda:** Actualización del icono `pill` manteniendo el estilo Stroked pero con trazado optimizado y soporte para grosor dinámico ({strokeWidth}).
 - **Limpieza de Deuda:** Eliminación de duplicados y normalización de viewboxes en `Icons.astro`.
 
+### Hito 31: Automatización de Iconografía (05/04/2026)
+- **Dinamización:** Implementación de un sistema de carga automática para la galería de iconos de desarrollo.
+- **Sincronización:** Ajuste del icono 'mortero' a su versión Stroke oficial para mantener coherencia con el sistema de diseño.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
-
-

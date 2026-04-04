@@ -1,18 +1,23 @@
 ---
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icons from '../../components/shared/Icons.astro';
 
-// Lista extraída de la interface Props de Icons.astro
-const allIcons = [
-    "test-tube", "flower", "molecules", "leaf", "cannabis", "droplet", 
-    "chevron-down", "chevron-right", "pill", "mortero", "jarabe", "gotas", "edit", "eye", "eye-off", 
-    "file-text", "info", "close-x", 
-    "external-link", "search", "cart", "menu", "plus", 
-    "minus", "x", "trash", "grid", "user", "user-circle-alt", "task-list", "alert-triangle", "check", 
-    "lock", "text-size", "pulse", "list", "instagram", "whatsapp", 
-    "phone", "mail", "play", "globe", "award", "map-pin", "help-circle", 
-    "clock", "building", "arrow-up", "select-card", "chevron-up"
-];
+// Extraer la lista dinámicamente de la interfaz Props en Icons.astro
+const iconsFilePath = path.join(process.cwd(), 'src/components/shared/Icons.astro');
+const iconsFileContent = await fs.readFile(iconsFilePath, 'utf-8');
+
+// Buscamos lo que hay dentro de la interfaz 'type: | "name1" | "name2" ...;'
+const match = iconsFileContent.match(/type:\s+([\s\S]+?);/);
+let allIcons = [];
+
+if (match) {
+    allIcons = match[1]
+        .split('|')
+        .map(icon => icon.trim().replace(/"/g, ''))
+        .filter(icon => icon && icon !== 'type:');
+}
 ---
 
 <BaseLayout title="Iconography Showcase | Dev" mostrarZoom={false}>

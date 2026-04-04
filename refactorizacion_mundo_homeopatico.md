@@ -63,6 +63,11 @@
 - **Limpieza UI:** Remoción de casing `uppercase` en el encabezado de detalles para total coherencia con el diseño "Sentence Case" del proyecto.
 - **Gestión de Estados:** Implementación de visibilidad coordinada para el `empty-state` de detalles.
 
+### Hito 30: Refactorización de Iconografía - Hugeicons Solid & Stroked (04/04/2026)
+- **Migración Solid:** Actualización de `flower`, `molecules`, `leaf`, `cannabis`, `droplet`, `mortero`, `chevron-down`, `chevron-up`, `chevron-right` y `chevron-left` al estilo Solid (24px, fill="currentColor").
+- **Versión Stroked bajo demanda:** Actualización del icono `pill` manteniendo el estilo Stroked pero con trazado optimizado y soporte para grosor dinámico ({strokeWidth}).
+- **Limpieza de Deuda:** Eliminación de duplicados y normalización de viewboxes en `Icons.astro`.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 

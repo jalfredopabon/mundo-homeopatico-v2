@@ -1,0 +1,92 @@
+﻿13:15:15 [types] Generated 329ms
+13:15:15 [build] output: "static"
+13:15:15 [build] directory: C:\Users\Alfredo Pab├│n\Documents\Proyectos antigravity\mundo_homeopatico_v2\dist\
+13:15:15 [build] Collecting build info...
+13:15:15 [build] Ô£ô Completed in 706ms.
+13:15:15 [build] Building static entrypoints...
+13:15:23 [vite] [32mÔ£ô built in 7.64s[39m
+13:15:23 [build] Ô£ô Completed in 7.75s.
+
+ building client (vite) 
+13:15:23 [vite] transforming...
+13:15:23 [vite] [32mÔ£ô[39m 28 modules transformed.
+13:15:23 [vite] rendering chunks...
+13:15:23 [vite] computing gzip size...
+13:15:23 [vite] [2mdist/[22m[36m_astro/Footer.astro_astro_type_script_index_0_lang.DsoIaFZq.js  [39m[1m[2m 0.55 kB[22m[1m[22m[2m Ôöé gzip: 0.29 kB[22m
+13:15:23 [vite] [2mdist/[22m[36m_astro/hoisted.DPMnUVXi.js                                      [39m[1m[2m 1.09 kB[22m[1m[22m[2m Ôöé gzip: 0.53 kB[22m
+13:15:23 [vite] [2mdist/[22m[36m_astro/hoisted.BPUz-sIh.js                                      [39m[1m[2m 2.51 kB[22m[1m[22m[2m Ôöé gzip: 1.08 kB[22m
+13:15:23 [vite] [2mdist/[22m[36m_astro/hoisted.CtQZ7jYk.js                                      [39m[1m[2m 5.29 kB[22m[1m[22m[2m Ôöé gzip: 1.94 kB[22m
+13:15:23 [vite] [2mdist/[22m[36m_astro/hoisted.Btvm1MaP.js                                      [39m[1m[2m26.10 kB[22m[1m[22m[2m Ôöé gzip: 7.95 kB[22m
+13:15:23 [vite] [32mÔ£ô built in 448ms[39m
+
+ generating static routes 
+13:15:23 ÔûÂ src/pages/contacto.astro
+13:15:23   ÔööÔöÇ /contacto/index.html (+77ms)
+13:15:23 ÔûÂ src/pages/dev/iconos.astro
+13:15:23   ÔööÔöÇ /dev/iconos/index.html (+28ms)
+13:15:23 ÔûÂ src/pages/vademecum.astro
+13:15:23   ÔööÔöÇ /vademecum/index.html (+63ms)
+13:15:23 ÔûÂ src/pages/index.astro
+13:15:23   ÔööÔöÇ /index.html (+44ms)
+13:15:23 Ô£ô Completed in 329ms.
+
+ generating optimized images 
+node.exe : Failed to 
+load remote image https:
+//images.unsplash.com/ph
+oto-1576091160550-217359
+f42f8c?q=80&w=1200&auto=
+format&fit=crop. The 
+request did not return 
+a 200 OK response. 
+(received 404))
+En línea: 1 Carácter: 1
++ & "C:\nvm4w\nodejs/nod
+e.exe" "C:\nvm\npm-globa
+l/node_modules/npm/bin/ 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo      
+        : NotSpecified  
+  : (Failed to load .   
+ ..(received 404)):S    
+tring) [], RemoteEx    
+ception
+    + FullyQualifiedErr 
+   orId : NativeComman  
+  dError
+ 
+  Location:
+    C:\Users\Alfredo Pab
+├│n\Documents\Proyectos 
+antigravity\mundo_homeop
+atico_v2\node_modules\as
+tro\dist\assets\build\re
+mote.js:6:11
+  Stack trace:
+    at loadRemoteImage (
+file:///C:/Users/Alfredo
+%20Pab%C3%B3n/Documents/
+Proyectos%20antigravity/
+mundo_homeopatico_v2/nod
+e_modules/astro/dist/ass
+ets/build/remote.js:6:11
+)
+    at async loadImage (
+file:///C:/Users/Alfredo
+%20Pab%C3%B3n/Documents/
+Proyectos%20antigravity/
+mundo_homeopatico_v2/nod
+e_modules/astro/dist/ass
+ets/build/generate.js:18
+3:25)
+    at async 
+generateImage (file:///C
+:/Users/Alfredo%20Pab%C3
+%B3n/Documents/Proyectos
+%20antigravity/mundo_hom
+eopatico_v2/node_modules
+/astro/dist/assets/build
+/generate.js:71:28)

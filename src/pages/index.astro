@@ -288,6 +288,63 @@ const catalogSections = [
             });
         }
 
+        // --- 3. Motor de Búsqueda con Resaltado (Highlighter) ---
+        const searchInput = document.getElementById('catalogo-search') as HTMLInputElement;
+        const productRows = document.querySelectorAll('.catalog-row');
 
+        // Inicializamos los nombres originales para el resaltado
+        productRows.forEach(row => {
+            const titleEl = row.querySelector('h3');
+            if (titleEl && !row.hasAttribute('data-original')) {
+                row.setAttribute('data-original', titleEl.textContent?.trim() || '');
+            }
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const value = (e.target as HTMLInputElement).value.toLowerCase().trim();
+                
+                productRows.forEach(row => {
+                    const originalText = row.getAttribute('data-original') || '';
+                    const titleEl = row.querySelector('h3');
+                    if (!titleEl) return;
+
+                    // Si no hay búsqueda, restauramos todo
+                    if (!value) {
+                        row.classList.remove('hidden');
+                        titleEl.textContent = originalText;
+                        
+                        // Cerramos secciones que podrían haber quedado vacías
+                        const section = row.closest('section');
+                        if (section) section.classList.remove('hidden');
+                        return;
+                    }
+
+                    // Si hay coincidencia
+                    if (originalText.toLowerCase().includes(value)) {
+                        row.classList.remove('hidden');
+                        
+                        // Aplicamos el resaltado Elite
+                        const regex = new RegExp(`(${value})`, 'gi');
+                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold animate-fade-in">$1</mark>`);
+                        
+                        // Aseguramos que la sección sea visible
+                        const section = row.closest('section');
+                        if (section) section.classList.remove('hidden');
+                    } else {
+                        row.classList.add('hidden');
+                        
+                        // Si todas las filas de una sección están ocultas, ocultamos la sección entera
+                        const section = row.closest('section');
+                        if (section) {
+                            const visibleRows = section.querySelectorAll('.catalog-row:not(.hidden)');
+                            if (visibleRows.length === 0) {
+                                section.classList.add('hidden');
+                            }
+                        }
+                    }
+                });
+            });
+        }
     });
 </script>

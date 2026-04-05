@@ -4,7 +4,7 @@
 <!-- Fuente para el Logo de Animación -->
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
-<div id="mobile-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#158C77] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden">
+<div id="mobile-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#158C77] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden opacity-0" style="display: none;">
     
     <div class="relative flex flex-row items-baseline text-white font-serif tracking-tighter">
         <!-- Parte: M [undo] -->
@@ -25,6 +25,20 @@
 
 </div>
 
+<!-- Script de Detección Inmediata (Corre antes que el renderizado completo) -->
+<script is:inline>
+    (function() {
+        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash_v2');
+        const splash = document.getElementById('mobile-splash');
+        if (hasSeenSplash && splash) {
+            splash.style.display = 'none';
+        } else if (splash) {
+            splash.style.display = 'flex';
+            splash.style.opacity = '1';
+        }
+    })();
+</script>
+
 <script>
     document.addEventListener('astro:page-load', () => {
         const splash = document.getElementById('mobile-splash');
@@ -33,18 +47,16 @@
         const hasSeenSplash = sessionStorage.getItem('hasSeenSplash_v2');
 
         if (!hasSeenSplash) {
-            // Tiempo total de la coreografía (5 segundos para lectura completa y apreciación)
+            // Tiempo total de la coreografía (3 segundos para visualización ágil y dinámica)
             setTimeout(() => {
                 splash.style.opacity = '0';
-                splash.style.transform = 'translateY(-20px)';
+                splash.style.transform = 'translateY(-10px)'; // Menos salto, más elegancia
                 sessionStorage.setItem('hasSeenSplash_v2', 'true');
                 
                 setTimeout(() => {
                     splash.style.display = 'none';
                 }, 700);
-            }, 5000); 
-        } else {
-            splash.style.display = 'none';
+            }, 3000); 
         }
     });
 </script>

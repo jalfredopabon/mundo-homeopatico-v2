@@ -39,15 +39,15 @@ const tabs = [
       return (
         <a 
           href={tab.path}
-          class={`flex items-center justify-center transition-all duration-300 ease-out origin-center ${
+          class={`flex items-center justify-center transition-all duration-300 ease-out ${
             isActive 
-              ? 'gap-2 bg-slate-100 text-slate-900 px-5 py-2 rounded-full' 
-              : 'w-10 h-10 rounded-full text-slate-700 hover:text-slate-900 hover:bg-surface-muted'
+              ? 'gap-2 text-slate-900' 
+              : 'text-slate-600 hover:text-slate-800'
           }`}
           aria-label={tab.name}
         >
           <div class={`flex items-center justify-center transition-transform duration-300 ${isActive ? 'scale-110' : ''}`}>
-            <Icons type={tab.type} class="w-[22px] h-[22px]" strokeWidth={1.5} />
+            <Icons type={isActive ? `${tab.type}-solid` : tab.type as any} class="w-[22px] h-[22px]" strokeWidth={1.5} />
           </div>
           
           {/* Texto dinámico visible solo en el estado activo */}

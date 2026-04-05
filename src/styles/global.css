@@ -32,6 +32,26 @@ h1, h2, h3, h4, h5, h6 {
   --border-medium: #cbd5e1;
   --bg-surface-hover: #e6efed;
   --header-offset: 66px;
+
+  /* --- 📏 Sistema de Tipografía Dinámica (Elite) --- */
+  --dynamic-font-size: 0.75rem; /* 12px base */
+  --dynamic-badge-size: 10px;    /* 10px base */
+}
+
+/* Escalamiento Proporcional 12/16/20 */
+body[data-font-size="sm"] {
+  --dynamic-font-size: 0.75rem; /* 12px */
+  --dynamic-badge-size: 10px;
+}
+
+body[data-font-size="md"] {
+  --dynamic-font-size: 1rem;    /* 16px */
+  --dynamic-badge-size: 12px;
+}
+
+body[data-font-size="lg"] {
+  --dynamic-font-size: 1.25rem; /* 20px */
+  --dynamic-badge-size: 14px;
 }
 
 /* ─── Selección de Texto Corporativa ─── */
@@ -113,6 +133,32 @@ button,
   @apply pt-8 pb-24 md:pt-12;
 }
 
+/* --- 🔍 Limpieza de Inputs de Búsqueda (Elite UI Polish) --- */
+/* Oculta la equis nativa azul del navegador para evitar duplicidad con nuestro botón de cerrar */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+/* Forzar apariencia limpia en todos los buscadores */
+input[type="search"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* --- 🏛️ Utilidades de Tipografía Dinámica --- */
+.text-dynamic-content {
+  font-size: var(--dynamic-font-size);
+  transition: font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-dynamic-badge {
+  font-size: var(--dynamic-badge-size) !important;
+  transition: font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 
 /* --- 🏛️ Sistema Maestro de Tablas (Estética Elite) --- */
@@ -534,12 +580,38 @@ button,
 
 
 
-  .header-search-trigger {
-    @apply h-10 w-full bg-slate-50 rounded-lg flex items-center px-4 border border-slate-100 focus-within:bg-white focus-within:border-brand focus-within:ring-2 transition-all cursor-pointer;
+  /* Los estilos de .header-search-trigger fueron eliminados para un diseño más limpio (Elite) */
+
+  /* --- 🔍 Search Overlay Mobile (Elite Style) --- */
+  .search-overlay-mobile {
+    @apply fixed inset-x-0 top-0 z-[60] bg-white h-16 flex items-center px-4 gap-3 border-b border-subtle transition-all duration-500;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .search-overlay-mobile.is-active {
+    @apply shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)];
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .header-search-trigger:focus-within {
-    --tw-ring-color: rgba(10, 92, 78, 0.2); /* brand/20 */
+  /* --- 🍔 Mobile Menu Icon Transformation (Elite) --- */
+  .is-menu-open .menu-icon-burger {
+    @apply opacity-0 scale-50 transition-all duration-300;
+    transform: rotate(-90deg);
+  }
+  
+  .is-menu-open .menu-icon-close {
+    @apply opacity-100 scale-100 rotate-0 transition-all duration-300;
+  }
+  
+  .is-menu-open #mobile-menu-btn {
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+    border-color: color-mix(in srgb, var(--primary) 20%, transparent);
   }
 
   .header-progress-track {

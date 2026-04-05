@@ -196,6 +196,26 @@ import { medicines } from '../data/medicines.ts';
 
             filtered.slice(start, end).forEach((item, idx) => {
                 item.classList.remove('hidden');
+
+                // --- CAPA DE RESALTADO (HIGHLIGHTER) ---
+                const titleEl = item.querySelector('h3');
+                const searchValue = searchInput?.value.toLowerCase().trim();
+                
+                // Inicializar original si no existe
+                if (titleEl && !item.hasAttribute('data-original')) {
+                    item.setAttribute('data-original', titleEl.textContent || '');
+                }
+
+                if (titleEl && item.hasAttribute('data-original')) {
+                    const originalText = item.getAttribute('data-original') || '';
+                    if (searchValue) {
+                        const regex = new RegExp(`(${searchValue})`, 'gi');
+                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold animate-fade-in">$1</mark>`);
+                    } else {
+                        titleEl.textContent = originalText;
+                    }
+                }
+
                 // Escalonar animación por ítem
                 setTimeout(() => item.classList.add('page-visible'), idx * 30);
             });

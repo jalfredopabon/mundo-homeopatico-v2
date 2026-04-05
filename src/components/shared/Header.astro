@@ -54,17 +54,18 @@ const showTextSize = isCatalog || isVademecum;
     <!-- Espaciador Dinámico 2 -->
     <div class="hidden md:block flex-1"></div>
 
-    <!-- Buscador Móvil -->
-    <div class="md:hidden flex-1 px-2">
-      <div class="header-search-trigger" id="mobile-search-trigger">
-        <Icons type="search" class="w-4 h-4 text-slate-400" strokeWidth={2.5} />
-        <span class="text-[13px] text-slate-400 font-medium ml-2 select-none">Buscar...</span>
-      </div>
-    </div>
-
     <!-- Lado Derecho: Controles Operativos -->
     <div class="flex-1 flex items-center justify-end gap-4 pr-4">
       
+      {/* Lupa de Búsqueda (Solo visible en Catálogo y Vademécum) */}
+      {!isContact && (
+        <button id="mobile-search-trigger" class="md:hidden flex flex-col items-center justify-center p-2 rounded-full hover:bg-slate-100/50 transition-all group" aria-label="Abrir buscador">
+          <div class="header-icon-wrap flex items-center justify-center">
+            <Icons type="search" class="w-[22px] h-[22px] text-slate-700 group-hover:text-brand group-hover:scale-110 transition-all" strokeWidth={2.5} />
+          </div>
+        </button>
+      )}
+
       {showTextSize && (
         <div class="relative group hidden sm:flex flex-col items-center justify-center" id="text-size-btn">
           <button class="header-tool-btn min-w-[3.5rem]" aria-label="Cambiar tamaño de texto">
@@ -76,8 +77,8 @@ const showTextSize = isCatalog || isVademecum;
           
           <!-- Tooltip "Elite" -->
           <div class="absolute top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-1 group-hover:translate-y-0 z-50">
-            <div class="bg-slate-900 text-white text-[10px] font-bold py-1.5 px-3 rounded whitespace-nowrap relative text-center uppercase tracking-widest shadow-xl">
-              Tamaño normal
+            <div class="bg-slate-900 text-white text-[11px] font-bold py-1.5 px-3 rounded whitespace-nowrap relative text-center tracking-tight shadow-xl">
+              <span id="text-size-label">Tamaño normal</span>
               <div class="absolute -top-1 left-1/2 -translate-x-1/2 border-solid border-b-slate-900 border-b-[6px] border-x-transparent border-x-[5px] border-t-0"></div>
             </div>
           </div>
@@ -96,10 +97,17 @@ const showTextSize = isCatalog || isVademecum;
         <span class="hidden sm:block text-[10px] font-medium mt-1">Pedidos</span>
       </button>
 
-      <!-- Botón Menú Móvil -->
-      <button id="mobile-menu-btn" class="md:hidden header-tool-btn min-w-[2.75rem] group" aria-label="Abrir menú principal">
-          <div class="header-icon-wrap">
-              <Icons type="menu" class="w-[22px] h-[22px] group-hover:scale-110 transition-transform" strokeWidth={2.5} />
+      <!-- Botón Menú Móvil (Transformable Hamburguesa -> X) -->
+      <button id="mobile-menu-btn" class="md:hidden header-tool-btn min-w-[2.75rem] group relative z-[5] overflow-hidden" aria-label="Abrir menú principal">
+          <div class="header-icon-wrap transition-all duration-300 transform" id="menu-icon-container">
+              <!-- Hamburguesa (Visible por defecto) -->
+              <div class="menu-icon-burger transition-all duration-300">
+                <Icons type="menu" class="w-[22px] h-[22px]" strokeWidth={2.5} />
+              </div>
+              <!-- X (Oculta por defecto) -->
+              <div class="menu-icon-close absolute inset-0 flex items-center justify-center opacity-0 scale-50 rotate-90 transition-all duration-300">
+                <Icons type="x" class="w-6 h-6 text-brand" strokeWidth={2.5} />
+              </div>
           </div>
       </button>
     </div>
@@ -108,6 +116,27 @@ const showTextSize = isCatalog || isVademecum;
   <!-- Barra de progreso (Feedback UX) -->
   <div class="header-progress-track">
     <div class="header-progress-bar" id="global-progress-bar"></div>
+  </div>
+
+  <!-- Overlay de Búsqueda Móvil (Paso 2) -->
+  <div id="mobile-search-overlay" class="search-overlay-mobile">
+    <div class="flex-1 relative">
+      <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+        <Icons type="search" class="w-5 h-5" strokeWidth={2.5} />
+      </div>
+      <input 
+        type="search" 
+        id="mobile-search-input"
+        placeholder="¿Qué medicamento buscas?" 
+        class="input-elite-field !h-11 pl-10 pr-4 !bg-slate-50 focus:!bg-white"
+        autocomplete="off"
+      />
+    </div>
+    <button id="close-search-btn" class="header-tool-btn min-w-[3rem]" aria-label="Cerrar búsqueda">
+      <div class="header-icon-wrap">
+        <Icons type="x" class="w-6 h-6" strokeWidth={2} />
+      </div>
+    </button>
   </div>
 </header>
 
@@ -127,25 +156,81 @@ const showTextSize = isCatalog || isVademecum;
 
     // 2. Menú Móvil
     if (menuBtn) {
-      menuBtn.addEventListener('click', () => {
+      menuBtn.addEventListener('click', (e) => {
+        // Evitamos que el clic se propague a otros elementos
+        e.preventDefault();
+        e.stopPropagation();
         document.dispatchEvent(new CustomEvent('toggleMobileMenu'));
       });
     }
 
-    // 3. Buscador Móvil Trigger
-    if (searchTrigger) {
+    // 3. Buscador Móvil Trigger (Overlay)
+    const searchOverlay = document.getElementById('mobile-search-overlay');
+    const searchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
+    const closeSearchBtn = document.getElementById('close-search-btn');
+
+    if (searchTrigger && searchOverlay && searchInput) {
       searchTrigger.addEventListener('click', () => {
-        // Enfoca el buscador del sidebar en móvil si existe, o emite evento
-        const sidebarSearch = document.getElementById('catalogo-search');
-        if (sidebarSearch) sidebarSearch.focus();
+        searchOverlay.classList.toggle('is-active');
+        if (searchOverlay.classList.contains('is-active')) {
+          setTimeout(() => searchInput.focus(), 300);
+        }
       });
     }
 
-    // 4. Lógica de Tamaño de Texto (Básica por ahora)
+    if (closeSearchBtn && searchOverlay) {
+      closeSearchBtn.addEventListener('click', () => {
+        searchOverlay.classList.remove('is-active');
+      });
+    }
+
+    // Sincronizar con el sistema de búsqueda contextual (Catálogo o Vademécum)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const value = (e.target as HTMLInputElement).value;
+        const targetIds = ['catalogo-search', 'vademecum-search'];
+        
+        targetIds.forEach(id => {
+          const targetInput = document.getElementById(id) as HTMLInputElement;
+          if (targetInput) {
+            targetInput.value = value;
+            // Disparamos el evento input para que los filtros de cada página reaccionen
+            targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+      });
+    }
+
+    // 4. Lógica de Tamaño de Texto (Sistema Dinámico Elite)
     if (textSizeBtn) {
+      const sizeLabel = document.getElementById('text-size-label');
+      const levels = ['sm', 'md', 'lg'];
+      const labels: Record<string, string> = {
+        'sm': 'Tamaño normal',
+        'md': 'Texto grande',
+        'lg': 'Texto extra'
+      };
+
+      // Inicializar desde localStorage o por defecto
+      let currentIdx = levels.indexOf(localStorage.getItem('mh-font-size') || 'sm');
+      if (currentIdx === -1) currentIdx = 0;
+      
+      const updateFontSize = (idx: number) => {
+        const size = levels[idx];
+        document.body.setAttribute('data-font-size', size);
+        localStorage.setItem('mh-font-size', size);
+        if (sizeLabel) sizeLabel.textContent = labels[size];
+        
+        // Emitir evento para componentes que necesiten recalculación profunda (opcional)
+        document.dispatchEvent(new CustomEvent('textSizeChanged', { detail: { size } }));
+      };
+
+      // Aplicar estado inicial
+      updateFontSize(currentIdx);
+
       textSizeBtn.addEventListener('click', () => {
-         // Emitir evento para que las tablas reaccionen
-         document.dispatchEvent(new CustomEvent('toggleTextSize'));
+        currentIdx = (currentIdx + 1) % levels.length;
+        updateFontSize(currentIdx);
       });
     }
 

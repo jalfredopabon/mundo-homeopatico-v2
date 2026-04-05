@@ -43,7 +43,7 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
                         {hasSubLinks ? (
                           <button class="drawer-accordion-trigger w-full flex items-center justify-between py-3.5 pl-4 text-body active:opacity-70 transition-opacity group">
                             <span class="text-[15px] font-medium tracking-tight flex-1 text-left">{group.name}</span>
-                            <Icons type="chevron-down" class="w-4 h-4 text-muted transition-transform duration-300 drawer-chevron" />
+                            <Icons type="chevron-down" class="w-4 h-4 text-body transition-transform duration-300 drawer-chevron" />
                           </button>
                         ) : (
                           <a href={group.href} class="w-full flex items-center justify-between py-3.5 pl-4 text-body active:opacity-70 transition-opacity group">
@@ -187,76 +187,79 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
 </div>
 
 <script>
-    // Lógica básica de apertura y cierre (Cableado inicial)
-    const openBtn = document.getElementById('mobile-menu-btn');
-    // Lógica básica de apertura y cierre (Estilo Pantalla Completa Figma)
-    const closeBtn = document.getElementById('close-mobile-menu');
-    const drawer = document.getElementById('mobile-menu-drawer');
+    document.addEventListener('astro:page-load', () => {
+        // Seleccionamos los elementos dinámicamente en cada carga
+        const drawer = document.getElementById('mobile-menu-drawer');
+        const closeBtn = document.getElementById('close-mobile-menu');
+        const drawerAccordions = document.querySelectorAll('.drawer-accordion-trigger');
+        const mobileContactoLinks = document.querySelectorAll('.mobile-contacto-scroll');
 
-    function toggleMenu(isOpen: boolean) {
-        if (isOpen) {
-            drawer?.classList.remove('translate-x-full');
-            document.body.style.overflow = 'hidden';
-        } else {
-            drawer?.classList.add('translate-x-full');
-            document.body.style.overflow = '';
-        }
-    }
-
-    // Escuchar evento personalizado que vendrá del Header
-    document.addEventListener('toggleMobileMenu', () => toggleMenu(true));
-    closeBtn?.addEventListener('click', () => toggleMenu(false));
-
-    // Lógica de Acordeones del Catálogo (Acordeón Exclusivo)
-    const drawerAccordions = document.querySelectorAll('.drawer-accordion-trigger');
-    
-    function closeAllAccordions() {
-        drawerAccordions.forEach(trigger => {
-            const content = trigger.nextElementSibling as HTMLElement;
-            const chevron = trigger.querySelector('.drawer-chevron');
-            if (content && content.style.maxHeight && content.style.maxHeight !== '0px') {
-                content.style.maxHeight = '0px';
-                chevron?.classList.remove('rotate-180');
-            }
-        });
-    }
-    
-    drawerAccordions.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            const content = trigger.nextElementSibling as HTMLElement;
-            const chevron = trigger.querySelector('.drawer-chevron');
+        // Función Maestra de Control
+        function toggleMenu(isOpen: boolean) {
+            if (!drawer) return;
             
-            const isClosed = content.style.maxHeight === '0px' || !content.style.maxHeight;
-            
-            if (isClosed) {
-                // Si estaba cerrado, cerramos todos los demás y abrimos este
-                closeAllAccordions();
-                content.style.maxHeight = content.scrollHeight + 'px';
-                chevron?.classList.add('rotate-180');
+            if (isOpen) {
+                drawer.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+                document.body.classList.add('is-menu-open');
             } else {
-                // Si estab abierto, lo cerramos
-                content.style.maxHeight = '0px';
-                chevron?.classList.remove('rotate-180');
+                drawer.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+                document.body.classList.remove('is-menu-open');
             }
-        });
-    });
-
-    // Si hace click fuera de cualquier acordeón, cerrar todos para limpiar la vista
-    document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const isTrigger = target.closest('.drawer-accordion-trigger');
-        const isContent = target.closest('.drawer-accordion-content');
-        
-        if (!isTrigger && !isContent) {
-            closeAllAccordions();
         }
-    });
 
-    // Cerrar el Drawer automáticamente al hacer clic en un enlace interno (ScrollSpy Móvil)
-    const mobileContactoLinks = document.querySelectorAll('.mobile-contacto-scroll');
-    mobileContactoLinks.forEach(link => {
-       link.addEventListener('click', () => {
-           toggleMenu(false);
-       });
+        // 1. Escuchar Evento desde el Header
+        document.addEventListener('toggleMobileMenu', () => {
+             toggleMenu(true);
+        });
+
+        // 2. Cerrar con el botón interno (X)
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => toggleMenu(false));
+        }
+
+        // 3. Lógica de Acordeones
+        function closeAllAccordions() {
+            drawerAccordions.forEach(trigger => {
+                const content = trigger.nextElementSibling as HTMLElement;
+                const chevron = trigger.querySelector('.drawer-chevron');
+                if (content && content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = '0px';
+                    chevron?.classList.remove('rotate-180');
+                }
+            });
+        }
+        
+        drawerAccordions.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                const content = trigger.nextElementSibling as HTMLElement;
+                const chevron = trigger.querySelector('.drawer-chevron');
+                if (!content) return;
+
+                const isClosed = content.style.maxHeight === '0px' || !content.style.maxHeight;
+                
+                if (isClosed) {
+                    closeAllAccordions();
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    chevron?.classList.add('rotate-180');
+                } else {
+                    content.style.maxHeight = '0px';
+                    chevron?.classList.remove('rotate-180');
+                }
+            });
+        });
+
+        // 4. Cerrar al pulsar enlaces internos (Catálogo, Sedes, Contacto)
+        const navigationLinks = drawer.querySelectorAll('a[href^="#"]');
+        navigationLinks.forEach(link => {
+           link.addEventListener('click', () => {
+               // Pequeño retardo para dar fluidez visual al inicio del desplazamiento
+               setTimeout(() => toggleMenu(false), 150);
+           });
+        });
+
+        // 5. Cierre de seguridad al hacer click fuera en el body (si existiera overlay)
+        // Por ahora, el botón X es nuestra fuente de verdad.
     });
 </script>

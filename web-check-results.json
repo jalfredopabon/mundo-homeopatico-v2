@@ -1,0 +1,407 @@
+{
+  "ssl": {
+    "subject": {
+      "CN": "mundo-homeopatico-v2.pages.dev"
+    },
+    "issuer": {
+      "C": "US",
+      "O": "Let's Encrypt",
+      "CN": "E7"
+    },
+    "subjectaltname": "DNS:*.mundo-homeopatico-v2.pages.dev, DNS:mundo-homeopatico-v2.pages.dev",
+    "infoAccess": {
+      "CA Issuers - URI": [
+        "http://e7.i.lencr.org/"
+      ]
+    },
+    "ca": false,
+    "bits": 256,
+    "pubkey": {
+      "type": "Buffer",
+      "data": [
+        4,
+        201,
+        111,
+        199,
+        194,
+        250,
+        251,
+        119,
+        226,
+        82,
+        172,
+        45,
+        68,
+        153,
+        155,
+        60,
+        220,
+        208,
+        130,
+        230,
+        169,
+        164,
+        4,
+        78,
+        119,
+        44,
+        13,
+        81,
+        96,
+        217,
+        160,
+        165,
+        159,
+        167,
+        87,
+        51,
+        194,
+        153,
+        67,
+        108,
+        139,
+        200,
+        198,
+        59,
+        188,
+        113,
+        197,
+        144,
+        159,
+        211,
+        174,
+        103,
+        107,
+        20,
+        213,
+        172,
+        215,
+        128,
+        219,
+        196,
+        170,
+        199,
+        213,
+        225,
+        59
+      ]
+    },
+    "asn1Curve": "prime256v1",
+    "nistCurve": "P-256",
+    "valid_from": "Mar 16 18:49:59 2026 GMT",
+    "valid_to": "Jun 14 18:49:58 2026 GMT",
+    "fingerprint": "85:BD:8E:22:72:3C:31:47:D9:07:B4:53:33:94:1A:F7:09:38:78:C2",
+    "fingerprint256": "48:74:8E:4F:D0:2F:94:3A:9D:EE:20:E3:B3:FB:CE:6E:CC:45:40:02:5B:A1:F1:18:C5:BC:40:61:15:B6:BC:3C",
+    "fingerprint512": "2A:CD:8B:A9:B0:AC:82:9D:D7:7D:71:A3:34:57:CB:A7:83:D3:E2:64:AA:61:2F:05:B1:18:70:BA:9F:71:8F:C2:40:97:EE:2A:72:3E:9A:79:A4:0B:D5:41:80:4A:5D:F7:78:C6:F7:5D:25:BD:F1:DF:30:B4:23:3E:B3:89:65:10",
+    "ext_key_usage": [
+      "1.3.6.1.5.5.7.3.1"
+    ],
+    "serialNumber": "060CDF71B9A8AEA5C0FAA5F7EB718410EF9B"
+  },
+  "domain": {
+    "internicData": {
+      "error": "No matches found for domain in internic database"
+    },
+    "whoisData": null
+  },
+  "headers": {
+    "date": "Mon, 06 Apr 2026 04:56:05 GMT",
+    "content-type": "text/html; charset=utf-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "access-control-allow-origin": "*",
+    "cache-control": "public, max-age=0, must-revalidate",
+    "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "x-content-type-options": "nosniff",
+    "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=%2B0upJDA8c7DZswBwj0kkJcQmn1m%2FMsKBY7GujknKGT34sA9WvQNucN4gRsLJDTgI9R3fSKqcoxQ1j4bz17kTiiVuKonx8gJkIUYhopaHUsBo2Ik0ev0FmbpZ6CmSRTHD%2FZg%2F0RJBYiiB34XtQpZgDSw%3D\"}]}",
+    "etag": "W/\"32b1ab9d55fafb91a9dade40cae6d428\"",
+    "server": "cloudflare",
+    "cf-ray": "9e7e3437e939218d-LHR",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "dns": {
+    "A": {
+      "address": "172.66.44.215",
+      "family": 4
+    },
+    "AAAA": [
+      "172.66.44.215",
+      "172.66.47.41"
+    ],
+    "MX": [
+      "2606:4700:310c::ac42:2f29",
+      "2606:4700:310c::ac42:2cd7"
+    ],
+    "TXT": [],
+    "NS": [],
+    "CNAME": [
+      "june.ns.cloudflare.com",
+      "memphis.ns.cloudflare.com"
+    ],
+    "SOA": [],
+    "SRV": {
+      "nsname": "june.ns.cloudflare.com",
+      "hostmaster": "dns.cloudflare.com",
+      "serial": 2399176330,
+      "refresh": 10000,
+      "retry": 2400,
+      "expire": 604800,
+      "minttl": 1800
+    },
+    "PTR": []
+  },
+  "http-security": {
+    "strictTransportPolicy": false,
+    "xFrameOptions": false,
+    "xContentTypeOptions": true,
+    "xXSSProtection": false,
+    "contentSecurityPolicy": false
+  },
+  "social-tags": {
+    "title": "Catálogo de Productos | Mundo Homeopático",
+    "description": "Catálogo digital de productos homeopáticos",
+    "viewport": "width=device-width, initial-scale=1.0",
+    "favicon": "/favicon.svg"
+  },
+  "security-txt": {
+    "isPresent": false
+  },
+  "firewall": {
+    "hasWaf": true,
+    "waf": "Cloudflare"
+  },
+  "dnssec": {
+    "DNSKEY": {
+      "isFound": false,
+      "answer": null,
+      "response": {
+        "Status": 3,
+        "TC": false,
+        "RD": true,
+        "RA": true,
+        "AD": true,
+        "CD": false,
+        "Question": [
+          {
+            "name": "https://mundo-homeopatico-v2.pages.dev/.",
+            "type": 48
+          }
+        ],
+        "Authority": [
+          {
+            "name": ".",
+            "type": 6,
+            "TTL": 86400,
+            "data": "a.root-servers.net. nstld.verisign-grs.com. 2026040501 1800 900 604800 86400"
+          }
+        ],
+        "Comment": "Response from 198.41.0.4."
+      }
+    },
+    "DS": {
+      "isFound": false,
+      "answer": null,
+      "response": {
+        "Status": 3,
+        "TC": false,
+        "RD": true,
+        "RA": true,
+        "AD": true,
+        "CD": false,
+        "Question": [
+          {
+            "name": "https://mundo-homeopatico-v2.pages.dev/.",
+            "type": 43
+          }
+        ],
+        "Authority": [
+          {
+            "name": ".",
+            "type": 6,
+            "TTL": 86400,
+            "data": "a.root-servers.net. nstld.verisign-grs.com. 2026040501 1800 900 604800 86400"
+          }
+        ],
+        "Comment": "Response from 2001:500:2d::d."
+      }
+    },
+    "RRSIG": {
+      "isFound": false,
+      "answer": null,
+      "response": {
+        "Status": 3,
+        "TC": false,
+        "RD": true,
+        "RA": true,
+        "AD": true,
+        "CD": false,
+        "Question": [
+          {
+            "name": "https://mundo-homeopatico-v2.pages.dev/.",
+            "type": 46
+          }
+        ],
+        "Authority": [
+          {
+            "name": ".",
+            "type": 6,
+            "TTL": 86398,
+            "data": "a.root-servers.net. nstld.verisign-grs.com. 2026040501 1800 900 604800 86400"
+          }
+        ]
+      }
+    }
+  },
+  "hsts": {
+    "message": "Site does not serve any HSTS headers.",
+    "compatible": false,
+    "hstsHeader": null
+  },
+  "threats": {
+    "urlHaus": {
+      "error": "Request to URLHaus failed, Request failed with status code 401"
+    },
+    "phishTank": {
+      "url0": {
+        "url": "https://mundo-homeopatico-v2.pages.dev/",
+        "in_database": "false"
+      }
+    },
+    "cloudmersive": {
+      "error": "Request to Cloudmersive failed: Request failed with status code 401"
+    },
+    "safeBrowsing": {
+      "error": "GOOGLE_CLOUD_API_KEY is required for the Google Safe Browsing check"
+    }
+  },
+  "redirects": {
+    "redirects": [
+      "https://mundo-homeopatico-v2.pages.dev/"
+    ]
+  },
+  "linked-pages": {
+    "internal": [
+      "https://mundo-homeopatico-v2.pages.dev/",
+      "https://mundo-homeopatico-v2.pages.dev/contacto",
+      "https://mundo-homeopatico-v2.pages.dev/vademecum",
+      "https://mundo-homeopatico-v2.pages.dev/#oficinales",
+      "https://mundo-homeopatico-v2.pages.dev/#multipotencias",
+      "https://mundo-homeopatico-v2.pages.dev/#magistrales",
+      "https://mundo-homeopatico-v2.pages.dev/#esencias-florales",
+      "https://mundo-homeopatico-v2.pages.dev/#oligoelementos",
+      "https://mundo-homeopatico-v2.pages.dev/#homeopaticos-esenciales",
+      "https://mundo-homeopatico-v2.pages.dev/#homeopaticos-especiales",
+      "https://mundo-homeopatico-v2.pages.dev/#cuidado-capilar",
+      "https://mundo-homeopatico-v2.pages.dev/#capsulas",
+      "https://mundo-homeopatico-v2.pages.dev/#cremas",
+      "https://mundo-homeopatico-v2.pages.dev/#geles",
+      "https://mundo-homeopatico-v2.pages.dev/#unguentos",
+      "https://mundo-homeopatico-v2.pages.dev/#elixires",
+      "https://mundo-homeopatico-v2.pages.dev/#esencias-florales-lmh",
+      "https://mundo-homeopatico-v2.pages.dev/#oligoelementos-k7",
+      "https://mundo-homeopatico-v2.pages.dev/#alimentos-funcionales",
+      "https://mundo-homeopatico-v2.pages.dev/#cbd",
+      "https://mundo-homeopatico-v2.pages.dev/#aceites-esenciales",
+      "https://mundo-homeopatico-v2.pages.dev/#/"
+    ],
+    "external": [
+      "https://www.linkedin.com/in/jalfredopabon/",
+      "https://mhmundohomeopatico.com/"
+    ]
+  },
+  "status": {
+    "isUp": true,
+    "responseTime": 49.392347000015434,
+    "responseCode": 200
+  },
+  "block-lists": {
+    "blocklists": [
+      {
+        "server": "AdGuard",
+        "serverIp": "176.103.130.130",
+        "isBlocked": false
+      },
+      {
+        "server": "AdGuard Family",
+        "serverIp": "176.103.130.132",
+        "isBlocked": false
+      },
+      {
+        "server": "CleanBrowsing Adult",
+        "serverIp": "185.228.168.10",
+        "isBlocked": false
+      },
+      {
+        "server": "CleanBrowsing Family",
+        "serverIp": "185.228.168.168",
+        "isBlocked": false
+      },
+      {
+        "server": "CleanBrowsing Security",
+        "serverIp": "185.228.168.9",
+        "isBlocked": false
+      },
+      {
+        "server": "CloudFlare",
+        "serverIp": "1.1.1.1",
+        "isBlocked": false
+      },
+      {
+        "server": "CloudFlare Family",
+        "serverIp": "1.1.1.3",
+        "isBlocked": false
+      },
+      {
+        "server": "Comodo Secure",
+        "serverIp": "8.26.56.26",
+        "isBlocked": false
+      },
+      {
+        "server": "Google DNS",
+        "serverIp": "8.8.8.8",
+        "isBlocked": false
+      },
+      {
+        "server": "Neustar Family",
+        "serverIp": "156.154.70.3",
+        "isBlocked": false
+      },
+      {
+        "server": "Neustar Protection",
+        "serverIp": "156.154.70.2",
+        "isBlocked": false
+      },
+      {
+        "server": "Norton Family",
+        "serverIp": "199.85.126.20",
+        "isBlocked": false
+      },
+      {
+        "server": "OpenDNS",
+        "serverIp": "208.67.222.222",
+        "isBlocked": false
+      },
+      {
+        "server": "OpenDNS Family",
+        "serverIp": "208.67.222.123",
+        "isBlocked": false
+      },
+      {
+        "server": "Quad9",
+        "serverIp": "9.9.9.9",
+        "isBlocked": false
+      },
+      {
+        "server": "Yandex Family",
+        "serverIp": "77.88.8.7",
+        "isBlocked": false
+      },
+      {
+        "server": "Yandex Safe",
+        "serverIp": "77.88.8.88",
+        "isBlocked": false
+      }
+    ]
+  }
+}

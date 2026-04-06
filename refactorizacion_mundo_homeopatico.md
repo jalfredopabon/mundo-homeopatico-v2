@@ -129,3 +129,23 @@
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 - [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.
+- [ ] **Seguridad Avanzada (WAF & Headers)**:
+    - [ ] Implementar **Content Security Policy (CSP)** para mitigar ataques XSS.
+    - [ ] Configurar **HSTS (Strict Transport Security)** para forzar conexiones HTTPS.
+    - [ ] Activar **X-Frame-Options** para prevenir ataques de Clickjacking.
+
+## 🧪 Auditorías de Calidad (Métricas Elite)
+
+### Reporte Lighthouse (06/04/2026)
+| Categoría | Puntaje | Observación Técnica |
+| :--- | :--- | :--- |
+| **Performance** | **66/100** | Escala 🟠. Requiere optimización de carga de imágenes e hidratación de scripts. |
+| **Accesibilidad** | **95/100** | Escala 🟢. Excelente soporte para lectores de pantalla y navegación teclado. |
+| **Best Practices** | **100/100** | Escala 🟢. Código libre de errores de consola y APIs obsoletas. |
+| **SEO** | **92/100** | Escala 🟢. Estructura de metadatos y encabezados altamente eficiente. |
+
+### Diagnóstico de Seguridad (Web-Check.xyz)
+- **Estado General:** Saludable. Detrás de Cloudflare (WAF activo).
+- **SSL:** Válido (Let's Encrypt).
+- **Hallazgos:** Faltan encabezados de seguridad avanzada (CSP, HSTS, X-Frame-Options), registrados en deuda técnica.
+- **Latencia:** **49.39ms** (Excelente desempeño de infraestructura).

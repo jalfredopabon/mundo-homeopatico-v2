@@ -38,19 +38,19 @@ h1, h2, h3, h4, h5, h6 {
   --dynamic-badge-size: 10px;    /* 10px base */
 }
 
-/* Escalamiento Proporcional 12/16/20 */
+/* Escalamiento Proporcional 14/17/20 (Elite UI Standard) */
 body[data-font-size="sm"] {
-  --dynamic-font-size: 0.75rem; /* 12px */
+  --dynamic-font-size: 0.875rem; /* 14px (Base Swiss Fine) */
   --dynamic-badge-size: 10px;
 }
 
 body[data-font-size="md"] {
-  --dynamic-font-size: 1rem;    /* 16px */
+  --dynamic-font-size: 1.0625rem; /* 17px (Texto Grande) */
   --dynamic-badge-size: 12px;
 }
 
 body[data-font-size="lg"] {
-  --dynamic-font-size: 1.25rem; /* 20px */
+  --dynamic-font-size: 1.25rem;  /* 20px (Texto Extra) */
   --dynamic-badge-size: 14px;
 }
 
@@ -656,6 +656,10 @@ input[type="search"] {
     @apply text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight;
   }
 
+  .catalog-description {
+    @apply text-slate-600 leading-relaxed mt-2 font-normal;
+  }
+
   .catalog-table-shell {
     @apply w-full bg-surface-white rounded-2xl border border-subtle overflow-hidden;
   }
@@ -924,5 +928,25 @@ input[type="search"] {
 
   .med-item.page-visible {
     animation: page-fade-in 0.25s ease-out both;
+  }
+
+  /* --- 📏 Tipografía Dinámica (Utilidades Maestras) --- */
+  .text-dynamic-content {
+    font-size: var(--dynamic-font-size);
+    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .text-dynamic-badge {
+    font-size: var(--dynamic-badge-size) !important;
+    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- 🏷️ Micropíldoras de Estado (Tokenizadas) --- */
+  .badge-status-alert {
+    @apply inline-flex items-center gap-1.5;
+    @apply bg-sky-50/50 text-sky-700 border border-sky-100/80;
+    @apply px-1.5 py-0.5 rounded-md;
+    @apply text-[10px] font-medium leading-tight whitespace-nowrap;
+    transition: all 0.2s ease-in-out;
   }
 }

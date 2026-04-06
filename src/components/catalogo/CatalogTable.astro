@@ -5,6 +5,8 @@ import ProductRowElite from "./ProductRowElite.astro";
 
 interface Product {
     name: string;
+    description?: string;
+    requiresPreparation?: boolean;
     badges: { label: string; variant?: any }[];
     farmaciaPrice: string;
     publicoPrice: string;
@@ -15,11 +17,12 @@ interface Props {
     id: string;
     title: string;
     subtitle?: string;
+    description?: string;
     breadcrumb: string[];
     products: Product[];
 }
 
-const { id, title, subtitle, breadcrumb, products } = Astro.props;
+const { id, title, subtitle, description, breadcrumb, products } = Astro.props;
 ---
 
 <section id={id} class="scroll-mt-16">
@@ -37,6 +40,11 @@ const { id, title, subtitle, breadcrumb, products } = Astro.props;
         </nav>
         <h2 class="catalog-title">{title}</h2>
         {subtitle && <p class="text-slate-700 text-[15px] font-medium leading-snug">{subtitle}</p>}
+        {description && (
+            <p class="catalog-description text-dynamic-content">
+                {description}
+            </p>
+        )}
     </header>
 
     <!-- Shell de la Tabla -->

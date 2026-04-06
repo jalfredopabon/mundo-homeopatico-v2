@@ -18,11 +18,30 @@ const catalogSections = [
     {
         id: "oficinales",
         title: "Oficinales",
+        description: "Un medicamento con una dilución · Gotas x 30ml – Glóbulos x 30g",
         breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
         products: [
-            { name: "Arnica montana D4", farmaciaPrice: "$18.500", publicoPrice: "$32.400", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Calendula officinalis D6", farmaciaPrice: "$16.200", publicoPrice: "$28.900", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Bryonia alba D12", farmaciaPrice: "$21.000", publicoPrice: "$36.500", badges: [{ label: "Tabletas", variant: "outline" }] },
+            { 
+              name: "Arnica montana D4", 
+              description: "Traumatismos, contusiones y dolores musculares post-esfuerzo.",
+              farmaciaPrice: "$18.500", 
+              publicoPrice: "$32.400", 
+              badges: [{ label: "Gotas", variant: "outline" }] 
+            },
+            { 
+              name: "Calendula officinalis D6", 
+              requiresPreparation: true,
+              farmaciaPrice: "$16.200", 
+              publicoPrice: "$28.900", 
+              badges: [{ label: "Gotas", variant: "outline" }] 
+            },
+            { 
+              name: "Bryonia alba D12", 
+              description: "Inflamación de mucosas y dolores punzantes que empeoran con el movimiento.",
+              farmaciaPrice: "$21.000", 
+              publicoPrice: "$36.500", 
+              badges: [{ label: "Tabletas", variant: "outline" }] 
+            },
             { name: "Nux vomica D6", farmaciaPrice: "$17.800", publicoPrice: "$31.200", badges: [{ label: "Gotas", variant: "outline" }] }
         ]
     },
@@ -31,27 +50,43 @@ const catalogSections = [
         title: "Multipotencias",
         breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
         products: [
-            { name: "Lachesis mutus (Multipotencia)", farmaciaPrice: "$45.000", publicoPrice: "$78.000", badges: [{ label: "Glóbulos", variant: "outline" }] },
+            { name: "Lachesis mutus (Multipotencia)", requiresPreparation: true, farmaciaPrice: "$45.000", publicoPrice: "$78.000", badges: [{ label: "Glóbulos", variant: "outline" }] },
             { name: "Lycopodium clavatum (Multipotencia)", farmaciaPrice: "$48.500", publicoPrice: "$84.000", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Natrum muriaticum (Multipotencia)", farmaciaPrice: "$42.900", publicoPrice: "$75.200", badges: [{ label: "Gotas", variant: "outline" }] }
+            { name: "Natrum muriaticum (Multipotencia)", requiresPreparation: true, farmaciaPrice: "$42.900", publicoPrice: "$75.200", badges: [{ label: "Gotas", variant: "outline" }] }
         ]
     },
     {
         id: "magistrales",
         title: "Magistrales",
+        description: "Varios medicamentos con sus diluciones · Gotas x 30ml – Glóbulos x 30g",
         breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
         products: [
-            { name: "Fórmula Magistral Digestiva MH", farmaciaPrice: "$35.000", publicoPrice: "$62.000", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Fórmula Magistral Sedante MH", farmaciaPrice: "$38.000", publicoPrice: "$65.000", badges: [{ label: "Spray", variant: "outline" }] },
+            { 
+              name: "Fórmula Magistral Digestiva MH", 
+              description: "Tratamiento coadyuvante para gastritis crónica y reflujo gastroesofágico.",
+              requiresPreparation: true,
+              farmaciaPrice: "$35.000", 
+              publicoPrice: "$62.000", 
+              badges: [{ label: "Gotas", variant: "outline" }] 
+            },
+            { 
+              name: "Fórmula Magistral Sedante MH", 
+              description: "Control de ansiedad, trastornos menores del sueño e irritabilidad.",
+              requiresPreparation: true,
+              farmaciaPrice: "$38.000", 
+              publicoPrice: "$65.000", 
+              badges: [{ label: "Spray", variant: "outline" }] 
+            },
             { name: "Fórmula Magistral Respiratoria", farmaciaPrice: "$33.500", publicoPrice: "$59.000", badges: [{ label: "Jarabe", variant: "outline" }] }
         ]
     },
     {
         id: "esencias-florales",
         title: "Esencias florales",
+        description: "Individuales o combinadas a partir de los sistemas Bach, Australiano, Nueva generación y Orquídeas del Amazonas.",
         breadcrumb: ["De nuestra farmacia", "Según prescripción"],
         products: [
-            { name: "Rescue Remedy (Auxilio)", farmaciaPrice: "$24.500", publicoPrice: "$42.000", badges: [{ label: "Gotas / Spray", variant: "outline" }] },
+            { name: "Rescue Remedy (Auxilio)", description: "Combinación de urgencia para situaciones de crisis emocional o shock físico.", farmaciaPrice: "$24.500", publicoPrice: "$42.000", badges: [{ label: "Gotas / Spray", variant: "outline" }] },
             { name: "White Chestnut (Pensamientos)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] },
             { name: "Star of Bethlehem (Consuelo)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] },
             { name: "Walnut (Protección)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] }
@@ -64,16 +99,31 @@ const catalogSections = [
         breadcrumb: ["De nuestra farmacia", "Según prescripción"],
         products: [
             { name: "Oligoelementos individuales", farmaciaPrice: "$19.500", publicoPrice: "$36.000", badges: [{ label: "Gotas / Spray", variant: "outline" }, { label: "Glóbulos x 30g", variant: "outline" }] },
-            { name: "Oligoelementos combinados (hasta 6 componentes)", farmaciaPrice: "$25.500", publicoPrice: "$44.000", badges: [{ label: "Gotas / Spray", variant: "outline" }, { label: "Glóbulos x 30g", variant: "outline" }] },
+            { name: "Oligoelementos combinados (hasta 6 componentes)", requiresPreparation: true, farmaciaPrice: "$25.500", publicoPrice: "$44.000", badges: [{ label: "Gotas / Spray", variant: "outline" }, { label: "Glóbulos x 30g", variant: "outline" }] },
             { name: "Kit Oligoelementos (3 unidades)", farmaciaPrice: "$55.000", publicoPrice: "$92.000", badges: [{ label: "Oferta", variant: "outline" }] }
         ]
     },
     {
         id: "homeopaticos-esenciales",
-        title: "Homeopáticos esenciales",
+        title: "Esenciales",
+        description: "Todos los medicamentos disponibles en gotas se pueden elaborar en las otras formas farmacéuticas de este listado",
         breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
         products: [
-            { name: "Complex Inmuno MH", farmaciaPrice: "$28.500", publicoPrice: "$49.500", badges: [{ label: "Gotas", variant: "outline" }] },
+            { 
+              name: "Complex Inmuno MH", 
+              description: "Fortalecimiento preventivo de las defensas naturales del organismo.",
+              farmaciaPrice: "$28.500", 
+              publicoPrice: "$49.500", 
+              badges: [
+                { label: "Equinácea" }, { label: "Propóleo" }, { label: "Vitamina C" }, 
+                { label: "Zinc" }, { label: "Saúco" }, { label: "Ajo" }, 
+                { label: "Astrágalo" }, { label: "Jengibre" }, { label: "Cúrcuma" }, 
+                { label: "Jalea Real" }, { label: "Ganoderma" }, { label: "Shiitake" }, 
+                { label: "Reishi" }, { label: "Ginseng" }, { label: "Aloe Vera" }, 
+                { label: "Uña de Gato" }, { label: "Artemisa" }, { label: "Caléndula" }, 
+                { label: "Menta" }, { label: "Eucalipto" }, { label: "Limón" }, { label: "Miel" }
+              ]
+            },
             { name: "Complex Osteo MH", farmaciaPrice: "$31.200", publicoPrice: "$54.000", badges: [{ label: "Tabletas", variant: "outline" }] },
             { name: "Complex Cardio MH", farmaciaPrice: "$29.900", publicoPrice: "$52.000", badges: [{ label: "Gotas", variant: "outline" }] }
         ]

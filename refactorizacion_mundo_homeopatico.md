@@ -87,5 +87,31 @@
 - **Pulido UI/UX (Sentence Case):**
     - Eliminación de `uppercase` en Tooltips y headers para cumplir con la estética "Sentence Case" del proyecto.
 
+### Hito 33: Estandarización de Descripciones y Paridad Visual (05/04/2026)
+- **Tokenización Atómica:** Creación del átomo global `.catalog-description` en `global.css` para centralizar el estilo de las descripciones de sección.
+- **Modulización:** Actualización de `CatalogTable.astro` para usar el nuevo átomo y habilitar la tipografía dinámica en descripciones.
+- **Paridad Visual 1:1:** Ajuste de título ("Esenciales") y agregado de descripción técnica en la sección de homeopáticos para coincidir con la maqueta aprobada.
+
+### Hito 34: Refinamiento Tipográfico y Legibilidad Médica (05/04/2026)
+- **Base Técnica:** Ajuste de la escala tipográfica `sm` de 12px a **14px** en `global.css` para optimizar la lectura técnica de médicos.
+- **Utilidades:** Definición de `.text-dynamic-content` y `.text-dynamic-badge` para asegurar un escalado fluido (`0.3s cubic-bezier`) en toda la interfaz.
+
+### Hito 35: Estandarización de Estado de Producto - Micropíldoras (05/04/2026)
+- **Tokenización Atómica:** Creación del átomo `.badge-status-alert` (sky-50/700) para estados de "elaboración bajo pedido".
+- **Lego-Architecture Expansion:** 
+    - Evolución de `ProductRowElite.astro` para soportar una jerarquía de **3 líneas dinámicas** (Nombre+Estado, Descripción técnica, Badges de atributos).
+    - Implementación de `flex-wrap` inteligente para evitar colisiones visuales entre el nombre y el badge de estado.
+- **Integración de Datos:** Inyección de descripciones reales y estados de preparación en secciones críticas de `index.astro` (Oficinales, Magistrales, Esenciales).
+- **UX Parity:** Se logró paridad visual 1:1 con la versión online garantizando que la información crítica para médicos sea visible sin interacción (sin tooltips huerfanos).
+
+### Hito 36: Estandarización de Layout y Resolución de Conflictos (05/04/2026)
+- **Resolución de Conflictos de Renderizado:** Eliminación del `line-clamp-2` en las descripciones de productos para desactivar el comportamiento `-webkit-box`, el cual causaba truncados prematuros (especialmente en palabras largas como "gastroesofágico") debido a interferencias con `text-wrap: pretty`.
+- **Modularización y Tokenización Total:**
+    - Saneamiento de `CatalogTable.astro` y `ProductRowElite.astro` mediante la remoción de todos los parches locales de ancho (`max-w-2xl`, `max-w-none`).
+    - Unificación del flujo visual delegado 100% al átomo global `.catalog-description` en `global.css`.
+- **Estructura "Elite" Antifragilidad:** Inyección técnica de `w-full min-w-0` en el contenedor de información de `ProductRowElite.astro`, garantizando que el Flexbox secundario no se "encoja" (shrink) al ancho del título y aproveche el 100% del espacio del grid `1fr`.
+- **Parity Result:** Alineación perfecta de la vertical de lectura entre encabezados de sección y descripciones de producto, logrando una interfaz fluida bajo los estándares de arquitectura atómica.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
+- [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.

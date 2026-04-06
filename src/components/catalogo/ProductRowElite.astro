@@ -11,6 +11,8 @@ interface Badge {
 
 interface Props {
   name: string;
+  description?: string;
+  requiresPreparation?: boolean;
   badges: Badge[];
   farmaciaPrice: string;
   publicoPrice: string;
@@ -21,30 +23,99 @@ interface Props {
 }
 
 const { 
-  name, 
+  name,
+  description,
+  requiresPreparation,
   badges, 
   farmaciaPrice, 
   publicoPrice, 
   cartData 
 } = Astro.props;
+
+// Fase 1: Lógica de Truncado Automático (Revelación Progresiva)
+const maxBadges = 10;
+const visibleBadges = (badges && badges.length > 0) ? badges.slice(0, maxBadges) : [];
+const hiddenBadges = badges && badges.length > maxBadges ? badges.slice(maxBadges) : [];
+const extraCount = hiddenBadges.length;
+
+// ID Único para evitar colisiones quirúrgicas entre filas
+const extraId = `badges-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
 <div class="catalog-row group/row">
     <!-- Información del Producto (Nivel 3 Lego) -->
-    <div class="flex flex-col pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
-        <h3 class="text-slate-900 font-bold leading-tight line-clamp-2 text-dynamic-content">
-            {name}
-        </h3>
-        <div class="flex flex-wrap items-center gap-2 mt-2">
-            {badges.map((badge) => (
-                <BadgeElite 
-                  label={badge.label} 
-                  variant={badge.variant || 'outline'} 
-                  size="xs"
-                  class="text-dynamic-badge" 
-                />
-            ))}
+    <div class="flex flex-col w-full min-w-0 pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
+        <!-- Línea 1: Nombre + Estado (Flujo Dinámico) -->
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <h3 class="text-slate-900 font-bold leading-tight text-dynamic-content">
+                {name}
+                <!-- Fase 2: Keywords ocultos para permitir búsqueda por badges invisibles -->
+                <span style="display: none !important;" aria-hidden="true">
+                    {badges && badges.map(b => b.label).join(' ')}
+                </span>
+            </h3>
+            
+            {requiresPreparation && (
+              <div class="badge-status-alert">
+                  <Icons type="clock" class="w-[11px] h-[11px]" strokeWidth={3} />
+                  <span>Requiere elaboración</span>
+              </div>
+            )}
         </div>
+
+        <!-- Línea 2: Descripción (Si existe) -->
+        {description && (
+            <p class="catalog-description text-slate-700 mt-1">
+                {description}
+            </p>
+        )}
+
+        <!-- Línea 3: Badges de Atributos (Revelación Progresiva) -->
+        {badges && badges.length > 0 && (
+            <div class="flex flex-wrap items-center gap-2 mt-2">
+                {/* Badges Visibles */}
+                {visibleBadges.map((badge) => (
+                    <BadgeElite 
+                      label={badge.label} 
+                      variant={badge.variant || 'outline'} 
+                      size="xs"
+                      class="text-dynamic-badge" 
+                    />
+                ))}
+
+                {/* Contenedor Fantasma (Invisible para el diseño, real para el DOM) */}
+                <span id={extraId} style="display: none;">
+                    {hiddenBadges.map((badge) => (
+                        <span class="inline-flex m-1">
+                          <BadgeElite 
+                            label={badge.label} 
+                            variant={badge.variant || 'outline'} 
+                            size="xs"
+                            class="text-dynamic-badge" 
+                          />
+                        </span>
+                    ))}
+                </span>
+
+                {/* Botón Contador (Interruptor Inteligente- Fase 1) */}
+                {extraCount > 0 && (
+                  <button 
+                    id={`${extraId}-btn`}
+                    data-expanded="false"
+                    class="badge-elite badge-elite--emerald px-2 py-0.5 text-[9px] font-bold flex items-center gap-1 cursor-pointer hover:bg-emerald-100 transition-all group/extra ml-0.5"
+                    onclick={`const container = document.getElementById('${extraId}'); const label = this.querySelector('.js-label'); const isExpanded = this.getAttribute('data-expanded') === 'true'; if (isExpanded) { container.style.display = 'none'; label.textContent = '+${extraCount} más'; this.setAttribute('data-expanded', 'false'); } else { container.style.display = 'contents'; label.textContent = 'Ver menos'; this.setAttribute('data-expanded', 'true'); }`}
+                    aria-label="Alternar visualización de badges"
+                  >
+                    <span class="js-label">+{extraCount} más</span>
+                    <Icons 
+                      type="chevron-down" 
+                      class="w-2.5 h-2.5 transition-transform duration-300 group-data-[expanded=true]/extra:rotate-180" 
+                      strokeWidth={3} 
+                    />
+                  </button>
+                )}
+            </div>
+        )}
     </div>
 
     <!-- Precios y Acción (Estructura responsiva Elite) -->

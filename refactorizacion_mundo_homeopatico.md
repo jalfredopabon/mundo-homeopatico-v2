@@ -72,5 +72,20 @@
 - **Dinamización:** Implementación de un sistema de carga automática para la galería de iconos de desarrollo.
 - **Sincronización:** Ajuste del icono 'mortero' a su versión Stroke oficial para mantener coherencia con el sistema de diseño.
 
+### Hito 32: Sistema de Tipografía Dinámica y Navegación Móvil Elite (05/04/2026)
+- **Navegación Móvil Premium:**
+    - Implementación de iconos dinámicos (**Stroke → Solid**) basados en el estado activo (`isActive`) de la ruta.
+    - Saneamiento y normalización de variantes `Solid` en `Icons.astro` para `map-pin`, `user` y `grid`.
+    - Refinamiento estético: Eliminación de píldoras de fondo en el `MobileTabNav` para lograr una interfaz minimalista.
+- **Tipografía Dinámica Global:**
+    - Creación del sistema de escalado (12px / 16px / 20px) mediante variables CSS reactivas en `global.css`.
+    - Persistencia de estado en `localStorage` vinculada al atributo `data-font-size` del `body`.
+    - Botón "Texto" en Header con ciclo infinito y transición fluida (`0.3s cubic-bezier`).
+- **Sincronización de Componentes:**
+    - Dinamización de nombres de productos y descripciones en `ProductRowElite.astro` y `MedicalCard.astro`.
+    - Implementación de **Badges Reactivos** mediante la clase maestra `.text-dynamic-badge`.
+- **Pulido UI/UX (Sentence Case):**
+    - Eliminación de `uppercase` en Tooltips y headers para cumplir con la estética "Sentence Case" del proyecto.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.

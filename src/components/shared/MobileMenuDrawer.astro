@@ -251,13 +251,15 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
         });
 
         // 4. Cerrar al pulsar enlaces internos (Catálogo, Sedes, Contacto)
-        const navigationLinks = drawer.querySelectorAll('a[href^="#"]');
-        navigationLinks.forEach(link => {
-           link.addEventListener('click', () => {
-               // Pequeño retardo para dar fluidez visual al inicio del desplazamiento
-               setTimeout(() => toggleMenu(false), 150);
-           });
-        });
+        if (drawer) {
+            const navigationLinks = drawer.querySelectorAll('a[href^="#"]');
+            navigationLinks.forEach(link => {
+               link.addEventListener('click', () => {
+                   // Pequeño retardo para dar fluidez visual al inicio del desplazamiento
+                   setTimeout(() => toggleMenu(false), 150);
+               });
+            });
+        }
 
         // 5. Cierre de seguridad al hacer click fuera en el body (si existiera overlay)
         // Por ahora, el botón X es nuestra fuente de verdad.

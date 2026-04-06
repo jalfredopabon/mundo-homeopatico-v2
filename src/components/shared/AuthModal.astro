@@ -2,8 +2,8 @@
 import Icons from './Icons.astro';
 ---
 
-<!-- Modal de Autenticación (Capa sobre todo el Dashboard) -->
-<div id="auth-modal-overlay" class="fixed inset-0 z-[100] bg-slate-900/70 backdrop-blur-md flex items-start pt-16 md:pt-0 md:items-center justify-center overflow-y-auto transition-opacity duration-300 pb-10">
+<!-- Modal de Autenticación (Capa sobre el Dashboard, respeta TabNav en móvil) -->
+<div id="auth-modal-overlay" class="fixed top-0 left-0 right-0 bottom-16 md:bottom-0 z-40 md:z-[100] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center overflow-y-auto transition-all duration-500 ease-in-out">
     
     <!-- Enlace invisible que cubre el fondo para cerrar el modal al hacer clic fuera -->
     <a href="/" class="absolute inset-0 z-0" aria-label="Cerrar y volver al inicio"></a>

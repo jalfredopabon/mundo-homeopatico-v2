@@ -1,7 +1,6 @@
 ---
 // src/components/catalogo/ProductRowElite.astro
 import BadgeElite from "../shared/BadgeElite.astro";
-import ButtonElite from "../shared/ButtonElite.astro";
 import Icons from "../shared/Icons.astro";
 
 interface Badge {
@@ -118,35 +117,37 @@ const extraId = `badges-${Math.random().toString(36).substring(2, 9)}`;
         )}
     </div>
 
-    <!-- Precios y Acción (Estructura responsiva Elite) -->
-    <div class="sm:contents">
-        <!-- Farmacia -->
-        <div class="flex flex-col sm:block text-left sm:text-right mt-3 sm:mt-0 pt-3 sm:pt-0 border-t border-subtle/30 sm:border-0">
-            <span class="sm:hidden text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Farmacia</span>
-            <span class="catalog-cell-price">
-                {farmaciaPrice}
-            </span>
-        </div>
-        
-        <!-- Público (Desktop) -->
-        <div class="hidden sm:block text-right mt-1 sm:mt-0">
-            <span class="catalog-cell-price">
-                {publicoPrice}
-            </span>
+    <!-- Precios y Acción (Estructura responsiva Elite - Hito 39) -->
+    <div class="catalog-price-hub">
+        <!-- Grupo de Precios (Horizontal Master Layout) -->
+        <div class="flex flex-row flex-wrap items-center gap-x-4 gap-y-1.5 sm:contents">
+            <!-- Farmacia -->
+            <div class="flex items-center gap-1.5 sm:block text-left sm:text-right">
+                <span class="sm:hidden text-[10px] text-slate-400 font-medium">Farmacia:</span>
+                <span class="catalog-cell-price">
+                    {farmaciaPrice || '$0.00'}
+                </span>
+            </div>
+            
+            <!-- Público -->
+            <div class="flex items-center gap-1.5 sm:block text-left sm:text-right">
+                <span class="sm:hidden text-[10px] text-slate-400">Público:</span>
+                <span class="catalog-cell-price">
+                    {publicoPrice || '$0.00'}
+                </span>
+            </div>
         </div>
 
-        <!-- Botón de Acción (Uso de ButtonElite) -->
-        <div class="flex justify-end sm:justify-center mt-3 sm:mt-0">
+        <!-- Botón de Acción (Compacto en Móvil) -->
+        <div class="flex justify-end sm:justify-center">
             <button 
-                class="catalog-btn-add btn-add-cart" 
+                class="catalog-btn-add btn-add-cart !w-10 sm:!w-10" 
                 data-name={cartData?.name || name} 
-                data-price={cartData?.price || farmaciaPrice.replace(/[^0-9]/g, '')}
+                data-price={cartData?.price || String(farmaciaPrice || '0').replace(/[^0-9]/g, '')}
                 aria-label={`Añadir ${name}`}
-                id={cartData ? `btn-${cartData.price}` : undefined}
             >
-                <div class="flex items-center justify-center mt-[-1px]">
+                <div class="flex items-center justify-center">
                     <Icons type="plus" class="w-[18px] h-[18px] transition-colors" strokeWidth={3} />
-                    <span class="sm:hidden ml-2 font-bold text-sm leading-none">Añadir al pedido</span>
                 </div>
             </button>
         </div>

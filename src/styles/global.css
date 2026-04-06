@@ -476,7 +476,14 @@ input[type="search"] {
   }
 
   .btn-back-to-top {
-    @apply fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-brand;
+    @apply fixed bottom-8 right-8 w-11 h-11 bg-white text-slate-800 rounded-full flex items-center justify-center translate-y-20 opacity-0 invisible hover:-translate-y-1 hover:text-brand transition-all duration-500 z-50 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-brand shadow-lg;
+  }
+
+  @media (max-width: 767px) {
+    .btn-back-to-top {
+      bottom: calc(4rem + 1rem); /* h-16 (64px) + 16px de separación */
+      right: 1.5rem;
+    }
   }
 
   /* --- 🛒 Cart Drawer --- */
@@ -674,6 +681,11 @@ input[type="search"] {
 
   .catalog-cell-price {
     @apply text-slate-700 font-medium transition-colors;
+  }
+
+  /* --- 🏛️ Hub de Acción Móvil (Hito 39) --- */
+  .catalog-price-hub {
+    @apply flex items-center justify-between mt-3 pt-3 border-t border-slate-100 sm:contents;
   }
   
   .catalog-row:hover .catalog-cell-price {

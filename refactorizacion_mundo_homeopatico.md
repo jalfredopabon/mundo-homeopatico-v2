@@ -112,6 +112,20 @@
 - **Estructura "Elite" Antifragilidad:** Inyección técnica de `w-full min-w-0` en el contenedor de información de `ProductRowElite.astro`, garantizando que el Flexbox secundario no se "encoja" (shrink) al ancho del título y aproveche el 100% del espacio del grid `1fr`.
 - **Parity Result:** Alineación perfecta de la vertical de lectura entre encabezados de sección y descripciones de producto, logrando una interfaz fluida bajo los estándares de arquitectura atómica.
 
+### Hito 38: Blindaje de Experiencia y Control de Foco (05/04/2026)
+- **Seguridad UI:** Implementación de un **Backdrop Blindado** en `AuthModal.astro` con `z-index: 70`, bloqueando toda interacción con el Header y la navegación mientras el modal está activo.
+- **Gestión de Scroll:** Integración de lógica de bloqueo/desbloqueo de scroll en el `body` para eliminar el "scroll fantasma" en móviles.
+- **Corrección de Jerarquía:** Elevación del `z-index` para superar el `z-50` del Header principal.
+
+### Hito 39: Catálogo Elite Mobile - Densidad y Paridad Visual (05/04/2026)
+- **Arquitectura del Hub (`.catalog-price-hub`):** Creación de un átomo global en `global.css` que organiza precios y acciones en una sola línea horizontal en móviles.
+- **Rescate de Datos:** Habilitación del **Precio Público** en móvil, logrando paridad 1:1 con la versión de escritorio.
+- **Micro-diseño:** 
+    - Sustitución de etiquetas por **Micro-labels** en "Sentence Case" (Farmacia vs Público).
+    - Compactación del botón de compra a un icono **`[+]` cuadrado**, optimizando el espacio vertical en un **40%**.
+- **Antifragilidad SSR:** Implementación de validaciones de cadena y valores por defecto (`$0.00`) para prevenir errores de renderizado ante datos nulos.
+- **Corrección PostCSS:** Resolución de errores de compilación mediante el uso de tokens nativos (`border-slate-100`).
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 - [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.

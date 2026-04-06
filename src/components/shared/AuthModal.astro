@@ -3,7 +3,7 @@ import Icons from './Icons.astro';
 ---
 
 <!-- Modal de Autenticación (Capa sobre el Dashboard, respeta TabNav en móvil) -->
-<div id="auth-modal-overlay" class="fixed top-0 left-0 right-0 bottom-16 md:bottom-0 z-40 md:z-[100] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center overflow-y-auto transition-all duration-500 ease-in-out">
+<div id="auth-modal-overlay" class="fixed top-0 left-0 right-0 bottom-16 md:bottom-0 z-[70] md:z-[100] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center overflow-y-auto transition-all duration-500 ease-in-out">
     
     <!-- Enlace invisible que cubre el fondo para cerrar el modal al hacer clic fuera -->
     <a href="/" class="absolute inset-0 z-0" aria-label="Cerrar y volver al inicio"></a>
@@ -106,7 +106,7 @@ import Icons from './Icons.astro';
 
 <script>
     function initAuth() {
-        const TEMP_USER = 'invitado';
+        const TEMP_USER = 'invitado'; // TODO: Integrar con sistema real de autenticación
         const TEMP_PASS = '1234';
 
         const overlay = document.getElementById('auth-modal-overlay');
@@ -120,21 +120,30 @@ import Icons from './Icons.astro';
         const iconClosed = document.getElementById('icon-eye-closed');
         const submitBtn = document.getElementById('auth-submit');
 
-        if (!form) return;
+        if (!form || !overlay) return;
+
+        // Bloqueo de scroll al detectar el modal activo
+        if (!overlay.classList.contains('hidden')) {
+            document.body.style.overflow = 'hidden';
+            // Pequeño delay de foco para UX
+            setTimeout(() => inputNit?.focus(), 500);
+        }
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const user = inputNit?.value.trim().toLowerCase(); // Normalización a minúsculas
+            const user = inputNit?.value.trim().toLowerCase(); 
             const pass = inputPass?.value;
 
             if (user === TEMP_USER && pass === TEMP_PASS) {
                 if (submitBtn) submitBtn.textContent = 'Ingresando...';
-                overlay?.classList.add('opacity-0');
+                
+                // Transición fluida de salida
+                overlay.classList.add('opacity-0');
                 
                 setTimeout(() => {
-                    overlay?.classList.add('hidden');
-                    document.body.style.overflow = '';
-                }, 300);
+                    overlay.classList.add('hidden');
+                    document.body.style.overflow = ''; // Devolver scroll al usuario
+                }, 400);
             } else {
                 errorBox?.classList.remove('hidden');
                 errorBox?.classList.add('flex');

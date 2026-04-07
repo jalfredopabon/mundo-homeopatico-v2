@@ -142,7 +142,40 @@
 - Mejora de la fluidez visual al cambiar entre medicamentos, eliminando la aparición brusca de contenido.
 **Deuda Técnica:** Ninguna. Se sincronizó con el sistema de visibilidad `hidden` existente.
 
+## Hito 45: Inicio Seguridad "Fort Knox" (Fase 1)
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Implementación de headers de seguridad básicos para blindar la infraestructura en Cloudflare Pages.
+**Acciones:**
+- Creación de `public/_headers` (fuente de verdad para cabeceras HTTP).
+- Inyección de `X-Frame-Options: DENY` (Anti-Clickjacking).
+- Inyección de `X-Content-Type-Options: nosniff` (Anti-MIME Sniffing).
+- Restricción global de permisos (`Permissions-Policy`) para cámara, micro y GPS.
+**Deuda Técnica:** Las fases 2 (CSP) y 3 (HSTS) están pendientes de aprobación.
+
+## Hito 46: Blindaje CSP (Fase 2 - Seguridad)
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Implementación de Content Security Policy (CSP) para prevenir ataques XSS y asegurar que solo se carguen recursos de confianza.
+**Acciones:**
+- Inyección de cabecera `Content-Security-Policy` en `public/_headers`.
+- Restricción de scripts, estilos, fuentes e imágenes a orígenes de confianza (`self`, Google Fonts).
+- Activación de `upgrade-insecure-requests` para forzar HTTPS en recursos externos.
+**Deuda Técnica:** Fase 3 (HSTS) pendiente de aprobación final.
+
+## Hito 47: "Fort Knox" Completado — HSTS (Fase 3)
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Cierre del blindaje de seguridad con HSTS. El navegador recordará usar HTTPS durante 1 año.
+**Acciones:**
+- Inyección de `Strict-Transport-Security: max-age=31536000; includeSubDomains` en `public/_headers`.
+- Con esto, los 3 niveles de seguridad HTTP quedan implementados: Headers básicos → CSP → HSTS.
+**Resultado:** Score esperado "A+" en securityheaders.com.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
+
+
+
 - [ ] **Métricas de Performance**: Optimizar carga de imágenes e hidratación para alcanzar el Verde (90+) en Lighthouse.
 - [ ] **Seguridad Avanzada (WAF & Headers)**:
     - [ ] Implementar **Content Security Policy (CSP)** para mitigar ataques XSS.

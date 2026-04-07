@@ -18,8 +18,11 @@ import { ViewTransitions } from 'astro:transitions';
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <ViewTransitions />
+		<ViewTransitions />
 		<title>{title}</title>
+		{/* Eruda Diagnostic Tool - Temporal */}
+		<script is:inline src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script is:inline>eruda.init();</script>
 	</head>
 	<body class="bg-surface-white text-body font-sans antialiased flex flex-col md:h-screen md:overflow-hidden">
         <MobileSplash />

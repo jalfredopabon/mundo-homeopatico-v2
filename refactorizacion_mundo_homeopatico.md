@@ -154,3 +154,16 @@
 - **SSL:** Válido (Let's Encrypt).
 - **Hallazgos:** Faltan encabezados de seguridad avanzada (CSP, HSTS, X-Frame-Options), registrados en deuda técnica.
 - **Latencia:** **49.39ms** (Excelente desempeño de infraestructura).
+
+---
+
+## Hito 41: Blindaje de Inicialización y Resiliencia de Almacenamiento
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Se implementó un sistema de "blindaje" en la inicialización de la página para resolver el problema de "pantalla blanca" detectado en usuarios externos.
+**Acciones:**
+- Envoltura de todos los accesos a `sessionStorage` y `localStorage` en bloques `try-catch` para prevenir que fallos de seguridad (ej. Safari en modo incógnito) detengan la ejecución del JS de Astro.
+- Optimización del *fail-safe* de 5 segundos en `MobileSplash.astro` para asegurar que el contenido sea visible independientemente del estado de la hidratación.
+- Verificación de paridad visual y eliminación de posibles bloqueos en `Header.astro` y `CartDrawer.astro`.
+- Auditoría de WAF y Caching en Cloudflare para descartar bloqueos de red.
+**Deuda Técnica:** Ninguna inmediata. La lógica de autenticación en `AuthModal.astro` sigue siendo simulada.

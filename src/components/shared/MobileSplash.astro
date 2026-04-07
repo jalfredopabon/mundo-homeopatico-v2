@@ -66,7 +66,12 @@
         const splash = document.getElementById('mobile-splash');
         if (!splash) return;
         
-        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash_v2');
+        let hasSeenSplash = false;
+        try {
+            hasSeenSplash = !!sessionStorage.getItem('hasSeenSplash_v2');
+        } catch (e) {
+            console.warn('[Elite Splash] Fallo al leer sessionStorage en el script principal.');
+        }
 
         if (!hasSeenSplash) {
             // Tiempo total de la coreografía (3 segundos para visualización ágil y dinámica)

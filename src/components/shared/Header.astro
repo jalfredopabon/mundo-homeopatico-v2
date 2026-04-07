@@ -201,7 +201,7 @@ const showTextSize = isCatalog || isVademecum;
       });
     }
 
-    // 4. Lógica de Tamaño de Texto (Sistema Dinámico Elite)
+    // 4. Lógica de Tamaño de Texto (Sistema Dinámico Elite con Blindaje)
     if (textSizeBtn) {
       const sizeLabel = document.getElementById('text-size-label');
       const levels = ['sm', 'md', 'lg'];
@@ -211,17 +211,31 @@ const showTextSize = isCatalog || isVademecum;
         'lg': 'Texto extra'
       };
 
-      // Inicializar desde localStorage o por defecto
-      let currentIdx = levels.indexOf(localStorage.getItem('mh-font-size') || 'sm');
+      // Función segura para leer el estado inicial
+      const getInitialSize = () => {
+        try {
+          return localStorage.getItem('mh-font-size') || 'sm';
+        } catch (e) {
+          console.warn('[Elite Storage] LocalStorage bloqueado, usando valor por defecto.');
+          return 'sm';
+        }
+      };
+
+      let currentIdx = levels.indexOf(getInitialSize());
       if (currentIdx === -1) currentIdx = 0;
       
       const updateFontSize = (idx: number) => {
         const size = levels[idx];
         document.body.setAttribute('data-font-size', size);
-        localStorage.setItem('mh-font-size', size);
-        if (sizeLabel) sizeLabel.textContent = labels[size];
         
-        // Emitir evento para componentes que necesiten recalculación profunda (opcional)
+        try {
+          localStorage.setItem('mh-font-size', size);
+        } catch (e) {
+          // Si falla (ej. modo incógnito restrictivo), al menos lo mantenemos en memoria durante la sesión
+          console.error('[Elite Storage] No se pudo guardar preferencia de texto.');
+        }
+
+        if (sizeLabel) sizeLabel.textContent = labels[size];
         document.dispatchEvent(new CustomEvent('textSizeChanged', { detail: { size } }));
       };
 

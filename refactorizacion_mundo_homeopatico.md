@@ -126,6 +126,11 @@
 - **Antifragilidad SSR:** Implementación de validaciones de cadena y valores por defecto (`$0.00`) para prevenir errores de renderizado ante datos nulos.
 - **Corrección PostCSS:** Resolución de errores de compilación mediante el uso de tokens nativos (`border-slate-100`).
 
+### Hito 40: Blindaje de Resiliencia y Rescate de Sesión (06/04/2026)
+- **Storage Shield:** Implementación de envoltorios `try-catch` en todos los accesos a `localStorage` y `sessionStorage`, previniendo el "Secuestro de Pantalla" en entornos con cookies bloqueadas o navegación privada estricta.
+- **Fail-Safe Visual:** Inyección de un temporizador de seguridad de 5 segundos en `MobileSplash.astro` que fuerza la visibilidad del sitio si la hidratación de Astro falla o se retrasa.
+- **Robustez de Hidratación:** Normalización de los ciclos de vida `astro:page-load` para asegurar que el estado inicial del carrito y la tipografía no bloqueen el renderizado principal.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 - [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.

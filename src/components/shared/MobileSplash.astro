@@ -28,13 +28,35 @@
 <!-- Script de Detección Inmediata (Corre antes que el renderizado completo) -->
 <script is:inline>
     (function() {
-        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash_v2');
+        // Acceso seguro a sessionStorage
+        let hasSeenSplash = false;
+        try {
+            hasSeenSplash = !!sessionStorage.getItem('hasSeenSplash_v2');
+        } catch (e) {
+            console.warn('[Elite Splash] SessionStorage bloqueado. El splash aparecerá siempre.');
+        }
+
         const splash = document.getElementById('mobile-splash');
         if (hasSeenSplash && splash) {
             splash.style.display = 'none';
         } else if (splash) {
             splash.style.display = 'flex';
             splash.style.opacity = '1';
+
+            // --- 🧪 FAIL-SAFE TIMER (Fase 2: Robustez Visual) ---
+            // Si en 5 segundos Astro no ha terminado la hidratación o el script principal ha fallado, 
+            // forzamos la salida del splash para evitar que el usuario se quede atrapado.
+            setTimeout(() => {
+                if (splash.style.display !== 'none') {
+                    console.warn('[Elite Splash] Fail-safe activado: Quitando splash por tiempo límite (5s).');
+                    splash.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+                    splash.style.opacity = '0';
+                    splash.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                    }, 1000);
+                }
+            }, 5000); 
         }
     })();
 </script>
@@ -51,7 +73,12 @@
             setTimeout(() => {
                 splash.style.opacity = '0';
                 splash.style.transform = 'translateY(-10px)'; // Menos salto, más elegancia
-                sessionStorage.setItem('hasSeenSplash_v2', 'true');
+                
+                try {
+                    sessionStorage.setItem('hasSeenSplash_v2', 'true');
+                } catch (e) {
+                    // Fallo silencioso si no se puede guardar
+                }
                 
                 setTimeout(() => {
                     splash.style.display = 'none';

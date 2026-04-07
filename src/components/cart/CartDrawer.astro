@@ -124,10 +124,16 @@ import SelectElite from "../shared/SelectElite.astro";
 <div id="cart-overlay" class="drawer-overlay"></div>
 
 <script>
-    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES) ---
-    // Estas funciones y estado viven a nivel de módulo, por lo que no se duplican.
+    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES - CON BLINDAJE) ---
     if (!(window as any).cartInitialized) {
-        (window as any).cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+        // Inicialización segura del carrito
+        try {
+            const savedCart = localStorage.getItem('cart');
+            (window as any).cartItems = savedCart ? JSON.parse(savedCart) : [];
+        } catch (e) {
+            console.error('[Elite Cart Storage] Error al leer el carrito del almacenamiento. Iniciando vacío.');
+            (window as any).cartItems = [];
+        }
         
         // El handler de toggle DEBE ser estable
         (window as any).handleToggleCart = () => {
@@ -239,13 +245,18 @@ import SelectElite from "../shared/SelectElite.astro";
                     });
                 });
 
-                // Guardar nota sin re-renderizar (evita perder foco)
+                // Guardar nota sin re-renderizar (evita perder foco - Blindado)
                 cartItemsList.querySelectorAll('.cart-item-note').forEach(textarea => {
                     textarea.addEventListener('input', (e) => {
                         const t = e.currentTarget as HTMLTextAreaElement;
                         const idx = parseInt(t.dataset.index!);
                         items[idx].note = t.value;
-                        localStorage.setItem('cart', JSON.stringify(items));
+                        
+                        try {
+                            localStorage.setItem('cart', JSON.stringify(items));
+                        } catch (e) {
+                            console.error('[Elite Cart Storage] Error al guardar nota por ítem.');
+                        }
                     });
                 });
             }
@@ -255,7 +266,11 @@ import SelectElite from "../shared/SelectElite.astro";
             if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;
             if (cartTotalEl) cartTotalEl.innerText = `$${subtotal.toLocaleString()}`;
             
-            localStorage.setItem('cart', JSON.stringify(items));
+            try {
+                localStorage.setItem('cart', JSON.stringify(items));
+            } catch (e) {
+                console.error('[Elite Cart Storage] Error al persistir cambios en el carrito.');
+            }
             
             document.dispatchEvent(new CustomEvent('cartUpdated', { 
                 detail: { totalItems: items.reduce((acc: number, i: any) => acc + i.quantity, 0) } 

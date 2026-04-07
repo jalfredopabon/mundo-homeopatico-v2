@@ -41,7 +41,7 @@ const { products = [] } = Astro.props;
             data-sheet-id={product.id}
         >
             <!-- Encabezado de la Ficha -->
-            <div class="mb-8 relative">
+            <div class="mb-8 relative animate-slide-in-right stagger-1">
                 <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
                     <Icons type="close-x" class="w-4 h-4" />
                 </button>
@@ -55,7 +55,7 @@ const { products = [] } = Astro.props;
                     {product.name} {product.potency}
                 </h2>
 
-                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle animate-slide-in-right stagger-2">
                     <BadgeElite label={product.scientificName} variant="slate" size="sm" />
                     <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />
                     <BadgeElite label={product.origin} variant="slate" size="sm" />
@@ -64,8 +64,8 @@ const { products = [] } = Astro.props;
 
             <!-- Secciones de la Ficha -->
             <div class="flex flex-col">
-                {product.sections.map((section) => (
-                    <div class="medical-section-container">
+                {product.sections.map((section, index) => (
+                    <div class={`medical-section-container animate-slide-in-right stagger-${Math.min(index + 3, 6)}`}>
                         <h4 class="medical-section-title">
                             <Icons type={section.icon} class="w-3.5 h-3.5" />
                             {section.title}

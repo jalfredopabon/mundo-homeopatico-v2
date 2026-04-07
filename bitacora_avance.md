@@ -131,6 +131,17 @@
 - **Fail-Safe Visual:** Inyección de un temporizador de seguridad de 5 segundos en `MobileSplash.astro` que fuerza la visibilidad del sitio si la hidratación de Astro falla o se retrasa.
 - **Robustez de Hidratación:** Normalización de los ciclos de vida `astro:page-load` para asegurar que el estado inicial del carrito y la tipografía no bloqueen el renderizado principal.
 
+## Hito 44: Animaciones Coreográficas Elite en Vademécum
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Implementación de un sistema de entrada en cascada (staggered animation) para la Columna 3 (Ficha Técnica) para elevar la percepción de calidad UX.
+**Acciones:**
+- Creación de la animación `elite-slideInRight` (desplazamiento lateral de 15px + fade) en `global.css`.
+- Implementación de clases de utilidad `stagger-1` a `stagger-6` para gestionar retrasos progresivos de 50ms.
+- Refactorización de `MedicalDetails.astro` para inyectar estas clases dinámicamente mediante el índice de secciones.
+- Mejora de la fluidez visual al cambiar entre medicamentos, eliminando la aparición brusca de contenido.
+**Deuda Técnica:** Ninguna. Se sincronizó con el sistema de visibilidad `hidden` existente.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
 - [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.

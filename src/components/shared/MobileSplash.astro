@@ -54,6 +54,12 @@
                     splash.style.transform = 'translateY(-20px)';
                     setTimeout(() => {
                         splash.style.display = 'none';
+                        // Red de seguridad: Forzar visibilidad del contenido principal
+                        const mainEl = document.querySelector('main');
+                        if (mainEl) {
+                            mainEl.style.opacity = '1';
+                            mainEl.style.visibility = 'visible';
+                        }
                     }, 1000);
                 }
             }, 5000); 
@@ -87,6 +93,12 @@
                 
                 setTimeout(() => {
                     splash.style.display = 'none';
+                    // Garantizar visibilidad tras salida exitosa
+                    const mainEl = document.querySelector('main');
+                    if (mainEl) {
+                        mainEl.style.opacity = '1';
+                        mainEl.style.visibility = 'visible';
+                    }
                 }, 700);
             }, 3000); 
         }

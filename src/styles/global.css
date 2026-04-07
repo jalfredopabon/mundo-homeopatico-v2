@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@supports (interpolate-size: allow-keywords) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
 html {
-  interpolate-size: allow-keywords; /* Permite animar de 0 a auto (Chrome 129+) */
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   scrollbar-gutter: stable; /* Evita saltos de layout cuando aparece/desaparece el scroll */
   scroll-padding-top: 4rem; /* Ajuste para que el Header fijo (h-16 = 64px) no tape los títulos al navegar */
 }
@@ -12,7 +19,14 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-  text-wrap: pretty; /* Evita huérfanas en párrafos */
+  @apply bg-surface-white text-body selection:bg-brand/10 selection:text-brand;
+  text-wrap: balance; /* Fallback universal */
+}
+
+@supports (text-wrap: pretty) {
+  body {
+    text-wrap: pretty;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -112,12 +126,14 @@ body[data-font-size="lg"] {
 /* Implementación de text-box-trim para eliminar el leading invisible y asegurar alineación quirúrgica. 
    Soportado en Chrome 133+, Safari 18.2+. En otros navegadores se ignora (Mejora Progresiva). */
 
-.text-trim,
-button,
-.btn-elite,
-.badge-elite {
-  text-box-trim: both;
-  text-box-edge: cap alphabetic;
+@supports (text-box-trim: both) {
+  .text-trim,
+  button,
+  .btn-elite,
+  .badge-elite {
+    text-box-trim: both;
+    text-box-edge: cap alphabetic;
+  }
 }
 
 /* --- 🏛️ Layout Spacing Tokens (ADN Modular) --- */
@@ -630,6 +646,18 @@ input[type="search"] {
   }
 
   /* --- 📄 Main Content & Page Atoms --- */
+  /* Red de seguridad: el main nunca debe colapsar a 0 en Safari iOS */
+  main {
+    min-height: 100dvh;
+    min-height: 100vh; /* Fallback para iOS < 15.4 */
+  }
+
+  @media (min-width: 768px) {
+    main {
+      min-height: 0;
+    }
+  }
+
   .main-content-scroll {
     @apply flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100dvh-64px)] scroll-smooth;
     min-height: 0; /* Fix: Safari flex collapse */

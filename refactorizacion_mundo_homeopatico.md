@@ -172,11 +172,24 @@
 
 ## Hito 42: Resolución de Colapso de Layout en Safari iOS
 **Fecha:** 07 de Abril, 2026
-**Estado:** Completado ✅ (Fase 1)
-**Descripción:** Se corrigió el problema de "pantalla blanca" en dispositivos iPhone/iOS mediante la modernización de las unidades de altura del viewport y el blindaje de contenedores flex.
+**Estado:** Completado ✅
+**Descripción:** Se corrigió de raíz el problema de "pantalla blanca" en dispositivos iPhone/iOS causado por el colapso de altura en Safari tras la modularización del proyecto.
 **Acciones:**
-- Reemplazo de todas las instancias de `100vh` por `100dvh` en `global.css`, `index.astro`, `vademecum.astro`, `contacto.astro` y componentes de sidebar para evitar el mal cálculo de altura en Safari.
-- Adición de `min-h-0` en contenedores flex críticos para prevenir el colapso de altura a 0px en Safari iOS.
-- Implementación de `shrink-0` en sidebars para estabilizar el layout bajo presión de scroll.
-- Despliegue inmediato a producción vía Cloudflare Pages para validación visual de usuarios externos.
-**Deuda Técnica:** Las fases 2 (blindaje CSS experimental) y 3 (CSS defensivo) del plan de compatibilidad quedan pendientes de ejecución tras la validación visual de la Fase 1.
+- Reemplazo de todas las instancias de `100vh` por `100dvh` en `global.css` y archivos críticos.
+- Implementación de `min-h-dvh` en el `body` de `BaseLayout.astro` para obligar a Safari a dimensionar el contenedor raíz.
+- Blindaje de `main` con `min-h-0` para evitar el colapso de altura intrínseca.
+- Inyección temporal de `Eruda Inspector` para descartar fallos de JavaScript (Consola limpia confirmada en iPhone).
+- Verificación visual exitosa por parte de usuarios externos en entornos móviles reales.
+**Deuda Técnica:** Ninguna. Se eliminaron las reglas de CSS experimental que causaban inestabilidad.
+
+---
+
+## Hito 43: Limpieza y Estabilización Final iOS
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Eliminación de herramientas de diagnóstico y refactorización de sintaxis CSS de selección de texto para paridad de build en Cloudflare.
+**Acciones:**
+- Eliminación de Eruda Inspector tras la confirmación de la solución.
+- Corrección de sintaxis `@apply selection:bg-brand/10` (no admitida por PostCSS/Tailwind) reemplazándola por CSS nativo `::selection`.
+- Limpieza de redundancias en `global.css`.
+**Deuda Técnica:** Ninguna. El proyecto recupera el 100% de paridad visual y funcional en Safari móvil.

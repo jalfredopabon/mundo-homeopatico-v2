@@ -143,8 +143,7 @@
 **Deuda Técnica:** Ninguna. Se sincronizó con el sistema de visibilidad `hidden` existente.
 
 ## 🚀 Próximos Pasos (Deuda Técnica)
-- [ ] **Fase Final Vademécum**: Revisión de responsividad extrema y pulido de animaciones de entrada en la Columna 3.
-- [ ] **Limpieza de Badges:** Revisión de colores en badges de 'oligoelementos' para asegurar que no confundan con estados de alerta.
+- [ ] **Métricas de Performance**: Optimizar carga de imágenes e hidratación para alcanzar el Verde (90+) en Lighthouse.
 - [ ] **Seguridad Avanzada (WAF & Headers)**:
     - [ ] Implementar **Content Security Policy (CSP)** para mitigar ataques XSS.
     - [ ] Configurar **HSTS (Strict Transport Security)** para forzar conexiones HTTPS.

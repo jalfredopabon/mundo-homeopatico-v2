@@ -925,22 +925,6 @@ input[type="search"] {
   }
   .animate-slide-down { animation: elite-slideDown 0.4s ease-out forwards; overflow: hidden; }
 
-  @keyframes elite-slideInRight {
-    from { opacity: 0; transform: translateX(15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .animate-slide-in-right { 
-    animation: elite-slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; 
-  }
-
-  /* Sistema de Cascada (Stagger) */
-  .stagger-1 { animation-delay: 50ms; }
-  .stagger-2 { animation-delay: 100ms; }
-  .stagger-3 { animation-delay: 150ms; }
-  .stagger-4 { animation-delay: 200ms; }
-  .stagger-5 { animation-delay: 250ms; }
-  .stagger-6 { animation-delay: 300ms; }
-
   /* --- 📄 Paginador Vademécum --- */
   .pagination-wrap {
     @apply flex items-center justify-between gap-4 pt-6 pb-2 max-w-3xl;

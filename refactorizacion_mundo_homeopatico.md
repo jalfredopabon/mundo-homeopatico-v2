@@ -167,3 +167,16 @@
 - Verificación de paridad visual y eliminación de posibles bloqueos en `Header.astro` y `CartDrawer.astro`.
 - Auditoría de WAF y Caching en Cloudflare para descartar bloqueos de red.
 **Deuda Técnica:** Ninguna inmediata. La lógica de autenticación en `AuthModal.astro` sigue siendo simulada.
+
+---
+
+## Hito 42: Resolución de Colapso de Layout en Safari iOS
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅ (Fase 1)
+**Descripción:** Se corrigió el problema de "pantalla blanca" en dispositivos iPhone/iOS mediante la modernización de las unidades de altura del viewport y el blindaje de contenedores flex.
+**Acciones:**
+- Reemplazo de todas las instancias de `100vh` por `100dvh` en `global.css`, `index.astro`, `vademecum.astro`, `contacto.astro` y componentes de sidebar para evitar el mal cálculo de altura en Safari.
+- Adición de `min-h-0` en contenedores flex críticos para prevenir el colapso de altura a 0px en Safari iOS.
+- Implementación de `shrink-0` en sidebars para estabilizar el layout bajo presión de scroll.
+- Despliegue inmediato a producción vía Cloudflare Pages para validación visual de usuarios externos.
+**Deuda Técnica:** Las fases 2 (blindaje CSS experimental) y 3 (CSS defensivo) del plan de compatibilidad quedan pendientes de ejecución tras la validación visual de la Fase 1.

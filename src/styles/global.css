@@ -19,7 +19,7 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-  @apply bg-surface-white text-body selection:bg-brand/10 selection:text-brand;
+  @apply bg-surface-white text-body;
   text-wrap: balance; /* Fallback universal */
 }
 

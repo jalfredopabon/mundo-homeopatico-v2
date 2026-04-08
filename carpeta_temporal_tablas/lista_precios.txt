@@ -1,0 +1,124 @@
+tabla_id	producto	presentacion	precio_farmacia	precio_publico	notas	titulo_presentacion	titulo_precio_farmacia	titulo_precio_publico	stock
+oficinales	3 a 99 (D X CH K)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	23000	43000		Presentación	Precio farmacia	Precio público	
+oficinales	100 a 900 (D X CH K)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	28000	48000		Presentación	Precio farmacia	Precio público	
+oficinales	10000+ (D X CH LM)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	45000	68000		Presentación	Precio farmacia	Precio público	
+oficinales	Disponibles también en tabletas	Frasco x 90	40000	63000		Presentación	Precio farmacia	Precio público	
+multipotencias	3 a 200 (D X CH K)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	30000	50000		Presentación	Precio farmacia	Precio público	
+multipotencias	1000+ (D CH LM)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	45000	68000		Presentación	Precio farmacia	Precio público	
+multipotencias	Disponibles también en tabletas	Frasco x 90	40000	63000		Presentación	Precio farmacia	Precio público	
+magistrales	3 a 900 (D X CH K)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	33500	54000		Presentación	Precio farmacia	Precio público	
+magistrales	1000 o + (D X CH LM)	Dilución y escala. Gotas x 30ml / Glóbulos x 30g	58500	80000		Presentación	Precio farmacia	Precio público	
+magistrales	Spray nasal x 30 ml		34500	54000		Presentación	Precio farmacia	Precio público	
+magistrales	Elíxir x 240 ml	Endulzados con estevia	39000	60000		Presentación	Precio farmacia	Precio público	
+magistrales	Gel o Crema x 120 g	Libres de parabenos	38000	56000		Presentación	Precio farmacia	Precio público	
+magistrales	Tabletas 	Frasco x 90	40000	63000		Presentación	Precio farmacia	Precio público	
+magistrales	Viales bebibes caja x 12	Cada vial de 10ml	40000	60000		Presentación	Precio farmacia	Precio público	
+magistrales	Viales nebulizables caja x 12	Cada vial de 10ml	52000	82000		Presentación	Precio farmacia	Precio público	
+esencias_florales_1	Gotas o Spray x 30 ml		18000	28000		Presentación	Precio farmacia	Precio público	
+esencias_florales_1	Glóbulos x 30 g		21000	31000		Presentación	Precio farmacia	Precio público	
+esencias_florales_1	Primera dilución para terapéutas	Gotero de pera x 30ml	57000			Presentación	Precio farmacia	Precio público	
+oligoelementos_1	Oligoelementos Individuales	Gotas o Spray x 30 ml y Glóbulos x 30g	19500	36000		Presentación	Precio farmacia	Precio público	
+oligoelementos_1	Oligoelementos Combinados (hasta 6 componentes)	Gotas o Spray x 30 ml y Glóbulos x 30g	25500	44000		Presentación	Precio farmacia	Precio público	
+homeopaticos_esenciales	Gotas x 30 ml	Vitex y Conium tienen precio diferente. Ver en la sección "Especiales"^§ Abies | Acid picricum | Aconitum | Aesculus | Agnus | Alúmina | Angélica | Apis | Árnica | Aurum metallicum | Baptisia | Baryta carbónica | Belladonna | Benzoicum acidum | Berberis | Bryonia | Cactus | Calcarea phosphorica | Carbo Vegetabilis | Centella asiática | Chelidonium | Chimaphilla | Chininum | Cholesterolum | Cicuta | Cinnamomum | Cólchicum | Colocynthis | Crataegus | Crocus | Damiana | Echinacea | Equisetum | Euphatorium | Euphrasia | Fucus | Galium | Gelsemium | Gentiana | Ginkgo Biloba | Glonoinum | Graphites | Hamamelis | Hydrangea | Hydrastis | Hypéricum | Ignatia | Iodum | Ipeca | Iris | Jaborandi | Juglans | Kalium Bich. | Kalium Bromatum | Kalmia | Leptandra | Lilium | Luffa | Magnesia phosphorica | Marrubium | Medicago | Melissa | Mercurius | Mezereum | Nux vómica | Passiflora | Petroleum | Phosphoricum acidum | Placenta | Plumbum | Pulsatilla | Rhododendron | Rhus tox. | Rúmex | Ruta | Sabal | Sambucus | Scrofularia | Selenium | Senna | Solidago | Staphysagria | Sulphur | Syzygium | Tabacum | Taraxacum | Teucrium | Thallium | Thuja | Urtica | Vaccinum | Vincetóxicum | Vípera | Viscum | Zincum metallicum | Zingiber	33500	54000	 	Presentación	Precio farmacia	Precio público	
+homeopaticos_esenciales	Tabletas x 90	§ Abies | Acid picricum | Aconitum | Aesculus | Agnus | Alúmina | Angélica | Apis | Árnica | Aurum metallicum | Baptisia | Baryta carbónica | Belladonna | Benzoicum acidum | Berberis | Bryonia | Cactus | Calcarea phosphorica | Carbo Vegetabilis | Centella asiática | Chelidonium | Chimaphilla | Chininum | Cholesterolum | Cicuta | Cinnamomum | Cólchicum | Colocynthis | Crataegus | Crocus | Damiana | Echinacea | Equisetum | Euphatorium | Euphrasia | Fucus | Galium | Gelsemium | Gentiana | Ginkgo Biloba | Glonoinum | Graphites | Hamamelis | Hydrangea | Hydrastis | Hypéricum | Ignatia | Iodum | Ipeca | Iris | Jaborandi | Juglans | Kalium Bich. | Kalium Bromatum | Kalmia | Leptandra | Lilium | Luffa | Magnesia phosphorica | Marrubium | Medicago | Melissa | Mercurius | Mezereum | Nux vómica | Passiflora | Petroleum | Phosphoricum acidum | Placenta | Plumbum | Pulsatilla | Rhododendron | Rhus tox. | Rúmex | Ruta | Sabal | Sambucus | Scrofularia | Selenium | Senna | Solidago | Staphysagria | Sulphur | Syzygium | Tabacum | Taraxacum | Teucrium | Thallium | Thuja | Urtica | Vaccinum | Vincetóxicum | Vípera | Viscum | Zincum metallicum | Zingiber	40000	63000		Presentación	Precio farmacia	Precio público	
+homeopaticos_esenciales	Spray oral x 30ml 		33500	54000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_esenciales	Glóbulos x 30g		33500	54000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_esenciales	Glóbulos caja x 10 tubos		31000	44000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_esenciales	Viales nebulizables caja x 12 viales de 10ml		52000	82000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_esenciales	Presentación Pediátrica en Glóbulos (Caja x 5 tubos)		25500	41000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_esenciales	Viales bebibles caja x 12 viales de 10ml		40000	60000		Presentación	Precio farmacia	Precio público	Requiere tiempo de elaboración
+homeopaticos_especiales	Allium Cepa D4 MH	Gotas óticas x 15ml	21500	36000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Apis D10 y Apis D20	Vial x 100 ml	76000	126000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Borax D4 MH	Spray x 30ml (uso oral y tópico)	34000	52000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Calcium Phosphoricum D4 MH	Polvo x 400g	48000	70000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Cedrón D4 MH	Gotas x 20ml	23000	39000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Conium maculatum D4 MH	Gotas x 30ml	39000	62000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Cuprum met. D4 MH (Cobre coloidal)	Spray x 30ml (uso oral y tópico)	26500	48000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Luffa D4 MH - Spray nasal	Frasco  x 30ml	34500	55000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Óvulos vaginales Boricum acidum D4 MH	Blíster x 12	34500	54000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Óvulos vaginales Caléndula D4 MH	Blíster x 12	34500	54000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Óvulos vaginales Lilium D4 MH	Blíster x 12	34500	54000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Argentum metallicum D4 MH (plata coloidal)	Spray x 30ml	21000	37000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Argentum metallicum D4 MH (plata coloidal)	Spray x 100ml	32000	53000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Argentum metallicum D4 MH (plata coloidal)	Frasco x 250ml	55000	80000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Sales de Schussler	Polvo x 400g^También se hacen como magistral en gotas y en tabletas.	40000	60000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Sepia D4 MH - Spray tópico	Frasco x 30ml	32000	48000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Supositorios Aesculus D4 MH	Blíster x 10	25500	46000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Stanum D4 MH - Spray oral	Frasco x 30ml	40000	63000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Tratamiento Detox 	3 gotas x 30ml. 1 cápsulas x 12 § Juglans D4 | Chelidonium D4 | Hydrangea D4 | Teucrium D4 cápsulas	106000	173000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Tratamiento Sistema nervioso	3 gotas x 30ml § Gelsemium D4 | Zincum D4 | Melissa D4	95500	153000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Tratamiento Sobrepeso	Cápsulas x 60 / Tabletas x 90 § Fucus D4 | Rumex D4	101000	160000		Presentación	Precio farmacia	Precio público	
+homeopaticos_especiales	Vitex D3	Gotas x 30ml	50000	76000		Presentación	Precio farmacia	Precio público	
+cuidado_capilar	Rosmarinus D4 MH - Loción Capilar	Spray tópico x 100ml	30000	48000		Presentación	Precio farmacia	Precio público	
+cuidado_capilar	Thallium D4 MH - Viales tópicos	Caja x 12 viales de 10ml	37000	60000		Presentación	Precio farmacia	Precio público	
+cuidado_capilar	Rosmarinus D4 MH - Shampoo medicado	Frasco x 500ml	25500	40000		Presentación	Precio farmacia	Precio público	
+cuidado_capilar	Rosmarinus D4 MH - Emulsión (acondicionador)	Frasco x 500ml 	25500	40000		Presentación	Precio farmacia	Precio público	
+capsulas	Ascorbicum acidum D4 MH - Cápsulas	Frasco x 90	39000	62000		Presentación	Precio farmacia	Precio público	
+capsulas	Badiaga D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Caladium D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Carduus Marianus D4 MH - Cápsulas	Frasco x 90	38000	68000		Presentación	Precio farmacia	Precio público	
+capsulas	Cholesterolum D4 MH - Cápsulas	Frasco x 90	32000	62000		Presentación	Precio farmacia	Precio público	
+capsulas	Fucus D4 MH -Cápsulas	Frasco x 60	60000	80000		Presentación	Precio farmacia	Precio público	
+capsulas	Harpagophytum D4 MH - Cápsulas	Frasco x 60	64500	92000		Presentación	Precio farmacia	Precio público	
+capsulas	Manganum D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Origanum D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Rhamnus purshiana D4 MH - Cápsulas	Frasco x 50	32000	50000		Presentación	Precio farmacia	Precio público	
+capsulas	Rhus tox D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Silicea D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Stanum D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+capsulas	Teucrium D4 MH - Cápsulas	Frasco x 12	15000	26500		Presentación	Precio farmacia	Precio público	
+capsulas	Uranium D4 MH - Cápsulas	Frasco x 90	50000	73000		Presentación	Precio farmacia	Precio público	
+cremas	Crema - tubo x 120g 	§ Árnica | Caléndula | Echinacea | Graphites | Hamamelis | Hydrocotyle | Rhus Tox | Salvia | Sulphur | Thuja | Urtica	38000	56000		Presentación	Precio farmacia	Precio público	
+cremas	Silicea D4 MH - Crema	100g 	55000	103500		Presentación	Precio farmacia	Precio público	
+geles 	Gel - Tubo x 120g	§ Aesculus | Árnica | Caléndula | Echinacea | Fucus | Graphites | Hamamelis | Hedera | Kalmia | Salvia | Thuja | Urtica | Sulphur	38000	56000		Presentación	Precio farmacia	Precio público	
+unguentos	Cápsicum D4 ungüento	Pote x 40g	29500	45000		Presentación	Precio farmacia	Precio público	
+unguentos	Graphites D4 ungüento	Pote x 40g	29500	45000		Presentación	Precio farmacia	Precio público	
+elixires	Elíxir - frasco x 240ml	§ Abies | Ipeca | Ruta | Sambucus | Taraxacum | Zingiber.	39000	60000		Presentación	Precio farmacia	Precio público	
+elixires	Cúrcuma D4 MH - Elíxir	Frasco x 240ml 	44000	66000		Presentación	Precio farmacia	Precio público	
+esencias_florales_2	Esencias Florales MH - Spray oral x 30 ml (Stock permanante)	§ Armonía del ser | Autoaceptación |  Autoconfianza |  Autoestima | Autonomía | Buen dormir | Control del apetito | Coraje | Crecer | Duelos | Equilibrium | Fórmula de exámen | Integración | Memories | Perdón | Perseverancia | Relax | Rescate |Ser Feliz | Serenidad | Templanza | Tranquilidad  Valentía	18000	28000		Presentación	Precio farmacia	Precio público	
+esencias_florales_2	Splash para ambientes x 120ml (Stock permanente)^Elaborados con esencias florales y esencias minerales	§ Abundancia-Prosperidad | Ambiente laboral positivo | Armonía en pareja | Limpieza-Transmutación |Protección | Recién Nacido | Serenity	17000	30000		Presentación	Precio farmacia	Precio público	
+esencias_florales_2	Kit áurico- 2 esencias florales en spray para uso externo (Bajo pedido)	Limpieza áurica personal y protección del aura	35500	52000		Presentación	Precio farmacia	Precio público	
+esencias_florales_2	Rescate crema (Bajo pedido)	Pote x 20g	13000	23000		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Aurum K7 - Oligoelemento MH	Diátesis anérgica	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Cobre K7 - Oligoelemento MH	Diátesis neuromiovegetativa	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Cuprum K7 - Oligoelmento MH	Diátesis pancreodigestiva	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Hierro K7 - Oligoelmento MH	Diátesis hematopoyética	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Iodo K7 - Oligoelemento MH	Diátesis inmonológica	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Manganeso K7 - Oligoelemento MH	Diátesis dermoartroinfecciosa	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Magnesio K7 - Oligoelemento MH	Diátesis inmunoenergética	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Phosphorus K7 - Oligoelemento MH	Diátesis ósea	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Platinum K7 - Oligoelemento MH	Oligoterapia completa	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Silicea K7 - Oligoelemento MH	Diátesis básicoregenerativa	30000	49500		Presentación	Precio farmacia	Precio público	
+oligoelementos_K7	Zinc K7 - Oligoelemento MH	Diátesis endocrina	30000	49500		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	ADAPMIX (adaptógenos en tabletas)	Frasco x 90	40000	65000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	3X FM  (vitalidad sexual masculina)	Frasco x 500ml	29000	50000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	+VID4  (citrato de magnesio en tabletas)	Frasco x 90	30000	50000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	FIBALOE (fibra digestiva líquida)	Frasco x 360ml	48000	70000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	IMPRO-GX (probióticos en tabletas)	Frasco x 60	69000	100000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	MHCOHY (colágeno hidrolizado en polvo)	Tarro x 500g	65000	95000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	MHPHOR (multivitamínico en polvo)	Tarro x 500g	62000	90000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	MULPHA (fibra digestiva en polvo)	Tarro x 400g	29000	45000		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	NATUSTEVIA (estevia líquida)	Gotero x 30ml	23000	34500		Presentación	Precio farmacia	Precio público	
+alimentos_funcionales	NUTRIVID4 (multivitamínico en tabletas)	Frasco x 90	30000	52000		Presentación	Precio farmacia	Precio público	
+cbd	ANSCBD 15 - Cannabis medicinal	Gotero de pera x 30ml	55000	80000		Presentación	Precio farmacia	Precio público	
+aceites_esenciales	Albahaca		27000	121000		Presentación	20%	100%	
+aceites_esenciales	Bergamota		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Cardamomo		27000	121000		Presentación	20%	100%	
+aceites_esenciales	Cidrón		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Ciprés		15000	68000		Presentación	20%	100%	
+aceites_esenciales	Citronela		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Clavo		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Cúrcuma		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Eucalipto globulus		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Geranio		27000	121000		Presentación	20%	100%	
+aceites_esenciales	Lavanda		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Limón		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Limoncillo		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Menta		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Naranja		11000	47000		Presentación	20%	100%	
+aceites_esenciales	Orégano		19000	87000		Presentación	20%	100%	
+aceites_esenciales	Palo Santo		27000	121000		Presentación	20%	100%	
+aceites_esenciales	Pimienta Negra		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Pronto Alivio		22000	100000		Presentación	20%	100%	
+aceites_esenciales	Romero		13000	54000		Presentación	20%	100%	
+aceites_esenciales	Tomillo		19000	87000		Presentación	20%	100%	

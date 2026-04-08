@@ -1,5 +1,9 @@
 # Bitácora de Refactorización Atómica - Mundo Homeopático v2
 
+> [!IMPORTANT]
+> **⚠️ Regla de Mantenimiento Crítico:** Al realizar limpiezas de archivos o "limpiezas finales" (chore), **NUNCA** eliminar la carpeta `.agents` ni el archivo `bitacora_avance.md`. Ambos son elementos críticos para la continuidad del desarrollo y la trazabilidad del proyecto.
+
+
 ## 🛡️ Hitos de Arquitectura Atómica (Lego-Architecture)
 
 ### Hito 21: Footer Atómico y Centralización (02/04/2026)
@@ -237,6 +241,17 @@
 - **Sincronización de Plomadas:** Alineación perfecta del eje de iconos y el inicio de texto con el buscador principal (Plomadas 1, 2 y 3).
 - **Tokenización:** Uso de variables CSS para el control centralizado de los offsets y ejes de alineación.
 **Resultado:** Código 70% más limpio, mantenimiento instantáneo y una interfaz que cumple con los estándares estéticos más exigentes de la marca.
+
+## Hito 54: Personalización Elite de Interfaz - Saludo de Usuario (Vademécum)
+**Fecha:** 08 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Implementación de un sistema de saludo personalizado modular siguiendo los principios de arquitectura atómica y minimalismo "Elite".
+**Acciones:**
+- **Tokenización:** Creación del átomo `.user-greeting` en `global.css` con tipografía limpia (`11px`), espaciado intencional (`tracking-wide`) y color de bajo contraste (`slate-600`).
+- **Inyección Atómica:** Incorporación del componente en el encabezado de `vademecum.astro` (columna central), justo sobre las migas de pan para mantener jerarquía visual.
+- **Filosofía "Menos es Más":** Mantenimiento del ícono de usuario como anclaje visual para diferenciar el saludo de otros elementos de texto, evitando el ruido visual.
+- **Preparación de Datos:** Uso de la variable `userName` como placeholder estratégico, listo para la integración dinámica con Google Sheets.
+**Resultado:** Una interfaz personalizada que respeta el ritmo visual del proyecto y refuerza la sensación de una herramienta profesional hecha a medida.
 
 ---
 

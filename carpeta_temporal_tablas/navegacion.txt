@@ -1,0 +1,23 @@
+nivel_1	nivel_2	nivel_3	nivel_4	titulo_mostrar	descripcion	tabla_id
+De nuestra farmacia	Según prescripción			Preparaciones según prescripción		
+De nuestra farmacia	Según prescripción	Homeopáticos		Homeopáticos		
+De nuestra farmacia	Según prescripción	Homeopáticos	Oficinales	Oficinales	Un medicamento con una dilución ^ Gotas x 30ml – Glóbulos x 30g	oficinales
+De nuestra farmacia	Según prescripción	Homeopáticos	Multipotencias	Multipotencias	Un medicamento con varias diluciones ^ Gotas x 30ml – Glóbulos x 30g	multipotencias
+De nuestra farmacia	Según prescripción	Homeopáticos	Magistrales	Fórmulas magistrales	Varios medicamentos con sus diluciones ^ Gotas x 30ml – Glóbulos x 30g	magistrales
+De nuestra farmacia	Según prescripción		Esencias florales	Esencias florales	Individuales o combinadas a partir de lo sistemas Bach, Australiano, Nueva generación y Orquídeas del Amazonas.	esencias_florales_1
+De nuestra farmacia	Según prescripción		Oligoelementos	Oligoelementos	Elaborados a la D7	oligoelementos_1
+De nuestra farmacia	Línea MH			Línea Mundo Homeopático	Formulaciones propias de alta calidad y en gran variedad de formas farmacéuticas. Nuestra línea incluye medicamentos homeopáticos, esencias florales y oligoelementos.	
+De nuestra farmacia	Línea MH	Homeopatía		Homeopatía		
+De nuestra farmacia	Línea MH	Homeopatía	Esenciales	Homeopáticos esenciales D4	Todos los medicamentos disponibles en gotas se pueden elaborar en las otras formas farmacéuticas de este listado	homeopaticos_esenciales
+De nuestra farmacia	Línea MH	Homeopatía	Especiales	Homeopáticos especiales	Variedad de formas farmacéuticas que amplían las opciones terapéuticas.^En stock permanante (Excepto cobre y plata coloidal)	homeopaticos_especiales
+De nuestra farmacia	Línea MH	Homeopatía	Cuidado capilar	Cuidado capilar		cuidado_capilar
+De nuestra farmacia	Línea MH	Homeopatía	Cápsulas	Cápsulas		capsulas
+De nuestra farmacia	Línea MH	Homeopatía	Cremas	Cremas	Libres de parabenos	cremas
+De nuestra farmacia	Línea MH	Homeopatía	Geles	Geles	Libres de parabenos	geles
+De nuestra farmacia	Línea MH	Homeopatía	Ungüentos	Ungüentos	Con ceras naturales	unguentos
+De nuestra farmacia	Línea MH	Homeopatía	Elíxires	Elíxires	Endulzados con estevia	elixires
+De nuestra farmacia	Línea MH		Esencias florales	Esencias florales	Formulaciones MH 	esencias_florales_2
+De nuestra farmacia	Línea MH		Oligoelementos K7	Oligoelementos K7	Oligoterapia por diátesis	oligoelementos_K7
+Exclusivos			Alimentos funcionales	Alimentos funcionales	Con registro INVIMA	alimentos_funcionales
+Exclusivos			CBD	CBD	Cannabis medicinal con registro INVIMA	cbd
+Exclusivos			Aceites esenciales	Aceites esenciales	Gotas x 10ml	aceites_esenciales

@@ -1,0 +1,17 @@
+clave	valor
+nombre_marca	Mundo Homeopático
+boton_contacto	Sedes y contacto
+buscador_placeholder	Buscar productos...
+contacto_titulo	Sedes y contacto
+contacto_subtitulo	Red nacional de distribución
+video_titulo	Excelencia en la elaboración homeopática
+video_descripcion	Procesos secuenciales limpios y fórmulas innovadoras bajo estándares farmacéuticos internacionales.
+footer_descripcion	Más de 20 años elaborando productos homeopáticos con los más altos estándares de calidad.
+link_instagram	https://www.instagram.com/mundohomeopatico
+link_whatsapp	https://wa.me/573001234567
+link_web	https://www.mhmundohomeopatico.com
+footer_copyright	© 2026 Mundo Homeopático. Todos los derechos reservados.
+footer_ubicacion	Medellín, Colombia
+email_contacto	info@mhmundohomeopatico.com
+whatsapp_mensaje_pedido	Hola, quisiera más información sobre
+horario_atencion	Lunes a sábados de 8 a 6pm

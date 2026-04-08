@@ -680,6 +680,11 @@ input[type="search"] {
   }
 
   /* --- 🛒 Catalog Atoms --- */
+  /* --- 👤 User Greeting Atom (Elite Contextual) --- */
+  .user-greeting {
+    @apply flex items-center gap-2.5 text-[11px] font-normal text-slate-600 tracking-wide mb-3 animate-fade-in;
+  }
+
   .catalog-section-header {
     @apply sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col gap-y-2;
   }

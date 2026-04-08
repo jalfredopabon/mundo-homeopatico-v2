@@ -1,0 +1,3 @@
+banner
+"Se informa al público: Dispensación limitada a usuarios con receta médica vigente. ^
+Validación de stock: identifique si el artículo seleccionado cuenta con entrega inmediata o es de elaboración bajo pedido."

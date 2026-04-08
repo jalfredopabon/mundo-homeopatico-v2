@@ -8,6 +8,7 @@ import MedicalCard from '../components/vademecum/MedicalCard.astro';
 import Icons from '../components/shared/Icons.astro';
 
 import { medicines } from '../data/medicines.ts';
+const userName = "Invitado";
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -28,6 +29,11 @@ import { medicines } from '../data/medicines.ts';
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
                 <header class="catalog-section-header reveal">
                     <div class="flex flex-col w-full">
+                        <!-- Saludo de cortesía (Hito 54: Consistencia Homóloga) -->
+                        <div class="user-greeting">
+                            <Icons type="user" class="w-3.5 h-3.5" strokeWidth={1.5} />
+                            <span>Hola, {userName}</span>
+                        </div>
                         <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
                             <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
                             <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" strokeWidth={3} />

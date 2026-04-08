@@ -298,7 +298,7 @@ input[type="search"] {
   .sidebar-capsule.is-active,
   .sidebar-link.is-active {
     background-color: var(--bg-muted) !important;
-    color: inherit !important;
+    @apply text-slate-900 !important;
     font-weight: 700 !important;
     box-shadow: none !important;
     border: none !important;
@@ -313,6 +313,12 @@ input[type="search"] {
   .sidebar-capsule,
   .sidebar-link {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Los íconos siempre deben clonar el color del texto acompañante */
+    & svg {
+      color: inherit !important;
+      fill: currentColor;
+    }
   }
 
   /* --- Acordeones (Línea Maestra Jerárquica) --- */

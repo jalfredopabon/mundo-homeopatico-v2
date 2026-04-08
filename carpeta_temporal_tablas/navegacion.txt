@@ -1,23 +1,23 @@
-nivel_1	nivel_2	nivel_3	nivel_4	titulo_mostrar	descripcion	tabla_id
-De nuestra farmacia	Según prescripción			Preparaciones según prescripción		
-De nuestra farmacia	Según prescripción	Homeopáticos		Homeopáticos		
-De nuestra farmacia	Según prescripción	Homeopáticos	Oficinales	Oficinales	Un medicamento con una dilución ^ Gotas x 30ml – Glóbulos x 30g	oficinales
-De nuestra farmacia	Según prescripción	Homeopáticos	Multipotencias	Multipotencias	Un medicamento con varias diluciones ^ Gotas x 30ml – Glóbulos x 30g	multipotencias
-De nuestra farmacia	Según prescripción	Homeopáticos	Magistrales	Fórmulas magistrales	Varios medicamentos con sus diluciones ^ Gotas x 30ml – Glóbulos x 30g	magistrales
-De nuestra farmacia	Según prescripción		Esencias florales	Esencias florales	Individuales o combinadas a partir de lo sistemas Bach, Australiano, Nueva generación y Orquídeas del Amazonas.	esencias_florales_1
-De nuestra farmacia	Según prescripción		Oligoelementos	Oligoelementos	Elaborados a la D7	oligoelementos_1
-De nuestra farmacia	Línea MH			Línea Mundo Homeopático	Formulaciones propias de alta calidad y en gran variedad de formas farmacéuticas. Nuestra línea incluye medicamentos homeopáticos, esencias florales y oligoelementos.	
-De nuestra farmacia	Línea MH	Homeopatía		Homeopatía		
-De nuestra farmacia	Línea MH	Homeopatía	Esenciales	Homeopáticos esenciales D4	Todos los medicamentos disponibles en gotas se pueden elaborar en las otras formas farmacéuticas de este listado	homeopaticos_esenciales
-De nuestra farmacia	Línea MH	Homeopatía	Especiales	Homeopáticos especiales	Variedad de formas farmacéuticas que amplían las opciones terapéuticas.^En stock permanante (Excepto cobre y plata coloidal)	homeopaticos_especiales
-De nuestra farmacia	Línea MH	Homeopatía	Cuidado capilar	Cuidado capilar		cuidado_capilar
-De nuestra farmacia	Línea MH	Homeopatía	Cápsulas	Cápsulas		capsulas
-De nuestra farmacia	Línea MH	Homeopatía	Cremas	Cremas	Libres de parabenos	cremas
-De nuestra farmacia	Línea MH	Homeopatía	Geles	Geles	Libres de parabenos	geles
-De nuestra farmacia	Línea MH	Homeopatía	Ungüentos	Ungüentos	Con ceras naturales	unguentos
-De nuestra farmacia	Línea MH	Homeopatía	Elíxires	Elíxires	Endulzados con estevia	elixires
-De nuestra farmacia	Línea MH		Esencias florales	Esencias florales	Formulaciones MH 	esencias_florales_2
-De nuestra farmacia	Línea MH		Oligoelementos K7	Oligoelementos K7	Oligoterapia por diátesis	oligoelementos_K7
-Exclusivos			Alimentos funcionales	Alimentos funcionales	Con registro INVIMA	alimentos_funcionales
-Exclusivos			CBD	CBD	Cannabis medicinal con registro INVIMA	cbd
-Exclusivos			Aceites esenciales	Aceites esenciales	Gotas x 10ml	aceites_esenciales
+nivel_1	nivel_2	nivel_3	nivel_4	titulo_mostrar	descripcion	titulo_presentacion	titulo_precio_farmacia	titulo_precio_publico	tabla_id
+De nuestra farmacia	Según prescripción			Preparaciones según prescripción		Presentación	Precio farmacia	Precio público	
+De nuestra farmacia	Según prescripción	Homeopáticos		Homeopáticos		Presentación	Precio farmacia	Precio público	
+De nuestra farmacia	Según prescripción	Homeopáticos	Oficinales	Oficinales	Un medicamento con una dilución ^ Gotas x 30ml – Glóbulos x 30g	Presentación	Precio farmacia	Precio público	oficinales
+De nuestra farmacia	Según prescripción	Homeopáticos	Multipotencias	Multipotencias	Un medicamento con varias diluciones ^ Gotas x 30ml – Glóbulos x 30g	Presentación	Precio farmacia	Precio público	multipotencias
+De nuestra farmacia	Según prescripción	Homeopáticos	Magistrales	Fórmulas magistrales	Varios medicamentos con sus diluciones ^ Gotas x 30ml – Glóbulos x 30g	Presentación	Precio farmacia	Precio público	magistrales
+De nuestra farmacia	Según prescripción	Esencias florales		Esencias florales	Individuales o combinadas a partir de lo sistemas Bach, Australiano, Nueva generación y Orquídeas del Amazonas.	Presentación	Precio farmacia	Precio público	esencias_florales_1
+De nuestra farmacia	Según prescripción	Oligoelementos		Oligoelementos	Elaborados a la D7	Presentación	Precio farmacia	Precio público	oligoelementos_1
+De nuestra farmacia	Línea MH			Línea Mundo Homeopático	Formulaciones propias de alta calidad y en gran variedad de formas farmacéuticas. Nuestra línea incluye medicamentos homeopáticos, esencias florales y oligoelementos.	Presentación	Precio farmacia	Precio público	
+De nuestra farmacia	Línea MH	Homeopatía		Homeopatía		Presentación	Precio farmacia	Precio público	
+De nuestra farmacia	Línea MH	Homeopatía	Esenciales	Homeopáticos esenciales D4	Todos los medicamentos disponibles en gotas se pueden elaborar en las otras formas farmacéuticas de este listado	Presentación	Precio farmacia	Precio público	homeopaticos_esenciales
+De nuestra farmacia	Línea MH	Homeopatía	Especiales	Homeopáticos especiales	Variedad de formas farmacéuticas que amplían las opciones terapéuticas.^En stock permanante (Excepto cobre y plata coloidal)	Presentación	Precio farmacia	Precio público	homeopaticos_especiales
+De nuestra farmacia	Línea MH	Homeopatía	Cuidado capilar	Cuidado capilar		Presentación	Precio farmacia	Precio público	cuidado_capilar
+De nuestra farmacia	Línea MH	Homeopatía	Cápsulas	Cápsulas		Presentación	Precio farmacia	Precio público	capsulas
+De nuestra farmacia	Línea MH	Homeopatía	Cremas	Cremas	Libres de parabenos	Presentación	Precio farmacia	Precio público	cremas
+De nuestra farmacia	Línea MH	Homeopatía	Geles	Geles	Libres de parabenos	Presentación	Precio farmacia	Precio público	geles
+De nuestra farmacia	Línea MH	Homeopatía	Ungüentos	Ungüentos	Con ceras naturales	Presentación	Precio farmacia	Precio público	unguentos
+De nuestra farmacia	Línea MH	Homeopatía	Elíxires	Elíxires	Endulzados con estevia	Presentación	Precio farmacia	Precio público	elixires
+De nuestra farmacia	Línea MH	Esencias florales		Esencias florales	Formulaciones MH 	Presentación	Precio farmacia	Precio público	esencias_florales_2
+De nuestra farmacia	Línea MH	Oligoelementos K7		Oligoelementos K7	Oligoterapia por diátesis	Presentación	Precio farmacia	Precio público	oligoelementos_K7
+Exclusivos	Alimentos funcionales			Alimentos funcionales	Con registro INVIMA	Presentación	Precio farmacia	Precio público	alimentos_funcionales
+Exclusivos	CBD			CBD	Cannabis medicinal con registro INVIMA	Presentación	Precio farmacia	Precio público	cbd
+Exclusivos	Aceites esenciales			Aceites esenciales	Gotas x 10ml	Presentación	20%	100%	aceites_esenciales

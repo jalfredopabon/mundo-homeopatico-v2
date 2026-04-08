@@ -40,8 +40,8 @@ import { medicines } from '../data/medicines.ts';
                     </div>
                 </header>
 
-                <!-- Contador de Resultados (Alineado a la lista - UX Aireado) -->
-                <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal">
+                <!-- Contador de Resultados (Blindado con min-h para CLS) -->
+                <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal min-h-[32px]">
                     <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
                     <span id="results-counter">{[...medicines, ...medicines].length} medicamentos en catálogo</span>
                 </div>
@@ -88,8 +88,8 @@ import { medicines } from '../data/medicines.ts';
 
                 </div>
 
-                <!-- Paginador Elite -->
-                <nav class="pagination-wrap" id="pagination-nav" aria-label="Paginación del vademécum">
+                <!-- Paginador Elite (Blindado con min-h para CLS) -->
+                <nav class="pagination-wrap min-h-[44px]" id="pagination-nav" aria-label="Paginación del vademécum">
                     <span class="pagination-info" id="pagination-info">Mostrando 1–10 de 24</span>
                     <div class="pagination-controls" id="pagination-controls"></div>
                 </nav>
@@ -106,13 +106,13 @@ import { medicines } from '../data/medicines.ts';
 </BaseLayout>
 
 <script>
-    document.addEventListener('astro:page-load', () => {
+    document.addEventListener('astro:page-load', async () => {
         // --- HIDRATACIÓN INTELIGENTE: Diferir inicialización para liberar el hilo principal ---
-        const initAll = () => {
+        const initAll = async () => {
             initReveal();
             initFichasManager();
             initMobileDrawer();
-            initFilters();
+            await initFilters();
         };
 
         if ('requestIdleCallback' in window) {
@@ -148,7 +148,7 @@ import { medicines } from '../data/medicines.ts';
      * --- 2. GESTIÓN DE FILTROS (ADN ELITE) ---
      * Motor booleano AND/OR para filtrado de Vademécum masivo.
      */
-    function initFilters() {
+    async function initFilters() {
         // ── Configuración de paginación (cambia este valor en el futuro) ──
         const ITEMS_PER_PAGE = 10;
         let currentPage = 1;
@@ -164,13 +164,16 @@ import { medicines } from '../data/medicines.ts';
         const paginationCtrl= document.getElementById('pagination-controls');
         const scrollTarget  = document.getElementById('vademecum-main-scroll');
 
+        const { sanitizeInput } = await import('../utils/security');
+
         // ── Motor de filtrado: devuelve los items que pasan el filtro ──
         function getFilteredItems(): HTMLElement[] {
+            const rawSearch = searchInput?.value || '';
             const activeFilters = {
                 terapia : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value')),
                 sistema : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value')),
                 forma   : Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value')),
-                search  : searchInput?.value.toLowerCase().trim() || ''
+                search  : sanitizeInput(rawSearch).toLowerCase().trim()
             };
 
             return allMedItems.filter(item => {

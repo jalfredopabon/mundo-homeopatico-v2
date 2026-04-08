@@ -297,7 +297,7 @@ const catalogSections = [
 </BaseLayout>
 
 <script>
-    document.addEventListener('astro:page-load', () => {
+    document.addEventListener('astro:page-load', async () => {
         // --- 1. Lógica del Carrito con Micro-animaciones ---
         const btnAddCart = document.querySelectorAll('.btn-add-cart');
         
@@ -351,8 +351,12 @@ const catalogSections = [
         });
 
         if (searchInput) {
+            // Importación dinámica para el motor de búsqueda (Elite Security)
+            const { sanitizeInput } = await import('../utils/security');
+
             searchInput.addEventListener('input', (e) => {
-                const value = (e.target as HTMLInputElement).value.toLowerCase().trim();
+                const rawValue = (e.target as HTMLInputElement).value;
+                const value = sanitizeInput(rawValue).toLowerCase().trim();
                 
                 productRows.forEach(row => {
                     const originalText = row.getAttribute('data-original') || '';

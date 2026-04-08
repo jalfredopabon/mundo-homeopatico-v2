@@ -28,7 +28,11 @@ export default {
       },
       animation: {
         'pulse-slow': 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      }
+      },
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif'],
+        serif: ['"Libre Baskerville"', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+      },
     },
   },
   plugins: [],

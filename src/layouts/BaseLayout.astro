@@ -18,6 +18,25 @@ import { ViewTransitions } from 'astro:transitions';
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		
+        <!-- 🛰️ Cúpula de Hierro: Content Security Policy (Elite Security) -->
+        <meta http-equiv="Content-Security-Policy" content="
+            default-src 'self'; 
+            script-src 'self' 'unsafe-inline' https://www.youtube.com;
+            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+            font-src 'self' https://fonts.gstatic.com;
+            img-src 'self' data: https://i.ytimg.com https://s.ytimg.com;
+            frame-src 'self' https://www.youtube.com;
+            connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
+        " />
+		
+		<!-- 🖋️ Infraestructura Tipográfica Elite (Hito 51) -->
+		<!-- Acelera el handshake con Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<!-- Carga de fuentes críticas con display=swap para evitar texto invisible -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 		<ViewTransitions />
 		<title>{title}</title>
 	</head>

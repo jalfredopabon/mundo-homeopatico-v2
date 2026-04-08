@@ -211,27 +211,26 @@ const showTextSize = isCatalog || isVademecum;
         'lg': 'Texto extra'
       };
 
-      // Función segura para leer el estado inicial
-      const getInitialSize = () => {
+      // Función segura para leer el estado inicial con desofuscación
+      const getInitialSize = async () => {
+        const { decryptData } = await import('../../utils/security');
         try {
-          return localStorage.getItem('mh-font-size') || 'sm';
+          const saved = localStorage.getItem('mh-font-size');
+          return decryptData(saved) || 'sm';
         } catch (e) {
           console.warn('[Elite Storage] LocalStorage bloqueado, usando valor por defecto.');
           return 'sm';
         }
       };
 
-      let currentIdx = levels.indexOf(getInitialSize());
-      if (currentIdx === -1) currentIdx = 0;
-      
-      const updateFontSize = (idx: number) => {
+      const updateFontSize = async (idx: number) => {
+        const { encryptData } = await import('../../utils/security');
         const size = levels[idx];
         document.body.setAttribute('data-font-size', size);
         
         try {
-          localStorage.setItem('mh-font-size', size);
+          localStorage.setItem('mh-font-size', encryptData(size));
         } catch (e) {
-          // Si falla (ej. modo incógnito restrictivo), al menos lo mantenemos en memoria durante la sesión
           console.error('[Elite Storage] No se pudo guardar preferencia de texto.');
         }
 
@@ -239,13 +238,18 @@ const showTextSize = isCatalog || isVademecum;
         document.dispatchEvent(new CustomEvent('textSizeChanged', { detail: { size } }));
       };
 
-      // Aplicar estado inicial
-      updateFontSize(currentIdx);
+      // Inicialización
+      (async () => {
+          const initialValue = await getInitialSize();
+          let currentIdx = levels.indexOf(initialValue);
+          if (currentIdx === -1) currentIdx = 0;
+          updateFontSize(currentIdx);
 
-      textSizeBtn.addEventListener('click', () => {
-        currentIdx = (currentIdx + 1) % levels.length;
-        updateFontSize(currentIdx);
-      });
+          textSizeBtn.addEventListener('click', () => {
+            currentIdx = (currentIdx + 1) % levels.length;
+            updateFontSize(currentIdx);
+          });
+      })();
     }
 
     // 5. Barra de progreso (Simulada al entrar)

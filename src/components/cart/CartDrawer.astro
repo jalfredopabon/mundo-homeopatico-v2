@@ -124,16 +124,29 @@ import SelectElite from "../shared/SelectElite.astro";
 <div id="cart-overlay" class="drawer-overlay"></div>
 
 <script>
-    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES - CON BLINDAJE) ---
+    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES - CON BLINDAJE ELITE) ---
     if (!(window as any).cartInitialized) {
-        // Inicialización segura del carrito
-        try {
-            const savedCart = localStorage.getItem('cart');
-            (window as any).cartItems = savedCart ? JSON.parse(savedCart) : [];
-        } catch (e) {
-            console.error('[Elite Cart Storage] Error al leer el carrito del almacenamiento. Iniciando vacío.');
-            (window as any).cartItems = [];
-        }
+        // Inicialización segura del carrito con desofuscación
+        (window as any).initCartStorage = async () => {
+            const { decryptData, encryptData } = await import('../../utils/security');
+            try {
+                const savedCart = localStorage.getItem('cart');
+                // Intentar leer datos ofuscados, fallback a JSON normal para compatibilidad migratoria
+                (window as any).cartItems = savedCart ? (decryptData(savedCart) || JSON.parse(savedCart)) : [];
+                
+                // Red de seguridad: si lo recuperamos como JSON normal, lo ofuscamos inmediatamente
+                if (savedCart && !savedCart.includes(' ')) { 
+                    // Ya está ofuscado o es nulo
+                } else if (savedCart) {
+                    localStorage.setItem('cart', encryptData((window as any).cartItems));
+                }
+            } catch (e) {
+                console.error('[Elite Cart Storage] Error al leer/migrar el carrito. Iniciando vacío.');
+                (window as any).cartItems = [];
+            }
+        };
+
+        (window as any).initCartStorage();
         
         // El handler de toggle DEBE ser estable
         (window as any).handleToggleCart = () => {
@@ -168,7 +181,7 @@ import SelectElite from "../shared/SelectElite.astro";
         const cartSubtotalEl = document.getElementById('cart-subtotal');
         const cartDiscountEl = document.getElementById('cart-discount');
 
-        const renderCart = () => {
+        const renderCart = async () => {
             const items = (window as any).cartItems || [];
             if (!cartItemsList || !cartEmptyState) return;
 
@@ -247,13 +260,14 @@ import SelectElite from "../shared/SelectElite.astro";
 
                 // Guardar nota sin re-renderizar (evita perder foco - Blindado)
                 cartItemsList.querySelectorAll('.cart-item-note').forEach(textarea => {
-                    textarea.addEventListener('input', (e) => {
+                    textarea.addEventListener('input', async (e) => {
                         const t = e.currentTarget as HTMLTextAreaElement;
                         const idx = parseInt(t.dataset.index!);
                         items[idx].note = t.value;
                         
                         try {
-                            localStorage.setItem('cart', JSON.stringify(items));
+                            const { encryptData } = await import('../../utils/security');
+                            localStorage.setItem('cart', encryptData(items));
                         } catch (e) {
                             console.error('[Elite Cart Storage] Error al guardar nota por ítem.');
                         }
@@ -267,7 +281,8 @@ import SelectElite from "../shared/SelectElite.astro";
             if (cartTotalEl) cartTotalEl.innerText = `$${subtotal.toLocaleString()}`;
             
             try {
-                localStorage.setItem('cart', JSON.stringify(items));
+                const { encryptData } = await import('../../utils/security');
+                localStorage.setItem('cart', encryptData(items));
             } catch (e) {
                 console.error('[Elite Cart Storage] Error al persistir cambios en el carrito.');
             }

@@ -107,10 +107,19 @@ import { medicines } from '../data/medicines.ts';
 
 <script>
     document.addEventListener('astro:page-load', () => {
-        initReveal();
-        initFichasManager();
-        initMobileDrawer();
-        initFilters();
+        // --- HIDRATACIÓN INTELIGENTE: Diferir inicialización para liberar el hilo principal ---
+        const initAll = () => {
+            initReveal();
+            initFichasManager();
+            initMobileDrawer();
+            initFilters();
+        };
+
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(initAll);
+        } else {
+            setTimeout(initAll, 200);
+        }
     });
 
     /**

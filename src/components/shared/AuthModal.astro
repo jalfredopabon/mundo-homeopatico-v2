@@ -161,10 +161,15 @@ import Icons from './Icons.astro';
         });
     }
 
-    // Asegura funcionamiento en cada carga de página (Soporte ViewTransitions)
-    document.addEventListener('astro:page-load', initAuth);
-    // Ejecutar inmediatamente por si ya cargó
-    initAuth();
+    // --- HIDRATACIÓN INTELIGENTE (Paso 2.1) ---
+    // Usamos requestIdleCallback para que el modal se inicialice cuando el navegador esté libre.
+    document.addEventListener('astro:page-load', () => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => initAuth());
+        } else {
+            setTimeout(() => initAuth(), 200);
+        }
+    });
 </script>
 
 <style>

@@ -68,27 +68,43 @@ import Icons from "../shared/Icons.astro";
 
 <script>
     document.addEventListener('astro:page-load', () => {
-        const playBtn = document.getElementById('play-video-btn');
-        const closeBtn = document.getElementById('close-video');
-        const overlay = document.getElementById('youtube-overlay');
-        const iframe = document.getElementById('youtube-iframe') as HTMLIFrameElement;
-        const videoId = "ZCkVmauoVVo";
-
-        if (playBtn && overlay && iframe) {
-            playBtn.addEventListener('click', () => {
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
-                overlay.classList.remove('hidden');
-                overlay.classList.add('flex');
+        const videoSection = document.getElementById('excelencia');
+        
+        // --- HIDRATACIÓN INTELIGENTE: Solo inicializar cuando sea visible ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initVideoLogic();
+                    observer.unobserve(entry.target);
+                }
             });
-        }
+        }, { threshold: 0.1 });
 
-        if (closeBtn && overlay && iframe) {
-            closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                iframe.src = "";
-                overlay.classList.add('hidden');
-                overlay.classList.remove('flex');
-            });
+        if (videoSection) observer.observe(videoSection);
+
+        function initVideoLogic() {
+            const playBtn = document.getElementById('play-video-btn');
+            const closeBtn = document.getElementById('close-video');
+            const overlay = document.getElementById('youtube-overlay');
+            const iframe = document.getElementById('youtube-iframe') as HTMLIFrameElement;
+            const videoId = "ZCkVmauoVVo";
+
+            if (playBtn && overlay && iframe) {
+                playBtn.addEventListener('click', () => {
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('flex');
+                });
+            }
+
+            if (closeBtn && overlay && iframe) {
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    iframe.src = "";
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                });
+            }
         }
     });
 </script>

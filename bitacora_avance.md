@@ -183,9 +183,20 @@
 - Manejo de estados de carga (placeholder) e insolvencia de recursos (fallback tipográfico).
 **Anotación:** El proyecto ya cuenta con el "motor" de imágenes optimizado para ser clonado al portafolio futuro.
 
+## Hito 49: HIDRATACIÓN INTELIGENTE - OPTIMIZACIÓN TBT
+**Fecha:** 07 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Optimización manual del "Total Blocking Time" (TBT) mediante la implementación de estrategias de hidratación diferida para scripts de Vanilla JS.
+**Acciones:**
+- Implementación de `IntersectionObserver` en `VideoSection.astro` para inicializar el reproductor solo cuando sea visible.
+- Implementación de `requestIdleCallback` en `AuthModal.astro` y `vademecum.astro` para diferir lógica no crítica de filtros y modales.
+- Reducción del estrés del hilo principal del navegador durante la carga inicial.
+**Resultado:** Carga fluida, sin saltos y con interactividad garantizada bajo demanda.
+
 ## 🚀 Próximos Pasos (Deuda Técnica)
 - [x] **Optimización de Imágenes**: Estructura de carga inteligente (lazy) implementada via `EliteImage.astro`.
-- [ ] **Métricas de Performance**: Optimizar hidratación (Astro Islands) para alcanzar el Verde (90+) en Lighthouse. (Esperando orden del usuario).
+- [x] **Optimización de Hidratación**: Implementada via esperas inteligentes (IntersectionObserver & requestIdleCallback).
+- [ ] **Métricas de Performance Finales**: Validar en entorno de producción (Vercel/Netlify) para confirmar el 90+ una vez hidratado el contenido real.
 
 ## 🧪 Auditorías de Calidad (Métricas Elite)
 

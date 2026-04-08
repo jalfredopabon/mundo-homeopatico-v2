@@ -58,7 +58,8 @@
     - Aplicación de `.page-section` para estandarizar el contenedor de contenido.
     - Implementación de `.catalog-section-header`, `.catalog-breadcrumb` y `.catalog-title` para paridad visual 1:1 con el Catálogo.
 - **Lógica Declarativa:** Creación del átomo `.medical-card.is-selected` en `global.css`, eliminando la manipulación manual de bordes y sombras desde JavaScript.
-- **Consistencia Elite:** Estandarización de espaciados, tipografías y jerarquías visuales en la columna central del Dashboard.
+- [Hito 54] Consistencia Homóloga: Estabilización de Vademécum con ADN de Catálogo Elite.
+- [Hito 55] Navegación de Alta Precisión: Refactorización de scroll-offset y blindaje visual de secciones en Catálogo.
 
 ### Hito 29: Vademécum Elite - Columna 3 y Centralización (03/04/2026)
 - **Centralización "Lego":** Eliminación completa del bloqueo `<script>` en `MedicalDetails.astro`. La orquestación ahora recae 100% en el archivo de página principal.

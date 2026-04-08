@@ -6,6 +6,66 @@
  * Plomadas: borde=16px, icono=~22px, texto=48px.
  */
 import Icons from "../shared/Icons.astro";
+
+const catalogData = [
+  {
+    category: "De nuestra farmacia",
+    subcategories: [
+      {
+        label: "Según prescripción",
+        items: [
+          {
+            type: "accordion",
+            label: "Homeopáticos",
+            icon: "test-tube",
+            children: [
+              { label: "Oficinales", href: "#oficinales" },
+              { label: "Multipotencias", href: "#multipotencias" },
+              { label: "Magistrales", href: "#magistrales" }
+            ]
+          },
+          { type: "link", label: "Esencias florales", href: "#esencias-florales", icon: "flower" },
+          { type: "link", label: "Oligoelementos", href: "#oligoelementos", icon: "molecules" }
+        ]
+      },
+      {
+        label: "Línea MH",
+        items: [
+          {
+            type: "accordion",
+            label: "Homeopatía",
+            icon: "test-tube",
+            children: [
+              { label: "Homeopáticos esenciales", href: "#homeopaticos-esenciales" },
+              { label: "Homeopáticos especiales", href: "#homeopaticos-especiales" },
+              { label: "Cuidado capilar", href: "#cuidado-capilar" },
+              { label: "Cápsulas", href: "#capsulas" },
+              { label: "Cremas", href: "#cremas" },
+              { label: "Geles", href: "#geles" },
+              { label: "Ungüentos", href: "#unguentos" },
+              { label: "Elíxires", href: "#elixires" }
+            ]
+          },
+          { type: "link", label: "Esencias florales", href: "#esencias-florales-lmh", icon: "flower" },
+          { type: "link", label: "Oligoelementos K7", href: "#oligoelementos-k7", icon: "molecules" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Productos exclusivos",
+    subcategories: [
+      {
+        label: "Complementarios",
+        items: [
+          { type: "link", label: "Alimentos funcionales", href: "#alimentos-funcionales", icon: "leaf" },
+          { type: "link", label: "CBD", href: "#cbd", icon: "cannabis" },
+          { type: "link", label: "Aceites esenciales", href: "#aceites-esenciales", icon: "droplet" }
+        ]
+      }
+    ]
+  }
+];
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
@@ -23,170 +83,53 @@ import Icons from "../shared/Icons.astro";
   </div>
 
   <nav class="pb-6 mt-0 space-y-6" id="catalogo-scrollspy">
-    <!-- DE NUESTRA FARMACIA -->
-    <div class="space-y-2">
-      <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">De nuestra farmacia</span>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-0">
-          <span class="block text-[12px] font-medium text-slate-600 px-4">Según prescripción</span>
-          <div class="flex flex-col gap-0.5">
-            <!-- Acordeón: Homeopáticos -->
-            <div class="flex flex-col">
-              <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target="homeopáticos">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label">Homeopáticos</span>
-                <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
-              </button>
-              <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
-                <a href="#oficinales" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Oficinales</span>
-                </a>
-                <a href="#multipotencias" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Multipotencias</span>
-                </a>
-                <a href="#magistrales" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Magistrales</span>
-                </a>
+    {catalogData.map((category) => (
+      <div class="space-y-2">
+        <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">
+          {category.category}
+        </span>
+        <div class="flex flex-col gap-4">
+          {category.subcategories.map((sub) => (
+            <div class="flex flex-col gap-0">
+              <span class="block text-[12px] font-medium text-slate-600 px-4">
+                {sub.label}
+              </span>
+              <div class="flex flex-col gap-0.5">
+                {sub.items.map((item) => (
+                  <div class="flex flex-col">
+                    {item.type === "accordion" ? (
+                      <>
+                        <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target={item.label.toLowerCase()}>
+                          <div class="sidebar-icon-slot">
+                            <div><Icons type={item.icon} class="w-full h-full" strokeWidth={1.5} /></div>
+                          </div>
+                          <span class="sidebar-label">{item.label}</span>
+                          <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
+                        </button>
+                        <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
+                          {item.children?.map((child) => (
+                            <a href={child.href} class="sidebar-link sidebar-capsule group ml-[38px] w-[calc(100%-38px-1rem)] pl-[10px]">
+                              <span class="sidebar-label--sub group-[.is-active]:font-bold">{child.label}</span>
+                            </a>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <a href={item.href} class="sidebar-link sidebar-capsule group">
+                        <div class="sidebar-icon-slot">
+                          <div><Icons type={item.icon} class="w-full h-full" strokeWidth={1.5} /></div>
+                        </div>
+                        <span class="sidebar-label group-[.is-active]:font-bold">{item.label}</span>
+                      </a>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
-
-            <!-- Item: Esencias florales -->
-            <div class="flex flex-col">
-              <a href="#esencias-florales" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="flower" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Esencias florales</span>
-              </a>
-            </div>
-
-            <!-- Item: Oligoelementos -->
-            <div class="flex flex-col">
-              <a href="#oligoelementos" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="molecules" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Oligoelementos</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- LINEA MH -->
-        <div class="flex flex-col gap-0">
-          <span class="block text-[12px] font-medium text-slate-600 px-4">Línea MH</span>
-          <div class="flex flex-col gap-0.5">
-            <!-- Acordeón: Homeopatía -->
-            <div class="flex flex-col">
-              <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target="homeopatia">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="test-tube" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label">Homeopatía</span>
-                <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
-              </button>
-              <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
-                <a href="#homeopaticos-esenciales" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Homeopáticos esenciales</span>
-                </a>
-                <a href="#homeopaticos-especiales" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Homeopáticos especiales</span>
-                </a>
-                <a href="#cuidado-capilar" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cuidado capilar</span>
-                </a>
-                <a href="#capsulas" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cápsulas</span>
-                </a>
-                <a href="#cremas" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Cremas</span>
-                </a>
-                <a href="#geles" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Geles</span>
-                </a>
-                <a href="#unguentos" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Ungüentos</span>
-                </a>
-                <a href="#elixires" class="sidebar-link sidebar-capsule group">
-                  <div class="sidebar-icon-spacer"></div>
-                  <span class="sidebar-label--sub group-[.is-active]:font-bold">Elíxires</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Item: Esencias florales LMH -->
-            <div class="flex flex-col">
-              <a href="#esencias-florales-lmh" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="flower" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Esencias florales</span>
-              </a>
-            </div>
-
-            <!-- Item: Oligoelementos K7 -->
-            <div class="flex flex-col">
-              <a href="#oligoelementos-k7" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="molecules" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Oligoelementos K7</span>
-              </a>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
-
-    <!-- PRODUCTOS EXCLUSIVOS -->
-    <div class="space-y-2">
-      <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">Productos exclusivos</span>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-0">
-          <span class="block text-[12px] font-medium text-slate-600 px-4">Complementarios</span>
-          <div class="flex flex-col gap-0.5">
-            <div class="flex flex-col">
-              <a href="#alimentos-funcionales" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="leaf" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Alimentos funcionales</span>
-              </a>
-            </div>
-            
-            <div class="flex flex-col">
-              <a href="#cbd" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="cannabis" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">CBD</span>
-              </a>
-            </div>
-
-            <div class="flex flex-col">
-              <a href="#aceites-esenciales" class="sidebar-link sidebar-capsule group">
-                <div class="sidebar-icon-slot">
-                  <div><Icons type="droplet" class="w-full h-full" strokeWidth={1.5} /></div>
-                </div>
-                <span class="sidebar-label group-[.is-active]:font-bold">Aceites esenciales</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    ))}
   </nav>
 
   <!-- FIRMA DE AUTOR -->
@@ -296,20 +239,28 @@ import Icons from "../shared/Icons.astro";
 </script>
 
 <style>
-    /* Sobrecargas de geometría exclusivas del acordeón (no generalizables) */
+    /* VARIABLES DE ALINEACIÓN ELITE (PLOMADAS) */
+    :root {
+        --sidebar-gap-x: 1rem; /* 16px (Plomada 1: Borde) */
+        --sidebar-icon-w: 32px;
+        --sidebar-plumb-line: 31px; /* Eje de la línea guía */
+        --sidebar-l4-indent: 38px; /* Offset para cápsula Nivel 4 */
+    }
+
+    /* Sobrecargas de geometría exclusivas del acordeón */
     .accordion-trigger.is-expanded {
         @apply bg-slate-50 text-slate-900 font-bold;
     }
 
-    /* Línea maestra local (complementa la global) */
     .accordion-content {
         position: relative;
     }
 
+    /* Línea maestra: Sincronizada con Plomada 2 */
     .accordion-content::before {
         content: "";
         position: absolute;
-        left: 31px;
+        left: var(--sidebar-plumb-line);
         top: 0;
         bottom: 0;
         width: 1px;
@@ -324,7 +275,14 @@ import Icons from "../shared/Icons.astro";
         z-index: 5;
     }
 
-    .sidebar-link.is-active, .sidebar-link:hover {
-        z-index: 5;
+    /* Ajuste fino para asegurar alineación de texto Nivel 4 */
+    .sidebar-label--sub {
+        @apply transition-all duration-300;
+        font-size: 13px;
+        color: #475569; /* slate-600 */
+    }
+
+    .sidebar-link.is-active .sidebar-label--sub {
+        @apply text-slate-900;
     }
 </style>

@@ -1,0 +1,60 @@
+---
+// src/components/shared/EliteImage.astro
+/**
+ * Componente de Imagen Elite:
+ * - Lazy Loading automático (con opción de prioridad para Hero)
+ * - Decoding asíncrono para no bloquear el renderizado
+ * - Aspect-ratio protegido para evitar CLS (salto de contenido)
+ * - Placeholder de carga estilizado
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  priority?: boolean;  // Si es true, se carga inmediatamente (Hero images)
+  class?: string;
+  objectFit?: 'cover' | 'contain' | 'scale-down' | 'none';
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  priority = false, 
+  class: className = '',
+  objectFit = 'cover'
+} = Astro.props;
+
+// Calculamos los atributos de performance dinámicamente
+const loading = priority ? 'eager' : 'lazy';
+const decoding = 'async';
+const fetchPriority = priority ? 'high' : 'auto';
+---
+
+<div 
+  class={`elite-image-container relative overflow-hidden bg-slate-100/50 rounded-lg ${className}`}
+  style={`aspect-ratio: ${width} / ${height};`}
+>
+  <img
+    src={src}
+    alt={alt || ""}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchPriority}
+    class={`w-full h-full transition-opacity duration-500`}
+    style={`object-fit: ${objectFit};`}
+    onload="this.style.opacity = 1"
+    onerror="this.parentElement.innerHTML = '<div class=\'flex items-center justify-center w-full h-full text-slate-300 italic text-[10px]\'>Error al cargar</div>'"
+  />
+</div>
+
+<style>
+  .elite-image-container img {
+    opacity: 0; /* Empieza invisible para el fade-in suave al cargar */
+  }
+</style>

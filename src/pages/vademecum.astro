@@ -6,13 +6,15 @@ import AuthModal from '../components/shared/AuthModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 import MedicalCard from '../components/vademecum/MedicalCard.astro';
 import Icons from '../components/shared/Icons.astro';
+import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 
 import { medicines as staticMeds } from '../data/medicines.ts';
-import { getVademecumMaestro } from '../data/api';
+import { getVademecumMaestro, getVademecumProtocolos } from '../data/api';
+import ProtocolCard from '../components/vademecum/ProtocolCard.astro';
 
 // En fase de desarrollo/build, usamos getVademecumMaestro()
-// Para evitar errores si la API no está configurada, usamos un fallback a staticMeds
 const medicines = await getVademecumMaestro().then(res => res.length > 0 ? res : staticMeds);
+const protocols = await getVademecumProtocolos();
 
 const userName = "Invitado";
 ---
@@ -23,7 +25,7 @@ const userName = "Invitado";
     <AuthModal />
 
     <!-- Contenedor Principal Dashboard 3 Columnas -->
-    <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden">
+    <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden" id="vademecum-page-container" data-view="products">
         
         <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
         <SidebarVademecum userName={userName} />
@@ -33,8 +35,13 @@ const userName = "Invitado";
             <div class="page-section">
                 
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
-                <header class="catalog-section-header reveal">
+                <header class="catalog-section-header reveal mb-2">
                     <div class="flex flex-col w-full">
+                        <!-- Switcher de Vistas (Hito 57) -->
+                        <div class="mb-8">
+                            <VademecumToggle />
+                        </div>
+
                         <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
                             <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
                             <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" strokeWidth={3} />
@@ -47,14 +54,15 @@ const userName = "Invitado";
                     </div>
                 </header>
 
+
                 <!-- Contador de Resultados (Blindado con min-h para CLS) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal min-h-[32px]">
                     <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
                     <span id="results-counter">{[...medicines, ...medicines].length} medicamentos en catálogo</span>
                 </div>
 
-                <!-- Listado de Tarjetas Clínicas -->
-                <div class="space-y-3 max-w-3xl" id="meds-container">
+                <!-- Listado de Tarjetas Clínicas (PRODUCTOS) -->
+                <div class="space-y-3 max-w-3xl products-view-content" id="meds-container">
                     
                     {medicines
                         .sort((a, b) => a.name.localeCompare(b.name))
@@ -95,6 +103,26 @@ const userName = "Invitado";
 
                 </div>
 
+                <!-- Listado de Protocolos (PROTOCOLOS) -->
+                <div class="space-y-3 max-w-3xl protocols-view-content hidden" id="protocols-container">
+                    {protocols
+                        .sort((a, b) => a.patologia.localeCompare(b.patologia))
+                        .map((prot) => (
+                        <div 
+                            class="protocol-item reveal" 
+                            data-sistema={prot.sistema}
+                            data-name={prot.patologia.toLowerCase()}
+                        >
+                            <ProtocolCard 
+                                id={prot.id_protocolo}
+                                patologia={prot.patologia}
+                                principales={prot.principales}
+                                sistema={prot.sistema}
+                            />
+                        </div>
+                    ))}
+                </div>
+
                 <!-- Paginador Elite (Blindado con min-h para CLS) -->
                 <nav class="pagination-wrap min-h-[44px]" id="pagination-nav" aria-label="Paginación del vademécum">
                     <span class="pagination-info" id="pagination-info">Mostrando 1–10 de 24</span>
@@ -106,7 +134,7 @@ const userName = "Invitado";
         </div>
 
         <!-- Columna Derecha: Panel de Ficha Técnica Modular -->
-        <MedicalDetails products={medicines} />
+        <MedicalDetails products={medicines} protocols={protocols} />
 
     </div>
 
@@ -152,17 +180,23 @@ const userName = "Invitado";
     }
 
     /**
-     * --- 2. GESTIÓN DE FILTROS (ADN ELITE) ---
+     * --- 2. GESTIÓN DE FILTROS Y VISTAS (ADN ELITE) ---
      * Motor booleano AND/OR para filtrado de Vademécum masivo.
+     * Soporta conmutación dinámica entre Productos y Protocolos.
      */
     async function initFilters() {
-        // ── Configuración de paginación (cambia este valor en el futuro) ──
         const ITEMS_PER_PAGE = 10;
         let currentPage = 1;
+        let currentView = (document.getElementById('vademecum-page-container')?.getAttribute('data-view') as 'products' | 'protocols') || 'products';
 
         const filterInputs  = document.querySelectorAll('.vademecum-filter');
         const searchInput   = document.getElementById('vademecum-search') as HTMLInputElement;
+        const medsContainer = document.getElementById('meds-container');
+        const protocolsContainer = document.getElementById('protocols-container');
+        
         const allMedItems   = Array.from(document.querySelectorAll('.med-item')) as HTMLElement[];
+        const allProtItems  = Array.from(document.querySelectorAll('.protocol-item')) as HTMLElement[];
+        
         const counter       = document.getElementById('results-counter');
         const emptyState    = document.getElementById('empty-state');
         const clearBtn      = document.getElementById('clear-filters-btn');
@@ -173,7 +207,7 @@ const userName = "Invitado";
 
         const { sanitizeInput } = await import('../utils/security');
 
-        // ── Motor de filtrado: devuelve los items que pasan el filtro ──
+        // ── Motor de filtrado ──
         function getFilteredItems(): HTMLElement[] {
             const rawSearch = searchInput?.value || '';
             const activeFilters = {
@@ -183,22 +217,24 @@ const userName = "Invitado";
                 search  : sanitizeInput(rawSearch).toLowerCase().trim()
             };
 
-            return allMedItems.filter(item => {
+            const itemsToFilter = currentView === 'products' ? allMedItems : allProtItems;
+
+            return itemsToFilter.filter(item => {
                 const t  = item.getAttribute('data-terapia') || '';
                 const ss = (item.getAttribute('data-sistema') || '').split(',');
                 const f  = item.getAttribute('data-forma') || '';
                 const n  = item.getAttribute('data-name') || '';
 
-                const okTerapia = activeFilters.terapia.length === 0 || activeFilters.terapia.includes(t);
+                const okTerapia = currentView === 'protocols' || (activeFilters.terapia.length === 0 || activeFilters.terapia.includes(t));
                 const okSistema = activeFilters.sistema.length === 0 || activeFilters.sistema.some(s => ss.includes(s));
-                const okForma   = activeFilters.forma.length === 0   || activeFilters.forma.includes(f);
+                const okForma   = currentView === 'protocols' || (activeFilters.forma.length === 0   || activeFilters.forma.includes(f));
                 const okSearch  = !activeFilters.search || n.includes(activeFilters.search);
 
                 return okTerapia && okSistema && okForma && okSearch;
             });
         }
 
-        // ── Renderiza la página actual sobre el conjunto filtrado ──
+        // ── Renderiza la página actual ──
         function renderPage(filtered: HTMLElement[], page: number) {
             const total      = filtered.length;
             const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
@@ -207,20 +243,18 @@ const userName = "Invitado";
             const start = (currentPage - 1) * ITEMS_PER_PAGE;
             const end   = Math.min(start + ITEMS_PER_PAGE, total);
 
-            // Ocultar todos → mostrar sólo la página
-            allMedItems.forEach(item => {
-                item.classList.add('hidden');
-                item.classList.remove('page-visible');
-            });
+            // Limpiar visibilidad de todos los items
+            allMedItems.forEach(item => { item.classList.add('hidden'); item.classList.remove('page-visible'); });
+            allProtItems.forEach(item => { item.classList.add('hidden'); item.classList.remove('page-visible'); });
 
+            // Mostrar solo los items filtrados de la página actual
             filtered.slice(start, end).forEach((item, idx) => {
                 item.classList.remove('hidden');
 
-                // --- CAPA DE RESALTADO (HIGHLIGHTER) ---
+                // Highlighting
                 const titleEl = item.querySelector('h3');
                 const searchValue = searchInput?.value.toLowerCase().trim();
                 
-                // Inicializar original si no existe
                 if (titleEl && !item.hasAttribute('data-original')) {
                     item.setAttribute('data-original', titleEl.textContent || '');
                 }
@@ -235,38 +269,21 @@ const userName = "Invitado";
                     }
                 }
 
-                // Escalonar animación por ítem
                 setTimeout(() => item.classList.add('page-visible'), idx * 30);
             });
 
-            // Actualizar contador superior
-            if (counter) counter.innerText = `${total} medicamentos en catálogo`;
+            // UI Feedback
+            const label = currentView === 'products' ? 'medicamentos' : 'protocolos';
+            if (counter) counter.innerText = `${total} ${label} encontrados`;
 
-            // Estado vacío
-            if (emptyState) {
-                emptyState.classList.toggle('hidden', total > 0);
-            }
+            if (emptyState) emptyState.classList.toggle('hidden', total > 0);
+            if (paginationNav) paginationNav.style.display = total === 0 ? 'none' : '';
+            if (paginationInfo) paginationInfo.textContent = `Mostrando ${start + 1}–${end} de ${total}`;
 
-            // Ocultar paginador si no hay páginas
-            if (paginationNav) {
-                paginationNav.style.display = total === 0 ? 'none' : '';
-            }
-
-            // Info contextual
-            if (paginationInfo) {
-                paginationInfo.textContent = `Mostrando ${start + 1}–${end} de ${total}`;
-            }
-
-            // Construir botones
             renderPageButtons(currentPage, totalPages);
-
-            // Auto-scroll suave al principio de la lista
-            if (scrollTarget) {
-                scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            if (scrollTarget) scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ── Genera los botones de paginación con ellipsis ──
         function renderPageButtons(current: number, total: number) {
             if (!paginationCtrl) return;
             paginationCtrl.innerHTML = '';
@@ -276,9 +293,7 @@ const userName = "Invitado";
                 el.className = 'pagination-btn' + (active ? ' is-active' : '') + (disabled ? ' is-disabled' : '');
                 el.textContent = label;
                 if (page !== null && !disabled) {
-                    el.addEventListener('click', () => {
-                        renderPage(getFilteredItems(), page);
-                    });
+                    el.addEventListener('click', () => renderPage(getFilteredItems(), page));
                 }
                 paginationCtrl.appendChild(el);
             };
@@ -290,42 +305,46 @@ const userName = "Invitado";
                 paginationCtrl?.appendChild(el);
             };
 
-            // Botón Anterior
             btn('‹', current - 1, false, current === 1);
-
-            // Números de página con ellipsis
             const pages: (number | '...')[] = [];
-            if (total <= 7) {
-                for (let i = 1; i <= total; i++) pages.push(i);
-            } else {
+            if (total <= 7) { for (let i = 1; i <= total; i++) pages.push(i); }
+            else {
                 pages.push(1);
                 if (current > 3) pages.push('...');
                 for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) pages.push(i);
                 if (current < total - 2) pages.push('...');
                 pages.push(total);
             }
-
             pages.forEach(p => {
                 if (p === '...') ellipsis();
                 else btn(String(p), p, p === current);
             });
-
-            // Botón Siguiente
             btn('›', current + 1, false, current === total);
         }
 
-        // ── Aplicar filtros (resetea a página 1) ──
         function applyFilters() {
             currentPage = 1;
             renderPage(getFilteredItems(), 1);
         }
 
-        // Listeners
+        // Listeners básicos
         filterInputs.forEach(input => input.addEventListener('change', applyFilters));
         searchInput?.addEventListener('input', applyFilters);
         clearBtn?.addEventListener('click', () => {
             (document.querySelectorAll('.vademecum-filter:checked') as NodeListOf<HTMLInputElement>).forEach(i => i.checked = false);
             if (searchInput) searchInput.value = '';
+            applyFilters();
+        });
+
+        // ── Listener del Switcher de Vistas ──
+        window.addEventListener('vademecum:view-change', (e: any) => {
+            currentView = e.detail.view;
+            
+            // Switch de contenedores físicos
+            if (medsContainer) medsContainer.classList.toggle('hidden', currentView !== 'products');
+            if (protocolsContainer) protocolsContainer.classList.toggle('hidden', currentView !== 'protocols');
+
+            // Reset de filtros y paginación
             applyFilters();
         });
 
@@ -338,48 +357,49 @@ const userName = "Invitado";
      */
     function initFichasManager() {
         const medsContainer = document.getElementById('meds-container');
+        const protocolsContainer = document.getElementById('protocols-container');
         const vademecumAside = document.getElementById('vademecum-aside');
         const sheets = document.querySelectorAll('.medical-sheet');
         const emptySheetState = document.getElementById('vademecum-empty-state');
 
-        medsContainer?.addEventListener('click', (e) => {
-            const card = (e.target as HTMLElement).closest('[data-med]');
+        const handleCardClick = (e: MouseEvent, targetAttr: string) => {
+            const card = (e.target as HTMLElement).closest(`[${targetAttr}]`);
             if (!card) return;
 
-            const medId = card.getAttribute('data-med');
-            const allCards = document.querySelectorAll('[data-med]');
+            const id = card.getAttribute(targetAttr);
+            const allCards = document.querySelectorAll(`[data-med], [data-protocol]`);
             
             actualizarTarjetasActivas(allCards, (card as HTMLElement));
-            cambiarFichaTecnica(sheets, medId);
+            cambiarFichaTecnica(sheets, id);
             
             if (emptySheetState) emptySheetState.classList.add('hidden');
             if (vademecumAside) vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
             
             abrirDrawerMovil(vademecumAside);
-        });
+        };
+
+        medsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-med'));
+        protocolsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-protocol'));
     }
 
-    function actualizarTarjetasActivas(allCards, selectedCard) {
+    function actualizarTarjetasActivas(allCards: NodeListOf<Element>, selectedCard: HTMLElement) {
         allCards.forEach(c => c.classList.remove('is-selected'));
         selectedCard.classList.add('is-selected');
     }
 
-    function cambiarFichaTecnica(allSheets, id) {
+    function cambiarFichaTecnica(allSheets: NodeListOf<Element>, id: string | null) {
+        if (!id) return;
         allSheets.forEach(sheet => {
             if (sheet.getAttribute('data-sheet-id') === id) sheet.classList.remove('hidden');
             else sheet.classList.add('hidden');
         });
     }
 
-
-
     /**
-     * --- 3. INTERFAZ MÓVIL (DRAWER) ---
-     * Gestiona la apertura y cierre del panel lateral en resoluciones móviles.
+     * --- 4. INTERFAZ MÓVIL (DRAWER) ---
      */
     function initMobileDrawer() {
         const vademecumAside = document.getElementById('vademecum-aside');
-        
         document.querySelectorAll('.close-ficha-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -388,14 +408,14 @@ const userName = "Invitado";
         });
     }
 
-    function abrirDrawerMovil(aside) {
+    function abrirDrawerMovil(aside: HTMLElement | null) {
         if (aside && window.innerWidth < 1024) {
             aside.setAttribute('data-mobile-open', 'true');
             document.body.style.overflow = 'hidden';
         }
     }
 
-    function cerrarDrawerMovil(aside) {
+    function cerrarDrawerMovil(aside: HTMLElement | null) {
         if (aside) {
             aside.setAttribute('data-mobile-open', 'false');
             document.body.style.overflow = '';

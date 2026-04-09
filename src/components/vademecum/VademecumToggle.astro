@@ -1,0 +1,70 @@
+---
+// src/components/vademecum/VademecumToggle.astro
+import Icons from '../shared/Icons.astro';
+
+interface Props {
+    activeView?: 'products' | 'protocols';
+    class?: string;
+}
+
+const { activeView = 'products', class: className } = Astro.props;
+---
+
+<div class:list={["mh-view-switch group", className]} id="vademecum-view-toggle">
+    <!-- Slider de fondo -->
+    <div class="mh-view-slider"></div>
+
+    <!-- Opción: Productos -->
+    <button 
+        class:list={["mh-view-option text-dynamic-content", activeView === 'products' ? 'is-active' : '']} 
+        data-target="products"
+        aria-pressed={activeView === 'products'}
+    >
+        <Icons type="grid-solid" class="w-3.5 h-3.5" />
+        <span>Productos</span>
+    </button>
+
+    <!-- Opción: Protocolos -->
+    <button 
+        class:list={["mh-view-option text-dynamic-content", activeView === 'protocols' ? 'is-active' : '']} 
+        data-target="protocols"
+        aria-pressed={activeView === 'protocols'}
+    >
+        <Icons type="task-list" class="w-3.5 h-3.5" />
+        <span>Protocolos</span>
+    </button>
+</div>
+
+<script>
+    function initToggle() {
+        const toggle = document.getElementById('vademecum-view-toggle');
+        if (!toggle) return;
+
+        const buttons = toggle.querySelectorAll('.mh-view-option');
+        const container = document.getElementById('vademecum-page-container');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = (btn as HTMLElement).dataset.target;
+                
+                // Actualizar estado visual del toggle
+                buttons.forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                
+                // Notificar al contenedor principal (Fase 2)
+                if (container) {
+                    container.setAttribute('data-view', target || 'products');
+                }
+
+                // Evento personalizado para otros componentes (Filtros, etc)
+                window.dispatchEvent(new CustomEvent('vademecum:view-change', { 
+                    detail: { view: target } 
+                }));
+            });
+        });
+    }
+
+    // Inicializar en carga y navegaciones suaves
+    initToggle();
+    document.addEventListener('astro:page-load', initToggle);
+</script>

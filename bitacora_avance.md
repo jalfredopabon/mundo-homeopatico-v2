@@ -349,3 +349,13 @@
 - Sincronización de `MobileMenuDrawer.astro` para mostrar el perfil del médico en el contexto de Vademécum.
 - Despeje total de la parte superior de la Columna 2 en `vademecum.astro`, optimizando el espacio para el futuro Switch de Productos/Protocolos.
 **Deuda Técnica:** Ninguna. Se mantiene la consistencia total del sistema Lego-Architecture.
+
+## Hito 56: Evolución Visual "Elite Contrast" (09/04/2026)
+- **Sistema de Colores:** Implementación del diseño **Pure Outline** (bordes de 1px vibrantes, fondos transparentes y texto Slate-900) para las categorías del Vademécum.
+- **Legibilidad AAA:** Ajuste global de la tipografía Inter con `letter-spacing: 0.01em` y desactivación de `text-wrap: balance` en el body.
+- **Interactividad:** Actualización de checkboxes del sidebar con colores vibrantes para retroalimentación visual inmediata.
+
+## Hito 57: Vademecum View Switcher - Fase 1 (Visual) (09/04/2026)
+- **Infraestructura CSS:** Creación de átomos `.mh-view-switch` y `.mh-view-slider` con transiciones aceleradas.
+- **Componentización:** Desarrollo de `VademecumToggle.astro` con iconos dinámicos (`grid-solid` y `task-list`).
+- **Orquestación:** Integración en la columna central y preparación del contenedor principal con el atributo `data-view` para la lógica de la Fase 2.

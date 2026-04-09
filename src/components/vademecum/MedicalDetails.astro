@@ -6,7 +6,7 @@ import BadgeElite from '../shared/BadgeElite.astro';
 interface Section {
     title: string;
     icon: string;
-    content: string;
+    content?: string;
     items?: string[];
 }
 
@@ -20,11 +20,22 @@ interface Product {
     isActive?: boolean;
 }
 
-interface Props {
-    products: Product[];
+interface Protocol {
+    id_protocolo: string;
+    patologia: string;
+    principales: string;
+    sistema: string;
+    complementarios: string;
+    oligoelementos: string;
+    topicos: string;
 }
 
-const { products = [] } = Astro.props;
+interface Props {
+    products: Product[];
+    protocols?: Protocol[];
+}
+
+const { products = [], protocols = [] } = Astro.props;
 ---
 
 <!-- Columna Derecha: Panel de Ficha Técnica (ADN Clon Elite) -->
@@ -34,21 +45,21 @@ const { products = [] } = Astro.props;
     class="medical-aside"
 >
     
+    <!-- Renderizado de Productos -->
     {products.map((product) => (
         <div 
             id={`ficha-${product.id}`} 
             class={`medical-sheet ${product.isActive ? '' : 'hidden'}`}
             data-sheet-id={product.id}
         >
-            <!-- Encabezado de la Ficha -->
             <div class="mb-8 relative">
                 <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
                     <Icons type="close-x" class="w-4 h-4" />
                 </button>
 
-                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
                     <Icons type="file-text" class="w-4 h-4" strokeWidth={2} />
-                    Ficha técnica del producto
+                    Ficha técnica de Producto
                 </div>
 
                 <h2 class="medical-title">
@@ -57,12 +68,11 @@ const { products = [] } = Astro.props;
 
                 <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
                     <BadgeElite label={product.scientificName} variant="slate" size="sm" />
-                    <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />
+                    {product.potency && <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />}
                     <BadgeElite label={product.origin} variant="slate" size="sm" />
                 </div>
             </div>
 
-            <!-- Secciones de la Ficha -->
             <div class="flex flex-col">
                 {product.sections.map((section) => (
                     <div class="medical-section-container">
@@ -72,7 +82,7 @@ const { products = [] } = Astro.props;
                         </h4>
                         
                         <ul class="space-y-4">
-                            {!section.items && (
+                            {section.content && (
                                 <li class="medical-list-item">
                                     <div class="medical-bullet"></div>
                                     <p class="leading-[1.8]" set:html={section.content} />
@@ -91,17 +101,66 @@ const { products = [] } = Astro.props;
         </div>
     ))}
 
+    <!-- Renderizado de Protocolos -->
+    {protocols.map((protocol) => (
+        <div 
+            id={`ficha-prot-${protocol.id_protocolo}`} 
+            class="medical-sheet hidden"
+            data-sheet-id={protocol.id_protocolo}
+        >
+            <div class="mb-8 relative">
+                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
+                    <Icons type="close-x" class="w-4 h-4" />
+                </button>
+
+                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
+                    <Icons type="task-list" class="w-4 h-4" strokeWidth={2} />
+                    Guía de Protocolo Clínico
+                </div>
+
+                <h2 class="medical-title">
+                    {protocol.patologia}
+                </h2>
+
+                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+                    <BadgeElite label={protocol.sistema} variant="success" size="sm" />
+                    <BadgeElite label="Soporte Terapéutico" variant="slate" size="sm" />
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                {[
+                    { title: 'Medicamentos Principales', icon: 'gotas', content: protocol.principales },
+                    { title: 'Complementarios', icon: 'plus-circle', content: protocol.complementarios },
+                    { title: 'Oligoelementos / Catalizadores', icon: 'zap', content: protocol.oligoelementos },
+                    { title: 'Tópicos / Externos', icon: 'edit', content: protocol.topicos }
+                ].filter(s => s.content && s.content !== '-').map((section) => (
+                    <div class="medical-section-container">
+                        <h4 class="medical-section-title">
+                            <Icons type={section.icon} class="w-3.5 h-3.5" />
+                            {section.title}
+                        </h4>
+                        
+                        <div class="medical-list-item pl-6">
+                            <p class="leading-[1.8] text-slate-700 font-medium italic" set:html={section.content} />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    ))}
+
     {products.length > 0 && (
         <div id="vademecum-empty-state" class="medical-empty-state">
             <div class="mb-8 flex justify-center text-slate-200">
                 <Icons type="select-card" class="w-20 h-20" strokeWidth={1} />
             </div>
-            <h3 class="text-[16px] font-bold text-slate-900 mb-2">Selecciona un medicamento</h3>
+            <h3 class="text-[16px] font-bold text-slate-900 mb-2">Selecciona un elemento</h3>
             <p class="text-[13px] text-slate-500 max-w-[240px] mb-1 leading-relaxed">
-                Haz clic en una tarjeta del listado para consultar su ficha técnica detallada.
+                Haz clic en una tarjeta del listado para consultar su información detallada.
             </p>
             <p class="text-[11px] font-bold text-brand tracking-tighter mt-4">
-                Fórmula • Posología • Aplicaciones
+                Fórmula • Protocolos • Dosificación
             </p>
         </div>
     )}

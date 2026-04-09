@@ -1,0 +1,36 @@
+---
+// src/components/vademecum/ProtocolCard.astro
+import BadgeElite from '../shared/BadgeElite.astro';
+
+interface Props {
+    id: string;
+    patologia: string;
+    principales: string;
+    sistema: string;
+}
+
+const { id, patologia, principales, sistema } = Astro.props;
+---
+
+<div 
+    class="medical-card protocol-item-btn" 
+    data-protocol={id}
+    data-id={id}
+>
+    <div class="mb-2">
+        <h3 class="font-bold text-slate-900 leading-tight text-dynamic-content">
+            {patologia}
+        </h3>
+    </div>
+    
+    <p class="text-slate-700 leading-relaxed mb-4 text-dynamic-content line-clamp-2">
+        <strong>Principales:</strong> {principales}
+    </p>
+    
+    <div class="flex items-center gap-2 flex-wrap">
+        {sistema && (
+            <BadgeElite label={sistema} variant="success" size="xs" class="text-dynamic-badge" />
+        )}
+        <BadgeElite label="Protocolo" variant="neutral" size="xs" class="text-dynamic-badge" />
+    </div>
+</div>

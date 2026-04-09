@@ -20,7 +20,7 @@ body {
   padding: 0 !important;
   width: 100%;
   @apply bg-surface-white text-body;
-  text-wrap: balance; /* Fallback universal */
+  letter-spacing: 0.01em; /* Mejora la legibilidad de Inter */
 }
 
 @supports (text-wrap: pretty) {
@@ -354,24 +354,25 @@ input[type="search"] {
   }
 
   .badge-elite--indigo  { 
-    @apply bg-indigo-50/80; 
-    color: #004A8F; 
+    @apply bg-transparent border border-indigo-200 text-indigo-900;
   }
   .badge-elite--violet  { 
-    @apply bg-violet-50/80; 
-    color: #4A008F; 
+    background-color: transparent; 
+    color: #020617; 
+    border: 1px solid #904CE3;
   }
-  .badge-elite--cyan    { 
-    @apply bg-cyan-100; 
-    color: theme('colors.cyan.950'); 
+  .badge-elite--emerald { 
+    background-color: transparent; 
+    color: #020617; 
+    border: 1px solid #2BC826;
   }
-  .badge-elite--bronze  { 
-    @apply bg-amber-50; 
-    color: #8F5700; 
+  .badge-elite--amber { 
+    background-color: transparent; 
+    color: #020617; 
+    border: 1px solid #FBAC38;
   }
   .badge-elite--rose    { 
-    @apply bg-rose-100; 
-    color: theme('colors.rose.950'); 
+    @apply bg-transparent border border-rose-200 text-rose-900;
   }
   .badge-elite--neutral { 
     @apply bg-surface-muted; 

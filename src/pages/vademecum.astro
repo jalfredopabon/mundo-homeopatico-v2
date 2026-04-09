@@ -7,7 +7,13 @@ import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 import MedicalCard from '../components/vademecum/MedicalCard.astro';
 import Icons from '../components/shared/Icons.astro';
 
-import { medicines } from '../data/medicines.ts';
+import { medicines as staticMeds } from '../data/medicines.ts';
+import { getVademecumMaestro } from '../data/api';
+
+// En fase de desarrollo/build, usamos getVademecumMaestro()
+// Para evitar errores si la API no está configurada, usamos un fallback a staticMeds
+const medicines = await getVademecumMaestro().then(res => res.length > 0 ? res : staticMeds);
+
 const userName = "Invitado";
 ---
 

@@ -35,14 +35,14 @@ const { userName = "Invitado" } = Astro.props;
             </h4>
             <div class="space-y-4">
                 {["Homeopatía compleja", "Oligoelementos", "Terapia floral"].map((filter) => (
-                    <label class="sidebar-filter-label">
+                    <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox"
+                            class="vademecum-filter sidebar-filter-checkbox accent-[#904CE3]"
                             data-filter-group="terapia"
                             data-filter-value={filter}
                         />
-                        {filter}
+                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
                     </label>
                 ))}
             </div>
@@ -56,14 +56,14 @@ const { userName = "Invitado" } = Astro.props;
             </h4>
             <div class="space-y-4">
                 {["Cardiovascular", "Digestivo", "Locomotor", "Nervioso", "Respiratorio"].map((filter) => (
-                    <label class="sidebar-filter-label">
+                    <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox"
+                            class="vademecum-filter sidebar-filter-checkbox accent-[#2BC826]"
                             data-filter-group="sistema"
                             data-filter-value={filter}
                         />
-                        {filter}
+                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
                     </label>
                 ))}
             </div>
@@ -77,14 +77,14 @@ const { userName = "Invitado" } = Astro.props;
             </h4>
             <div class="space-y-4">
                 {["Crema", "Gotas", "Spray", "Tabletas"].map((filter) => (
-                    <label class="sidebar-filter-label">
+                    <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox"
+                            class="vademecum-filter sidebar-filter-checkbox accent-[#FBAC38]"
                             data-filter-group="forma"
                             data-filter-value={filter}
                         />
-                        {filter}
+                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
                     </label>
                 ))}
             </div>

@@ -36,11 +36,11 @@ const { id, name, potency, shortDesc, tags } = Astro.props;
     <div class="flex items-center gap-2 flex-wrap">
         {tags && (
             <>
-                <BadgeElite label={tags.terapia} variant="indigo" size="xs" class="text-dynamic-badge" />
+                <BadgeElite label={tags.terapia} variant="violet" size="xs" class="text-dynamic-badge" />
                 {tags.sistema.map(s => (
-                    <BadgeElite label={s} variant="violet" size="xs" class="text-dynamic-badge" />
+                    <BadgeElite label={s} variant="success" size="xs" class="text-dynamic-badge" />
                 ))}
-                <BadgeElite label={tags.forma} variant="bronze" size="xs" class="text-dynamic-badge" />
+                <BadgeElite label={tags.forma} variant="warning" size="xs" class="text-dynamic-badge" />
             </>
         )}
     </div>

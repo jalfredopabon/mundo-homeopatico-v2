@@ -1,11 +1,17 @@
 ---
 // src/components/vademecum/SidebarVademecum.astro
 import Icons from "../shared/Icons.astro";
+
+interface Props {
+    userName?: string;
+}
+
+const { userName = "Invitado" } = Astro.props;
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
     <!-- Buscador sticky -->
-    <div class="sticky top-0 z-30 bg-surface-white px-4 py-4">
+    <div class="sidebar-search-header">
         <div class="relative group">
             <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
                 <Icons type="search" class="w-full h-full" strokeWidth={1.5} />
@@ -19,10 +25,11 @@ import Icons from "../shared/Icons.astro";
         </div>
     </div>
 
-    <div class="px-4 pb-6 pt-0 space-y-7">
+    <!-- Navegación de Filtros -->
+    <div class="flex-1 px-4 pb-6 pt-0 space-y-7">
         <!-- Sección 1: Tipo de terapia -->
         <section class="sidebar-filter-section">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="mortero" class="w-4 h-4 text-slate-900" strokeWidth={1.8} />
                 Tipo de terapia
             </h4>
@@ -43,7 +50,7 @@ import Icons from "../shared/Icons.astro";
 
         <!-- Sección 2: Sistema del cuerpo -->
         <section class="sidebar-filter-section">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="user-circle-alt" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Sistema del cuerpo
             </h4>
@@ -64,7 +71,7 @@ import Icons from "../shared/Icons.astro";
 
         <!-- Sección 3: Forma farmacéutica -->
         <section class="sidebar-filter-section">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="pill" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Forma farmacéutica
             </h4>
@@ -82,5 +89,20 @@ import Icons from "../shared/Icons.astro";
                 ))}
             </div>
         </section>
+    </div>
+
+    <!-- Contenedor Inferior: Identidad del Profesional (Hito: Reubicación de Saludo) -->
+    <div class="px-4 py-4 mt-auto bg-surface-muted/50 border-t border-subtle">
+        <div class="flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-white hover:shadow-sm group">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white ring-1 ring-white/20 shadow-sm transition-transform group-hover:scale-105 overflow-hidden">
+                <span class="text-[12px] font-bold tracking-tighter">AL</span>
+            </div>
+            <div class="flex flex-col min-w-0">
+                <span class="text-[10px] text-slate-500 font-bold leading-none mb-1 tracking-tight">Hola</span>
+                <span class="text-[13px] font-bold text-slate-900 leading-none truncate group-hover:text-brand transition-colors">
+                    Alfredo Pabón
+                </span>
+            </div>
+        </div>
     </div>
 </aside>

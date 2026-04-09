@@ -317,7 +317,6 @@ input[type="search"] {
     /* Los íconos siempre deben clonar el color del texto acompañante */
     & svg {
       color: inherit !important;
-      fill: currentColor;
     }
   }
 
@@ -670,7 +669,7 @@ input[type="search"] {
   }
 
   .page-section {
-    @apply px-8 md:px-[72px] pt-0 pb-8 flex-1 flex flex-col max-w-[1600px] mx-auto w-full;
+    @apply mh-layout-px mh-layout-py flex-1 flex flex-col max-w-[1600px] mx-auto w-full;
   }
 
   .banner-info {
@@ -692,7 +691,7 @@ input[type="search"] {
   }
 
   .catalog-section-header {
-    @apply sticky top-0 md:static z-30 bg-surface-muted -mx-8 px-8 md:-mx-[72px] md:px-[72px] pt-0 pb-8 flex flex-col gap-y-2;
+    @apply sticky top-0 md:static z-30 bg-surface-muted mh-layout-px-neg mh-layout-px pb-8 flex flex-col gap-y-2;
   }
 
   .catalog-breadcrumb {
@@ -847,7 +846,7 @@ input[type="search"] {
   /* Paso 1.2 — Tarjeta de sede */
   .location-card {
     @apply bg-surface-white rounded-2xl border border-subtle
-           hover:border-strong transition-all duration-300;
+           hover:border-brand transition-all duration-300;
   }
   .location-card-icon {
     @apply h-10 w-10 rounded-xl bg-surface-muted border border-subtle
@@ -865,10 +864,10 @@ input[type="search"] {
 
   /* Paso 1.4 — Acordeón FAQ: contenido y lista */
   .faq-content-wrapper { @apply overflow-hidden transition-all duration-500 ease-in-out opacity-0; max-height: 0; }
-  .faq-content-inner   { @apply pb-6 sm:pb-7 text-body leading-relaxed text-[15px] pr-8 sm:pr-12; }
+  .faq-content-inner   { @apply pb-6 sm:pb-7 text-secondary leading-relaxed text-[15px] pr-8 sm:pr-12; }
   .faq-list            { @apply space-y-3.5 mt-2; }
   .faq-list-item       { @apply flex items-start gap-3; }
-  .faq-list-text       { @apply text-[14.5px] font-medium text-body; }
+  .faq-list-text       { @apply text-[14.5px] font-medium text-secondary; }
   .faq-check-box {
     @apply p-1 rounded-md text-brand mt-0.5 shrink-0; /* rounded-md: filosofía cuadrada con bordes */
     background-color: rgba(10, 92, 78, 0.05);

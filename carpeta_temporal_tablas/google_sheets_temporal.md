@@ -218,7 +218,97 @@ Se realiza una auditoría campo por campo para asegurar la compatibilidad con el
 2.  **LISTA_PRECIOS:** Mapeo de productos, presentaciones y mini-lenguaje.
 3.  **DISTRIBUIDORES:** Nueva tabla para la red nacional de distribución.
 
+### 📚 TABLA 1: vademecum_maestro (Ficha Técnica y Listado A-Z)
+- **Estado:** LISTA / AUDITADA (450 Registros)
+- **Estructura Normalizada (8 Columnas):**
+  - **Columna A:** `id_producto` (Ej: prod_001)
+  - **Columna B:** `linea` (Filtro 1 - Sentence Case)
+  - **Columna C:** `nombre` (Título Tarjeta - Regex Refinado)
+  - **Columna D:** `principios_activos` (Ficha Técnica Detalle - Separador `; `)
+  - **Columna E:** `indicaciones` (Extracto Tarjeta y Ficha Técnica Detalle)
+  - **Columna F:** `posologia` (Ficha Técnica Detalle)
+  - **Columna G:** `presentaciones` (Filtro 2 - Extracto Regex)
+  - **Columna H:** `estado` (Control visibilidad - activo/oculto)
+
+### 🩺 TABLA 2: vademecum_protocolos (Buscador por Enfermedades)
+- **Estado:** LISTA / AUDITADA (220 Registros)
+- **Estructura Normalizada (8 Columnas):**
+  - **Columna A:** `id_protocolo` (Ej: prot_001)
+  - **Columna B:** `patologia` (Filtro Maestro - Sentence Case)
+  - **Columna C:** `principales` (Rol P)
+  - **Columna D:** `sistema` (Rol S)
+  - **Columna E:** `complementarios` (Rol C)
+  - **Columna F:** `oligoelementos` (Rol O)
+  - **Columna G:** `topicos` (Rol T)
+  - **Columna H:** `estado` (Control visibilidad - activo/oculto)
+
 ---
 
 > [!IMPORTANT]
 > **Estado del Diagnóstico:** FAQ, ACCESOS, VIDEO, BANNER, SEO, AUTHOR, DESCUENTOS, PEDIDOS y CONFIG validadas. **Pendiente:** NAVEGACIÓN, LISTA_PRECIOS y DISTRIBUIDORES.
+
+---
+
+## 🚀 5. Hoja de Ruta de Implementación (Cableado Vademécum v2)
+
+### Fase 1: Estructuración y Datos de Prueba (Google Sheets)
+- **Acción:** Creación de las hojas `vademecum_maestro` y `vademecum_protocolos` en el documento oficial.
+- **Objetivo:** Rellenar 2 a 3 filas con datos reales para tener un JSON válido y probar que el motor MD Lite interpreta correctamente los caracteres `|` y `^`.
+
+### Fase 2: Desarrollo del "API Gateway" (Google Apps Script)
+- **Acción:** Evolucionar el script actual añadiendo una función `doGet()`.
+- **Objetivo:** 
+  1. Leer las hojas maestras de forma programática.
+  2. Implementar el blindaje de seguridad exigiendo un token `X-Secret-Key`.
+  3. Retornar la data estructurada en formato JSON puro.
+
+### Fase 3: Fetcher Inteligente y UI (Código Astro)
+- **Acción:** Crear la capa de integración técnica local.
+- **Objetivo:**
+  1. **Servicio TS (`src/data/api.ts`):** Para consultar el GAS enviando la llave secreta.
+  2. **Sistema SWR (Caché):** Implementar la estrategia *Stale-While-Revalidate* vía `localStorage` para garantizar cargas en 0ms en visitas recurrentes.
+  3. **Conexión UI:** Remplazar el archivo de datos local y *hardcodeado* de `Hito 28` por la integración dinámica, asegurando que la interfaz "Elite" absorba los datos sin romper el diseño renderizando.
+
+---
+
+## 🎨 6. Arquitectura UX/UI (Patrón Maestro-Detalle Dual)
+
+El diseño de 3 columnas (Master-Detail) se adaptará con una mentalidad **Mobile-First**, optimizando el espacio visual y utilizando un sistema de "Switch" dinámico que reutiliza el código de la UI base.
+
+### 📱 Reestructuración Visual Base
+1. **Perfil de Usuario al Sidebar:** Se mueve el área de cuenta ("Hola, Invitado") a la cima de la **Columna 1**. Esto despeja el panel central y consolida el Sidebar como el "Centro de Control" (estándar tipo SaaS/Notion).
+2. **Switch Maestro en Columna 2:** El interruptor general `[ Productos | Protocolos ]` se ancla justo bajo el Título Principal en la **Columna 2**. Esto garantiza que en teléfonos móviles sea lo primero que interactúe el usuario sin tener que abrir el panel de filtros.
+3. **Sincronía de Color (Filtros ↔ Badges):** Lógica visual "Elite". Los checkboxes del Sidebar y los badges de las tarjetas (Columna 2) operan bajo el mismo espectro cromático. *Ejemplo:* Si la tarjeta define "Gotas" en color naranja, el checkbox "Gotas" se pintará de naranja al estar activo. Esto reduce la carga cognitiva a cero.
+
+### 🕹️ Estado A: Modo VADEMÉCUM (Búsqueda de producto específico)
+- **Columna 1 (Panel de Control):**
+  - Perfil de Usuario.
+  - Buscador General de Catálogo.
+  - Checkboxes Sincronizados (por color): `Línea de Terapia` y `Forma Farmacéutica`.
+- **Columna 2 (Listing General):**
+  - Switch en Posición: "Vademécum".
+  - Tarjetas de MEDICAMENTOS (`nombre`, extracto de `indicaciones`, badges colorizados de `linea` y `presentación`).
+- **Columna 3 (Ficha Técnica Elite):**
+  - Al seleccionar un medicamento en C2, se despliega: Nombre, Indicaciones (lista), Principios Activos Formateados, Posología y Presentación detallada.
+
+### 🔬 Estado B: Modo PROTOCOLOS (Búsqueda por Patología)
+- **Columna 1 (Panel de Control):**
+  - Perfil de Usuario.
+  - Buscador de Patologías.
+  - (Los filtros de formato farmacéutico desaparecen dinámicamente).
+- **Columna 2 (Listing General):**
+  - Switch en Posición: "Guía de Protocolos".
+  - Tarjetas de ENFERMEDADES (`patologia`).
+- **Columna 3 (La Receta / Detalle Relacional):**
+  - Al seleccionar una enfermedad en C2, se despliega el cuadro clínico:
+    - **(P) Principal:** `principales`
+    - **(S) Sistema:** `sistema`
+    - **(C) Complementarios:** `complementarios`
+    - **(O) Oligoelementos:** `oligoelementos`
+    - **(T) Tópico:** `topicos`
+  - *Sinergia Elite:* Los nombres de medicamentos impresos en esta receta serán links interactivos que llevarán de regreso al *Estado A* para ver la ficha técnica del medicamento.
+
+---
+
+### 📝 NOTAS DE REVISIÓN PENDIENTE
+- [ ] **Ajuste de Layout:** Revisar el padding entre el Header y el Contenido Principal. (Pendiente explicación detallada del usuario).

@@ -219,6 +219,7 @@
 - Eliminación de la carga redundante en componentes aislados para optimizar el rendimiento.
 **Resultado:** Texto legible instantáneamente con tipografía de alta fidelidad, eliminando el parpadeo de fuentes genéricas (FOUT).
 
+
 ## Hito 52: HARDENING DE SEGURIDAD (FORT KNOX PHASE 1-3)
 **Fecha:** 07 de Abril, 2026
 **Estado:** Completado ✅
@@ -253,6 +254,13 @@
 - **Filosofía "Menos es Más":** Mantenimiento del ícono de usuario como anclaje visual para diferenciar el saludo de otros elementos de texto, evitando el ruido visual.
 - **Preparación de Datos:** Uso de la variable `userName` como placeholder estratégico, listo para la integración dinámica con Google Sheets.
 **Resultado:** Una interfaz personalizada que respeta el ritmo visual del proyecto y refuerza la sensación de una herramienta profesional hecha a medida.
+
+## Hito 55: Normalización de Rítmica Vertical "Elite" (09/04/2026)
+- **Eliminación de Deuda Técnica:** Remoción del hardcode `pt-0` en `.page-section` y `pt-12` en `CatalogTable.astro` que generaban inconsistencias de aire (colapso o exceso).
+- **Sincronización de Tokens:** Reconexión total de los contenedores con los tokens `.mh-layout-px` y `.mh-layout-py`.
+- **Estandarización de Gaps:** Implementación de `gap-12` en contenedores maestros (`index.astro`, `contacto.astro`) para gestionar la separación entre secciones de forma centralizada.
+- **Resultado:** Paridad visual absoluta. El primer elemento de cada página ahora respira exactamente a 32px (8) / 48px (12) del Header/Banner, independientemente del tipo de componente.
+
 
 ---
 
@@ -317,3 +325,16 @@
 - Corrección de sintaxis `@apply selection:bg-brand/10` (no admitida por PostCSS/Tailwind) reemplazándola por CSS nativo `::selection`.
 - Limpieza de redundancias en `global.css`.
 **Deuda Técnica:** Ninguna. El proyecto recupera el 100% de paridad visual y funcional en Safari móvil.
+
+---
+
+## Hito 44: Reubicación Arquitectónica de la Identidad en Vademécum
+**Fecha:** 09 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Reubicación estratégica del saludo del usuario desde el área de contenido (Columna 2) al pie del Sidebar (Columna 1), logrando una interfaz más limpia y consistente con el ecosistema Elite.
+**Acciones:**
+- Estandarización de `SidebarVademecum.astro` utilizando la clase maestra `.sidebar-search-header` para alineación de plomadas.
+- Creación de la "Cápsula de Identidad" en el footer del Sidebar (Web/Móvil) con fondo `bg-slate-900` e iniciales (**AL**), emulando el patrón de Catálogo.
+- Sincronización de `MobileMenuDrawer.astro` para mostrar el perfil del médico en el contexto de Vademécum.
+- Despeje total de la parte superior de la Columna 2 en `vademecum.astro`, optimizando el espacio para el futuro Switch de Productos/Protocolos.
+**Deuda Técnica:** Ninguna. Se mantiene la consistencia total del sistema Lego-Architecture.

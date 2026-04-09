@@ -20,7 +20,7 @@ const userName = "Invitado";
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden">
         
         <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
-        <SidebarVademecum />
+        <SidebarVademecum userName={userName} />
 
         <!-- Columna Central: Listado de Productos (Scroll propio) -->
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100dvh-64px)] md:h-[calc(100dvh-72px)] min-h-0 scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
@@ -29,11 +29,6 @@ const userName = "Invitado";
                 <!-- Encabezado del Vademécum (ADN Clon Catálogo Elite) -->
                 <header class="catalog-section-header reveal">
                     <div class="flex flex-col w-full">
-                        <!-- Saludo de cortesía (Hito 54: Consistencia Homóloga) -->
-                        <div class="user-greeting">
-                            <Icons type="user" class="w-3.5 h-3.5" strokeWidth={1.5} />
-                            <span>Hola, {userName}</span>
-                        </div>
                         <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
                             <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
                             <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" strokeWidth={3} />

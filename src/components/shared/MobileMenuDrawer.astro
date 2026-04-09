@@ -179,10 +179,22 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
 
   <!-- Footer del Drawer -->
   <div class="p-6 bg-surface-muted/30">
-    <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs shrink-0">MH</div>
-        <span class="text-xs font-bold text-body">Mundo homeopático</span>
-    </div>
+    {isVademecum ? (
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white font-bold text-[11px] shrink-0">
+          AL
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[10px] text-slate-500 font-bold tracking-tight leading-none mb-1">Hola</span>
+          <span class="text-xs font-bold text-body leading-none">Alfredo Pabón</span>
+        </div>
+      </div>
+    ) : (
+      <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs shrink-0">MH</div>
+          <span class="text-xs font-bold text-body">Mundo homeopático</span>
+      </div>
+    )}
   </div>
 </div>
 

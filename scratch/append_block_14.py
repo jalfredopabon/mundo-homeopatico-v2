@@ -1,0 +1,22 @@
+import os
+
+csv_content = """prod_131,PRODUCTOS MH,TABACUM D4 MH,Tabacum D30-D200; Hyosciamus D12-D30; Natrum cloratum D12-D30; Nux vómica 200CH; Plantago mayor D2; Robina D6-D12.,Tabaquismo crónico.,,Gotas x 30 ml; Tabletas x 90 (En stock permanente) Bajo pedido: Glóbulos; Elixir; Spray oral; Spray nasal; Viales bebibles; Viales nebulizables.,activo
+prod_132,PRODUCTOS MH,TARAXACUM D4 MH,Abies nigra D3; Aloe vera D3; Alumina D8; Calcium carbonicum D8; Chelidonium majus D3; Fumaria D6; Hydrastis D3; Mellisa D3; Nux vómica D3; Peumus boldus D3; Rhamnus purshiana (Cascara sagrada) D3; Rheum D3; Taraxacum D3.,Drenador hepático y biliar; estreñimiento; abdomen distendido; drenaje de toxinas acumuladas por mal funcionamiento del sistema pancreodigestivo.,,Gotas x 30 ml; Tabletas x 90 (En stock permanente) Bajo pedido: Glóbulos; Elixir; Spray oral; Spray nasal; Viales bebibles; Viales nebulizables.,activo
+prod_133,PRODUCTOS MH,TARAXACUM ELIXIR D4 MH,Guarango D1; chamomilla D3; aloe D2; croton D3 (sangre de drago); cynara scolymus D3 (alcachofa); taraxacum D3(diente de León); Abies D4 MH.,Drenador hepático y biliar; estreñimiento; abdomen distendido; drenaje de toxinas acumuladas por mal funcionamiento del sistema pancreodigestivo.,,Elixir x 240 ml.,activo
+prod_134,PRODUCTOS MH,TEUCRIUM CÁPSULAS D4 MH,Boldo D1; Ruibarbo D1; Cascara sagrada D1; Sen D1 y la impregnación del Teucrium MH.,Purgante; drenador.,ADULTOS: 2 cápsulas 3 veces al día durante dos días. NIÑOS: (6 años en adelante): 2 cápsulas 2 veces al día durante dos días.,Frasco por 12 cápsulas.,activo
+prod_135,PRODUCTOS MH,TEUCRIUM GOTAS D4 MH,Allium sativum D3 D4; Artemisa vulg. D3; Chenopodium D3-D4; Cina D4; Graphites D30; Ricinus D3-D4; Ruta D3-D4; Teucrium D3-D6.,Helmintiasis; oxiuariasis; para la mejora constitucional en caso de helmintiasis pertinaz y tendencia del recidivo; antiparasitario.,,Gotas x 30 ml.,activo
+prod_136,PRODUCTOS MH,THALLIUM D4 MH,Acido ascorbicum D3-D6; Calcárea carbónica D12; Calcárea fluorica D12; Chelidonium D6; Fluoricum acidum D6-D12-D30; Graphites D8; D12; Hepar sulphur D8; D12; Juglans D12; Kalium phosphoricum D8-D12; Oleander D6; Petroleum D6; Staphisagria D6; Sulphur D12-D30;Thallium aceticum D8-D12-D30; Ulmus D3; Urtica D6; Ustillago D8; Viola tricolor D4.,Pérdida prematura del cabello; debilidad; dolores de cabeza; debilidad en las uñas.,,Gotas x 30 ml; Tabletas x 90 (En stock permanente) Bajo pedido: Glóbulos; Elixir; Spray oral; Spray nasal; Viales bebibles; Viales nebulizables.,activo
+prod_137,PRODUCTOS MH,THALLIUM D4 MH VIALES,Misma composición del Thallium; sólo cambia el vehículo.,Seborrea; alopecia; pérdida prematura del cabello.,,Viales en aceite de coco caja x 12 unidades de 10 ml.,activo
+prod_138,PRODUCTOS MH,THUJA D4 MH,Antimonium crudum D12; Belladonna 7CH; Conium 5CH; Natrum Sulphuricum D12; Nitricum acidum D6; Phytolacca 5CH; Scrophularia D3; Silícea D12; Thuja D3-D6.,Tumores benignos y malignos; fibromas de seno; condilomas; callosidades; cuerpos extraños.,,Gotas x 30 ml; Tabletas x 90 (En stock permanente) Bajo pedido: Glóbulos; Elixir; Spray oral; Spray nasal; Viales bebibles; Viales nebulizables.,activo
+prod_139,PRODUCTOS MH,THUJA CREMA D4 MH,Antimonium Crudum D3; Graphites D3; Nitricum Acidum D3; Thuja D3.,Verrugas; condilomas.,,Tubo x 120g.,activo
+prod_140,PRODUCTOS MH,TRATAMIENTO DETOX D4 MH,JUGLANS MH; HYDRANGEA MH; CHELIDONIUM MH; TEUCRIUM MH.,Para ayudar al cuerpo a eliminar las toxinas que ha acumulado y que afectan la salud. Esto se logra a través de los medicamentos homeopáticos que estimulan los órganos de drenaje mas importantes: Riñones; Hígado; Sistema digestivo; Sitema linfático^Como un apoyo terapéutico en el proceso de detoxificacion; Mundo Homeopático presenta un tratamiento eficaz; basado en cuatro medicamentos cuya función depuradora es asimilada por el organismo de manera natural; progresiva y duradera.,,Kit de 4 productos.,activo"""
+
+# Limpieza de artefactos PDF (reforzada)
+csv_content = csv_content.replace('\u001b', 'f').replace('\u001e', 'fl').replace('\u001f', 'fi').replace('\u001c', ' ').replace('\u001b', 'f')
+
+target_csv = r'c:\Users\Alfredo Pabón\Documents\Proyectos antigravity\mundo_homeopatico_v2\carpeta_temporal_tablas\vademecum_maestro.csv'
+
+with open(target_csv, 'a', encoding='utf-8', newline='') as f:
+    f.write('\n' + csv_content.strip())
+
+print('Bloque 14 (131-140) anexado correctamente.')

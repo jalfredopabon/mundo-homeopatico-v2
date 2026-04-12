@@ -152,7 +152,17 @@ const userName = "Alfredo Pabón";
 </BaseLayout>
 
 <script>
+    // ── Estado Central de Contexto (accesible desde todos los módulos) ──
+    const _vdState: { selectedProductId: string | null; selectedProtocolId: string | null } = {
+        selectedProductId: null,
+        selectedProtocolId: null
+    };
+
     document.addEventListener('astro:page-load', async () => {
+        // Resetear memoria de contexto en cada carga de página
+        _vdState.selectedProductId = null;
+        _vdState.selectedProtocolId = null;
+
         // --- HIDRATACIÓN INTELIGENTE: Diferir inicialización para liberar el hilo principal ---
         const initAll = async () => {
             initReveal();
@@ -366,12 +376,25 @@ const userName = "Alfredo Pabón";
                 }
             });
 
-            // Limpieza de Columna 3 (Reseteo de Fichas)
+            // Restauración inteligente de Columna 3 (Memoria de Contexto)
             const sheets = document.querySelectorAll('.medical-sheet');
             const emptyStateDetails = document.getElementById('vademecum-empty-state');
-            
-            sheets.forEach(s => s.classList.add('hidden'));
-            if (emptyStateDetails) emptyStateDetails.classList.remove('hidden');
+            const activeId = currentView === 'products' ? _vdState.selectedProductId : _vdState.selectedProtocolId;
+
+            if (activeId) {
+                // Restaurar ficha técnica
+                cambiarFichaTecnica(sheets, activeId);
+                if (emptyStateDetails) emptyStateDetails.classList.add('hidden');
+                
+                // Restaurar estado visual de la tarjeta (opcional/seguridad)
+                const selector = currentView === 'products' ? `[data-med="${activeId}"]` : `[data-protocol="${activeId}"]`;
+                const card = document.querySelector(selector) as HTMLElement;
+                if (card) card.classList.add('is-selected');
+            } else {
+                // Sin selección previa en esta vista
+                sheets.forEach(s => s.classList.add('hidden'));
+                if (emptyStateDetails) emptyStateDetails.classList.remove('hidden');
+            }
 
             // Reset de filtros y paginación
             applyFilters();
@@ -405,9 +428,13 @@ const userName = "Alfredo Pabón";
             if (!card) return;
 
             const id = card.getAttribute(targetAttr);
-            const allCards = document.querySelectorAll(`[data-med], [data-protocol]`);
-            
-            actualizarTarjetasActivas(allCards, (card as HTMLElement));
+            const category = targetAttr === 'data-med' ? 'products' : 'protocols';
+
+            // Registrar en memoria de contexto
+            if (category === 'products') _vdState.selectedProductId = id;
+            else _vdState.selectedProtocolId = id;
+
+            actualizarTarjetasActivas((card as HTMLElement), category);
             cambiarFichaTecnica(sheets, id);
             
             if (emptySheetState) emptySheetState.classList.add('hidden');
@@ -444,8 +471,10 @@ const userName = "Alfredo Pabón";
         });
     }
 
-    function actualizarTarjetasActivas(allCards: NodeListOf<Element>, selectedCard: HTMLElement) {
-        allCards.forEach(c => c.classList.remove('is-selected'));
+    function actualizarTarjetasActivas(selectedCard: HTMLElement, category: 'products' | 'protocols') {
+        // Limpiar solo las tarjetas de la categoría activa, preservando la selección de la otra vista
+        const selector = category === 'products' ? '[data-med]' : '[data-protocol]';
+        document.querySelectorAll(selector).forEach(c => c.classList.remove('is-selected'));
         selectedCard.classList.add('is-selected');
     }
 

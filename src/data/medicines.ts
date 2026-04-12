@@ -10,10 +10,11 @@ export interface MedicineSection {
 export interface Medicine {
     id: string;
     name: string;
-    potency: string;
-    scientificName: string;
-    origin: string;
-    shortDesc: string;
+    linea: string; // Corresponde a 'terapia' en la UI
+    activeIngredients: string;
+    indications: string;
+    dosage?: string;
+    presentations: string;
     tags: {
         terapia: string;
         sistema: string[];

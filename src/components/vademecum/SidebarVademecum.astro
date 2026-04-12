@@ -4,9 +4,19 @@ import Icons from "../shared/Icons.astro";
 
 interface Props {
     userName?: string;
+    activeView?: 'productos' | 'protocolos';
+    terapias?: string[];
+    sistemas?: string[];
+    formas?: string[];
 }
 
-const { userName = "Invitado" } = Astro.props;
+const { 
+    userName = "Invitado", 
+    activeView = "productos",
+    terapias = [],
+    sistemas = [],
+    formas = []
+} = Astro.props;
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
@@ -27,18 +37,18 @@ const { userName = "Invitado" } = Astro.props;
 
     <!-- Navegación de Filtros -->
     <div class="flex-1 px-4 pb-6 pt-0 space-y-7">
-        <!-- Sección 1: Tipo de terapia -->
-        <section class="sidebar-filter-section">
+        <!-- Sección 1: Tipo de terapia (Productos) -->
+        <section class="sidebar-filter-section" data-view-target="products" id="section-terapia">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="mortero" class="w-4 h-4 text-slate-900" strokeWidth={1.8} />
                 Tipo de terapia
             </h4>
             <div class="space-y-4">
-                {["Homeopatía compleja", "Oligoelementos", "Terapia floral"].map((filter) => (
+                {terapias.map((filter) => (
                     <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-[#904CE3]"
+                            class="vademecum-filter sidebar-filter-checkbox accent-brand"
                             data-filter-group="terapia"
                             data-filter-value={filter}
                         />
@@ -48,18 +58,18 @@ const { userName = "Invitado" } = Astro.props;
             </div>
         </section>
 
-        <!-- Sección 2: Sistema del cuerpo -->
-        <section class="sidebar-filter-section">
+        <!-- Sección 2: Sistema del cuerpo (solo Protocolos) -->
+        <section class="sidebar-filter-section" data-view-target="protocols" id="section-sistema">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="user-circle-alt" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Sistema del cuerpo
             </h4>
             <div class="space-y-4">
-                {["Cardiovascular", "Digestivo", "Locomotor", "Nervioso", "Respiratorio"].map((filter) => (
+                {sistemas.map((filter) => (
                     <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-[#2BC826]"
+                            class="vademecum-filter sidebar-filter-checkbox accent-success"
                             data-filter-group="sistema"
                             data-filter-value={filter}
                         />
@@ -69,18 +79,18 @@ const { userName = "Invitado" } = Astro.props;
             </div>
         </section>
 
-        <!-- Sección 3: Forma farmacéutica -->
-        <section class="sidebar-filter-section">
+        <!-- Sección 3: Forma farmacéutica (Productos) -->
+        <section class="sidebar-filter-section" data-view-target="products" id="section-forma">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="pill" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Forma farmacéutica
             </h4>
             <div class="space-y-4">
-                {["Crema", "Gotas", "Spray", "Tabletas"].map((filter) => (
+                {formas.map((filter) => (
                     <label class="sidebar-filter-label group">
                         <input 
                             type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-[#FBAC38]"
+                            class="vademecum-filter sidebar-filter-checkbox accent-warning"
                             data-filter-group="forma"
                             data-filter-value={filter}
                         />

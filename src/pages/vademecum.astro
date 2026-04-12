@@ -12,11 +12,16 @@ import { medicines as staticMeds } from '../data/medicines.ts';
 import { getVademecumMaestro, getVademecumProtocolos } from '../data/api';
 import ProtocolCard from '../components/vademecum/ProtocolCard.astro';
 
-// Renderizado inicial instantáneo con datos estáticos (SSR Speed)
-const medicines = staticMeds;
-const protocols = []; // Se cargarán dinámicamente en el cliente
+// En fase de desarrollo/build, usamos getVademecumMaestro()
+const medicines = await getVademecumMaestro().then(res => res.length > 0 ? res : staticMeds);
+const protocols = await getVademecumProtocolos();
 
-const userName = "Invitado";
+// Extracción de filtros únicos para el Sidebar
+const terapias = [...new Set(medicines.map(m => m.tags.terapia))].sort();
+const formas = [...new Set(medicines.map(m => m.tags.forma))].sort();
+const sistemas = [...new Set(protocols.map(p => p.sistema_corporal))].sort();
+
+const userName = "Alfredo Pabón";
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -24,16 +29,17 @@ const userName = "Invitado";
     <!-- Modal de Autenticación Modular -->
     <AuthModal />
 
-    <!-- Barra de progreso inteligente (Hito Global) -->
-    <div id="vademecum-loader-bar" class="fixed top-[64px] left-0 w-full h-[3px] bg-emerald-500/20 z-50 overflow-hidden hidden">
-        <div class="h-full bg-emerald-500 animate-progress-fast shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-    </div>
-
     <!-- Contenedor Principal Dashboard 3 Columnas -->
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden" id="vademecum-page-container" data-view="products">
         
-        <!-- Columna Izquierda: Sidebar de Filtros (Consistente con Catálogo) -->
-        <SidebarVademecum userName={userName} />
+        <!-- Columna Izquierda: Sidebar de Filtros (Dinámico e Híbrido) -->
+        <SidebarVademecum 
+            userName={userName} 
+            terapias={terapias}
+            sistemas={sistemas}
+            formas={formas}
+            activeView="productos"
+        />
 
         <!-- Columna Central: Listado de Productos (Scroll propio) -->
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100dvh-64px)] md:h-[calc(100dvh-72px)] min-h-0 scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
@@ -63,7 +69,7 @@ const userName = "Invitado";
                 <!-- Contador de Resultados (Blindado con min-h para CLS) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal min-h-[32px]">
                     <Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} />
-                    <span id="results-counter">{medicines.length} medicamentos en catálogo</span>
+                    <span id="results-counter">{[...medicines, ...medicines].length} medicamentos en catálogo</span>
                 </div>
 
                 <!-- Listado de Tarjetas Clínicas (PRODUCTOS) -->
@@ -83,7 +89,7 @@ const userName = "Invitado";
                             <MedicalCard 
                                 id={med.id}
                                 name={med.name}
-                                potency={med.potency}
+                                potency={med.linea}
                                 shortDesc={med.shortDesc}
                                 tags={med.tags}
                             />
@@ -110,7 +116,22 @@ const userName = "Invitado";
 
                 <!-- Listado de Protocolos (PROTOCOLOS) -->
                 <div class="space-y-3 max-w-3xl protocols-view-content hidden" id="protocols-container">
-                    <!-- Los protocolos se inyectan dinámicamente -->
+                    {protocols
+                        .sort((a, b) => a.patologia.localeCompare(b.patologia))
+                        .map((prot) => (
+                        <div 
+                            class="protocol-item reveal" 
+                            data-sistema={prot.sistema}
+                            data-name={prot.patologia.toLowerCase()}
+                        >
+                            <ProtocolCard 
+                                id={prot.id_protocolo}
+                                patologia={prot.patologia}
+                                principales={prot.principales}
+                                sistema={prot.sistema}
+                            />
+                        </div>
+                    ))}
                 </div>
 
                 <!-- Paginador Elite (Blindado con min-h para CLS) -->
@@ -130,16 +151,6 @@ const userName = "Invitado";
 
 </BaseLayout>
 
-<style>
-    @keyframes progress-fast {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-    .animate-progress-fast {
-        animation: progress-fast 1s infinite linear;
-    }
-</style>
-
 <script>
     document.addEventListener('astro:page-load', async () => {
         // --- HIDRATACIÓN INTELIGENTE: Diferir inicialización para liberar el hilo principal ---
@@ -147,10 +158,7 @@ const userName = "Invitado";
             initReveal();
             initFichasManager();
             initMobileDrawer();
-            const filterAPI = await initFilters();
-            
-            // Iniciar carga dinámica desde Google / Caché
-            await loadDynamicContent(filterAPI);
+            await initFilters();
         };
 
         if ('requestIdleCallback' in window) {
@@ -161,108 +169,12 @@ const userName = "Invitado";
     });
 
     /**
-     * MOTOR DE CARGA DINÁMICA (ELITE HYDRATION)
-     */
-    async function loadDynamicContent(filterAPI: any) {
-        const loader = document.getElementById('vademecum-loader-bar');
-        const medsContainer = document.getElementById('meds-container');
-        const protocolsContainer = document.getElementById('protocols-container');
-        
-        try {
-            loader?.classList.remove('hidden');
-            
-            const { getVademecumMaestro, getVademecumProtocolos } = await import('../data/api');
-            
-            // Cargar datos en paralelo
-            const [dynamicMeds, dynamicProtocols] = await Promise.all([
-                getVademecumMaestro(),
-                getVademecumProtocolos()
-            ]);
-
-            if (dynamicMeds.length > 0) {
-                renderMedsDynamic(dynamicMeds, medsContainer);
-            }
-
-            if (dynamicProtocols.length > 0) {
-                renderProtocolsDynamic(dynamicProtocols, protocolsContainer);
-            }
-
-            // Actualizar el motor de filtros con los nuevos elementos del DOM
-            filterAPI.refresh();
-            
-            // Re-vincular eventos de fichas técnicas para los nuevos elementos
-            window.dispatchEvent(new CustomEvent('vademecum:content-updated'));
-
-        } catch (error) {
-            console.warn('Fallback: Usando datos estáticos del servidor.');
-        } finally {
-            loader?.classList.add('hidden');
-        }
-    }
-
-    function renderMedsDynamic(meds: any[], container: HTMLElement | null) {
-        if (!container) return;
-        
-        // Conservar el Empty State y otros elementos especiales antes de vaciar
-        const emptyState = document.getElementById('empty-state');
-        container.innerHTML = '';
-        if (emptyState) container.appendChild(emptyState);
-
-        meds.forEach(med => {
-            const div = document.createElement('div');
-            div.className = 'med-item reveal';
-            div.setAttribute('data-terapia', med.tags.terapia);
-            div.setAttribute('data-sistema', med.tags.sistema.join(','));
-            div.setAttribute('data-forma', med.tags.forma);
-            div.setAttribute('data-name', med.name.toLowerCase());
-            
-            div.innerHTML = `
-                <div class="medical-card medical-item-btn" data-med="${med.id}" data-id="${med.id}">
-                    <div class="mb-2">
-                        <h3 class="font-bold text-slate-900 leading-tight">${med.name} ${med.potency}</h3>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed mb-4 text-sm">${med.shortDesc}</p>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-100 text-violet-700">${med.tags.terapia}</span>
-                        ${med.tags.sistema.map((s: string) => `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">${s}</span>`).join('')}
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700">${med.tags.forma}</span>
-                    </div>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderProtocolsDynamic(protocols: any[], container: HTMLElement | null) {
-        if (!container) return;
-        container.innerHTML = '';
-        
-        protocols.forEach(prot => {
-            const div = document.createElement('div');
-            div.className = 'protocol-item reveal';
-            div.setAttribute('data-sistema', prot.sistema);
-            div.setAttribute('data-name', prot.patologia.toLowerCase());
-            
-            div.innerHTML = `
-                <div class="medical-card medical-item-btn is-protocol" data-protocol="${prot.id_protocolo}">
-                    <div class="flex items-start justify-between gap-4 mb-2">
-                        <h3 class="font-bold text-slate-900 leading-tight">${prot.patologia}</h3>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-wider">${prot.sistema}</span>
-                    </div>
-                    <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">${prot.principales}</p>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    /**
      * --- 1. SISTEMA DE REVEAL (ANIMACIONES) ---
      */
     function initReveal() {
         const revealElements = document.querySelectorAll('.reveal');
         const observerOptions = {
-            root: null,
+            root: null, // Viewport para detectar elementos en listado y paneles laterales
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
@@ -280,6 +192,8 @@ const userName = "Invitado";
 
     /**
      * --- 2. GESTIÓN DE FILTROS Y VISTAS (ADN ELITE) ---
+     * Motor booleano AND/OR para filtrado de Vademécum masivo.
+     * Soporta conmutación dinámica entre Productos y Protocolos.
      */
     async function initFilters() {
         const ITEMS_PER_PAGE = 10;
@@ -291,8 +205,8 @@ const userName = "Invitado";
         const medsContainer = document.getElementById('meds-container');
         const protocolsContainer = document.getElementById('protocols-container');
         
-        let allMedItems   = Array.from(document.querySelectorAll('.med-item')) as HTMLElement[];
-        let allProtItems  = Array.from(document.querySelectorAll('.protocol-item')) as HTMLElement[];
+        const allMedItems   = Array.from(document.querySelectorAll('.med-item')) as HTMLElement[];
+        const allProtItems  = Array.from(document.querySelectorAll('.protocol-item')) as HTMLElement[];
         
         const counter       = document.getElementById('results-counter');
         const emptyState    = document.getElementById('empty-state');
@@ -304,6 +218,7 @@ const userName = "Invitado";
 
         const { sanitizeInput } = await import('../utils/security');
 
+        // ── Motor de filtrado ──
         function getFilteredItems(): HTMLElement[] {
             const rawSearch = searchInput?.value || '';
             const activeFilters = {
@@ -330,28 +245,54 @@ const userName = "Invitado";
             });
         }
 
+        // ── Renderiza la página actual ──
         function renderPage(filtered: HTMLElement[], page: number) {
             const total      = filtered.length;
             const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
             currentPage      = Math.min(page, totalPages);
+
             const start = (currentPage - 1) * ITEMS_PER_PAGE;
             const end   = Math.min(start + ITEMS_PER_PAGE, total);
 
+            // Limpiar visibilidad de todos los items
             allMedItems.forEach(item => { item.classList.add('hidden'); item.classList.remove('page-visible'); });
             allProtItems.forEach(item => { item.classList.add('hidden'); item.classList.remove('page-visible'); });
 
+            // Mostrar solo los items filtrados de la página actual
             filtered.slice(start, end).forEach((item, idx) => {
                 item.classList.remove('hidden');
+
+                // Highlighting
+                const titleEl = item.querySelector('h3');
+                const searchValue = searchInput?.value.toLowerCase().trim();
+                
+                if (titleEl && !item.hasAttribute('data-original')) {
+                    item.setAttribute('data-original', titleEl.textContent || '');
+                }
+
+                if (titleEl && item.hasAttribute('data-original')) {
+                    const originalText = item.getAttribute('data-original') || '';
+                    if (searchValue) {
+                        const regex = new RegExp(`(${searchValue})`, 'gi');
+                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold animate-fade-in">$1</mark>`);
+                    } else {
+                        titleEl.textContent = originalText;
+                    }
+                }
+
                 setTimeout(() => item.classList.add('page-visible'), idx * 30);
             });
 
+            // UI Feedback
             const label = currentView === 'products' ? 'medicamentos' : 'protocolos';
             if (counter) counter.innerText = `${total} ${label} encontrados`;
+
             if (emptyState) emptyState.classList.toggle('hidden', total > 0);
             if (paginationNav) paginationNav.style.display = total === 0 ? 'none' : '';
             if (paginationInfo) paginationInfo.textContent = `Mostrando ${start + 1}–${end} de ${total}`;
 
             renderPageButtons(currentPage, totalPages);
+            if (scrollTarget) scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function renderPageButtons(current: number, total: number) {
@@ -363,31 +304,41 @@ const userName = "Invitado";
                 el.className = 'pagination-btn' + (active ? ' is-active' : '') + (disabled ? ' is-disabled' : '');
                 el.textContent = label;
                 if (page !== null && !disabled) {
-                    el.addEventListener('click', () => {
-                        renderPage(getFilteredItems(), page);
-                        if (scrollTarget) scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
-                    });
+                    el.addEventListener('click', () => renderPage(getFilteredItems(), page));
                 }
                 paginationCtrl.appendChild(el);
             };
 
+            const ellipsis = () => {
+                const el = document.createElement('span');
+                el.className = 'pagination-ellipsis';
+                el.textContent = '…';
+                paginationCtrl?.appendChild(el);
+            };
+
             btn('‹', current - 1, false, current === 1);
-            for (let i = 1; i <= total; i++) {
-                if (total > 7 && i > 3 && i < total - 2 && Math.abs(i - current) > 1) {
-                    if (i === current - 2 || i === current + 2) {
-                        const span = document.createElement('span');
-                        span.textContent = '...';
-                        paginationCtrl.appendChild(span);
-                    }
-                    continue;
-                }
-                btn(String(i), i, i === current);
+            const pages: (number | '...')[] = [];
+            if (total <= 7) { for (let i = 1; i <= total; i++) pages.push(i); }
+            else {
+                pages.push(1);
+                if (current > 3) pages.push('...');
+                for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) pages.push(i);
+                if (current < total - 2) pages.push('...');
+                pages.push(total);
             }
+            pages.forEach(p => {
+                if (p === '...') ellipsis();
+                else btn(String(p), p, p === current);
+            });
             btn('›', current + 1, false, current === total);
         }
 
-        const applyFilters = () => renderPage(getFilteredItems(), 1);
+        function applyFilters() {
+            currentPage = 1;
+            renderPage(getFilteredItems(), 1);
+        }
 
+        // Listeners básicos
         filterInputs.forEach(input => input.addEventListener('change', applyFilters));
         searchInput?.addEventListener('input', applyFilters);
         clearBtn?.addEventListener('click', () => {
@@ -396,23 +347,47 @@ const userName = "Invitado";
             applyFilters();
         });
 
+        // ── Listener del Switcher de Vistas ──
         window.addEventListener('vademecum:view-change', (e: any) => {
             currentView = e.detail.view;
+            
+            // Switch de contenedores físicos
             if (medsContainer) medsContainer.classList.toggle('hidden', currentView !== 'products');
             if (protocolsContainer) protocolsContainer.classList.toggle('hidden', currentView !== 'protocols');
+
+            // Actualizar visibilidad del Sidebar (Híbrido)
+            const sidebarSections = document.querySelectorAll('.sidebar-filter-section');
+            sidebarSections.forEach(section => {
+                const target = section.getAttribute('data-view-target');
+                if (target === 'both') {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.toggle('hidden', target !== currentView);
+                }
+            });
+
+            // Limpieza de Columna 3 (Reseteo de Fichas)
+            const sheets = document.querySelectorAll('.medical-sheet');
+            const emptyStateDetails = document.getElementById('vademecum-empty-state');
+            
+            sheets.forEach(s => s.classList.add('hidden'));
+            if (emptyStateDetails) emptyStateDetails.classList.remove('hidden');
+
+            // Reset de filtros y paginación
             applyFilters();
         });
 
-        applyFilters();
-
-        return {
-            refresh: () => {
-                allMedItems   = Array.from(document.querySelectorAll('.med-item')) as HTMLElement[];
-                allProtItems  = Array.from(document.querySelectorAll('.protocol-item')) as HTMLElement[];
-                initReveal(); // Re-aplicar animaciones a nuevos elementos
-                applyFilters();
+        // Inicialización de visibilidad del Sidebar (Fase 3)
+        const sidebarSections = document.querySelectorAll('.sidebar-filter-section');
+        sidebarSections.forEach(section => {
+            const target = section.getAttribute('data-view-target');
+            if (target !== 'both') {
+                section.classList.toggle('hidden', target !== currentView);
             }
-        };
+        });
+
+        // Inicializar
+        applyFilters();
     }
 
     /**
@@ -422,43 +397,64 @@ const userName = "Invitado";
         const medsContainer = document.getElementById('meds-container');
         const protocolsContainer = document.getElementById('protocols-container');
         const vademecumAside = document.getElementById('vademecum-aside');
-        
-        const attachEvents = () => {
-            const handleCardClick = (e: MouseEvent, targetAttr: string) => {
-                const card = (e.target as HTMLElement).closest(`[${targetAttr}]`);
-                if (!card) return;
+        const sheets = document.querySelectorAll('.medical-sheet');
+        const emptySheetState = document.getElementById('vademecum-empty-state');
 
-                const id = card.getAttribute(targetAttr);
-                const sheets = document.querySelectorAll('.medical-sheet');
-                const emptySheetState = document.getElementById('vademecum-empty-state');
-                const allCards = document.querySelectorAll(`[data-med], [data-protocol]`);
-                
-                allCards.forEach(c => c.classList.remove('is-selected'));
-                card.classList.add('is-selected');
+        const handleCardClick = (e: MouseEvent, targetAttr: string) => {
+            const card = (e.target as HTMLElement).closest(`[${targetAttr}]`);
+            if (!card) return;
 
-                if (id) {
-                    sheets.forEach(sheet => {
-                        if (sheet.getAttribute('data-sheet-id') === id) sheet.classList.remove('hidden');
-                        else sheet.classList.add('hidden');
-                    });
-                }
-                
-                if (emptySheetState) emptySheetState.classList.add('hidden');
-                if (vademecumAside) {
-                    vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
-                    if (window.innerWidth < 1024) {
-                        vademecumAside.setAttribute('data-mobile-open', 'true');
-                        document.body.style.overflow = 'hidden';
-                    }
-                }
-            };
-
-            medsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-med'));
-            protocolsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-protocol'));
+            const id = card.getAttribute(targetAttr);
+            const allCards = document.querySelectorAll(`[data-med], [data-protocol]`);
+            
+            actualizarTarjetasActivas(allCards, (card as HTMLElement));
+            cambiarFichaTecnica(sheets, id);
+            
+            if (emptySheetState) emptySheetState.classList.add('hidden');
+            if (vademecumAside) vademecumAside.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            abrirDrawerMovil(vademecumAside);
         };
 
-        attachEvents();
-        window.addEventListener('vademecum:content-updated', attachEvents);
+        medsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-med'));
+        protocolsContainer?.addEventListener('click', (e) => handleCardClick(e, 'data-protocol'));
+
+        // --- SALTO MAESTRO: Listener para clics en productos dentro de protocolos ---
+        document.getElementById('vademecum-aside')?.addEventListener('click', (e) => {
+            const jumpLink = (e.target as HTMLElement).closest('.master-jump-link');
+            if (!jumpLink) return;
+
+            const targetId = jumpLink.getAttribute('data-jump-to');
+            if (targetId) {
+                // 1. Cambiar a vista de productos si es necesario
+                const switcher = document.querySelector('button[data-view="products"]') as HTMLButtonElement;
+                if (switcher && !switcher.classList.contains('is-active')) {
+                    switcher.click();
+                }
+
+                // 2. Esperar un poco a que el DOM se actualice y clickear la tarjeta
+                setTimeout(() => {
+                    const card = document.querySelector(`[data-med="${targetId}"]`) as HTMLElement;
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.click();
+                    }
+                }, 100);
+            }
+        });
+    }
+
+    function actualizarTarjetasActivas(allCards: NodeListOf<Element>, selectedCard: HTMLElement) {
+        allCards.forEach(c => c.classList.remove('is-selected'));
+        selectedCard.classList.add('is-selected');
+    }
+
+    function cambiarFichaTecnica(allSheets: NodeListOf<Element>, id: string | null) {
+        if (!id) return;
+        allSheets.forEach(sheet => {
+            if (sheet.getAttribute('data-sheet-id') === id) sheet.classList.remove('hidden');
+            else sheet.classList.add('hidden');
+        });
     }
 
     /**
@@ -469,11 +465,22 @@ const userName = "Invitado";
         document.querySelectorAll('.close-ficha-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (vademecumAside) {
-                    vademecumAside.setAttribute('data-mobile-open', 'false');
-                    document.body.style.overflow = '';
-                }
+                cerrarDrawerMovil(vademecumAside);
             });
         });
+    }
+
+    function abrirDrawerMovil(aside: HTMLElement | null) {
+        if (aside && window.innerWidth < 1024) {
+            aside.setAttribute('data-mobile-open', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function cerrarDrawerMovil(aside: HTMLElement | null) {
+        if (aside) {
+            aside.setAttribute('data-mobile-open', 'false');
+            document.body.style.overflow = '';
+        }
     }
 </script>

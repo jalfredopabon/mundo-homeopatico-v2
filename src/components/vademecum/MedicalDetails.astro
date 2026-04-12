@@ -3,32 +3,8 @@
 import Icons from '../shared/Icons.astro';
 import BadgeElite from '../shared/BadgeElite.astro';
 
-interface Section {
-    title: string;
-    icon: string;
-    content?: string;
-    items?: string[];
-}
-
-interface Product {
-    id: string;
-    name: string;
-    potency: string;
-    scientificName: string;
-    origin: string;
-    sections: Section[];
-    isActive?: boolean;
-}
-
-interface Protocol {
-    id_protocolo: string;
-    patologia: string;
-    principales: string;
-    sistema: string;
-    complementarios: string;
-    oligoelementos: string;
-    topicos: string;
-}
+import type { Medicine as Product } from '../../data/medicines';
+import type { VademecumProtocolo as Protocol } from '../../data/api';
 
 interface Props {
     products: Product[];
@@ -36,6 +12,27 @@ interface Props {
 }
 
 const { products = [], protocols = [] } = Astro.props;
+
+// Diccionario para el "Salto Maestro": Nombre -> ID
+const productMap = new Map(products.map(p => [p.name.toLowerCase(), p.id]));
+const productNames = Array.from(productMap.keys()).sort((a,b) => b.length - a.length); // Ordenar por longitud descendente para evitar colisiones
+
+function enrichProtocolText(text: string) {
+    if (!text || text === '-') return text;
+    
+    let enriched = text;
+    // Buscamos nombres de productos en el texto (de forma simple por ahora)
+    productNames.forEach(name => {
+        const regex = new RegExp(`(${name})`, 'gi');
+        // Usamos un marcador temporal para no re-procesar lo ya procesado
+        if (enriched.toLowerCase().includes(name)) {
+            const id = productMap.get(name);
+            enriched = enriched.replace(regex, `<span class="master-jump-link underline decoration-brand/30 hover:decoration-brand cursor-pointer text-brand/90 font-bold" data-jump-to="${id}">$1</span>`);
+        }
+    });
+    
+    return enriched;
+}
 ---
 
 <!-- Columna Derecha: Panel de Ficha Técnica (ADN Clon Elite) -->
@@ -63,13 +60,13 @@ const { products = [], protocols = [] } = Astro.props;
                 </div>
 
                 <h2 class="medical-title">
-                    {product.name} {product.potency}
+                    {product.name}
                 </h2>
 
                 <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-                    <BadgeElite label={product.scientificName} variant="slate" size="sm" />
-                    {product.potency && <BadgeElite label={`Potencia ${product.potency}`} variant="slate" size="sm" />}
-                    <BadgeElite label={product.origin} variant="slate" size="sm" />
+                    <BadgeElite label={product.linea} variant="brand" size="sm" />
+                    <BadgeElite label={product.tags.forma} variant="warning" size="sm" />
+                    {product.tags.sistema.map(s => <BadgeElite label={s} variant="success" size="sm" />)}
                 </div>
             </div>
 
@@ -123,8 +120,9 @@ const { products = [], protocols = [] } = Astro.props;
                 </h2>
 
                 <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-                    <BadgeElite label={protocol.sistema} variant="success" size="sm" />
+                    <BadgeElite label={protocol.sistema_corporal} variant="success" size="sm" />
                     <BadgeElite label="Soporte Terapéutico" variant="slate" size="sm" />
+                    <BadgeElite label={protocol.estado} variant="slate" size="sm" />
                 </div>
             </div>
 
@@ -142,7 +140,7 @@ const { products = [], protocols = [] } = Astro.props;
                         </h4>
                         
                         <div class="medical-list-item pl-6">
-                            <p class="leading-[1.8] text-slate-700 font-medium italic" set:html={section.content} />
+                            <p class="leading-[1.8] text-slate-700 font-medium italic" set:html={enrichProtocolText(section.content)} />
                         </div>
                     </div>
                 ))}

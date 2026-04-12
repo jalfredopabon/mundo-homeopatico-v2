@@ -310,5 +310,43 @@ El diseño de 3 columnas (Master-Detail) se adaptará con una mentalidad **Mobil
 
 ---
 
+### 🏗️ ARQUITECTURA DE VISUALIZACIÓN (Elite 3-Column Layout)
+
+Esta sección define el mapeo exacto de los datos hacia la interfaz de usuario en las tres columnas maestras.
+
+#### 💊 VISTA 1: PRODUCTOS (Vademécum Maestro)
+- **Columna 1 (Sidebar / Filtros):**
+    - Grupo de Filtros: Basado en valores únicos de la columna `linea`.
+    - Funcionalidad: Checkboxes interactivos vinculados a los Badges de las tarjetas.
+- **Columna 2 (Listing / Tarjetas):**
+    - Componente: `MedicalCard.astro`.
+    - Título: `nombre`.
+    - Badge: `linea` (Linkeado funcionalmente al filtro del Sidebar).
+    - Resumen: `indicaciones` (Tratamiento corto/truncado).
+- **Columna 3 (Detail / Ficha Técnica):**
+    - Componente: `MedicalDetails.astro`.
+    - Contenido: `nombre` (H1), `linea` (Badge), `principios_activos`, `indicaciones` (Full), `posologia`, `presentaciones`.
+
+#### 📋 VISTA 2: PROTOCOLOS (Vademécum Protocolos)
+- **Columna 1 (Sidebar / Filtros):**
+    - *Estado:* Pendiente definición (Propuesta: Sistemas Corporales o Alfabético).
+- **Columna 2 (Listing / Tarjetas):**
+    - Componente: `ProtocolCard.astro` (Homólogo a MedicalCard).
+    - Título: `patologia`.
+    - Badge: Categoría derivada / "Protocolo".
+    - Resumen: `principales` (Primer vistazo).
+- **Columna 3 (Detail / Receta Relacional):**
+    - Título: `patologia` (H1).
+    - Cuerpo: Bloques estructurados por tipo:
+        - `principales` (Medicamento base).
+        - `sistema` (Apoyo sistémico).
+        - `complementarios` (Refuerzos).
+        - `oligoelementos` (Catalizadores).
+        - `topicos` (Uso externo).
+
+---
+
 ### 📝 NOTAS DE REVISIÓN PENDIENTE
-- [ ] **Ajuste de Layout:** Revisar el padding entre el Header y el Contenido Principal. (Pendiente explicación detallada del usuario).
+- [ ] **Ajuste de Layout:** Revisar el padding entre el Header y el Contenido Principal.
+- [ ] **Filtros Protocolos:** Definir si se agruparán por Sistemas Corporales o Alfabéticamente.
+- [ ] **GAS Connection:** Implementar el fetcher configurando el `X-Secret-Key`.

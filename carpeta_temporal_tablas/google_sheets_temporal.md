@@ -344,9 +344,96 @@ Esta sección define el mapeo exacto de los datos hacia la interfaz de usuario e
         - `oligoelementos` (Catalizadores).
         - `topicos` (Uso externo).
 
+
+## Conexión Google Sheets - Automatización (Bloque 6)
+
+### Función de Webhook para GAS
+Copia y pega este código al final de tu script en Google Apps Script para habilitar el auto-despliegue tras editar la hoja.
+
+```javascript
+/**
+ * Envía una solicitud de despliegue a Cloudflare Pages
+ * Se recomienda invocar esta función desde un activador (Trigger) "Al editar" 
+ * o mediante un botón manual en la hoja.
+ */
+function triggerCloudflareBuild() {
+  const CLOUDFLARE_WEBHOOK_URL = 'pega_aqui_tu_url_de_hook_de_cloudflare';
+  
+  const options = {
+    'method' : 'post',
+    'contentType': 'application/json'
+  };
+  
+  try {
+    const response = UrlFetchApp.fetch(CLOUDFLARE_WEBHOOK_URL, options);
+    Logger.log('Build requested: ' + response.getContentText());
+  } catch (e) {
+    Logger.log('Error triggering build: ' + e.toString());
+  }
+}
+
+/**
+ * Trigger automático (Opcional)
+ * Se ejecuta cada vez que se detecta un cambio en la hoja.
+ */
+function onEdit(e) {
+  // Opcional: Filtrar para que solo se dispare si se edita una columna específica
+  triggerCloudflareBuild();
+}
+```
+
+### Protocolo de Seguridad (Fort Knox)
+Recuerda que para que tu Astro se comunique con GAS, debes usar el header:
+`X-Secret-Key: YOUR_SECRET_KEY_HERE` (definido en tu `api.ts`).
+
+
+## 📊 Estado de la Integración (Cierre de Sesión)
+
+### ✅ Hitos Completados
+1.  **Conexión Real:** `src/data/api.ts` conectado al WebApp de GAS funcional.
+2.  **Seguridad (CSP):** Autorizados los dominios `script.google.com` en `BaseLayout.astro` para permitir el flujo de datos.
+3.  **Normalización Resiliente:** El sistema ahora es inmune a cambios de mayúsculas/minúsculas o espacios en los encabezados de las columnas de Google Sheets.
+4.  **Sincronización de Filtros:** Mapeo de `category`, `type` y `system` unificado para que el buscador reconozca los registros del Sheet.
+5.  **Motor de Caché:** SWR implementado con éxito para carga ultrarrápida.
+
+### ⏳ Pendientes Próxima Sesión
+1.  **Prueba de Fuego:** Verificar que tras `localStorage.clear()`, los productos se visualicen correctamente con el nuevo mapeo.
+2.  **Ajuste de Strings:** Validar si existen discordancias de género/plural (ej: "Antihomotóxica" vs "Antihomotóxico") entre la hoja y los filtros.
+3.  **Webhook:** Probar que el botón de despliegue en GAS dispare correctamente el build en Cloudflare.
+4.  **Validación Visual:** Asegurar que todos los caracteres especiales (^, ;, x) se rendericen perfectamente en las fichas técnicas.
+
 ---
+
+## 📡 CONEXIÓN GOOGLE SHEETS (Pipeline de Datos Elite)
+
+Esta sección documentaquí la infraestructura de conexión entre el frontend en Astro y el repositorio de datos en Google Sheets.
+
+### 1. Gateway: Google Apps Script (GAS)
+Se utiliza un WebApp de GAS como puente (API Gateway) para servir los datos en formato JSON, evitando la complejidad de la API oficial de Google y permitiendo un formateo a medida.
+
+*   **Endpoint:** `https://script.google.com/macros/s/REEMPLAZAR_CON_URL_REAL/exec`
+*   **Método:** `GET`
+*   **Parámetros aceptados:** 
+    *   `sheet`: Indica la hoja a consultar (`maestro` o `protocolos`).
+    *   `token`: Clave de seguridad para validación.
+
+### 2. Protocolo de Seguridad (Fort Knox)
+Para proteger la integridad de los datos, toda petición debe incluir un header de validación:
+*   **Header:** `X-Secret-Key`
+*   **Manejo:** Validado en el servidor de Google Apps Script antes de liberar cualquier registro.
+*   **Estado:** Las hojas de cálculo son **Privadas** (No "Public on Web").
+
+### 3. Estrategia de Performance: SWR & Dynamic Rendering
+Para mitigar la lentitud detectada en intentos previos (causada por el volumen de 700+ registros), se implementará:
+1.  **Stale-While-Revalidate (SWR):** Uso de `localStorage` para hidratar la UI instantáneamente con datos cacheados mientras se actualiza el fondo.
+2.  **Zero-DOM Rendering:** El servidor de Astro inyecta el JSON de datos una sola vez. El DOM solo creará los elementos de las tarjetas visibles (bloques de 10-20), eliminando el overhead de 700+ nodos ocultos.
+3.  **Debounced Search:** Búsqueda en memoria de JavaScript (0ms de latencia) sobre el dataset hidratado.
+
+
 
 ### 📝 NOTAS DE REVISIÓN PENDIENTE
 - [ ] **Ajuste de Layout:** Revisar el padding entre el Header y el Contenido Principal.
 - [ ] **Filtros Protocolos:** Definir si se agruparán por Sistemas Corporales o Alfabéticamente.
 - [ ] **GAS Connection:** Implementar el fetcher configurando el `X-Secret-Key`.
+- [ ] **Validación SWR:** Confirmar persistencia de datos en `localStorage` post-hidratación.
+

@@ -5,32 +5,82 @@
  */
 
 import type { Medicine } from './medicines';
+import { z } from 'zod';
 
 // URL del WebApp de Google Apps Script (Placeholder - Reemplazar con la URL real)
-const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbz_XXXXXXXXX/exec';
+/**
+ * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
+ */
+const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxtc14Vbzm5ZAcF2hhQsLsEuGyEyJxzAgfnxWZIgTxv_iGHWzf4xrn9IQYtXkRIcZ59/exec';
 
-export interface VademecumMaestro {
-    id_producto: string;
-    linea: string;
-    nombre: string;
-    principios_activos: string;
-    indicaciones: string;
-    posologia: string;
-    presentaciones: string;
-    estado: string;
+/**
+ * TOKEN DE SEGURIDAD (Protocolo Fort Knox)
+ */
+const SECRET_KEY = 'YOUR_SECRET_KEY_HERE'; 
+
+// Esquema de validación para el Vademécum Maestro
+export const VademecumMaestroSchema = z.object({
+    id_producto: z.string(),
+    linea: z.string(),
+    nombre: z.string(),
+    principios_activos: z.string(),
+    indicaciones: z.string(),
+    posologia: z.string(),
+    presentaciones: z.string(),
+    estado: z.string(),
+});
+
+// Esquema de validación para los Protocolos
+export const VademecumProtocoloSchema = z.object({
+    id_protocolo: z.string(),
+    patologia: z.string(),
+    principales: z.string(),
+    sistema: z.string(),
+    complementarios: z.string(),
+    oligoelementos: z.string(),
+    topicos: z.string(),
+    estado: z.string(),
+    sistema_corporal: z.string(),
+});
+
+export type VademecumMaestro = z.infer<typeof VademecumMaestroSchema>;
+export type VademecumProtocolo = z.infer<typeof VademecumProtocoloSchema>;
+
+/**
+ * Helper para manejo de caché SWR (Stale-While-Revalidate)
+ * Proporciona carga instantánea desde localStorage y refresca en background.
+ */
+async function fetchWithSWR<T>(
+    cacheKey: string,
+    fetcher: () => Promise<T>
+): Promise<T> {
+    // Modo Servidor (Astro Build): Fetch directo
+    if (typeof window === 'undefined') return await fetcher();
+
+    const cached = localStorage.getItem(cacheKey);
+    
+    // Si existe caché, la devolvemos inmediatamente
+    if (cached) {
+        try {
+            const parsedData = JSON.parse(cached);
+            
+            // Revalidación asíncrona (Background)
+            fetcher().then(freshData => {
+                localStorage.setItem(cacheKey, JSON.stringify(freshData));
+            }).catch(err => console.error(`SWR Refresh Error [${cacheKey}]:`, err));
+
+            return parsedData;
+        } catch (e) {
+            console.error(`SWR Cache Error [${cacheKey}]:`, e);
+        }
+    }
+
+    // Si no hay caché, esperamos el fetch inicial
+    const fresh = await fetcher();
+    localStorage.setItem(cacheKey, JSON.stringify(fresh));
+    return fresh;
 }
 
-export interface VademecumProtocolo {
-    id_protocolo: string;
-    patologia: string;
-    principales: string;
-    sistema: string;
-    complementarios: string;
-    oligoelementos: string;
-    topicos: string;
-    estado: string;
-    sistema_corporal: string; // Campo enriquecido
-}
 
 /**
  * Transforma los datos del Maestro de CSV/JSON a la interfaz Medicine del proyecto
@@ -42,6 +92,8 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
         id: item.id_producto || `prod-${Math.random().toString(36).substr(2, 9)}`,
         name: item.nombre,
         linea: item.linea,
+        category: item.linea, // Necesario para el filtro de vademecum.astro
+        type: item.presentaciones.split(';')[0]?.split('x')[0]?.trim() || 'No especificada', // Necesario para el filtro de vademecum.astro
         shortDesc: indicationsList[0] ? `${indicationsList[0].substring(0, 120)}...` : 'Descripción no disponible',
         activeIngredients: item.principios_activos,
         indications: item.indicaciones,
@@ -78,122 +130,100 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
 }
 
 /**
- * Obtiene el Vademécum Maestro desde Google Sheets
+ * Normaliza las llaves de un objeto para que sean resilientes a mayúsculas/minúsculas y espacios.
  */
-export async function getVademecumMaestro(): Promise<Medicine[]> {
-    // MOCK DATA para desarrollo local si la URL es un placeholder
-    if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
-        console.warn('Vademecum: Usando Mock Data para Maestro (URL no configurada)');
-        const mockData: VademecumMaestro[] = [
-            {
-                id_producto: 'mock_001',
-                linea: 'Productos mh',
-                nombre: 'Abies D4 MH',
-                principios_activos: 'Abies nigra D6; Anacardium D8',
-                indicaciones: 'Gastritis; acidez; flatulencia^Dispepsias gástricas',
-                posologia: '10 gotas 3 veces al día',
-                presentaciones: 'Gotas x 30 ml; Tabletas x 90',
-                estado: 'activo'
-            },
-            {
-                id_producto: 'mock_002',
-                linea: 'Productos mh',
-                nombre: 'Arnica D4 MH',
-                principios_activos: 'Arnica montana D4; Bellis perennis D4',
-                indicaciones: 'Traumatismos; inflamación; dolor muscular^Contusiones y esguinces',
-                posologia: '5 glóbulos cada 2 horas',
-                presentaciones: 'Gotas x 30 ml; Glóbulos',
-                estado: 'activo'
-            },
-            {
-                id_producto: 'mock_003',
-                linea: 'Esencias florales',
-                nombre: 'Rescue Remedy',
-                principios_activos: 'Rock Rose; Impatiens; Clematis; Star of Bethlehem; Cherry Plum',
-                indicaciones: 'Estrés agudo; shock emocional; pánico^Situaciones de emergencia',
-                posologia: '4 gotas directas en lengua',
-                presentaciones: 'Gotas x 20 ml; Spray',
-                estado: 'activo'
-            },
-            {
-                id_producto: 'mock_004',
-                linea: 'Oligoelementos',
-                nombre: 'Zn-Ni-Co',
-                principios_activos: 'Zinc; Niquel; Cobalto',
-                indicaciones: 'Disfunciones hepato-biliares; regulación pancreática^Fatiga metabólica',
-                posologia: '1 ampolla en ayunas',
-                presentaciones: 'Ampollas bebibles x 28',
-                estado: 'activo'
-            }
-        ];
-        return mockData.map(mapMaestroToMedicine);
+function normalizeKeys(obj: any): any {
+    if (Array.isArray(obj)) return obj.map(normalizeKeys);
+    if (obj !== null && typeof obj === 'object') {
+        return Object.keys(obj).reduce((acc, key) => {
+            const normalizedKey = key.toLowerCase().trim().replace(/\s+/g, '_');
+            acc[normalizedKey] = obj[key];
+            return acc;
+        }, {} as any);
     }
-
-    try {
-        const response = await fetch(`${GAS_WEBAPP_URL}?sheet=maestro`);
-        if (!response.ok) throw new Error('Error al conectar con la API de Vademécum');
-        
-        const data: VademecumMaestro[] = await response.json();
-        return data
-            .filter(item => item.estado === 'activo')
-            .map(mapMaestroToMedicine);
-    } catch (error) {
-        console.error('API Error:', error);
-        return []; 
-    }
+    return obj;
 }
 
 /**
- * Obtiene los Protocolos desde Google Sheets
+ * Obtiene el Vademécum Maestro desde Google Sheets con soporte SWR
+ */
+export async function getVademecumMaestro(): Promise<Medicine[]> {
+    return fetchWithSWR('vd_maestro', async () => {
+        if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
+            console.warn('Vademecum: Usando Mock Data para Maestro');
+            const mockData: VademecumMaestro[] = [
+                {
+                    id_producto: 'mock_001',
+                    linea: 'Productos mh',
+                    nombre: 'Abies D4 MH',
+                    principios_activos: 'Abies nigra D6; Anacardium D8',
+                    indicaciones: 'Gastritis; acidez; flatulencia^Dispepsias gástricas',
+                    posologia: '10 gotas 3 veces al día',
+                    presentaciones: 'Gotas x 30 ml; Tabletas x 90',
+                    estado: 'activo'
+                }
+            ];
+            return mockData.map(mapMaestroToMedicine);
+        }
+
+        try {
+            const response = await fetch(`${GAS_WEBAPP_URL}?sheet=maestro`);
+            if (!response.ok) throw new Error('Error al conectar con la API de Vademécum');
+            
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            const data = z.array(VademecumMaestroSchema.passthrough()).parse(cleanData);
+            
+            return data
+                .filter(item => (item.estado || '').toLowerCase() === 'activo')
+                .map(mapMaestroToMedicine);
+        } catch (error) {
+            console.error('API Error (Maestro):', error);
+            if (error instanceof z.ZodError) console.warn('Zod Mapping Errors:', error.errors);
+            return []; 
+        }
+    });
+}
+
+/**
+ * Obtiene los Protocolos desde Google Sheets con soporte SWR
  */
 export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
-    if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
-        console.warn('Vademecum: Usando Mock Data para Protocolos');
-        return [
-            {
-                id_protocolo: 'prot_mock_001',
-                patologia: 'Gastritis Aguda',
-                principales: 'Abies D4 MH',
-                sistema: 'Digestivo',
-                complementarios: 'Nux vomica',
-                oligoelementos: 'Zn-Ni-Co',
-                topicos: 'Ninguno',
-                estado: 'activo',
-                sistema_corporal: 'Sistema Digestivo'
-            },
-            {
-                id_protocolo: 'prot_mock_002',
-                patologia: 'Traumatismo Muscular',
-                principales: 'Arnica D4 MH',
-                sistema: 'Locomotor',
-                complementarios: 'Rhus tox',
-                oligoelementos: 'Mg',
-                topicos: 'Arnica Crema',
-                estado: 'activo',
-                sistema_corporal: 'Sistema Locomotor'
-            },
-            {
-                id_protocolo: 'prot_mock_003',
-                patologia: 'Ansiedad Anticipatoria',
-                principales: 'Rescue Remedy',
-                sistema: 'Nervioso',
-                complementarios: 'Ignatia',
-                oligoelementos: 'Li',
-                topicos: 'Ninguno',
-                estado: 'activo',
-                sistema_corporal: 'Sistema Nervioso'
-            }
-        ];
-    }
+    return fetchWithSWR('vd_protocolos', async () => {
+        if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
+            return [
+                {
+                    id_protocolo: 'prot_mock_001',
+                    patologia: 'Gastritis Aguda',
+                    principales: 'Abies D4 MH',
+                    sistema: 'Digestivo',
+                    complementarios: 'Nux vomica',
+                    oligoelementos: 'Zn-Ni-Co',
+                    topicos: 'Ninguno',
+                    estado: 'activo',
+                    sistema_corporal: 'Sistema Digestivo'
+                }
+            ];
+        }
 
-    try {
-        const response = await fetch(`${GAS_WEBAPP_URL}?sheet=protocolos`);
-        if (!response.ok) throw new Error('Error al conectar con la API de Protocolos');
-        
-        const data: VademecumProtocolo[] = await response.json();
-        return data.filter(item => item.estado === 'activo');
-    } catch (error) {
-        console.error('API Error:', error);
-        return [];
-    }
+        try {
+            const response = await fetch(`${GAS_WEBAPP_URL}?sheet=protocolos`);
+            if (!response.ok) throw new Error('Error al conectar con la API de Protocolos');
+            
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            const data = z.array(VademecumProtocoloSchema.passthrough()).parse(cleanData);
+            
+            return data
+                .filter(item => (item.estado || '').toLowerCase() === 'activo')
+                .map(item => ({
+                    ...item,
+                    system: item.sistema_corporal || item.sistema // Asegurar compatibilidad con buscador
+                }));
+        } catch (error) {
+            console.error('API Error (Protocolos):', error);
+            if (error instanceof z.ZodError) console.warn('Zod Mapping Errors:', error.errors);
+            return [];
+        }
+    });
 }

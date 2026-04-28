@@ -1,176 +1,97 @@
 ---
 // src/components/vademecum/MedicalDetails.astro
 import Icons from '../shared/Icons.astro';
-import BadgeElite from '../shared/BadgeElite.astro';
 
-import type { Medicine as Product } from '../../data/medicines';
-import type { VademecumProtocolo as Protocol } from '../../data/api';
-
-interface Props {
-    products: Product[];
-    protocols?: Protocol[];
-}
-
-const { products = [], protocols = [] } = Astro.props;
-
-// Diccionario para el "Salto Maestro": Nombre -> ID
-const productMap = new Map(products.map(p => [p.name.toLowerCase(), p.id]));
-const productNames = Array.from(productMap.keys()).sort((a,b) => b.length - a.length); // Ordenar por longitud descendente para evitar colisiones
-
-function enrichProtocolText(text: string) {
-    if (!text || text === '-') return text;
-    
-    let enriched = text;
-    // Buscamos nombres de productos en el texto (de forma simple por ahora)
-    productNames.forEach(name => {
-        const regex = new RegExp(`(${name})`, 'gi');
-        // Usamos un marcador temporal para no re-procesar lo ya procesado
-        if (enriched.toLowerCase().includes(name)) {
-            const id = productMap.get(name);
-            enriched = enriched.replace(regex, `<span class="master-jump-link underline decoration-brand/30 hover:decoration-brand cursor-pointer text-brand/90 font-bold" data-jump-to="${id}">$1</span>`);
-        }
-    });
-    
-    return enriched;
-}
+/** 
+ * No recibimos props masivas. El componente se hidrata dinámicamente 
+ * en el cliente para mantener el DOM ligero.
+ */
 ---
 
-<!-- Columna Derecha: Panel de Ficha Técnica (ADN Clon Elite) -->
 <aside 
     id="vademecum-aside" 
     data-mobile-open="false" 
     class="medical-aside"
 >
-    
-    <!-- Renderizado de Productos -->
-    {products.map((product) => (
-        <div 
-            id={`ficha-${product.id}`} 
-            class={`medical-sheet ${product.isActive ? '' : 'hidden'}`}
-            data-sheet-id={product.id}
-        >
-            <div class="mb-8 relative">
-                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
-                    <Icons type="close-x" class="w-4 h-4" />
-                </button>
+    <!-- Botón de cierre móvil unificado -->
+    <button id="close-mobile-details" class="close-ficha-btn lg:hidden absolute top-4 right-4 z-50 p-2 text-slate-400 hover:text-brand bg-white rounded-full shadow-lg border border-slate-100 transition-all">
+        <Icons type="close-x" class="w-5 h-5" />
+    </button>
 
-                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
-                    <Icons type="file-text" class="w-4 h-4" strokeWidth={2} />
-                    Ficha técnica de Producto
-                </div>
-
-                <h2 class="medical-title">
-                    {product.name}
-                </h2>
-
-                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-                    <BadgeElite label={product.linea} variant="brand" size="sm" />
-                    <BadgeElite label={product.tags.forma} variant="warning" size="sm" />
-                    {product.tags.sistema.map(s => <BadgeElite label={s} variant="success" size="sm" />)}
-                </div>
-            </div>
-
-            <div class="flex flex-col">
-                {product.sections.map((section) => (
-                    <div class="medical-section-container">
-                        <h4 class="medical-section-title">
-                            <Icons type={section.icon} class="w-3.5 h-3.5" />
-                            {section.title}
-                        </h4>
-                        
-                        <ul class="space-y-4">
-                            {section.content && (
-                                <li class="medical-list-item">
-                                    <div class="medical-bullet"></div>
-                                    <p class="leading-[1.8]" set:html={section.content} />
-                                </li>
-                            )}
-                            {section.items && section.items.map((item) => (
-                                <li class="medical-list-item">
-                                    <div class="medical-bullet"></div>
-                                    <div class="flex-1" set:html={item} />
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
+    <!-- Estado Vacío Inicial -->
+    <div id="vademecum-empty-state" class="medical-empty-state flex flex-col items-center justify-center h-full text-center p-8">
+        <div class="mb-8 flex justify-center text-slate-200 animate-pulse">
+            <Icons type="select-card" class="w-16 h-16" strokeWidth={1} />
         </div>
-    ))}
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Selecciona un elemento</h3>
+        <p class="text-sm text-slate-500 max-w-[240px] mb-1 leading-relaxed">
+            Explora el catálogo y selecciona un medicamento o protocolo para ver su ficha técnica.
+        </p>
+    </div>
 
-    <!-- Renderizado de Protocolos -->
-    {protocols.map((protocol) => (
-        <div 
-            id={`ficha-prot-${protocol.id_protocolo}`} 
-            class="medical-sheet hidden"
-            data-sheet-id={protocol.id_protocolo}
-        >
-            <div class="mb-8 relative">
-                <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
-                    <Icons type="close-x" class="w-4 h-4" />
-                </button>
-
-                <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
-                    <Icons type="task-list" class="w-4 h-4" strokeWidth={2} />
-                    Guía de Protocolo Clínico
-                </div>
-
-                <h2 class="medical-title">
-                    {protocol.patologia}
-                </h2>
-
-                <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-                    <BadgeElite label={protocol.sistema_corporal} variant="success" size="sm" />
-                    <BadgeElite label="Soporte Terapéutico" variant="slate" size="sm" />
-                    <BadgeElite label={protocol.estado} variant="slate" size="sm" />
-                </div>
-            </div>
-
-            <div class="flex flex-col">
-                {[
-                    { title: 'Medicamentos Principales', icon: 'gotas', content: protocol.principales },
-                    { title: 'Complementarios', icon: 'plus-circle', content: protocol.complementarios },
-                    { title: 'Oligoelementos / Catalizadores', icon: 'zap', content: protocol.oligoelementos },
-                    { title: 'Tópicos / Externos', icon: 'edit', content: protocol.topicos }
-                ].filter(s => s.content && s.content !== '-').map((section) => (
-                    <div class="medical-section-container">
-                        <h4 class="medical-section-title">
-                            <Icons type={section.icon} class="w-3.5 h-3.5" />
-                            {section.title}
-                        </h4>
-                        
-                        <div class="medical-list-item pl-6">
-                            <p class="leading-[1.8] text-slate-700 font-medium italic" set:html={enrichProtocolText(section.content)} />
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    ))}
-
-    {products.length > 0 && (
-        <div id="vademecum-empty-state" class="medical-empty-state">
-            <div class="mb-8 flex justify-center text-slate-200">
-                <Icons type="select-card" class="w-20 h-20" strokeWidth={1} />
-            </div>
-            <h3 class="text-[16px] font-bold text-slate-900 mb-2">Selecciona un elemento</h3>
-            <p class="text-[13px] text-slate-500 max-w-[240px] mb-1 leading-relaxed">
-                Haz clic en una tarjeta del listado para consultar su información detallada.
-            </p>
-            <p class="text-[11px] font-medium text-brand tracking-tighter mt-4">
-                Fórmula • Protocolos • Dosificación
-            </p>
-        </div>
-    )}
-
-    {products.length === 0 && (
-        <div class="medical-empty-state">
-            <Icons type="file-text" class="w-16 h-16 text-slate-100 mb-6" />
-            <p class="text-[15px] text-slate-400 max-w-[200px] leading-relaxed">
-                Cargando vademécum corporativo...
-            </p>
-        </div>
-    )}
+    <!-- CONTENEDOR DE FICHA DINÁMICA -->
+    <div id="vademecum-details-content" class="medical-sheet p-6 lg:p-10 hidden overflow-y-auto h-full scrollbar-premium">
+        <!-- El motor JS inyectará el contenido aquí -->
+    </div>
 </aside>
+
+<script>
+    import { createMedicineDetails, createProtocolDetails } from '../../utils/vademecum-renderer';
+
+    document.addEventListener('astro:page-load', () => {
+        const aside = document.getElementById('vademecum-aside');
+        const content = document.getElementById('vademecum-details-content');
+        const emptyState = document.getElementById('vademecum-empty-state');
+        const closeBtn = document.getElementById('close-mobile-details');
+
+        // Escuchar selección desde Vademecum.astro
+        window.addEventListener('vademecum:select-item', (e: any) => {
+            const { item, type } = e.detail;
+
+            if (content && emptyState) {
+                emptyState.classList.add('hidden');
+                content.classList.remove('hidden');
+                
+                if (type === 'medicine') {
+                    content.innerHTML = createMedicineDetails(item);
+                } else {
+                    content.innerHTML = createProtocolDetails(item);
+                }
+
+                content.scrollTop = 0;
+                abrirDrawerMovil();
+            }
+        });
+
+        // SALTO MAESTRO: Delegación de eventos para links dentro de protocolos
+        content?.addEventListener('click', (e) => {
+            const jumpLink = (e.target as HTMLElement).closest('.master-jump-link');
+            if (jumpLink) {
+                const targetId = jumpLink.getAttribute('data-jump-to');
+                // Emitimos evento de búsqueda de producto para que el controlador principal lo encuentre
+                window.dispatchEvent(new CustomEvent('vademecum:request-jump', { 
+                    detail: { id: targetId } 
+                }));
+            }
+        });
+
+        // Cierre móvil
+        closeBtn?.addEventListener('click', cerrarDrawerMovil);
+
+        function abrirDrawerMovil() {
+            if (aside && window.innerWidth < 1024) {
+                aside.setAttribute('data-mobile-open', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function cerrarDrawerMovil() {
+            if (aside) {
+                aside.setAttribute('data-mobile-open', 'false');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+</script>
 
 

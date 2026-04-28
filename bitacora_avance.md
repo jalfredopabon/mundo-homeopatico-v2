@@ -73,6 +73,11 @@
 - **Versión Stroked bajo demanda:** Actualización del icono `pill` manteniendo el estilo Stroked pero con trazado optimizado y soporte para grosor dinámico ({strokeWidth}).
 - **Limpieza de Deuda:** Eliminación de duplicados y normalización de viewboxes en `Icons.astro`.
 
+### Hito 31: Sistema de Diseño "Cerebro IA" - DESIGN.md (28/04/2026)
+- **Implementación de Estándar Google:** Creación de `DESIGN.md` en la raíz del proyecto para centralizar tokens de diseño (colores, tipografía, espaciado) y reglas de estilo.
+- **Tokenización Elite:** Definición de paleta botánica (`primary`, `surface-muted`), tipografía dinámica (Inter, Libre Baskerville) y reglas de jerarquía (Sentence Case).
+- **Blindaje Arquitectónico:** Establecimiento de la fuente única de verdad para el diseño, facilitando la consistencia absoluta en la generación de componentes por IA.
+
 ## Hito 56: Sistema Cromático "Elite Contrast" y Legibilidad Médica
 **Fecha:** 09 de Abril, 2026
 **Estado:** Completado ✅

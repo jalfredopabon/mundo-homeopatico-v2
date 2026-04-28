@@ -17,7 +17,8 @@
 ### Hitos Técnicos Logrados
 1.  **Clonación Estricta Online:** Se logró paridad visual 1:1 con la versión de producción para tarjetas de producto, protocolos y columna editorial.
 2.  **Motor de Renderizado Dinámico:** Implementación en `vademecum-renderer.ts` para inyección de HTML premium bajo demanda (Zero-Blocking).
-3.  **Sistema de Badges Inteligentes:** Clasificación automática por color para Terapia, Sistema y Forma Farmacéutica.
+3.  **Simplificación de UI (Professional Tool):** Refactorización del Header eliminando saludos, migas de pan y descripciones redundantes. Reubicación del Switcher al inicio del contexto.
+4.  **Sistema de Badges Inteligentes:** Clasificación automática por color para Terapia, Sistema y Forma Farmacéutica.
 4.  **Optimización PostCSS:** Resolución de errores críticos de compilación local mediante el uso de `color-mix` nativo en lugar de utilidades Tailwind no configuradas.
 5.  **Interconectividad:** Restauración del "Salto Maestro" que vincula protocolos clínicos con fichas de producto individuales.
 

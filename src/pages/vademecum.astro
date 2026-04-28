@@ -30,28 +30,16 @@ const userName = "Alfredo Pabón";
             <div class="page-section">
                 
                 <header class="catalog-section-header reveal active">
-                    <div class="flex flex-col w-full">
-                        <!-- Saludo de cortesía (Hito 54: Consistencia Homóloga) -->
-                        <div class="user-greeting">
-                            <Icons type="user" class="w-3.5 h-3.5" />
-                            <span>Hola, Invitado</span>
+                    <div class="flex flex-col w-full gap-6">
+                        <!-- Switcher de Modo (Prioridad UX) -->
+                        <div class="w-fit">
+                            <VademecumToggle />
                         </div>
 
-                        <!-- Breadcrumbs -->
-                        <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
-                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
-                            <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" />
-                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Profesionales</span>
-                        </nav>
-
-                        <h2 class="catalog-title mb-2">Vademécum clínico</h2>
-                        <p class="text-slate-700 text-[15px] font-medium leading-snug">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
+                        <!-- Título Principal -->
+                        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Vademécum clínico</h1>
                     </div>
                 </header>
-
-                <div class="mb-8">
-                    <VademecumToggle />
-                </div>
 
                 <!-- Contador de Resultados (ADN Clon Catálogo Elite) -->
                 <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal active min-h-[32px]">

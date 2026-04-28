@@ -12,7 +12,20 @@
 - **DOM Bloat:** La inyección de 1.5MB de datos crudos en el pie de página incrementaba el tiempo de parseo del navegador, causando el congelamiento de la UI.
 - **Listeners Acumulados:** La lógica de sincronización de eventos de autenticación en el Header estaba creando una sobrecarga en el hilo principal durante las transiciones de Astro.
 
-## Próximos Pasos (Reconstrucción Elite)
-1.  **Capa de Hidratación Asíncrona:** Reintroducir los protocolos pero cargándolos desde el cliente *post-mount*.
-2.  **Zero-Blocking Header:** Refactorizar la autenticación para que no dependa de listeners globales pesados.
-3.  **Virtualización de Fichas:** En lugar de renderizar 400 fichas ocultas, renderizar solo la seleccionada bajo demanda.
+## [2026-04-28] Hito: Vademécum Elite - Paridad Visual Total
+
+### Hitos Técnicos Logrados
+1.  **Clonación Estricta Online:** Se logró paridad visual 1:1 con la versión de producción para tarjetas de producto, protocolos y columna editorial.
+2.  **Motor de Renderizado Dinámico:** Implementación en `vademecum-renderer.ts` para inyección de HTML premium bajo demanda (Zero-Blocking).
+3.  **Sistema de Badges Inteligentes:** Clasificación automática por color para Terapia, Sistema y Forma Farmacéutica.
+4.  **Optimización PostCSS:** Resolución de errores críticos de compilación local mediante el uso de `color-mix` nativo en lugar de utilidades Tailwind no configuradas.
+5.  **Interconectividad:** Restauración del "Salto Maestro" que vincula protocolos clínicos con fichas de producto individuales.
+
+### Estado Actual
+- **UI/UX:** 100% Funcional y Premium.
+- **Data:** Integrada con Google Sheets vía `api.ts`.
+- **Rendimiento:** Carga asíncrona validada sin bloqueos de DOM.
+
+## Próximos Pasos
+1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.
+2.  **Dashboard de Usuario:** Sincronización de perfiles médicos con el nuevo diseño.

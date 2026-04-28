@@ -699,8 +699,57 @@ input[type="search"] {
     @apply flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider;
   }
 
-  .catalog-title {
-    @apply text-[2.25rem] leading-[0.9] font-extrabold text-slate-900 tracking-tight;
+  /* --- VADEMECUM PREMIUM (ADN CLON) --- */
+  .medical-card {
+    @apply bg-white border border-slate-100 rounded-xl p-5 transition-all duration-300 shadow-sm;
+  }
+  .medical-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+    @apply shadow-md transform -translate-y-0.5;
+  }
+  
+  /* Badges Elite (ADN Online) */
+  .badge-elite {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded;
+  }
+  .badge-elite--indigo { @apply bg-indigo-50 text-indigo-600; }
+  .badge-elite--violet { @apply bg-purple-50 text-purple-600; }
+  .badge-elite--bronze { @apply bg-amber-50 text-amber-700; }
+  .badge-elite--emerald { @apply bg-emerald-50 text-emerald-700; }
+  .badge-elite--brand { 
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary-hover);
+  }
+
+  /* --- FICHA TÉCNICA (TERCERA COLUMNA) --- */
+  .medical-aside {
+    @apply bg-white border-l border-slate-100 w-full lg:w-[400px] xl:w-[450px] fixed lg:relative inset-0 lg:inset-auto z-50 transform lg:transform-none translate-x-full data-[mobile-open=true]:translate-x-0 transition-transform duration-500 overflow-y-auto;
+  }
+  .medical-sheet {
+    @apply p-8 lg:p-10 animate-fade-in;
+  }
+  .medical-title {
+    @apply text-3xl font-bold text-slate-900 mb-4 tracking-tight leading-none;
+  }
+  .medical-section-container {
+    @apply mb-10 last:mb-0;
+  }
+  .medical-section-title {
+    @apply flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-[0.15em] mb-6;
+  }
+  .medical-list-item {
+    @apply flex items-start gap-4 text-[14px] text-slate-700 leading-relaxed;
+  }
+  .vademecum-bullet-dot {
+    @apply w-[6px] h-[6px] rounded-full bg-slate-300 mt-[7.5px] flex-shrink-0 block;
+  }
+  .badge-elite--slate {
+    @apply bg-slate-50 text-slate-500 border border-slate-100;
+  }
+
+  /* Estado Vacío */
+  .medical-empty-state {
+    @apply h-full flex flex-col items-center justify-center text-center p-8 animate-fade-in;
   }
 
   .catalog-description {
@@ -895,8 +944,16 @@ input[type="search"] {
     }
 
     .mh-view-option {
-        @apply relative z-10 flex flex-1 items-center justify-center gap-2 text-xs font-bold transition-colors duration-300;
-        @apply text-slate-400;
+        @apply relative z-10 flex flex-1 items-center justify-center gap-2 text-xs font-bold transition-all duration-300;
+        @apply text-slate-400 cursor-pointer outline-none;
+    }
+
+    .mh-view-option:hover:not(.is-active) {
+        @apply text-slate-600 bg-slate-50/50;
+    }
+
+    .mh-view-option:active {
+        @apply scale-95;
     }
 
     .mh-view-option.is-active {

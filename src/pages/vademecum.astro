@@ -11,11 +11,6 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 // La hidratación es 100% cliente vía motor dinámico.
 const userName = "Alfredo Pabón";
 
-// Los filtros iniciales se mantendrán vacíos y se poblarán dinámicamente o vía constantes
-// para no bloquear el renderizado inicial.
-const terapias = ["Antihomotóxica", "Homeopática", "Fitoterapéutica", "Suplemento"];
-const formas = ["Glóbulos", "Gotas", "Jarabe", "Tabletas", "Ampollas"];
-const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"];
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -27,9 +22,6 @@ const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"]
         <!-- Sidebar: Ahora recibe filtros base, pero el filtrado es cliente puro -->
         <SidebarVademecum 
             userName={userName} 
-            terapias={terapias}
-            sistemas={sistemas}
-            formas={formas}
             activeView="productos"
         />
 
@@ -37,17 +29,33 @@ const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"]
         <div class="flex-1 overflow-y-auto w-full relative flex flex-col bg-surface-muted h-[calc(100dvh-64px)] md:h-[calc(100dvh-72px)] min-h-0 scroll-smooth scrollbar-premium" id="vademecum-main-scroll">
             <div class="page-section">
                 
-                <header class="catalog-section-header reveal mb-2">
+                <header class="catalog-section-header reveal active">
                     <div class="flex flex-col w-full">
-                        <div class="mb-8">
-                            <VademecumToggle />
+                        <!-- Saludo de cortesía (Hito 54: Consistencia Homóloga) -->
+                        <div class="user-greeting">
+                            <Icons type="user" class="w-3.5 h-3.5" />
+                            <span>Hola, Invitado</span>
                         </div>
-                        <h2 class="catalog-title mb-6">Vademécum clínico</h2>
+
+                        <!-- Breadcrumbs -->
+                        <nav aria-label="Breadcrumb" class="catalog-breadcrumb mb-2">
+                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Volver a Inicio</span>
+                            <Icons type="chevron-right" class="w-2.5 h-2.5 text-slate-400" />
+                            <span class="hover:text-slate-800 transition-colors cursor-pointer text-slate-500">Profesionales</span>
+                        </nav>
+
+                        <h2 class="catalog-title mb-2">Vademécum clínico</h2>
+                        <p class="text-slate-700 text-[15px] font-medium leading-snug">Explore el catálogo de medicamentos homeopáticos de alta dilución.</p>
                     </div>
                 </header>
 
-                <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-medium text-slate-700 w-fit shadow-sm reveal min-h-[32px]">
-                    <span id="results-icon-container"><Icons type="jarabe" class="w-3.5 h-3.5 text-slate-500" strokeWidth={1.5} /></span>
+                <div class="mb-8">
+                    <VademecumToggle />
+                </div>
+
+                <!-- Contador de Resultados (ADN Clon Catálogo Elite) -->
+                <div class="mb-4 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal active min-h-[32px]">
+                    <Icons type="mortero" class="w-3.5 h-3.5 text-slate-500" />
                     <span id="results-counter">Cargando catálogo profesional...</span>
                 </div>
 
@@ -108,28 +116,36 @@ const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"]
     });
 
     async function initVademecum() {
-        const medsContainer = document.getElementById('meds-container');
-        const protocolsContainer = document.getElementById('protocols-container');
         const counter = document.getElementById('results-counter');
 
         try {
-            // 1. CARGA SWR: Carga instantánea desde caché y refresh asíncrono
-            const [meds, protocols] = await Promise.all([
-                getVademecumMaestro(),
-                getVademecumProtocolos()
-            ]);
+            // 1. CARGA MAESTRO (Prioridad Alta + Metadatos)
+            const { medicines, metadata } = await getVademecumMaestro();
+            
+            _allMeds = medicines.sort((a, b) => a.name.localeCompare(b.name));
 
-            _allMeds = meds.sort((a, b) => a.name.localeCompare(b.name));
-            _allProtocols = protocols.sort((a, b) => a.name.localeCompare(b.name));
+            // Hidratar filtros de productos (Terapias y Formas)
+            renderSidebarFilters(metadata);
 
             // 1.5. Habilitar Salto Maestro
             import('../utils/vademecum-renderer').then(m => m.setProductJumpMap(_allMeds));
 
-            // 2. INICIALIZAR LISTENERS DE UI
+            // 2. INICIALIZAR LISTENERS DE UI (Delegación de eventos)
             initUIListeners();
             
-            // 3. PRIMER RENDER
+            // 3. PRIMER RENDER (Catálogo Maestro)
             applyFiltersAndRender();
+
+            // 4. CARGA PROTOCOLOS (Segundo plano)
+            getVademecumProtocolos().then(protocols => {
+                _allProtocols = protocols.sort((a, b) => a.name.localeCompare(b.name));
+                
+                // Extraer sistemas únicos de los protocolos para el sidebar
+                const sistemas = [...new Set(_allProtocols.map(p => p.system))].filter(Boolean).sort();
+                renderSidebarFilters({ sistemas });
+
+                if (_currentView === 'protocols') applyFiltersAndRender();
+            }).catch(err => console.error("Error cargando protocolos:", err));
 
         } catch (error) {
             console.error("Vademecum Initialization Error:", error);
@@ -137,11 +153,42 @@ const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"]
         }
     }
 
+    // --- MOTOR DE HIDRATACIÓN DINÁMICA ---
+
+    function renderSidebarFilters(metadata: any) {
+        if (metadata.terapias) {
+            const container = document.getElementById('filter-terapia-list');
+            if (container) container.innerHTML = metadata.terapias.map((t: string) => createFilterMarkup('terapia', t, 'accent-brand')).join('');
+        }
+        if (metadata.formas) {
+            const container = document.getElementById('filter-forma-list');
+            if (container) container.innerHTML = metadata.formas.map((f: string) => createFilterMarkup('forma', f, 'accent-warning')).join('');
+        }
+        if (metadata.sistemas) {
+            const container = document.getElementById('filter-sistema-list');
+            if (container) container.innerHTML = metadata.sistemas.map((s: string) => createFilterMarkup('sistema', s, 'accent-success')).join('');
+        }
+    }
+
+    function createFilterMarkup(group: string, value: string, accentClass: string) {
+        return `
+            <label class="sidebar-filter-label group">
+                <input 
+                    type="checkbox" 
+                    class="vademecum-filter sidebar-filter-checkbox ${accentClass}"
+                    data-filter-group="${group}"
+                    data-filter-value="${value}"
+                />
+                <span class="group-hover:text-slate-900 transition-colors">${value}</span>
+            </label>
+        `;
+    }
+
     function applyFiltersAndRender() {
         const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
         const searchTerm = sanitizeInput(searchInput?.value || '').toLowerCase();
 
-        // Obtener filtros activos del Sidebar
+        // Obtener filtros activos (funciona aunque se inyecten dinámicamente)
         const activeTerapias = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value'));
         const activeSistemas = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value'));
         const activeFormas = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value'));
@@ -227,11 +274,21 @@ const sistemas = ["Digestivo", "Inmune", "Muscular", "Nervioso", "Respiratorio"]
 
     function initUIListeners() {
         const searchInput = document.getElementById('vademecum-search');
-        const filterInputs = document.querySelectorAll('.vademecum-filter');
         const clearBtn = document.getElementById('clear-filters-btn');
+        const sidebar = document.querySelector('aside'); // Delegación en el Sidebar
 
+        // Búsqueda
         searchInput?.addEventListener('input', () => { _currentPage = 1; applyFiltersAndRender(); });
-        filterInputs.forEach(input => input.addEventListener('change', () => { _currentPage = 1; applyFiltersAndRender(); }));
+
+        // Delegación de eventos para filtros dinámicos
+        sidebar?.addEventListener('change', (e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.classList.contains('vademecum-filter')) {
+                _currentPage = 1;
+                applyFiltersAndRender();
+            }
+        });
+
         clearBtn?.addEventListener('click', () => {
             (document.querySelectorAll('.vademecum-filter:checked') as NodeListOf<HTMLInputElement>).forEach(i => i.checked = false);
             if (searchInput) (searchInput as HTMLInputElement).value = '';

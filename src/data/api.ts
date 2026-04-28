@@ -7,16 +7,24 @@
 import type { Medicine } from './medicines';
 import { z } from 'zod';
 
+/**
+ * Metadatos para filtros dinámicos extraídos de los datos reales
+ */
+export interface FilterMetadata {
+    terapias: string[];
+    formas: string[];
+}
+
 // URL del WebApp de Google Apps Script (Placeholder - Reemplazar con la URL real)
 /**
  * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
  */
-const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxtc14Vbzm5ZAcF2hhQsLsEuGyEyJxzAgfnxWZIgTxv_iGHWzf4xrn9IQYtXkRIcZ59/exec';
+const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbxtc14Vbzm5ZAcF2hhQsLsEuGyEyJxzAgfnxWZIgTxv_iGHWzf4xrn9IQYtXkRIcZ59/exec';
 
 /**
  * TOKEN DE SEGURIDAD (Protocolo Fort Knox)
  */
-const SECRET_KEY = 'YOUR_SECRET_KEY_HERE'; 
+const SECRET_KEY = import.meta.env.PUBLIC_GAS_SECRET || 'MH_SECRET_2026_ELITE'; 
 
 // Esquema de validación para el Vademécum Maestro
 export const VademecumMaestroSchema = z.object({
@@ -40,7 +48,7 @@ export const VademecumProtocoloSchema = z.object({
     oligoelementos: z.string(),
     topicos: z.string(),
     estado: z.string(),
-    sistema_corporal: z.string(),
+    sistema_corporal: z.string().optional().default(''),
 });
 
 export type VademecumMaestro = z.infer<typeof VademecumMaestroSchema>;
@@ -147,7 +155,7 @@ function normalizeKeys(obj: any): any {
 /**
  * Obtiene el Vademécum Maestro desde Google Sheets con soporte SWR
  */
-export async function getVademecumMaestro(): Promise<Medicine[]> {
+export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], metadata: FilterMetadata }> {
     return fetchWithSWR('vd_maestro', async () => {
         if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
             console.warn('Vademecum: Usando Mock Data para Maestro');
@@ -163,24 +171,39 @@ export async function getVademecumMaestro(): Promise<Medicine[]> {
                     estado: 'activo'
                 }
             ];
-            return mockData.map(mapMaestroToMedicine);
+            
+            const medicines = mockData.map(mapMaestroToMedicine);
+            const metadata: FilterMetadata = {
+                terapias: [...new Set(medicines.map(m => m.linea))].sort(),
+                formas: [...new Set(medicines.map(m => m.type))].sort()
+            };
+
+            return { medicines, metadata };
         }
 
         try {
-            const response = await fetch(`${GAS_WEBAPP_URL}?sheet=maestro`);
+            const response = await fetch(`${GAS_WEBAPP_URL}?action=maestro&key=${SECRET_KEY}`);
             if (!response.ok) throw new Error('Error al conectar con la API de Vademécum');
             
             const rawData = await response.json();
             const cleanData = normalizeKeys(rawData);
             const data = z.array(VademecumMaestroSchema.passthrough()).parse(cleanData);
             
-            return data
+            const medicines = data
                 .filter(item => (item.estado || '').toLowerCase() === 'activo')
                 .map(mapMaestroToMedicine);
+
+            // Extracción dinámica de metadatos para filtros
+            const metadata: FilterMetadata = {
+                terapias: [...new Set(medicines.map(m => m.linea))].sort(),
+                formas: [...new Set(medicines.map(m => m.type))].sort()
+            };
+            
+            return { medicines, metadata };
         } catch (error) {
             console.error('API Error (Maestro):', error);
             if (error instanceof z.ZodError) console.warn('Zod Mapping Errors:', error.errors);
-            return []; 
+            return { medicines: [], metadata: { terapias: [], formas: [] } }; 
         }
     });
 }
@@ -207,7 +230,7 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
         }
 
         try {
-            const response = await fetch(`${GAS_WEBAPP_URL}?sheet=protocolos`);
+            const response = await fetch(`${GAS_WEBAPP_URL}?action=protocolos&key=${SECRET_KEY}`);
             if (!response.ok) throw new Error('Error al conectar con la API de Protocolos');
             
             const rawData = await response.json();
@@ -218,7 +241,13 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
                 .filter(item => (item.estado || '').toLowerCase() === 'activo')
                 .map(item => ({
                     ...item,
-                    system: item.sistema_corporal || item.sistema // Asegurar compatibilidad con buscador
+                    id: item.id_protocolo,
+                    name: item.patologia,
+                    system: item.sistema_corporal || item.sistema,
+                    description: item.principales,
+                    complementary: item.complementarios,
+                    oligoelementos: item.oligoelementos,
+                    topicos: item.topicos
                 }));
         } catch (error) {
             console.error('API Error (Protocolos):', error);

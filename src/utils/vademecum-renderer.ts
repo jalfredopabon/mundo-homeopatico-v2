@@ -29,62 +29,42 @@ function enrichText(text: string) {
     names.forEach(name => {
         const id = PRODUCT_JUMP_MAP.get(name);
         const regex = new RegExp(`\\b(${name})\\b`, 'gi');
-        enriched = enriched.replace(regex, `<span class="master-jump-link text-brand-600 font-bold underline decoration-brand-200 hover:decoration-brand-500 cursor-pointer transition-all" data-jump-to="${id}">$1</span>`);
+        enriched = enriched.replace(regex, `<span class="master-jump-link text-brand-dark font-bold underline decoration-brand/30 hover:decoration-brand cursor-pointer transition-all" data-jump-to="${id}">$1</span>`);
     });
     return enriched;
 }
 
 /**
- * GENERADOR DE BADGES "ELITE"
+ * GENERADOR DE BADGES ELITE (ADN ONLINE)
  */
-function renderBadge(text: string) {
-  const normalized = text.toLowerCase();
-  let colorClass = "bg-surface-100 text-strong ring-surface-200";
-
-  if (normalized === "maestro" || normalized === "antihomotóxica" || normalized === "premium") {
-    colorClass = "bg-brand-50 text-brand-700 ring-brand-100/50";
-  } else if (normalized.includes("import") || normalized.includes("alem") || normalized.includes("fran")) {
-    colorClass = "bg-indigo-50 text-indigo-700 ring-indigo-100/50";
-  } else if (normalized.includes("comp") || normalized.includes("prep") || normalized.includes("fitoterapéutica")) {
-    colorClass = "bg-amber-50 text-amber-700 ring-amber-100/50";
-  } else if (normalized.includes("suplemento")) {
-    colorClass = "bg-emerald-50 text-emerald-700 ring-emerald-100/50";
-  }
-
-  return `
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide uppercase ${colorClass} ring-1 ring-inset transition-all duration-300">
-       ${text}
-    </span>
-  `;
+function renderEliteBadge(text: string, type: 'terapia' | 'sistema' | 'forma' | 'default' = 'default') {
+    let colorClass = "badge-elite--brand";
+    if (type === 'terapia') colorClass = "badge-elite--indigo";
+    else if (type === 'sistema') colorClass = "badge-elite--violet";
+    else if (type === 'forma') colorClass = "badge-elite--bronze";
+    
+    return `<span class="badge-elite ${colorClass}">${text}</span>`;
 }
 
 export function createMedicalCard(medicine: any): string {
+  // Extraer sistemas si vienen en el objeto tags
+  const sistemas = medicine.tags?.sistema || [];
+
   return `
-    <div 
-      class="product-card group relative bg-white border border-surface-200 rounded-2xl p-5 hover:border-brand-300 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-500 cursor-pointer overflow-hidden animate-fade-in"
-      data-medicine-id="${medicine.id}"
-    >
-      <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-50/30 rounded-full blur-2xl group-hover:bg-brand-100/40 transition-colors duration-500"></div>
-      <div class="relative flex flex-col h-full gap-4">
-        <div class="flex justify-between items-start gap-4">
-          <div class="space-y-1">
-            <h3 class="text-lg font-semibold text-strong group-hover:text-brand-700 transition-colors duration-300 leading-tight">
-              ${medicine.name}
-            </h3>
-            <p class="text-sm font-medium text-subtle italic truncate max-w-[180px]">
-              ${medicine.scientificName || ''}
-            </p>
-          </div>
-          <div class="flex-shrink-0 p-2 bg-surface-50 rounded-xl group-hover:bg-brand-50 transition-colors duration-300">
-            ${ICONS.mortero}
-          </div>
+    <div class="med-item reveal active" data-medicine-id="${medicine.id}">
+      <div class="medical-card medical-item-btn">
+        <div class="mb-2">
+          <h3 class="font-bold text-slate-900 leading-tight text-dynamic-content">
+            ${medicine.name}
+          </h3>
         </div>
-        <div class="flex flex-wrap gap-2 pt-1 border-t border-surface-100/60 mt-auto">
-          ${renderBadge(medicine.category)}
-          ${medicine.type ? renderBadge(medicine.type) : ""}
-        </div>
-        <div class="flex items-center gap-2 text-xs font-bold text-brand-600 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 mt-2">
-          ${ICONS.eye} VER FICHA TÉCNICA
+        <p class="text-slate-700 leading-relaxed mb-4 text-dynamic-content">
+          ${medicine.indications || ''}
+        </p>
+        <div class="flex items-center gap-2 flex-wrap">
+          ${renderEliteBadge(medicine.category, 'terapia')}
+          ${sistemas.map((s: string) => renderEliteBadge(s, 'sistema')).join('')}
+          ${medicine.type ? renderEliteBadge(medicine.type, 'forma') : ""}
         </div>
       </div>
     </div>
@@ -93,148 +73,160 @@ export function createMedicalCard(medicine: any): string {
 
 export function createProtocolCard(protocol: any): string {
   return `
-    <div 
-      class="protocol-card group relative bg-white border border-surface-200 rounded-2xl p-5 hover:border-brand-300 hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden animate-fade-in"
-      data-protocol-id="${protocol.id}"
-    >
-      <div class="relative space-y-4">
-        <div class="flex justify-between items-start gap-3">
-          <div class="p-2.5 bg-brand-50 rounded-xl text-brand-600 group-hover:scale-110 transition-transform duration-500">
-            ${ICONS.leaf}
-          </div>
-          <div class="px-2 py-0.5 bg-surface-50 rounded-full text-[10px] font-bold text-subtle tracking-tighter uppercase transition-colors group-hover:bg-brand-100 group-hover:text-brand-700">
-            PROTOCOLO
+    <div class="med-item reveal active" data-protocol-id="${protocol.id}">
+      <div class="medical-card medical-item-btn">
+        <div class="mb-2">
+          <div class="flex justify-between items-start">
+             <h3 class="font-bold text-slate-900 leading-tight text-dynamic-content">
+               ${protocol.name}
+             </h3>
+             <span class="badge-elite badge-elite--brand opacity-60">PROTOCOLO</span>
           </div>
         </div>
-        <div class="space-y-1.5">
-          <h3 class="text-base font-bold text-strong group-hover:text-brand-700 transition-colors duration-300 line-clamp-2 leading-snug">
-            ${protocol.name}
-          </h3>
-          <p class="text-xs text-subtle line-clamp-2 leading-relaxed">
-            ${protocol.description || protocol.indicaciones || ''}
-          </p>
-        </div>
-        <div class="flex items-center gap-2 pt-2 border-t border-surface-100 text-[10px] font-black text-brand-600 tracking-widest uppercase opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-           Explorar Guía ${ICONS.plus}
+        <p class="text-slate-700 leading-relaxed mb-4 text-dynamic-content line-clamp-2">
+          ${protocol.description || protocol.principales || ''}
+        </p>
+        <div class="flex items-center gap-2 flex-wrap">
+           ${renderEliteBadge(protocol.system || 'Medicina General', 'sistema')}
         </div>
       </div>
     </div>
   `;
 }
 
+/**
+ * RENDERIZADOR DE FICHA TÉCNICA (ADN ONLINE)
+ */
 export function createMedicineDetails(medicine: any): string {
-  const sections = medicine.sections || [];
+  // Procesar listas (convertir strings con saltos de línea o comas en arrays)
+  const formatList = (content: string) => {
+    if (!content) return [];
+    return content.split(/[;\n]/).filter(item => item.trim().length > 0);
+  };
+
+  const indicaciones = formatList(medicine.indications);
+  const perfil = [
+    { label: 'Tropismo principal', value: medicine.scientificName || 'Sistemas varios' },
+    { label: 'Mecanismo', value: medicine.category || 'Homeopatía compleja' }
+  ];
+  const posologia = formatList(medicine.posologia || 'Consultar con su especialista médico.');
+
   return `
-    <div class="animate-content-in">
-      <div class="mb-8 p-6 bg-gradient-to-br from-brand-50/50 to-white rounded-2xl border border-brand-100/50">
-        <div class="flex items-center gap-4 mb-4">
-           ${renderBadge(medicine.category)}
-           ${medicine.type ? renderBadge(medicine.type) : ""}
+    <div class="medical-sheet animate-content-in" data-sheet-id="${medicine.id}">
+      <!-- Encabezado de la Ficha -->
+      <div class="mb-8 relative">
+        <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+          Ficha técnica del producto
         </div>
-        <h2 class="text-3xl font-bold text-strong mb-2 leading-tight">${medicine.name}</h2>
-        <p class="text-lg text-brand-600 italic font-medium">${medicine.scientificName || ''}</p>
+        <h2 class="medical-title">${medicine.name}</h2>
+        <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.scientificName || medicine.name}</span>
+          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.category}</span>
+          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.type || 'Gotas'}</span>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <section>
-            <h4 class="flex items-center gap-2 text-sm font-black text-strong tracking-widest uppercase mb-3 px-1 border-l-4 border-brand-500">
-              Acción Clínica
-            </h4>
-            <div class="bg-surface-50 p-4 rounded-xl text-subtle leading-relaxed shadow-sm">
-              ${medicine.indications || ''}
-            </div>
-          </section>
-          ${medicine.presentation ? `
-          <section>
-            <h4 class="flex items-center gap-2 text-sm font-black text-strong tracking-widest uppercase mb-3 px-1 border-l-4 border-brand-500">
-              Presentación
-            </h4>
-            <div class="flex items-center gap-3 bg-white border border-surface-200 p-4 rounded-xl">
-              <div class="p-2 bg-brand-50 rounded-lg text-brand-600">
-                ${ICONS.pill}
-              </div>
-              <span class="font-medium text-strong italic">${medicine.presentation}</span>
-            </div>
-          </section>
-          ` : ""}
+      <!-- Secciones de la Ficha -->
+      <div class="flex flex-col">
+        <!-- Indicaciones -->
+        <div class="medical-section-container">
+          <h4 class="medical-section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M11 6L21 6"></path><path d="M11 12L21 12"></path><path d="M11 18L21 18"></path><path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4"></path><path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15"></path></svg>
+            Indicaciones clínicas
+          </h4>
+          <ul class="space-y-4">
+            ${indicaciones.map(text => `
+              <li class="medical-list-item">
+                <span class="vademecum-bullet-dot"></span>
+                <div class="flex-1">${text}</div>
+              </li>
+            `).join('')}
+          </ul>
         </div>
 
-        <div class="space-y-6">
-          <section>
-            <h4 class="flex items-center gap-2 text-sm font-black text-strong tracking-widest uppercase mb-3 px-1 border-l-4 border-amber-500">
-              Uso Sugerido
-            </h4>
-            <div class="bg-amber-50/50 border border-amber-100 p-4 rounded-xl text-amber-900 leading-relaxed italic text-sm">
-              ${medicine.dosage || "Consultar guía de protocolos para dosificación específica."}
-            </div>
-          </section>
-          ${medicine.keySymptoms ? `
-          <section>
-            <h4 class="flex items-center gap-2 text-sm font-black text-strong tracking-widest uppercase mb-3 px-1 border-l-4 border-brand-500">
-              Síntomas Clave
-            </h4>
-            <div class="bg-white border border-surface-200 p-4 rounded-xl">
-              <ul class="space-y-2">
-                ${(medicine.keySymptoms || []).map((s: string) => `<li class="flex items-start gap-2 text-sm text-subtle"><span class="text-brand-500 mt-1">•</span> ${s}</li>`).join('')}
-              </ul>
-            </div>
-          </section>
-          ` : ""}
+        <!-- Perfil -->
+        <div class="medical-section-container">
+          <h4 class="medical-section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M17.5 21C15.567 21 14 19.433 14 17.5L14 3L21 3L21 17.5C21 19.433 19.433 21 17.5 21Z"></path><path d="M22 3L13 3"></path><path d="M17 7H14"></path><path d="M10 16.875C10 19.9126 8 21 6 21C4 21 2 19.9126 2 16.875C2 13.8374 6 10 6 10C6 10 10 13.8374 10 16.875Z"></path><path d="M14 12C15.083 11.1336 16.2974 9.87843 17.771 10.7626C19.0014 11.5009 20.0342 10.7244 21 10"></path></svg>
+            Perfil farmacológico
+          </h4>
+          <ul class="space-y-4">
+            ${perfil.map(item => `
+              <li class="medical-list-item">
+                <span class="vademecum-bullet-dot"></span>
+                <div class="flex-1"><span class="font-bold text-slate-900">${item.label}:</span> ${item.value}</div>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- Posología -->
+        <div class="medical-section-container">
+          <h4 class="medical-section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591"></path><path d="M11 20H17"></path></svg>
+            Protocolo de posología
+          </h4>
+          <ul class="space-y-4">
+            ${posologia.map(text => `
+              <li class="medical-list-item">
+                <span class="vademecum-bullet-dot"></span>
+                <div class="flex-1">${text}</div>
+              </li>
+            `).join('')}
+          </ul>
         </div>
       </div>
-      
-      <!-- Secciones dinámicas adicionales -->
-      ${sections.length > 0 ? `
-      <div class="mt-8 pt-8 border-t border-surface-100 space-y-8">
-        ${sections.map((s: any) => `
-          <section>
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">${s.title}</h4>
-            <div class="bg-surface-25 p-5 rounded-2xl border border-surface-100 text-slate-600 text-sm leading-relaxed">
-                ${s.content || (s.items ? `<ul class="list-disc pl-5 space-y-2">${s.items.map((it: string) => `<li>${it}</li>`).join('')}</ul>` : '')}
-            </div>
-          </section>
-        `).join('')}
-      </div>
-      ` : ""}
     </div>
   `;
 }
+
 
 export function createProtocolDetails(protocol: any): string {
-    return `
-        <div class="animate-content-in">
-            <header class="mb-10 p-8 bg-slate-900 rounded-2xl text-white shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-8 opacity-10 scale-150">${ICONS.leaf}</div>
-                <div class="relative z-10">
-                    <div class="flex items-center gap-3 text-[10px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em]">
-                         Guía de Protocolo Clínico
-                    </div>
-                    <h2 class="text-3xl font-black mb-4">${protocol.name}</h2>
-                    <span class="px-3 py-1 bg-brand-500 text-white text-[11px] font-bold rounded-full uppercase border border-brand-400">
-                        ${protocol.system || 'Medicina General'}
-                    </span>
-                </div>
-            </header>
+  const formatList = (content: string) => {
+    if (!content) return [];
+    return content.split(/[;\n]/).filter(item => item.trim().length > 0);
+  };
 
-            <div class="space-y-12">
-                ${renderProtocolSection('Medicamentos Principales', protocol.description || protocol.indications || protocol.principales, 'gotas')}
-                ${protocol.complementary ? renderProtocolSection('Soporte Complementario', protocol.complementary, 'plus') : ''}
-                ${protocol.observaciones ? renderProtocolSection('Observaciones Terapéuticas', protocol.observaciones, 'search') : ''}
-            </div>
+  const sections = [
+    { title: 'Medicamentos Principales', content: protocol.description || protocol.principales, icon: 'mortero' },
+    { title: 'Soporte Complementario', content: protocol.complementary, icon: 'plus' },
+    { title: 'Oligoelementos', content: protocol.oligoelementos, icon: 'pill' },
+    { title: 'Tratamientos Tópicos', content: protocol.topicos, icon: 'droplet' }
+  ].filter(s => s.content);
+
+  return `
+    <div class="medical-sheet animate-content-in" data-sheet-id="${protocol.id}">
+      <div class="mb-8 relative">
+        <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Guía de Protocolo Clínico
         </div>
-    `;
-}
+        <h2 class="medical-title">${protocol.name}</h2>
+        <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+           <span class="badge-elite badge-elite--brand px-2 py-0.5 text-[10px] font-medium tracking-normal">${protocol.system || 'Medicina General'}</span>
+           <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">Protocolo</span>
+        </div>
+      </div>
 
-function renderProtocolSection(title: string, content: string, iconKey: string) {
-    return `
-        <section class="medical-section">
-            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest mb-5 flex items-center gap-2">
-               <span class="w-1.5 h-4 bg-brand-500 rounded-full"></span> ${title}
+      <div class="flex flex-col">
+        ${sections.map(section => `
+          <div class="medical-section-container">
+            <h4 class="medical-section-title">
+               ${section.title}
             </h4>
             <div class="bg-white border border-slate-100 p-6 rounded-2xl text-slate-700 leading-relaxed shadow-sm italic text-[14px]">
-                ${enrichText(content)}
+               ${enrichText(section.content)}
             </div>
-        </section>
-    `;
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
 }

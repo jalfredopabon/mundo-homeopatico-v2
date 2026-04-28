@@ -375,3 +375,14 @@
 - **Salto Maestro:** Desarrollo de lógica de enriquecimiento de texto para vincular menciones de productos en protocolos directamente con sus fichas técnicas.
 - **UX Premium:** Pulido del panel de detalles (`MedicalDetails.astro`) con badges reales y animaciones coreografiadas.
 **Resultado:** Una herramienta clínica de alto rendimiento, 100% escalable desde la nube y con una experiencia de navegación "Elite" sin fricciones.
+
+---
+
+### [28-Abr-2026] Hallazgo Técnico: Discrepancia de Parámetros GAS
+- **Problema:** La conexión con Google Sheets fallaba al intentar cargar protocolos (devolvía siempre datos maestros).
+- **Causa Raíz:** El script de Google Apps Script (GAS) esperaba el parámetro `action` para discriminar hojas, mientras que el frontend enviaba `sheet`.
+- **Solución:**
+    1. Refactorización de `src/data/api.ts` para usar `action` en lugar de `sheet`.
+    2. Implementación de flexibilidad en el `doGet` de GAS para aceptar ambos parámetros (`action` o `sheet`).
+    3. Normalización de esquemas: Mapeo de `patologia` -> `name` en protocolos para asegurar paridad con el motor de búsqueda.
+- **Resultado:** Conexión 100% funcional y segura validada mediante pruebas de endpoint.

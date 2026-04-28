@@ -5,17 +5,11 @@ import Icons from "../shared/Icons.astro";
 interface Props {
     userName?: string;
     activeView?: 'productos' | 'protocolos';
-    terapias?: string[];
-    sistemas?: string[];
-    formas?: string[];
 }
 
 const { 
     userName = "Invitado", 
-    activeView = "productos",
-    terapias = [],
-    sistemas = [],
-    formas = []
+    activeView = "productos"
 } = Astro.props;
 ---
 
@@ -43,39 +37,19 @@ const {
                 <Icons type="mortero" class="w-4 h-4 text-slate-900" strokeWidth={1.8} />
                 Tipo de terapia
             </h4>
-            <div class="space-y-4">
-                {terapias.map((filter) => (
-                    <label class="sidebar-filter-label group">
-                        <input 
-                            type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-brand"
-                            data-filter-group="terapia"
-                            data-filter-value={filter}
-                        />
-                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
-                    </label>
-                ))}
+            <div class="space-y-4" id="filter-terapia-list">
+                <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando terapias...</p>
             </div>
         </section>
 
         <!-- Sección 2: Sistema del cuerpo (solo Protocolos) -->
-        <section class="sidebar-filter-section" data-view-target="protocols" id="section-sistema">
+        <section class="sidebar-filter-section hidden" data-view-target="protocols" id="section-sistema">
             <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 uppercase tracking-wider">
                 <Icons type="user-circle-alt" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Sistema del cuerpo
             </h4>
-            <div class="space-y-4">
-                {sistemas.map((filter) => (
-                    <label class="sidebar-filter-label group">
-                        <input 
-                            type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-success"
-                            data-filter-group="sistema"
-                            data-filter-value={filter}
-                        />
-                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
-                    </label>
-                ))}
+            <div class="space-y-4" id="filter-sistema-list">
+                <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando sistemas...</p>
             </div>
         </section>
 
@@ -85,18 +59,8 @@ const {
                 <Icons type="pill" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
                 Forma farmacéutica
             </h4>
-            <div class="space-y-4">
-                {formas.map((filter) => (
-                    <label class="sidebar-filter-label group">
-                        <input 
-                            type="checkbox" 
-                            class="vademecum-filter sidebar-filter-checkbox accent-warning"
-                            data-filter-group="forma"
-                            data-filter-value={filter}
-                        />
-                        <span class="group-hover:text-slate-900 transition-colors">{filter}</span>
-                    </label>
-                ))}
+            <div class="space-y-4" id="filter-forma-list">
+                <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando formas...</p>
             </div>
         </section>
     </div>

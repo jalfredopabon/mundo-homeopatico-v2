@@ -13,6 +13,8 @@ const ICONS = {
   pill: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M11.4497 19.5503L19.5503 11.4497C20.4785 10.5215 21 9.2625 21 7.94975C21 5.21608 18.7839 3 16.0503 3C14.7375 3 13.4785 3.52149 12.5503 4.44975L4.44975 12.5503C3.52149 13.4785 3 14.7375 3 16.0503C3 18.7839 5.21608 21 7.94975 21C9.2625 21 10.5215 20.4785 11.4497 19.5503Z" /><path d="M8.5 8.5L15.5 15.5" /></svg>`,
   plus: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
   gotas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`,
+  'task-list': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M11 6L21 6" /><path d="M11 12L21 12" /><path d="M11 18L21 18" /><path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4" /><path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15" /></svg>`,
+  droplet: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`,
 };
 
 // Mapa global para el Salto Maestro
@@ -38,10 +40,10 @@ function enrichText(text: string) {
  * GENERADOR DE BADGES ELITE (ADN ONLINE)
  */
 function renderEliteBadge(text: string, type: 'terapia' | 'sistema' | 'forma' | 'default' = 'default') {
-    let colorClass = "badge-elite--brand";
-    if (type === 'terapia') colorClass = "badge-elite--indigo";
-    else if (type === 'sistema') colorClass = "badge-elite--violet";
-    else if (type === 'forma') colorClass = "badge-elite--bronze";
+    let colorClass = "badge-elite--brand"; // MH Verde por defecto
+    if (type === 'terapia') colorClass = "badge-elite--violet"; // Violeta Eléctrico
+    else if (type === 'sistema') colorClass = "badge-elite--violet"; // Violeta Eléctrico (Sincronizado)
+    else if (type === 'forma') colorClass = "badge-elite--orange"; // Naranja Vivo
     
     return `<span class="badge-elite ${colorClass}">${text}</span>`;
 }
@@ -59,7 +61,7 @@ export function createMedicalCard(medicine: any): string {
           </h3>
         </div>
         <p class="text-slate-700 leading-relaxed mb-4 text-dynamic-content">
-          ${medicine.indications || ''}
+          ${(medicine.indications || '').replace(/;/g, ', ')}
         </p>
         <div class="flex items-center gap-2 flex-wrap">
           ${renderEliteBadge(medicine.category, 'terapia')}
@@ -75,16 +77,11 @@ export function createProtocolCard(protocol: any): string {
   return `
     <div class="med-item reveal active" data-protocol-id="${protocol.id}">
       <div class="medical-card medical-item-btn">
-        <div class="mb-2">
-          <div class="flex justify-between items-start">
-             <h3 class="font-bold text-slate-900 leading-tight text-dynamic-content">
-               ${protocol.name}
-             </h3>
-             <span class="badge-elite badge-elite--brand opacity-60">PROTOCOLO</span>
-          </div>
-        </div>
+          <h3 class="font-bold text-slate-900 leading-tight text-dynamic-content mb-2">
+            ${protocol.name}
+          </h3>
         <p class="text-slate-700 leading-relaxed mb-4 text-dynamic-content line-clamp-2">
-          ${protocol.description || protocol.principales || ''}
+          ${(protocol.description || protocol.principales || '').replace(/;/g, ', ')}
         </p>
         <div class="flex items-center gap-2 flex-wrap">
            ${renderEliteBadge(protocol.system || 'Medicina General', 'sistema')}
@@ -112,21 +109,24 @@ export function createMedicineDetails(medicine: any): string {
   const posologia = formatList(medicine.posologia || 'Consultar con su especialista médico.');
 
   return `
-    <div class="medical-sheet animate-content-in" data-sheet-id="${medicine.id}">
+    <div class="animate-content-in" data-sheet-id="${medicine.id}">
       <!-- Encabezado de la Ficha -->
       <div class="mb-8 relative">
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
-        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
           Ficha técnica del producto
         </div>
         <h2 class="medical-title">${medicine.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.scientificName || medicine.name}</span>
-          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.category}</span>
-          <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.type || 'Gotas'}</span>
+          ${medicine.scientificName && medicine.scientificName !== medicine.name 
+            ? `<span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.scientificName}</span>` 
+            : ''
+          }
+          ${renderEliteBadge(medicine.category, 'terapia')}
+          ${renderEliteBadge(medicine.type || 'Gotas', 'forma')}
         </div>
       </div>
 
@@ -199,19 +199,18 @@ export function createProtocolDetails(protocol: any): string {
   ].filter(s => s.content);
 
   return `
-    <div class="medical-sheet animate-content-in" data-sheet-id="${protocol.id}">
+    <div class="animate-content-in" data-sheet-id="${protocol.id}">
       <div class="mb-8 relative">
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
-        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest uppercase">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-          Guía de Protocolo Clínico
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+          ${ICONS['task-list']}
+          Guía de protocolo clínico
         </div>
         <h2 class="medical-title">${protocol.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
-           <span class="badge-elite badge-elite--brand px-2 py-0.5 text-[10px] font-medium tracking-normal">${protocol.system || 'Medicina General'}</span>
-           <span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">Protocolo</span>
+           ${renderEliteBadge(protocol.system || 'Medicina General', 'sistema')}
         </div>
       </div>
 
@@ -219,11 +218,17 @@ export function createProtocolDetails(protocol: any): string {
         ${sections.map(section => `
           <div class="medical-section-container">
             <h4 class="medical-section-title">
+               ${ICONS[section.icon] || ''}
                ${section.title}
             </h4>
-            <div class="bg-white border border-slate-100 p-6 rounded-2xl text-slate-700 leading-relaxed shadow-sm italic text-[14px]">
-               ${enrichText(section.content)}
-            </div>
+            <ul class="space-y-4">
+               ${formatList(section.content).map(item => `
+                 <li class="medical-list-item">
+                   <span class="vademecum-bullet-dot"></span>
+                   <div class="flex-1 text-slate-700">${section.title === 'Oligoelementos' ? item : enrichText(item)}</div>
+                 </li>
+               `).join('')}
+            </ul>
           </div>
         `).join('')}
       </div>

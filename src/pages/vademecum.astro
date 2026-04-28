@@ -146,15 +146,15 @@ const userName = "Alfredo Pabón";
     function renderSidebarFilters(metadata: any) {
         if (metadata.terapias) {
             const container = document.getElementById('filter-terapia-list');
-            if (container) container.innerHTML = metadata.terapias.map((t: string) => createFilterMarkup('terapia', t, 'accent-brand')).join('');
+            if (container) container.innerHTML = metadata.terapias.map((t: string) => createFilterMarkup('terapia', t, 'accent-violet-600')).join('');
         }
         if (metadata.formas) {
             const container = document.getElementById('filter-forma-list');
-            if (container) container.innerHTML = metadata.formas.map((f: string) => createFilterMarkup('forma', f, 'accent-warning')).join('');
+            if (container) container.innerHTML = metadata.formas.map((f: string) => createFilterMarkup('forma', f, 'accent-orange-500')).join('');
         }
         if (metadata.sistemas) {
             const container = document.getElementById('filter-sistema-list');
-            if (container) container.innerHTML = metadata.sistemas.map((s: string) => createFilterMarkup('sistema', s, 'accent-success')).join('');
+            if (container) container.innerHTML = metadata.sistemas.map((s: string) => createFilterMarkup('sistema', s, 'accent-violet-600')).join('');
         }
     }
 

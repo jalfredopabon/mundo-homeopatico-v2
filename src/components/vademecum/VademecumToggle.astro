@@ -11,17 +11,15 @@ const { activeView = 'products', class: className } = Astro.props;
 ---
 
 <div class:list={["mh-view-switch group", className]} id="vademecum-view-toggle">
-    <!-- Slider de fondo -->
-    <div class="mh-view-slider"></div>
 
-    <!-- Opción: Productos -->
+    <!-- Opción: Preparaciones -->
     <button 
         class:list={["mh-view-option text-dynamic-content", activeView === 'products' ? 'is-active' : '']} 
         data-target="products"
         aria-pressed={activeView === 'products'}
     >
         <Icons type="grid-solid" class="w-3.5 h-3.5" />
-        <span>Productos</span>
+        <span>Preparaciones</span>
     </button>
 
     <!-- Opción: Protocolos -->

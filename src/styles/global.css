@@ -670,7 +670,7 @@ input[type="search"] {
   }
 
   .page-section {
-    @apply mh-layout-px mh-layout-py flex-1 flex flex-col max-w-[1600px] mx-auto w-full;
+    @apply mh-layout-px mh-layout-py flex-1 flex flex-col max-w-[1600px] mx-auto w-full pt-10 !important;
   }
 
   .banner-info {
@@ -710,24 +710,87 @@ input[type="search"] {
   
   /* Badges Elite (ADN Online) */
   .badge-elite {
-    @apply inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded;
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-medium tracking-normal rounded border transition-all;
+    text-transform: capitalize;
   }
-  .badge-elite--indigo { @apply bg-indigo-50 text-indigo-600; }
-  .badge-elite--violet { @apply bg-purple-50 text-purple-600; }
-  .badge-elite--bronze { @apply bg-amber-50 text-amber-700; }
-  .badge-elite--emerald { @apply bg-emerald-50 text-emerald-700; }
+  .badge-elite--violet { 
+    background-color: color-mix(in srgb, #8b5cf6 8%, transparent);
+    color: #8b5cf6;
+    border-color: #8b5cf6;
+  }
+  .badge-elite--orange { 
+    background-color: color-mix(in srgb, #f97316 8%, transparent);
+    color: #f97316;
+    border-color: #f97316;
+  }
+  .badge-elite--emerald { 
+    background-color: color-mix(in srgb, #10b981 8%, transparent);
+    color: #10b981;
+    border-color: #10b981;
+  }
   .badge-elite--brand { 
-    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
-    color: var(--primary-hover);
+    background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  .badge-elite--slate {
+    @apply text-slate-500 border-slate-200;
   }
 
+
+  /* Switcher de Vademécum Simplificado */
+  .mh-view-switch {
+    @apply flex flex-nowrap bg-slate-100 p-1 rounded-xl border border-slate-200/60 w-fit min-w-max;
+  }
+
+  .mh-view-option {
+    @apply flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 cursor-pointer text-slate-500 whitespace-nowrap;
+  }
+
+  .mh-view-option svg {
+    @apply transition-colors duration-200 fill-current;
+  }
+
+  .mh-view-option.is-active {
+    @apply bg-brand !important;
+    color: white !important;
+  }
+
+  .mh-view-option.is-active svg {
+    @apply text-white !important;
+  }
+
+  .mh-view-option:not(.is-active):hover {
+    @apply text-slate-900;
+  }
+
+  /* Checkboxes Elite Personalizados */
+  .sidebar-filter-checkbox {
+    @apply appearance-none w-4 h-4 rounded border border-slate-700 bg-white transition-all cursor-pointer relative;
+  }
+
+  .sidebar-filter-checkbox:checked {
+    @apply border-transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: 80% 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .sidebar-filter-checkbox.accent-violet-600:checked { @apply bg-[#8b5cf6]; }
+  .sidebar-filter-checkbox.accent-orange-500:checked { @apply bg-[#f97316]; }
+  .sidebar-filter-checkbox.accent-emerald-600:checked { @apply bg-[#10b981]; }
+
+  .sidebar-filter-checkbox:hover:not(:checked) {
+    @apply border-slate-400 bg-slate-50;
+  }
 
   /* --- FICHA TÉCNICA (TERCERA COLUMNA) --- */
   .medical-aside {
     @apply bg-white border-l border-slate-100 w-full lg:w-[400px] xl:w-[450px] fixed lg:relative inset-0 lg:inset-auto z-50 transform lg:transform-none translate-x-full data-[mobile-open=true]:translate-x-0 transition-transform duration-500 overflow-y-auto;
   }
   .medical-sheet {
-    @apply p-8 lg:p-10 animate-fade-in;
+    @apply p-8 lg:p-10 pt-10 !important;
   }
   .medical-title {
     @apply text-3xl font-bold text-slate-900 mb-4 tracking-tight leading-none;
@@ -736,13 +799,16 @@ input[type="search"] {
     @apply mb-10 last:mb-0;
   }
   .medical-section-title {
-    @apply flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-[0.15em] mb-6;
+    @apply flex items-center gap-2 text-xs font-bold text-slate-900 tracking-[0.15em] mb-6;
+  }
+  .medical-section-container ul {
+    @apply pl-[23px] space-y-4;
   }
   .medical-list-item {
-    @apply flex items-start gap-4 text-[14px] text-slate-700 leading-relaxed;
+    @apply flex items-start gap-3 text-[14px] text-slate-700 leading-relaxed;
   }
   .vademecum-bullet-dot {
-    @apply w-[6px] h-[6px] rounded-full bg-slate-300 mt-[7.5px] flex-shrink-0 block;
+    @apply w-[6px] h-[6px] rounded-full bg-slate-700 mt-[7.5px] flex-shrink-0 block;
   }
   .badge-elite--slate {
     @apply bg-slate-50 text-slate-500 border border-slate-100;

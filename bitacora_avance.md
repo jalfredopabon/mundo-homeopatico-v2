@@ -399,14 +399,17 @@
     3. Normalización de esquemas: Mapeo de `patologia` -> `name` en protocolos para asegurar paridad con el motor de búsqueda.
 - **Resultado:** Conexión 100% funcional y segura validada mediante pruebas de endpoint.
 
-### [29-Abr-2026] Hito: Backend Universal y Encabezados Dinámicos (Elite v2)
+### [29-Abr-2026] Hito: Backend Universal y Resiliencia "Elite" (Finalización)
 
-- **Descripción:** Unificación total del backend de Google Apps Script y automatización de la interfaz del catálogo.
+- **Descripción:** Consolidación de la infraestructura de datos y refinamiento de la experiencia de navegación inteligente.
 - **Cambios Clave:**
-    - **Gateway Universal (GAS):** Implementación de script `doGet` con discriminación de 4 acciones (`maestro`, `protocolos`, `navegacion`, `lista_precios`).
-    - **Esquemas Dinámicos:** Actualización de `api.ts` con Zod para soportar etiquetas de tabla configurables desde Google Sheets (`titulo_presentacion`, etc.).
-    - **Corrección Jerárquica:** Refactorización de `SidebarCatalogo.astro` para manejar correctamente vínculos directos desde el Nivel 2 y añadir protección contra datos `undefined`.
-    - **Visibilidad Elite:** Activación de encabezados de tabla dinámicos en `CatalogTable.astro` (ej: "20%" / "100%" para Aceites Esenciales).
-    - **Filtrado Activo:** Implementación de columna `estado` en las hojas de cálculo para control granular de visibilidad desde el backend.
-- **Resultado:** Sistema 100% dinámico y escalable. Paridad visual y técnica alcanzada.
+    - **Mecanismo Fort Knox (api.ts):** 
+        - `robustFetch`: Implementación de reintentos (3 intentos con backoff exponencial) para mitigar latencias de Google Apps Script.
+        - **Cache-Busting Dinámico:** Inyección de timestamps (`_cb`) para garantizar datos frescos en tiempo real.
+        - **Validación Flex-Type:** Refactorización de esquemas Zod para aceptar encabezados numéricos (ej. porcentajes) sin romper la carga.
+    - **Sidebar Inteligente:** 
+        - Implementación de algoritmo de detección de redundancia que oculta sub-encabezados si coinciden con el ítem único (limpieza visual en sección Exclusivos).
+        - Normalización de iconos y eliminación de duplicados mediante filtrado de filas estructurales vacías.
+    - **Telemetría de Diagnóstico:** Creación de `__DEBUG_CATALOG__` para auditoría en tiempo real desde la consola del navegador.
+- **Resultado:** Conexión robusta, error-proof y jerarquía visual optimizada 1:1 con los estándares Elite.
 

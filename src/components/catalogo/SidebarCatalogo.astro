@@ -123,7 +123,7 @@ const catalogData = getHierarchicalData(safeNavData);
   <nav class="pb-6 mt-0 space-y-6" id="catalogo-scrollspy">
     {catalogData.map((category) => (
       <div class="space-y-2">
-        <span class="block text-[12px] font-semibold text-slate-900 px-4 tracking-tight">
+        <span class="block text-[12px] font-semibold text-slate-900 pl-[23px] pr-4 tracking-tight">
           {category.category}
         </span>
         <div class="flex flex-col gap-4">
@@ -136,7 +136,7 @@ const catalogData = getHierarchicalData(safeNavData);
                    ["alimentos funcionales", "cbd", "aceites esenciales"].includes(sub.label.toLowerCase().trim()));
                 
                 return !isRedundant && (
-                  <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400 px-4 mb-1">
+                  <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400 pr-4 mb-1" style="padding-left: 23px;">
                     {sub.label}
                   </span>
                 );

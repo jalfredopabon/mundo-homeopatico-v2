@@ -300,18 +300,30 @@ const userName = "Alfredo Pabón";
 
         // Click en Tarjetas (Delegación de eventos)
         document.getElementById('meds-container')?.addEventListener('click', (e) => {
-            const card = (e.target as HTMLElement).closest('[data-medicine-id]');
-            if (card) {
-                const id = card.getAttribute('data-medicine-id');
+            const item = (e.target as HTMLElement).closest('[data-medicine-id]');
+            if (item) {
+                // Limpiar selección previa en ambos contenedores para ser seguros
+                document.querySelectorAll('.medical-card').forEach(c => c.classList.remove('is-selected'));
+                // Marcar actual
+                const card = item.querySelector('.medical-card');
+                if (card) card.classList.add('is-selected');
+
+                const id = item.getAttribute('data-medicine-id');
                 const medicine = _allMeds.find(m => m.id === id);
                 if (medicine) dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: medicine, type: 'medicine' } }));
             }
         });
 
         document.getElementById('protocols-container')?.addEventListener('click', (e) => {
-            const card = (e.target as HTMLElement).closest('[data-protocol-id]');
-            if (card) {
-                const id = card.getAttribute('data-protocol-id');
+            const item = (e.target as HTMLElement).closest('[data-protocol-id]');
+            if (item) {
+                // Limpiar selección previa
+                document.querySelectorAll('.medical-card').forEach(c => c.classList.remove('is-selected'));
+                // Marcar actual
+                const card = item.querySelector('.medical-card');
+                if (card) card.classList.add('is-selected');
+
+                const id = item.getAttribute('data-protocol-id');
                 const protocol = _allProtocols.find(p => p.id === id);
                 if (protocol) dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: protocol, type: 'protocol' } }));
             }

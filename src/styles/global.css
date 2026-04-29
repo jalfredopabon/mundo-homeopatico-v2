@@ -701,11 +701,14 @@ input[type="search"] {
 
   /* --- VADEMECUM PREMIUM (ADN CLON) --- */
   .medical-card {
-    @apply bg-white border border-slate-100 rounded-xl p-5 transition-all duration-300 shadow-sm;
+    @apply bg-white border border-slate-100 rounded-xl p-5 transition-all duration-300;
   }
   .medical-card:hover {
     border-color: color-mix(in srgb, var(--primary) 30%, transparent);
-    @apply shadow-md transform -translate-y-0.5;
+  }
+  .medical-card.is-selected {
+    @apply border-brand ring-2 ring-emerald-500/20;
+    border-color: var(--primary) !important;
   }
   
   /* Badges Elite (ADN Online) */

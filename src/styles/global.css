@@ -805,13 +805,13 @@ input[type="search"] {
     @apply flex items-center gap-2 text-xs font-bold text-slate-900 tracking-[0.15em] mb-6;
   }
   .medical-section-container ul {
-    @apply pl-2 space-y-2.5;
+    @apply pl-2 space-y-1.5;
   }
   .medical-list-item {
-    @apply flex items-start gap-2 text-[14px] text-slate-700 leading-relaxed;
+    @apply flex items-start gap-2 text-[14px] text-slate-700 leading-snug;
   }
   .vademecum-bullet-dot {
-    @apply w-[6px] h-[6px] rounded-full bg-slate-700 mt-[7.5px] flex-shrink-0 block;
+    @apply w-[6px] h-[6px] rounded-full bg-slate-700 mt-[6px] flex-shrink-0 block;
   }
   .badge-elite--slate {
     @apply bg-slate-50 text-slate-500 border border-slate-100;

@@ -99,6 +99,16 @@ const userName = "Alfredo Pabón";
     let _currentPage = 1;
     const ITEMS_PER_PAGE = 12;
 
+    // Fase 1: Selección independiente por vista
+    let _selectedMed: any | null = null;
+    let _selectedProtocol: any | null = null;
+
+    // Fase 2: Memoria de filtros por vista
+    let _filtersProducts = { search: '', terapias: [], formas: [] };
+    let _filtersProtocols = { search: '' };
+    // Fase 3: Filtro compartido
+    let _filterSistemas: string[] = [];
+
     document.addEventListener('astro:page-load', async () => {
         await initVademecum();
     });
@@ -173,31 +183,49 @@ const userName = "Alfredo Pabón";
     }
 
     function applyFiltersAndRender() {
-        const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
-        const searchTerm = sanitizeInput(searchInput?.value || '').toLowerCase();
-
-        // Obtener filtros activos (funciona aunque se inyecten dinámicamente)
-        const activeTerapias = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="terapia"]:checked')).map(i => i.getAttribute('data-filter-value'));
-        const activeSistemas = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="sistema"]:checked')).map(i => i.getAttribute('data-filter-value'));
-        const activeFormas = Array.from(document.querySelectorAll('.vademecum-filter[data-filter-group="forma"]:checked')).map(i => i.getAttribute('data-filter-value'));
-
+        const activeFilters = _currentView === 'products' ? _filtersProducts : _filtersProtocols;
+        const searchTerm = activeFilters.search.toLowerCase();
+        
         const source = _currentView === 'products' ? _allMeds : _allProtocols;
 
         const filtered = source.filter(item => {
             const matchesSearch = !searchTerm || item.name.toLowerCase().includes(searchTerm);
             
             if (_currentView === 'products') {
-                const matchesTerapia = activeTerapias.length === 0 || activeTerapias.includes(item.category);
-                const matchesForma = activeFormas.length === 0 || activeFormas.includes(item.type);
-                const matchesSistema = activeSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => activeSistemas.includes(s));
+                const f = _filtersProducts as any;
+                const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
+                const matchesForma = f.formas.length === 0 || f.formas.includes(item.type);
+                const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
                 return matchesSearch && matchesTerapia && matchesForma && matchesSistema;
             } else {
-                const matchesSistema = activeSistemas.length === 0 || activeSistemas.includes(item.system);
+                const matchesSistema = _filterSistemas.length === 0 || _filterSistemas.includes(item.system);
                 return matchesSearch && matchesSistema;
             }
         });
 
         renderList(filtered);
+    }
+
+    function syncFilterUI() {
+        const f = (_currentView === 'products' ? _filtersProducts : _filtersProtocols) as any;
+        
+        // Sincronizar Buscador
+        const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
+        if (searchInput) searchInput.value = f.search || '';
+
+        // Sincronizar Checkboxes
+        document.querySelectorAll('.vademecum-filter').forEach(checkbox => {
+            const cb = checkbox as HTMLInputElement;
+            const group = cb.getAttribute('data-filter-group') as string;
+            const value = cb.getAttribute('data-filter-value') as string;
+            
+            if (group === 'sistema') {
+                cb.checked = _filterSistemas.includes(value);
+            } else {
+                const activeList = (f as any)[group + 's'] || []; // terapias, formas
+                cb.checked = activeList.includes(value);
+            }
+        });
     }
 
     function renderList(items: any[]) {
@@ -232,6 +260,14 @@ const userName = "Alfredo Pabón";
         if (nav) nav.style.display = totalItems > 0 ? 'flex' : 'none';
 
         renderPaginationControls(totalPages);
+
+        // Fase 4: Restaurar clase is-selected visualmente si el ítem seleccionado está en esta página
+        const activeSelectionId = _currentView === 'products' ? _selectedMed?.id : _selectedProtocol?.id;
+        if (activeSelectionId) {
+            const attr = _currentView === 'products' ? 'data-medicine-id' : 'data-protocol-id';
+            const selectedCard = document.querySelector(`[${attr}="${activeSelectionId}"] .medical-card`);
+            if (selectedCard) selectedCard.classList.add('is-selected');
+        }
     }
 
     function renderPaginationControls(totalPages: number) {
@@ -261,25 +297,58 @@ const userName = "Alfredo Pabón";
     }
 
     function initUIListeners() {
-        const searchInput = document.getElementById('vademecum-search');
+        const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
         const clearBtn = document.getElementById('clear-filters-btn');
-        const sidebar = document.querySelector('aside'); // Delegación en el Sidebar
+        const sidebar = document.querySelector('aside');
 
         // Búsqueda
-        searchInput?.addEventListener('input', () => { _currentPage = 1; applyFiltersAndRender(); });
+        searchInput?.addEventListener('input', () => { 
+            const f = (_currentView === 'products' ? _filtersProducts : _filtersProtocols) as any;
+            f.search = sanitizeInput(searchInput.value);
+            _currentPage = 1; 
+            applyFiltersAndRender(); 
+        });
 
         // Delegación de eventos para filtros dinámicos
         sidebar?.addEventListener('change', (e) => {
             const target = e.target as HTMLInputElement;
             if (target.classList.contains('vademecum-filter')) {
+                const groupAttr = target.getAttribute('data-filter-group') as string;
+                const value = target.getAttribute('data-filter-value') as string;
+                
+                if (groupAttr === 'sistema') {
+                    // Fase 3: Actualizar filtro compartido
+                    if (target.checked) {
+                        if (!_filterSistemas.includes(value)) _filterSistemas.push(value);
+                    } else {
+                        _filterSistemas = _filterSistemas.filter(v => v !== value);
+                    }
+                } else {
+                    // Fase 2: Actualizar filtros por vista
+                    const f = (_currentView === 'products' ? _filtersProducts : _filtersProtocols) as any;
+                    const group = groupAttr + 's';
+                    if (target.checked) {
+                        if (!f[group].includes(value)) f[group].push(value);
+                    } else {
+                        f[group] = f[group].filter((v: string) => v !== value);
+                    }
+                }
+
                 _currentPage = 1;
                 applyFiltersAndRender();
             }
         });
 
         clearBtn?.addEventListener('click', () => {
-            (document.querySelectorAll('.vademecum-filter:checked') as NodeListOf<HTMLInputElement>).forEach(i => i.checked = false);
-            if (searchInput) (searchInput as HTMLInputElement).value = '';
+            const f = (_currentView === 'products' ? _filtersProducts : _filtersProtocols) as any;
+            f.search = '';
+            if (f.terapias) f.terapias = [];
+            if (f.formas) f.formas = [];
+            
+            // Fase 3: Limpiar sistemas también
+            _filterSistemas = [];
+
+            syncFilterUI();
             _currentPage = 1;
             applyFiltersAndRender();
         });
@@ -295,6 +364,18 @@ const userName = "Alfredo Pabón";
                 if (target !== 'both') section.classList.toggle('hidden', target !== _currentView);
             });
 
+            // Fase 1 & 4: Restaurar o limpiar la Columna 3 según la selección guardada de esta vista
+            const savedSelection = _currentView === 'products' ? _selectedMed : _selectedProtocol;
+            if (savedSelection) {
+                window.dispatchEvent(new CustomEvent('vademecum:select-item', { 
+                    detail: { item: savedSelection, type: _currentView === 'products' ? 'medicine' : 'protocol' } 
+                }));
+            } else {
+                window.dispatchEvent(new CustomEvent('vademecum:clear-sheet'));
+            }
+
+            // Fase 2: Sincronizar UI de filtros con el estado de la nueva vista
+            syncFilterUI();
             applyFiltersAndRender();
         });
 
@@ -302,30 +383,32 @@ const userName = "Alfredo Pabón";
         document.getElementById('meds-container')?.addEventListener('click', (e) => {
             const item = (e.target as HTMLElement).closest('[data-medicine-id]');
             if (item) {
-                // Limpiar selección previa en ambos contenedores para ser seguros
                 document.querySelectorAll('.medical-card').forEach(c => c.classList.remove('is-selected'));
-                // Marcar actual
                 const card = item.querySelector('.medical-card');
                 if (card) card.classList.add('is-selected');
 
                 const id = item.getAttribute('data-medicine-id');
                 const medicine = _allMeds.find(m => m.id === id);
-                if (medicine) dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: medicine, type: 'medicine' } }));
+                if (medicine) {
+                    _selectedMed = medicine; // Fase 1: guardar selección
+                    dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: medicine, type: 'medicine' } }));
+                }
             }
         });
 
         document.getElementById('protocols-container')?.addEventListener('click', (e) => {
             const item = (e.target as HTMLElement).closest('[data-protocol-id]');
             if (item) {
-                // Limpiar selección previa
                 document.querySelectorAll('.medical-card').forEach(c => c.classList.remove('is-selected'));
-                // Marcar actual
                 const card = item.querySelector('.medical-card');
                 if (card) card.classList.add('is-selected');
 
                 const id = item.getAttribute('data-protocol-id');
                 const protocol = _allProtocols.find(p => p.id === id);
-                if (protocol) dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: protocol, type: 'protocol' } }));
+                if (protocol) {
+                    _selectedProtocol = protocol; // Fase 1: guardar selección
+                    dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: protocol, type: 'protocol' } }));
+                }
             }
         });
 

@@ -63,6 +63,15 @@ import Icons from '../shared/Icons.astro';
             }
         });
 
+        // Limpiar ficha al cambiar de vista (Fase 1)
+        window.addEventListener('vademecum:clear-sheet', () => {
+            if (content && emptyState) {
+                content.classList.add('hidden');
+                content.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            }
+        });
+
         // SALTO MAESTRO: Delegación de eventos para links dentro de protocolos
         content?.addEventListener('click', (e) => {
             const jumpLink = (e.target as HTMLElement).closest('.master-jump-link');

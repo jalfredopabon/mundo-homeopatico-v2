@@ -790,7 +790,7 @@ input[type="search"] {
 
   /* --- FICHA TÉCNICA (TERCERA COLUMNA) --- */
   .medical-aside {
-    @apply bg-white border-l border-slate-100 w-full lg:w-[400px] xl:w-[450px] fixed lg:relative inset-0 lg:inset-auto z-50 transform lg:transform-none translate-x-full data-[mobile-open=true]:translate-x-0 transition-transform duration-500 overflow-y-auto;
+    @apply bg-white border-l border-slate-100 w-full lg:w-[400px] xl:w-[450px] fixed lg:relative inset-0 lg:inset-auto z-50 transform lg:transform-none translate-x-full data-[mobile-open=true]:translate-x-0 transition-transform duration-500 flex flex-col;
   }
   .medical-sheet {
     @apply p-8 lg:p-10 pt-10 !important;

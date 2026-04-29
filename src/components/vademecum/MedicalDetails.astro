@@ -29,6 +29,20 @@ import Icons from '../shared/Icons.astro';
         </p>
     </div>
 
+    <!-- BANNER DE CONTEXTO (GHOST MODE) - Estilo Catálogo Elite -->
+    <div id="vademecum-ghost-banner" class="hidden banner-info px-6 mb-4 !py-4 border-t-0 border-x-0 !bg-white">
+        <div class="banner-info-icon !bg-orange-500 !text-white !shadow-none">
+            <Icons type="info" class="w-4 h-4" />
+        </div>
+        <div class="flex-1 space-y-0.5">
+            <p class="text-[11px] font-bold text-slate-900 leading-tight">Consulta fuera de búsqueda</p>
+            <p class="text-[10px] text-slate-500 leading-tight">Este elemento no coincide con los filtros actuales.</p>
+        </div>
+        <button id="close-ghost-banner" class="banner-info-close">
+            <Icons type="close-x" class="w-4 h-4" />
+        </button>
+    </div>
+
     <!-- CONTENEDOR DE FICHA DINÁMICA -->
     <div id="vademecum-details-content" class="medical-sheet hidden overflow-y-auto h-full scrollbar-premium">
         <!-- El motor JS inyectará el contenido aquí -->
@@ -42,7 +56,21 @@ import Icons from '../shared/Icons.astro';
         const aside = document.getElementById('vademecum-aside');
         const content = document.getElementById('vademecum-details-content');
         const emptyState = document.getElementById('vademecum-empty-state');
+        const ghostBanner = document.getElementById('vademecum-ghost-banner');
+        const closeBtnGhost = document.getElementById('close-ghost-banner');
         const closeBtn = document.getElementById('close-mobile-details');
+
+        // Escuchar modo fantasma (Paso 3)
+        window.addEventListener('vademecum:ghost-mode', (e: any) => {
+            if (ghostBanner) {
+                ghostBanner.classList.toggle('hidden', !e.detail.isGhost);
+            }
+        });
+
+        // Botón cerrar banner (Paso 4)
+        closeBtnGhost?.addEventListener('click', () => {
+            if (ghostBanner) ghostBanner.classList.add('hidden');
+        });
 
         // Escuchar selección desde Vademecum.astro
         window.addEventListener('vademecum:select-item', (e: any) => {
@@ -69,6 +97,7 @@ import Icons from '../shared/Icons.astro';
                 content.classList.add('hidden');
                 content.innerHTML = '';
                 emptyState.classList.remove('hidden');
+                if (ghostBanner) ghostBanner.classList.add('hidden'); // Paso 4: Limpiar banner
             }
         });
 

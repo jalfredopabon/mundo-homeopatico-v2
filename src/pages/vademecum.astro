@@ -268,6 +268,24 @@ const userName = "Alfredo Pabón";
             const selectedCard = document.querySelector(`[${attr}="${activeSelectionId}"] .medical-card`);
             if (selectedCard) selectedCard.classList.add('is-selected');
         }
+
+        // Paso 2: Verificar si estamos en modo fantasma (seleccionado pero oculto)
+        checkGhostState();
+    }
+
+    function checkGhostState() {
+        const activeSelectionId = _currentView === 'products' ? _selectedMed?.id : _selectedProtocol?.id;
+        
+        // Si no hay nada seleccionado, no hay modo fantasma
+        if (!activeSelectionId) {
+            window.dispatchEvent(new CustomEvent('vademecum:ghost-mode', { detail: { isGhost: false } }));
+            return;
+        }
+
+        const attr = _currentView === 'products' ? 'data-medicine-id' : 'data-protocol-id';
+        const isVisible = !!document.querySelector(`[${attr}="${activeSelectionId}"]`);
+        
+        window.dispatchEvent(new CustomEvent('vademecum:ghost-mode', { detail: { isGhost: !isVisible } }));
     }
 
     function renderPaginationControls(totalPages: number) {

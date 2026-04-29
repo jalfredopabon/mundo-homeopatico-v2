@@ -99,7 +99,7 @@ body[data-font-size="lg"] {
 
 /* Variante para Sidebars (Fina y siempre visible) */
 .scrollbar-premium {
-  scrollbar-gutter: stable;
+  /* Eliminado: scrollbar-gutter para evitar espacio a la derecha */
 }
 
 .scrollbar-premium::-webkit-scrollbar {
@@ -793,6 +793,9 @@ input[type="search"] {
     @apply bg-white border-l border-slate-100 w-full lg:w-[400px] xl:w-[450px] fixed lg:relative inset-0 lg:inset-auto z-50 transform lg:transform-none translate-x-full data-[mobile-open=true]:translate-x-0 transition-transform duration-500 flex flex-col;
   }
   .medical-sheet {
+    /* Contenedor de scroll: sin padding para que la barra pegue al borde */
+  }
+  .medical-sheet-inner {
     @apply p-8 lg:p-10 pt-10 !important;
   }
   .medical-title {

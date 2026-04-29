@@ -109,7 +109,7 @@ export function createMedicineDetails(medicine: any): string {
   const posologia = formatList(medicine.posologia || 'Consultar con su especialista médico.');
 
   return `
-    <div class="animate-content-in" data-sheet-id="${medicine.id}">
+    <div class="animate-content-in medical-sheet-inner" data-sheet-id="${medicine.id}">
       <!-- Encabezado de la Ficha -->
       <div class="mb-8 relative">
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
@@ -199,7 +199,7 @@ export function createProtocolDetails(protocol: any): string {
   ].filter(s => s.content);
 
   return `
-    <div class="animate-content-in" data-sheet-id="${protocol.id}">
+    <div class="animate-content-in medical-sheet-inner" data-sheet-id="${protocol.id}">
       <div class="mb-8 relative">
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>

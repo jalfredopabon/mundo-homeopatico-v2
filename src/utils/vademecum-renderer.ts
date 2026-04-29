@@ -120,7 +120,7 @@ export function createMedicineDetails(medicine: any): string {
           Ficha técnica del producto
         </div>
         <h2 class="medical-title">${medicine.name}</h2>
-        <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+        <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">
           ${medicine.scientificName && medicine.scientificName !== medicine.name 
             ? `<span class="badge-elite badge-elite--slate px-2 py-0.5 text-[10px] font-medium tracking-normal">${medicine.scientificName}</span>` 
             : ''
@@ -209,7 +209,7 @@ export function createProtocolDetails(protocol: any): string {
           Guía de protocolo clínico
         </div>
         <h2 class="medical-title">${protocol.name}</h2>
-        <div class="flex flex-wrap gap-2.5 mb-8 pb-8 border-b border-subtle">
+        <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">
            ${renderEliteBadge(protocol.system || 'Medicina General', 'sistema')}
         </div>
       </div>

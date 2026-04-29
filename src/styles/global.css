@@ -799,16 +799,16 @@ input[type="search"] {
     @apply text-3xl font-bold text-slate-900 mb-4 tracking-tight leading-none;
   }
   .medical-section-container {
-    @apply mb-10 last:mb-0;
+    @apply mb-8 last:mb-0;
   }
   .medical-section-title {
     @apply flex items-center gap-2 text-xs font-bold text-slate-900 tracking-[0.15em] mb-6;
   }
   .medical-section-container ul {
-    @apply pl-[23px] space-y-4;
+    @apply pl-2 space-y-2.5;
   }
   .medical-list-item {
-    @apply flex items-start gap-3 text-[14px] text-slate-700 leading-relaxed;
+    @apply flex items-start gap-2 text-[14px] text-slate-700 leading-relaxed;
   }
   .vademecum-bullet-dot {
     @apply w-[6px] h-[6px] rounded-full bg-slate-700 mt-[7.5px] flex-shrink-0 block;

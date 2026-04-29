@@ -410,6 +410,7 @@ const userName = "Alfredo Pabón";
                 if (medicine) {
                     _selectedMed = medicine; // Fase 1: guardar selección
                     dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: medicine, type: 'medicine' } }));
+                    checkGhostState();
                 }
             }
         });
@@ -426,6 +427,7 @@ const userName = "Alfredo Pabón";
                 if (protocol) {
                     _selectedProtocol = protocol; // Fase 1: guardar selección
                     dispatchEvent(new CustomEvent('vademecum:select-item', { detail: { item: protocol, type: 'protocol' } }));
+                    checkGhostState();
                 }
             }
         });
@@ -444,6 +446,7 @@ const userName = "Alfredo Pabón";
                 window.dispatchEvent(new CustomEvent('vademecum:select-item', { 
                     detail: { item: medicine, type: 'medicine' } 
                 }));
+                checkGhostState();
             }
         });
     }

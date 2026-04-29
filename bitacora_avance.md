@@ -378,7 +378,19 @@
 
 ---
 
+
+## Hito 59: Estabilización de Rítmica Vertical "Elite" - Vademécum
+**Fecha:** 29 de Abril, 2026
+**Estado:** Completado ✅
+**Descripción:** Optimización milimétrica del aire visual y compactación de datos en la ficha técnica para mejorar la UX profesional.
+**Acciones:**
+- **Sincronización de Plomadas:** Unificación del padding superior de la Columna 2 y Columna 3 a **32px** (`pt-8`), eliminando una redundancia de 72px.
+- **Compactación de Viñetas:** Reducción del espaciado entre ítems de lista de 16px a **8px** (`space-y-2`).
+- **Limpieza de Átomos:** Eliminación del `py-1` en `.medical-list-item` para centralizar el control de espaciado en el contenedor padre.
+**Resultado:** Interfaz más densa, equilibrada y con mayor jerarquía visual en dispositivos de escritorio y móviles.
+
 ### [28-Abr-2026] Hallazgo Técnico: Discrepancia de Parámetros GAS
+
 - **Problema:** La conexión con Google Sheets fallaba al intentar cargar protocolos (devolvía siempre datos maestros).
 - **Causa Raíz:** El script de Google Apps Script (GAS) esperaba el parámetro `action` para discriminar hojas, mientras que el frontend enviaba `sheet`.
 - **Solución:**

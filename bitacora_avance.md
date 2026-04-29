@@ -398,3 +398,15 @@
     2. Implementación de flexibilidad en el `doGet` de GAS para aceptar ambos parámetros (`action` o `sheet`).
     3. Normalización de esquemas: Mapeo de `patologia` -> `name` en protocolos para asegurar paridad con el motor de búsqueda.
 - **Resultado:** Conexión 100% funcional y segura validada mediante pruebas de endpoint.
+
+### [29-Abr-2026] Hito: Backend Universal y Encabezados Dinámicos (Elite v2)
+
+- **Descripción:** Unificación total del backend de Google Apps Script y automatización de la interfaz del catálogo.
+- **Cambios Clave:**
+    - **Gateway Universal (GAS):** Implementación de script `doGet` con discriminación de 4 acciones (`maestro`, `protocolos`, `navegacion`, `lista_precios`).
+    - **Esquemas Dinámicos:** Actualización de `api.ts` con Zod para soportar etiquetas de tabla configurables desde Google Sheets (`titulo_presentacion`, etc.).
+    - **Corrección Jerárquica:** Refactorización de `SidebarCatalogo.astro` para manejar correctamente vínculos directos desde el Nivel 2 y añadir protección contra datos `undefined`.
+    - **Visibilidad Elite:** Activación de encabezados de tabla dinámicos en `CatalogTable.astro` (ej: "20%" / "100%" para Aceites Esenciales).
+    - **Filtrado Activo:** Implementación de columna `estado` en las hojas de cálculo para control granular de visibilidad desde el backend.
+- **Resultado:** Sistema 100% dinámico y escalable. Paridad visual y técnica alcanzada.
+

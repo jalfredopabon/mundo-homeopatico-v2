@@ -6,66 +6,104 @@
  * Plomadas: borde=16px, icono=~22px, texto=48px.
  */
 import Icons from "../shared/Icons.astro";
+import type { CatalogNavigation } from "../../data/api";
 
-const catalogData = [
-  {
-    category: "De nuestra farmacia",
-    subcategories: [
-      {
-        label: "Según prescripción",
-        items: [
-          {
-            type: "accordion",
-            label: "Homeopáticos",
-            icon: "test-tube",
-            children: [
-              { label: "Oficinales", href: "#oficinales" },
-              { label: "Multipotencias", href: "#multipotencias" },
-              { label: "Magistrales", href: "#magistrales" }
-            ]
-          },
-          { type: "link", label: "Esencias florales", href: "#esencias-florales", icon: "flower" },
-          { type: "link", label: "Oligoelementos", href: "#oligoelementos", icon: "molecules" }
-        ]
-      },
-      {
-        label: "Línea MH",
-        items: [
-          {
-            type: "accordion",
-            label: "Homeopatía",
-            icon: "test-tube",
-            children: [
-              { label: "Homeopáticos esenciales", href: "#homeopaticos-esenciales" },
-              { label: "Homeopáticos especiales", href: "#homeopaticos-especiales" },
-              { label: "Cuidado capilar", href: "#cuidado-capilar" },
-              { label: "Cápsulas", href: "#capsulas" },
-              { label: "Cremas", href: "#cremas" },
-              { label: "Geles", href: "#geles" },
-              { label: "Ungüentos", href: "#unguentos" },
-              { label: "Elíxires", href: "#elixires" }
-            ]
-          },
-          { type: "link", label: "Esencias florales", href: "#esencias-florales-lmh", icon: "flower" },
-          { type: "link", label: "Oligoelementos K7", href: "#oligoelementos-k7", icon: "molecules" }
-        ]
+interface Props {
+  navigationData?: CatalogNavigation[];
+}
+
+const { navigationData = [] } = Astro.props;
+
+// Validación defensiva: Si navigationData no es un array (por error de API), forzamos array vacío
+const safeNavData = Array.isArray(navigationData) ? navigationData : [];
+
+const getIcon = (label: string) => {
+  const lower = (label || "").toLowerCase();
+  if (lower.includes("floral")) return "flower";
+  if (lower.includes("oligo")) return "molecules";
+  if (lower.includes("aceite")) return "droplet";
+  if (lower.includes("alimento") || lower.includes("cbd")) return "leaf";
+  if (lower.includes("capilar")) return "sparkles";
+  if (lower.includes("crema") || lower.includes("gel") || lower.includes("ungüento")) return "droplet";
+  return "test-tube";
+};
+
+/**
+ * Agrupador de Niveles para construir la jerarquía visual de 4 niveles
+ */
+const getHierarchicalData = (navs: CatalogNavigation[]) => {
+  const root: any[] = [];
+
+  // 1. Solo procesamos filas que realmente disparan una tabla de productos
+  const dataRows = navs.filter(n => n.tabla_id && n.tabla_id.trim() !== "");
+
+  dataRows.forEach(nav => {
+    if (!nav.nivel_1) return;
+
+    // A. Nivel 1 (Categoría Global: ej. "De nuestra farmacia")
+    let cat = root.find(c => c.category === nav.nivel_1);
+    if (!cat) {
+      cat = { category: nav.nivel_1, subcategories: [] };
+      root.push(cat);
+    }
+
+    // B. Nivel 2 (Subcategoría/Grupo: ej. "Según prescripción", "Línea MH")
+    if (!nav.nivel_2) return;
+    let sub = cat.subcategories.find(s => s.label === nav.nivel_2);
+    if (!sub) {
+      sub = { label: nav.nivel_2, items: [] };
+      cat.subcategories.push(sub);
+    }
+
+    // C. Manejo de Niveles 3 y 4
+    if (nav.nivel_4) {
+      // Nivel 3 actúa como ACORDEÓN (Agrupador intermedio)
+      let accordion = sub.items.find(i => i.label === nav.nivel_3 && i.type === "accordion");
+      if (!accordion) {
+        accordion = { 
+          type: "accordion", 
+          label: nav.nivel_3, 
+          icon: getIcon(nav.nivel_3 || ""), 
+          children: [] 
+        };
+        sub.items.push(accordion);
       }
-    ]
-  },
-  {
-    category: "Productos exclusivos",
-    subcategories: [
-      {
-        label: "Complementarios",
-        items: [
-          { type: "link", label: "Alimentos funcionales", href: "#alimentos-funcionales", icon: "leaf" },
-          { type: "link", label: "CBD", href: "#cbd", icon: "cannabis" },
-          { type: "link", label: "Aceites esenciales", href: "#aceites-esenciales", icon: "droplet" }
-        ]
+      
+      // Evitamos duplicados en los hijos del acordeón
+      if (!accordion.children.find(c => c.label === nav.titulo_mostrar)) {
+        accordion.children.push({ 
+            label: nav.titulo_mostrar || nav.nivel_4, 
+            href: `#${nav.tabla_id}` 
+        });
       }
-    ]
-  }
-];
+    } else if (nav.nivel_3) {
+      // Nivel 3 actúa como LINK directo (sin hijos)
+      // Solo lo agregamos si no existe ya un acordeón con el mismo nombre
+      if (!sub.items.find(i => i.label === nav.nivel_3)) {
+          sub.items.push({ 
+            type: "link", 
+            label: nav.titulo_mostrar || nav.nivel_3, 
+            href: `#${nav.tabla_id}`, 
+            icon: getIcon(nav.nivel_3)
+          });
+      }
+    } else if (nav.tabla_id) {
+      // Caso Nivel 2 directo: El ítem cuelga directamente de Nivel 2
+      // Si el título es igual al grupo (nivel_2), lo agregamos como link pero 
+      // visualmente se sentirá como el ítem único del grupo.
+      sub.items.push({
+        type: "link",
+        label: nav.titulo_mostrar || nav.nivel_2,
+        href: `#${nav.tabla_id}`,
+        icon: getIcon(nav.titulo_mostrar || nav.nivel_2)
+      });
+    }
+  });
+
+  return root;
+};
+
+const catalogData = getHierarchicalData(safeNavData);
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
@@ -91,9 +129,18 @@ const catalogData = [
         <div class="flex flex-col gap-4">
           {category.subcategories.map((sub) => (
             <div class="flex flex-col gap-0">
-              <span class="block text-[12px] font-medium text-slate-600 px-4">
-                {sub.label}
-              </span>
+              {/* Lógica Inteligente: Ocultamos el título del grupo si coincide con el ítem o si es un grupo de un solo ítem de nivel superior */}
+              {(() => {
+                const isRedundant = sub.items.length === 1 && 
+                  (sub.items[0].label.toLowerCase().trim() === sub.label.toLowerCase().trim() || 
+                   ["alimentos funcionales", "cbd", "aceites esenciales"].includes(sub.label.toLowerCase().trim()));
+                
+                return !isRedundant && (
+                  <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400 px-4 mb-1">
+                    {sub.label}
+                  </span>
+                );
+              })()}
               <div class="flex flex-col gap-0.5">
                 {sub.items.map((item) => (
                   <div class="flex flex-col">

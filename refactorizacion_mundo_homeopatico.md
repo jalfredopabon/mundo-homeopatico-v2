@@ -27,6 +27,19 @@
 - **Data:** Integrada con Google Sheets vía `api.ts`.
 - **Rendimiento:** Carga asíncrona validada sin bloqueos de DOM.
 
+## [2026-04-29] Hito: Backend Universal y Catálogo Dinámico Elite
+
+### Hitos Técnicos Logrados
+1.  **Gateway Universal (GAS):** Consolidación del backend en una única función `doGet` para servir múltiples hojas (Maestro, Protocolos, Navegación, Precios).
+2.  **Esquemas Flexibles:** Implementación de validación Zod para encabezados dinámicos, permitiendo configurar columnas de tabla desde Google Sheets.
+3.  **Navegación de Nivel 2:** Refactorización de `SidebarCatalogo.astro` para soportar vínculos directos a subcategorías y blindaje contra datos nulos.
+4.  **Visibilidad Granular:** Control de publicación de productos desde el backend mediante una columna de "estado".
+
+### Estado Actual
+- **Infraestructura:** 100% Dinámica.
+- **Mantenimiento:** Bajo (todo se gestiona desde Sheets).
+- **Paridad Visual:** 1:1 con diseño Elite.
+
 ## Próximos Pasos
 1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.
 2.  **Dashboard de Usuario:** Sincronización de perfiles médicos con el nuevo diseño.

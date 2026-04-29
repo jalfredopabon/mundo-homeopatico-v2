@@ -20,9 +20,22 @@ interface Props {
     description?: string;
     breadcrumb: string[];
     products: Product[];
+    presentacionLabel?: string;
+    farmaciaLabel?: string;
+    publicoLabel?: string;
 }
 
-const { id, title, subtitle, description, breadcrumb, products } = Astro.props;
+const { 
+    id, 
+    title, 
+    subtitle, 
+    description, 
+    breadcrumb, 
+    products,
+    presentacionLabel = "Presentación",
+    farmaciaLabel = "Precio farmacia",
+    publicoLabel = "Precio público"
+} = Astro.props;
 ---
 
 <section id={id} class="scroll-mt-0">
@@ -51,9 +64,9 @@ const { id, title, subtitle, description, breadcrumb, products } = Astro.props;
     <div class="catalog-table-shell">
         <!-- Encabezado de Tabla (Solo Desktop) -->
         <div class="catalog-table-header">
-            <div class="invisible">Producto</div>
-            <div class="text-right">Precio farmacia</div>
-            <div class="text-right">Precio público</div>
+            <div>{presentacionLabel}</div>
+            <div class="text-right">{farmaciaLabel}</div>
+            <div class="text-right">{publicoLabel}</div>
             <div class="flex justify-center">
                 <Icons type="cart" class="w-4 h-4 text-slate-700" strokeWidth={2.3} />
             </div>

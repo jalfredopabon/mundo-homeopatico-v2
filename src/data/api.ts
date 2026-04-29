@@ -54,6 +54,37 @@ export const VademecumProtocoloSchema = z.object({
 export type VademecumMaestro = z.infer<typeof VademecumMaestroSchema>;
 export type VademecumProtocolo = z.infer<typeof VademecumProtocoloSchema>;
 
+// --- ESQUEMAS PARA CATÁLOGO (HIERARCHY & PRICES) ---
+
+// Esquema para la estructura de navegación (navegacion)
+export const CatalogNavigationSchema = z.object({
+    nivel_1: z.string(),
+    nivel_2: z.string().optional().default(''),
+    nivel_3: z.string().optional().default(''),
+    nivel_4: z.string().optional().default(''),
+    titulo_mostrar: z.string(),
+    descripcion: z.string().optional().default(''),
+    titulo_presentacion: z.union([z.string(), z.number()]).optional().default('Presentación').transform(val => String(val)),
+    titulo_precio_farmacia: z.union([z.string(), z.number()]).optional().default('Precio farmacia').transform(val => String(val)),
+    titulo_precio_publico: z.union([z.string(), z.number()]).optional().default('Precio público').transform(val => String(val)),
+    tabla_id: z.string().optional().default(''),
+});
+
+// Esquema para los productos del catálogo (lista_precios)
+export const CatalogProductSchema = z.object({
+    tabla_id: z.string(),
+    producto: z.string(),
+    requiere_elaboracion: z.string().optional().default(''),
+    descripcion_producto: z.string().optional().default(''),
+    badges: z.string().optional().default(''),
+    precio_farmacia: z.union([z.string(), z.number()]).transform(val => String(val)),
+    precio_publico: z.union([z.string(), z.number()]).transform(val => String(val)),
+    estado: z.string().optional().default('activo'),
+});
+
+export type CatalogNavigation = z.infer<typeof CatalogNavigationSchema>;
+export type CatalogProduct = z.infer<typeof CatalogProductSchema>;
+
 /**
  * Helper para manejo de caché SWR (Stale-While-Revalidate)
  * Proporciona carga instantánea desde localStorage y refresca en background.
@@ -139,12 +170,18 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
 
 /**
  * Normaliza las llaves de un objeto para que sean resilientes a mayúsculas/minúsculas y espacios.
+ * Incluye mapeo de alias históricos detectados en auditoría.
  */
 function normalizeKeys(obj: any): any {
     if (Array.isArray(obj)) return obj.map(normalizeKeys);
     if (obj !== null && typeof obj === 'object') {
         return Object.keys(obj).reduce((acc, key) => {
-            const normalizedKey = key.toLowerCase().trim().replace(/\s+/g, '_');
+            let normalizedKey = key.toLowerCase().trim().replace(/\s+/g, '_');
+            
+            // 🛡️ Mapeo de Alias de Auditoría (Proyecto Anterior)
+            if (normalizedKey === 'tablas_id') normalizedKey = 'tabla_id';
+            if (normalizedKey === 'productos') normalizedKey = 'producto';
+            
             acc[normalizedKey] = obj[key];
             return acc;
         }, {} as any);
@@ -153,38 +190,36 @@ function normalizeKeys(obj: any): any {
 }
 
 /**
+ * Fetch con Resiliencia Elite (Retries + Cache Busting)
+ */
+async function robustFetch(url: string, retries = 3): Promise<Response> {
+    const separator = url.includes('?') ? '&' : '?';
+    const finalUrl = `${url}${separator}_cb=${Date.now()}`;
+    
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(finalUrl);
+            if (response.ok) return response;
+            throw new Error("HTTP " + response.status);
+        } catch (err: any) {
+            const errorMsg = err?.message || String(err);
+            console.warn("⚠️ Intento " + (i + 1) + " falló: " + errorMsg);
+            
+            if (i === retries - 1) throw err;
+            // Espera exponencial: 1s, 2s, 3s...
+            await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+        }
+    }
+    throw new Error("Fetch failed after " + retries + " retries");
+}
+
+/**
  * Obtiene el Vademécum Maestro desde Google Sheets con soporte SWR
  */
 export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], metadata: FilterMetadata }> {
     return fetchWithSWR('vd_maestro', async () => {
-        if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
-            console.warn('Vademecum: Usando Mock Data para Maestro');
-            const mockData: VademecumMaestro[] = [
-                {
-                    id_producto: 'mock_001',
-                    linea: 'Productos mh',
-                    nombre: 'Abies D4 MH',
-                    principios_activos: 'Abies nigra D6; Anacardium D8',
-                    indicaciones: 'Gastritis; acidez; flatulencia^Dispepsias gástricas',
-                    posologia: '10 gotas 3 veces al día',
-                    presentaciones: 'Gotas x 30 ml; Tabletas x 90',
-                    estado: 'activo'
-                }
-            ];
-            
-            const medicines = mockData.map(mapMaestroToMedicine);
-            const metadata: FilterMetadata = {
-                terapias: [...new Set(medicines.map(m => m.linea))].sort(),
-                formas: [...new Set(medicines.map(m => m.type))].sort()
-            };
-
-            return { medicines, metadata };
-        }
-
         try {
-            const response = await fetch(`${GAS_WEBAPP_URL}?action=maestro&key=${SECRET_KEY}`);
-            if (!response.ok) throw new Error('Error al conectar con la API de Vademécum');
-            
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=maestro&key=${SECRET_KEY}`);
             const rawData = await response.json();
             const cleanData = normalizeKeys(rawData);
             const data = z.array(VademecumMaestroSchema.passthrough()).parse(cleanData);
@@ -193,7 +228,6 @@ export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], me
                 .filter(item => (item.estado || '').toLowerCase() === 'activo')
                 .map(mapMaestroToMedicine);
 
-            // Extracción dinámica de metadatos para filtros
             const metadata: FilterMetadata = {
                 terapias: [...new Set(medicines.map(m => m.linea))].sort(),
                 formas: [...new Set(medicines.map(m => m.type))].sort()
@@ -202,7 +236,6 @@ export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], me
             return { medicines, metadata };
         } catch (error) {
             console.error('API Error (Maestro):', error);
-            if (error instanceof z.ZodError) console.warn('Zod Mapping Errors:', error.errors);
             return { medicines: [], metadata: { terapias: [], formas: [] } }; 
         }
     });
@@ -213,26 +246,8 @@ export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], me
  */
 export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
     return fetchWithSWR('vd_protocolos', async () => {
-        if (GAS_WEBAPP_URL.includes('XXXXXXXXX')) {
-            return [
-                {
-                    id_protocolo: 'prot_mock_001',
-                    patologia: 'Gastritis Aguda',
-                    principales: 'Abies D4 MH',
-                    sistema: 'Digestivo',
-                    complementarios: 'Nux vomica',
-                    oligoelementos: 'Zn-Ni-Co',
-                    topicos: 'Ninguno',
-                    estado: 'activo',
-                    sistema_corporal: 'Sistema Digestivo'
-                }
-            ];
-        }
-
         try {
-            const response = await fetch(`${GAS_WEBAPP_URL}?action=protocolos&key=${SECRET_KEY}`);
-            if (!response.ok) throw new Error('Error al conectar con la API de Protocolos');
-            
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=protocolos&key=${SECRET_KEY}`);
             const rawData = await response.json();
             const cleanData = normalizeKeys(rawData);
             const data = z.array(VademecumProtocoloSchema.passthrough()).parse(cleanData);
@@ -251,8 +266,56 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
                 }));
         } catch (error) {
             console.error('API Error (Protocolos):', error);
-            if (error instanceof z.ZodError) console.warn('Zod Mapping Errors:', error.errors);
             return [];
         }
     });
 }
+
+
+/**
+ * Obtiene la estructura de navegación del catálogo (navegacion)
+ */
+export async function getCatalogNavigation(): Promise<CatalogNavigation[]> {
+    return fetchWithSWR('cat_nav', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=navegacion&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            
+            if (!Array.isArray(cleanData)) {
+                console.error("API Error: La respuesta de navegación no es un array", cleanData);
+                return [];
+            }
+
+            return z.array(CatalogNavigationSchema.passthrough()).parse(cleanData);
+        } catch (error: any) {
+            console.warn('API Error (Navegacion):', error?.message || String(error));
+            return [];
+        }
+    });
+}
+
+/**
+ * Obtiene la lista completa de precios/productos del catálogo (lista_precios)
+ */
+export async function getCatalogProducts(): Promise<CatalogProduct[]> {
+    return fetchWithSWR('cat_products', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=lista_precios&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+
+            if (!Array.isArray(cleanData)) {
+                console.error("API Error: La respuesta de productos no es un array", cleanData);
+                return [];
+            }
+
+            return z.array(CatalogProductSchema.passthrough()).parse(cleanData);
+        } catch (error: any) {
+            console.warn('API Error (Lista de Precios):', error?.message || String(error));
+            return [];
+        }
+    });
+}
+
+

@@ -9,6 +9,7 @@ interface Badge {
 }
 
 interface Props {
+  id?: string;
   name: string;
   description?: string;
   requiresPreparation?: boolean;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const { 
+  id,
   name,
   description,
   requiresPreparation,
@@ -37,8 +39,9 @@ const visibleBadges = (badges && badges.length > 0) ? badges.slice(0, maxBadges)
 const hiddenBadges = badges && badges.length > maxBadges ? badges.slice(maxBadges) : [];
 const extraCount = hiddenBadges.length;
 
-// ID Único para evitar colisiones quirúrgicas entre filas
-const extraId = `badges-${Math.random().toString(36).substring(2, 9)}`;
+// ID Único basado en el producto para estabilidad del DOM
+const safeId = id ? id.replace(/[^a-z0-9]/gi, '-') : name.toLowerCase().replace(/[^a-z0-9]/gi, '-');
+const extraId = `badges-${safeId}`;
 ---
 
 <div class="catalog-row group/row">
@@ -101,8 +104,9 @@ const extraId = `badges-${Math.random().toString(36).substring(2, 9)}`;
                   <button 
                     id={`${extraId}-btn`}
                     data-expanded="false"
-                    class="badge-elite badge-elite--emerald px-2 py-0.5 text-[9px] font-bold flex items-center gap-1 cursor-pointer hover:bg-emerald-100 transition-all group/extra ml-0.5"
-                    onclick={`const container = document.getElementById('${extraId}'); const label = this.querySelector('.js-label'); const isExpanded = this.getAttribute('data-expanded') === 'true'; if (isExpanded) { container.style.display = 'none'; label.textContent = '+${extraCount} más'; this.setAttribute('data-expanded', 'false'); } else { container.style.display = 'contents'; label.textContent = 'Ver menos'; this.setAttribute('data-expanded', 'true'); }`}
+                    data-extra-toggle={extraId}
+                    data-extra-count={extraCount}
+                    class="badge-elite badge-elite--emerald px-2 py-0.5 text-[9px] font-bold flex items-center gap-1 cursor-pointer hover:bg-emerald-100 transition-all group/extra ml-0.5 js-badge-toggle"
                     aria-label="Alternar visualización de badges"
                   >
                     <span class="js-label">+{extraCount} más</span>
@@ -153,3 +157,40 @@ const extraId = `badges-${Math.random().toString(36).substring(2, 9)}`;
         </div>
     </div>
 </div>
+
+<script>
+    /**
+     * Lógica de expansión de badges (Revelación Progresiva)
+     * Implementada vía delegación de eventos para cumplir con CSP "Fort Knox".
+     */
+    const initBadgeToggles = () => {
+        const toggleBadges = (e: Event) => {
+            const btn = (e.target as HTMLElement).closest('.js-badge-toggle') as HTMLButtonElement;
+            if (!btn) return;
+
+            const targetId = btn.getAttribute('data-extra-toggle');
+            const extraCount = btn.getAttribute('data-extra-count');
+            const container = document.getElementById(targetId || '');
+            const label = btn.querySelector('.js-label');
+            const isExpanded = btn.getAttribute('data-expanded') === 'true';
+
+            if (!container || !label) return;
+
+            if (isExpanded) {
+                container.style.display = 'none';
+                label.textContent = `+${extraCount} más`;
+                btn.setAttribute('data-expanded', 'false');
+            } else {
+                container.style.display = 'contents';
+                label.textContent = 'Ver menos';
+                btn.setAttribute('data-expanded', 'true');
+            }
+        };
+
+        // Escuchador global en el documento para manejar todas las filas dinámicas
+        document.removeEventListener('click', toggleBadges);
+        document.addEventListener('click', toggleBadges);
+    };
+
+    document.addEventListener('astro:page-load', initBadgeToggles);
+</script>

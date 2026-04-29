@@ -5,8 +5,8 @@ import SidebarCatalogo from '../components/catalogo/SidebarCatalogo.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
 import Footer from '../components/shared/Footer.astro';
 import Icons from '../components/shared/Icons.astro';
-import ProductRowElite from '../components/catalogo/ProductRowElite.astro';
 import CatalogTable from '../components/catalogo/CatalogTable.astro';
+import { getCatalogNavigation, getCatalogProducts } from '../data/api';
 
 /**
  * Página Principal (Catálogo): 
@@ -14,242 +14,58 @@ import CatalogTable from '../components/catalogo/CatalogTable.astro';
  * Se aplica el estándar "Sage Green Real" (#E7EDE3).
  */
 
-const catalogSections = [
-    {
-        id: "oficinales",
-        title: "Oficinales",
-        description: "Un medicamento con una dilución · Gotas x 30ml – Glóbulos x 30g",
-        breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
-        products: [
-            { 
-              name: "Arnica montana D4", 
-              description: "Traumatismos, contusiones y dolores musculares post-esfuerzo.",
-              farmaciaPrice: "$18.500", 
-              publicoPrice: "$32.400", 
-              badges: [{ label: "Gotas", variant: "outline" }] 
-            },
-            { 
-              name: "Calendula officinalis D6", 
-              requiresPreparation: true,
-              farmaciaPrice: "$16.200", 
-              publicoPrice: "$28.900", 
-              badges: [{ label: "Gotas", variant: "outline" }] 
-            },
-            { 
-              name: "Bryonia alba D12", 
-              description: "Inflamación de mucosas y dolores punzantes que empeoran con el movimiento.",
-              farmaciaPrice: "$21.000", 
-              publicoPrice: "$36.500", 
-              badges: [{ label: "Tabletas", variant: "outline" }] 
-            },
-            { name: "Nux vomica D6", farmaciaPrice: "$17.800", publicoPrice: "$31.200", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "multipotencias",
-        title: "Multipotencias",
-        breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
-        products: [
-            { name: "Lachesis mutus (Multipotencia)", requiresPreparation: true, farmaciaPrice: "$45.000", publicoPrice: "$78.000", badges: [{ label: "Glóbulos", variant: "outline" }] },
-            { name: "Lycopodium clavatum (Multipotencia)", farmaciaPrice: "$48.500", publicoPrice: "$84.000", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Natrum muriaticum (Multipotencia)", requiresPreparation: true, farmaciaPrice: "$42.900", publicoPrice: "$75.200", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "magistrales",
-        title: "Magistrales",
-        description: "Varios medicamentos con sus diluciones · Gotas x 30ml – Glóbulos x 30g",
-        breadcrumb: ["De nuestra farmacia", "Según prescripción", "Homeopáticos"],
-        products: [
-            { 
-              name: "Fórmula Magistral Digestiva MH", 
-              description: "Tratamiento coadyuvante para gastritis crónica y reflujo gastroesofágico.",
-              requiresPreparation: true,
-              farmaciaPrice: "$35.000", 
-              publicoPrice: "$62.000", 
-              badges: [{ label: "Gotas", variant: "outline" }] 
-            },
-            { 
-              name: "Fórmula Magistral Sedante MH", 
-              description: "Control de ansiedad, trastornos menores del sueño e irritabilidad.",
-              requiresPreparation: true,
-              farmaciaPrice: "$38.000", 
-              publicoPrice: "$65.000", 
-              badges: [{ label: "Spray", variant: "outline" }] 
-            },
-            { name: "Fórmula Magistral Respiratoria", farmaciaPrice: "$33.500", publicoPrice: "$59.000", badges: [{ label: "Jarabe", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "esencias-florales",
-        title: "Esencias florales",
-        description: "Individuales o combinadas a partir de los sistemas Bach, Australiano, Nueva generación y Orquídeas del Amazonas.",
-        breadcrumb: ["De nuestra farmacia", "Según prescripción"],
-        products: [
-            { name: "Rescue Remedy (Auxilio)", description: "Combinación de urgencia para situaciones de crisis emocional o shock físico.", farmaciaPrice: "$24.500", publicoPrice: "$42.000", badges: [{ label: "Gotas / Spray", variant: "outline" }] },
-            { name: "White Chestnut (Pensamientos)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Star of Bethlehem (Consuelo)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Walnut (Protección)", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "oligoelementos",
-        title: "Oligoelementos",
-        subtitle: "Elaborados a la D7",
-        breadcrumb: ["De nuestra farmacia", "Según prescripción"],
-        products: [
-            { name: "Oligoelementos individuales", farmaciaPrice: "$19.500", publicoPrice: "$36.000", badges: [{ label: "Gotas / Spray", variant: "outline" }, { label: "Glóbulos x 30g", variant: "outline" }] },
-            { name: "Oligoelementos combinados (hasta 6 componentes)", requiresPreparation: true, farmaciaPrice: "$25.500", publicoPrice: "$44.000", badges: [{ label: "Gotas / Spray", variant: "outline" }, { label: "Glóbulos x 30g", variant: "outline" }] },
-            { name: "Kit Oligoelementos (3 unidades)", farmaciaPrice: "$55.000", publicoPrice: "$92.000", badges: [{ label: "Oferta", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "homeopaticos-esenciales",
-        title: "Esenciales",
-        description: "Todos los medicamentos disponibles en gotas se pueden elaborar en las otras formas farmacéuticas de este listado",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { 
-              name: "Complex Inmuno MH", 
-              description: "Fortalecimiento preventivo de las defensas naturales del organismo.",
-              farmaciaPrice: "$28.500", 
-              publicoPrice: "$49.500", 
-              badges: [
-                { label: "Equinácea" }, { label: "Propóleo" }, { label: "Vitamina C" }, 
-                { label: "Zinc" }, { label: "Saúco" }, { label: "Ajo" }, 
-                { label: "Astrágalo" }, { label: "Jengibre" }, { label: "Cúrcuma" }, 
-                { label: "Jalea Real" }, { label: "Ganoderma" }, { label: "Shiitake" }, 
-                { label: "Reishi" }, { label: "Ginseng" }, { label: "Aloe Vera" }, 
-                { label: "Uña de Gato" }, { label: "Artemisa" }, { label: "Caléndula" }, 
-                { label: "Menta" }, { label: "Eucalipto" }, { label: "Limón" }, { label: "Miel" }
-              ]
-            },
-            { name: "Complex Osteo MH", farmaciaPrice: "$31.200", publicoPrice: "$54.000", badges: [{ label: "Tabletas", variant: "outline" }] },
-            { name: "Complex Cardio MH", farmaciaPrice: "$29.900", publicoPrice: "$52.000", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "homeopaticos-especiales",
-        title: "Homeopáticos especiales",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Detox Lymphático Especial", farmaciaPrice: "$42.000", publicoPrice: "$72.000", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Neuro-Regenerador K", farmaciaPrice: "$44.500", publicoPrice: "$76.500", badges: [{ label: "Inyectable Oral", variant: "outline" }] },
-            { name: "Filtro Hepático Plus", farmaciaPrice: "$39.800", publicoPrice: "$68.900", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "cuidado-capilar",
-        title: "Cuidado capilar",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Champú de Ortiga y Romero", farmaciaPrice: "$22.000", publicoPrice: "$38.000", badges: [{ label: "250ml", variant: "outline" }] },
-            { name: "Loción Capilar Tónica", farmaciaPrice: "$25.400", publicoPrice: "$44.200", badges: [{ label: "Spray", variant: "outline" }] },
-            { name: "Acondicionador Reconstituyente", farmaciaPrice: "$21.500", publicoPrice: "$36.900", badges: [{ label: "250ml", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "capsulas",
-        title: "Cápsulas",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Cápsulas de Cúrcuma Plus", farmaciaPrice: "$38.500", publicoPrice: "$66.000", badges: [{ label: "x 60 cáps.", variant: "outline" }] },
-            { name: "Cápsulas de Magnesio Citrato", farmaciaPrice: "$34.200", publicoPrice: "$59.100", badges: [{ label: "x 90 cáps.", variant: "outline" }] },
-            { name: "Cápsulas Veganas Omega-3", farmaciaPrice: "$41.900", publicoPrice: "$72.500", badges: [{ label: "Alta concentración", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "cremas",
-        title: "Cremas",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Crema de Caléndula y Avena", farmaciaPrice: "$15.800", publicoPrice: "$27.500", badges: [{ label: "60g", variant: "outline" }] },
-            { name: "Crema de Arnica Sport", farmaciaPrice: "$18.200", publicoPrice: "$31.600", badges: [{ label: "Potenciada", variant: "outline" }] },
-            { name: "Crema Anti-manchas Natural", farmaciaPrice: "$22.400", publicoPrice: "$38.900", badges: [{ label: "Uso nocturno", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "geles",
-        title: "Geles",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Gel de Alivio Muscular Criogénico", farmaciaPrice: "$19.500", publicoPrice: "$33.800", badges: [{ label: "Efecto Frío", variant: "outline" }] },
-            { name: "Gel de Aloe Vera Puro 99%", farmaciaPrice: "$14.200", publicoPrice: "$24.900", badges: [{ label: "Hidratante", variant: "outline" }] },
-            { name: "Gel Sanador de Venas (Castaño)", farmaciaPrice: "$25.600", publicoPrice: "$44.500", badges: [{ label: "Piernas Cansadas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "unguentos",
-        title: "Ungüentos",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Ungüento Cicatrizante Forte", farmaciaPrice: "$16.900", publicoPrice: "$29.400", badges: [{ label: "Antibacterial", variant: "outline" }] },
-            { name: "Ungüento de Propóleo y Miel", farmaciaPrice: "$14.500", publicoPrice: "$25.200", badges: [{ label: "Piel agrietada", variant: "outline" }] },
-            { name: "Ungüento Pediátrico Pañalera", farmaciaPrice: "$12.800", publicoPrice: "$22.100", badges: [{ label: "Sin químicos", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "elixires",
-        title: "Elíxires",
-        breadcrumb: ["De nuestra farmacia", "Línea MH", "Homeopatía"],
-        products: [
-            { name: "Elíxir de Juventud MH (Revital)", farmaciaPrice: "$52.000", publicoPrice: "$89.500", badges: [{ label: "Fórmula Elite", variant: "outline" }] },
-            { name: "Elíxir de Energía Concentrada", farmaciaPrice: "$48.500", publicoPrice: "$83.200", badges: [{ label: "Guaraná / Ginseng", variant: "outline" }] },
-            { name: "Elíxir de Inmunidad Suprema", farmaciaPrice: "$49.900", publicoPrice: "$86.000", badges: [{ label: "Equinácea / Ajo", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "esencias-florales-lmh",
-        title: "Esencias florales",
-        breadcrumb: ["De nuestra farmacia", "Línea MH"],
-        products: [
-            { name: "Floral Concentrado Paz Interior", farmaciaPrice: "$21.500", publicoPrice: "$37.400", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Floral Concentrado Concentración", farmaciaPrice: "$21.500", publicoPrice: "$37.400", badges: [{ label: "Gotas", variant: "outline" }] },
-            { name: "Floral Concentrado Vitalidad", farmaciaPrice: "$21.500", publicoPrice: "$37.400", badges: [{ label: "Gotas", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "oligoelementos-k7",
-        title: "Oligoelementos K7",
-        breadcrumb: ["De nuestra farmacia", "Línea MH"],
-        products: [
-            { name: "K7 Cobre - Oro - Plata", farmaciaPrice: "$32.400", publicoPrice: "$56.200", badges: [{ label: "Inmuno-regulador", variant: "outline" }] },
-            { name: "K7 Manganeso - Cobalto", farmaciaPrice: "$28.600", publicoPrice: "$49.800", badges: [{ label: "Articular", variant: "outline" }] },
-            { name: "K7 Zinc - Níquel - Cobalto", farmaciaPrice: "$29.200", publicoPrice: "$51.000", badges: [{ label: "Endocrino", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "alimentos-funcionales",
-        title: "Alimentos funcionales",
-        breadcrumb: ["Productos exclusivos", "Complementarios"],
-        products: [
-            { name: "Proteína de Arveja Orgánica", farmaciaPrice: "$75.000", publicoPrice: "$128.000", badges: [{ label: "1kg", variant: "outline" }] },
-            { name: "Miel de Abejas con Jalea Real", farmaciaPrice: "$42.500", publicoPrice: "$74.000", badges: [{ label: "500g", variant: "outline" }] },
-            { name: "Polen de Flores Natural", farmaciaPrice: "$18.400", publicoPrice: "$32.100", badges: [{ label: "250g", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "cbd",
-        title: "CBD",
-        breadcrumb: ["Productos exclusivos", "Complementarios"],
-        products: [
-            { name: "Aceite CBD 5% Full Spectrum", farmaciaPrice: "$85.000", publicoPrice: "$145.000", badges: [{ label: "10ml", variant: "outline" }] },
-            { name: "Aceite CBD 10% Full Spectrum", farmaciaPrice: "$142.000", publicoPrice: "$238.000", badges: [{ label: "10ml", variant: "outline" }] },
-            { name: "Bálsamo CBD Dolencias Articulares", farmaciaPrice: "$65.400", publicoPrice: "$112.500", badges: [{ label: "50g", variant: "outline" }] }
-        ]
-    },
-    {
-        id: "aceites-esenciales",
-        title: "Aceites esenciales",
-        breadcrumb: ["Productos exclusivos", "Complementarios"],
-        products: [
-            { name: "Aceite Esencial de Lavanda Francesa", farmaciaPrice: "$28.500", publicoPrice: "$49.800", badges: [{ label: "Relajante", variant: "outline" }] },
-            { name: "Aceite Esencial de Árbol de Té", farmaciaPrice: "$24.200", publicoPrice: "$42.300", badges: [{ label: "Antiséptico", variant: "outline" }] },
-            { name: "Aceite Esencial de Eucalipto Glóbulos", farmaciaPrice: "$19.800", publicoPrice: "$34.500", badges: [{ label: "Respiratorio", variant: "outline" }] },
-            { name: "Aceite Esencial de Limón Siciliano", farmaciaPrice: "$22.500", publicoPrice: "$39.200", badges: [{ label: "Energizante", variant: "outline" }] }
-        ]
-    }
-];
+/**
+ * HIDRATACIÓN DINÁMICA (API GOOGLE SHEETS)
+ */
+const navigationData = await getCatalogNavigation();
+const productsData = await getCatalogProducts();
+
+/**
+ * MOTOR DE TRANSFORMACIÓN RELACIONAL
+ * Vincula la estructura jerárquica de 'navegacion' con los ítems de 'lista_precios'
+ */
+const catalogSections = navigationData
+    .filter(nav => nav.tabla_id) // Solo nodos que disparan tablas de productos
+    .map(nav => {
+        // 1. Filtrado de productos por tabla_id y estado activo
+        const sectionProducts = productsData
+            .filter(p => p.tabla_id === nav.tabla_id && (p.estado || '').toLowerCase() === 'activo')
+            .map(p => {
+                // Normalización de precios (Hito Colombia: Pesos con punto de mil)
+                const formatPrice = (val: string) => {
+                    const clean = String(val).replace(/[^0-9]/g, '');
+                    return clean ? `$${Number(clean).toLocaleString('es-CO')}` : '$0.00';
+                };
+
+                return {
+                    id: `${p.tabla_id}-${p.producto.toLowerCase().replace(/[^a-z0-9]/gi, '-')}`,
+                    name: p.producto,
+                    description: p.descripcion_producto,
+                    requiresPreparation: ['si', '1', 'bajo pedido'].includes((p.requiere_elaboracion || '').toLowerCase()),
+                    badges: (p.badges || '').split('|').filter(Boolean).map(label => ({
+                        label: label.trim(),
+                        variant: 'outline' as const
+                    })),
+                    farmaciaPrice: formatPrice(p.precio_farmacia),
+                    publicoPrice: formatPrice(p.precio_publico),
+                    cartData: {
+                        name: p.producto,
+                        price: String(p.precio_farmacia).replace(/[^0-9]/g, '')
+                    }
+                };
+            });
+
+        return {
+            id: nav.tabla_id,
+            title: nav.titulo_mostrar,
+            description: nav.descripcion,
+            breadcrumb: [nav.nivel_1, nav.nivel_2, nav.nivel_3, nav.nivel_4].filter(Boolean),
+            products: sectionProducts,
+            presentacionLabel: nav.titulo_presentacion,
+            farmaciaLabel: nav.titulo_precio_farmacia,
+            publicoLabel: nav.titulo_precio_publico
+        };
+    });
 ---
 
 <BaseLayout title="Catálogo de Productos | Mundo Homeopático" mostrarZoom={true}>
@@ -258,7 +74,7 @@ const catalogSections = [
     <div class="flex flex-col md:flex-row w-full flex-1 h-[calc(100dvh-64px)] min-h-0">
         
         <!-- Columna Izquierda: Sidebar de Filtros (Fijo en Desktop) -->
-        <SidebarCatalogo />
+        <SidebarCatalogo navigationData={navigationData} />
 
         <!-- Columna Derecha: Contenedor Master de Data + Footer -->
         <div class="main-content-scroll" id="catalogo-main-scroll">
@@ -399,6 +215,29 @@ const catalogSections = [
                     }
                 });
             });
+        }
+        // --- 4. Herramientas de Diagnóstico (Elite Debug) ---
+        (window as any).__DEBUG_CATALOG__ = async () => {
+            console.log("🔍 Iniciando Auditoría de Datos del Catálogo...");
+            try {
+                const { getCatalogNavigation, getCatalogProducts } = await import('../data/api');
+                const nav = await getCatalogNavigation();
+                const products = await getCatalogProducts();
+                console.log("📍 Navegación:", nav);
+                console.log("📦 Productos:", products);
+                
+                if (nav.length === 0) console.warn("⚠️ Advertencia: La navegación está vacía.");
+                if (products.length === 0) console.warn("⚠️ Advertencia: La lista de productos está vacía.");
+                
+                return { nav, products };
+            } catch (err) {
+                console.error("❌ Error en el diagnóstico:", err);
+            }
+        };
+
+        // Auto-ejecución si hay ?debug en la URL
+        if (window.location.search.includes('debug')) {
+            (window as any).__DEBUG_CATALOG__();
         }
     });
 </script>

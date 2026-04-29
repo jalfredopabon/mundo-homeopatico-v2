@@ -138,7 +138,7 @@ export function createMedicineDetails(medicine: any): string {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M11 6L21 6"></path><path d="M11 12L21 12"></path><path d="M11 18L21 18"></path><path d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4"></path><path d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15"></path></svg>
             Indicaciones clínicas
           </h4>
-          <ul class="space-y-4">
+          <ul class="space-y-2">
             ${indicaciones.map(text => `
               <li class="medical-list-item">
                 <span class="vademecum-bullet-dot"></span>
@@ -154,7 +154,7 @@ export function createMedicineDetails(medicine: any): string {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M17.5 21C15.567 21 14 19.433 14 17.5L14 3L21 3L21 17.5C21 19.433 19.433 21 17.5 21Z"></path><path d="M22 3L13 3"></path><path d="M17 7H14"></path><path d="M10 16.875C10 19.9126 8 21 6 21C4 21 2 19.9126 2 16.875C2 13.8374 6 10 6 10C6 10 10 13.8374 10 16.875Z"></path><path d="M14 12C15.083 11.1336 16.2974 9.87843 17.771 10.7626C19.0014 11.5009 20.0342 10.7244 21 10"></path></svg>
             Perfil farmacológico
           </h4>
-          <ul class="space-y-4">
+          <ul class="space-y-2">
             ${perfil.map(item => `
               <li class="medical-list-item">
                 <span class="vademecum-bullet-dot"></span>
@@ -170,7 +170,7 @@ export function createMedicineDetails(medicine: any): string {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591"></path><path d="M11 20H17"></path></svg>
             Protocolo de posología
           </h4>
-          <ul class="space-y-4">
+          <ul class="space-y-2">
             ${posologia.map(text => `
               <li class="medical-list-item">
                 <span class="vademecum-bullet-dot"></span>
@@ -221,7 +221,7 @@ export function createProtocolDetails(protocol: any): string {
                ${ICONS[section.icon] || ''}
                ${section.title}
             </h4>
-            <ul class="space-y-4">
+            <ul class="space-y-2">
                ${formatList(section.content).map(item => `
                  <li class="medical-list-item">
                    <span class="vademecum-bullet-dot"></span>

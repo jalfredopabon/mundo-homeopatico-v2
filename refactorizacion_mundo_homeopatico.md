@@ -43,14 +43,17 @@
 ## [2026-04-30] Hito: Estandarización Elite y Alineación Quirúrgica (Sidebar & UI)
 
 ### Hitos Técnicos Logrados
-1.  **Sincronización de Plomada (Master Line):** Establecimiento de la línea maestra a los **23px** (iconos/check) y **48px** (texto) en todos los sidebars, sincronizada con el buscador.
-2.  **Paridad Estricta de Sidebars:** Refactorización de Vademécum para clonar la estructura de Catálogo: eliminación de bordes, ajuste de cabeceras a 12px Sentence Case y eliminación de iconos redundantes.
-3.  **Ritmo Vertical (8px Grid):** Estandarización de alturas de ítems a 32px y huecos de sección a 48px para una navegación fluida.
-4.  **Calibración de Alertas:** Cambio de color del banner informativo a Naranja (`orange-500`) para mejorar el contraste de seguridad sin romper la estética premium.
+1.  **Sincronización de Plomada (Master Line):** Establecimiento de la línea maestra a los **23px** (iconos/check) y **48px** (texto) en todos los sidebars.
+2.  **Paridad Estricta de Sidebars:** Refactorización de Vademécum: 12px Sentence Case, eliminación de bordes y negrillas redundantes.
+3.  **Calibración de Alertas:** Banner informativo a Naranja (`orange-500`) para contraste de seguridad.
+4.  **Refinamiento de Espaciado Profesional:**
+    - Reversión de paddings excesivos (100px) a un estándar de **32px** funcional.
+    - Restauración de jerarquía vertical en cabeceras de catálogo: Gaps de 8px entre Breadcrumbs > Título > Descripción.
+    - Margen maestro de 32px (`mb-8`) entre cabecera y tablas para evitar colisiones visuales.
 
 ### Estado Actual
 - **Navegación:** 100% Sincronizada entre páginas.
-- **UI/UX:** Consistencia visual total en la "plomada" del usuario.
+- **UI/UX:** Consistencia visual total; ritmo vertical restaurado y funcional.
 
 ## Próximos Pasos
 1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.

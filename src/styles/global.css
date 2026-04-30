@@ -61,6 +61,11 @@ h1, h2, h3, h4, h5, h6 {
   /* --- 📏 Sistema de Tipografía Dinámica (Elite) --- */
   --dynamic-font-size: 0.75rem; /* 12px base */
   --dynamic-badge-size: 10px;    /* 10px base */
+
+  /* --- 💎 Sistema de Espaciado Elite (Grid 8px - Master Reference) --- */
+  --elite-gap: 72px;      /* Espacio entre bloques grandes (Tablas/Secciones) */
+  --elite-hero: 100px;    /* Espacio superior para impacto visual (Hero) */
+  --elite-section: 132px; /* Espacio para separaciones profundas */
 }
 
 /* Escalamiento Proporcional 14/17/20 (Elite UI Standard) */
@@ -684,7 +689,9 @@ input[type="search"] {
   }
 
   .page-section {
-    @apply mh-layout-px mh-layout-py flex-1 flex flex-col max-w-[1600px] mx-auto w-full pt-8 !important;
+    @apply mh-layout-px flex-1 flex flex-col max-w-[1600px] mx-auto w-full !important;
+    padding-top: 32px !important;
+    padding-bottom: var(--elite-gap) !important;
   }
 
   .banner-info {
@@ -706,11 +713,15 @@ input[type="search"] {
   }
 
   .catalog-section-header {
-    @apply sticky top-0 md:static z-30 bg-surface-muted mh-layout-px-neg mh-layout-px flex flex-col;
+    @apply sticky top-0 md:static z-30 bg-surface-muted mh-layout-px-neg mh-layout-px flex flex-col gap-2 mb-8;
   }
 
   .catalog-breadcrumb {
     @apply flex items-center gap-2 text-[11px] font-bold text-slate-500 tracking-wider;
+  }
+
+  .catalog-title {
+    @apply text-[1.75rem] font-bold text-slate-900 tracking-tight leading-none mt-1;
   }
 
   /* --- VADEMECUM PREMIUM (ADN CLON) --- */
@@ -840,7 +851,7 @@ input[type="search"] {
   }
 
   .catalog-description {
-    @apply text-slate-600 leading-relaxed mt-2 font-normal;
+    @apply text-slate-600 leading-relaxed mt-2 font-normal max-w-3xl;
   }
 
   .catalog-table-shell {

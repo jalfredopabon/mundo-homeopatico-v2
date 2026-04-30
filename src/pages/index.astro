@@ -64,7 +64,7 @@ import Icons from '../components/shared/Icons.astro';
     import { createCatalogTable } from '../utils/catalogo-renderer';
     import { renderSidebar } from '../utils/sidebar-renderer';
 
-    document.addEventListener('astro:page-load', async () => {
+    const initCatalog = async () => {
         const container = document.getElementById('catalog-dynamic-container');
         const sidebarNav = document.getElementById('catalogo-scrollspy');
         if (!container || !sidebarNav) return;
@@ -75,6 +75,9 @@ import Icons from '../components/shared/Icons.astro';
                 getCatalogNavigation(),
                 getCatalogProducts()
             ]);
+
+            // EXPORTAR VARIABLE DEBUG PARA AUDITORÍA
+            (window as any).__DEBUG_CATALOG__ = { navData: navigationData, prodData: productsData };
 
             // 2. RENDERIZADO DE SIDEBAR
             sidebarNav.innerHTML = renderSidebar(navigationData);
@@ -147,7 +150,11 @@ import Icons from '../components/shared/Icons.astro';
             console.error("Error hidatrando catálogo:", error);
             container.innerHTML = '<div class="p-8 text-center text-slate-500">Error cargando el catálogo.</div>';
         }
-    });
+    };
+
+    // Doble gatillo para robustez: DOM estándar + Transiciones Astro
+    document.addEventListener('DOMContentLoaded', initCatalog);
+    document.addEventListener('astro:page-load', initCatalog);
 
     function initCatalogListeners() {
         // --- Lógica del Carrito ---

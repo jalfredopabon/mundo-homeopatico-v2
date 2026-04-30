@@ -415,12 +415,23 @@
 
 ## Hito 60: Catálogo Elite v2.0 - Hidratación Dinámica y SWR (30/04/2026)
 **Estado:** Completado ✅
-**Descripción:** Eliminación total de cuellos de botella en la carga del catálogo mediante la transición de SSR bloqueante a Hidratación Dinámica en Cliente.
+**Descripción:** Unificación de la arquitectura de datos entre Vademécum y Catálogo, eliminando el SSR bloqueante.
 **Acciones:**
+- **Unified Data Engine (api.ts):** Ahora ambos módulos comparten el motor `fetchWithSWR`, que garantiza:
+    - **Vademécum:** Carga de `getMedicines` y `getProtocols` con caché en `localStorage`.
+    - **Catálogo:** Carga de `getCatalogNavigation` y `getCatalogProducts` bajo el mismo estándar.
 - **Zero-Blocking Architecture:** El servidor ya no espera a Google Sheets; envía un esqueleto (Skeleton) instantáneo.
-- **SWR Hydration:** Implementación de `getCatalogNavigation` y `getCatalogProducts` en el cliente con persistencia en `localStorage`.
-- **Renderizado Unificado:** Creación de `catalogo-renderer.ts` y `sidebar-renderer.ts` para replicar el diseño premium de Astro en JavaScript.
-- **Optimización de Datos:** Uso de Hash Maps para indexación $O(N+M)$, eliminando loops anidados ineficientes.
-- **Restauración Funcional:** Sincronización de listeners para búsqueda en tiempo real, expansión de badges y sistema de carrito.
-**Resultado:** Carga instantánea tras la primera visita y mejora drástica en el LCP y TBT del sitio.
+- **Protocolo de Seguridad:** Centralización del parámetro `action` y validación de `SECRET_KEY` para todas las peticiones a Google Apps Script.
+- **Optimización de Datos:** Implementación de Hash Maps para indexación $O(N+M)$ en ambos módulos.
+**Resultado:** Paridad técnica total. Carga instantánea tras la primera visita y una base de código coherente y escalable.
+
+## Hito 61: Robustez "Anti-Gatillo" y Paridad 1:1 de Iconografía (30/04/2026)
+**Estado:** Completado ✅
+**Descripción:** Resolución de fallo de hidratación silencioso en entornos con `prefer-reduced-motion` y restauración de la estética original de iconos.
+**Acciones:**
+- **Doble Gatillo de Hidratación:** Refuerzo de `index.astro` con `DOMContentLoaded` + `astro:page-load` para asegurar ejecución en navegadores con animaciones desactivadas.
+- **Inyección de Telemetría:** Activación de `window.__DEBUG_CATALOG__` para auditoría técnica instantánea desde consola.
+- **Iconografía Elite 1:1:** Reemplazo de SVGs hardcoded por los vectores originales de `Icons.astro` (Solid Fills), recuperando la identidad visual premium.
+- **Filosofía de Auditoría:** Implementación del protocolo "Auditar → Limpiar → Ver" tras detectar que la complejidad modular requería una limpieza de lógica en lugar de parches.
+**Resultado:** Catálogo 100% funcional y visualmente idéntico a la versión online.
 

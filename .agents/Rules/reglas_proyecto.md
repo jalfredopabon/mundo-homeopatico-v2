@@ -32,3 +32,7 @@ trigger: always_on
 - Antialiasing global y transiciones fluidas (`transition-all`).
 - Consistencia homóloga: componentes que se repiten entre páginas (sidebars, headers, cards) deben tener dimensiones, paddings y tipografía idénticos.
 - Todo elemento clickeable necesita 3 estados: reposo, hover, focus/active.
+
+## Filosofía de Resolución
+- **Auditar antes de parchear:** Cuando una implementación modular no arroje el resultado esperado, el primer paso es **auditar el flujo completo** (identificar al culpable) en lugar de forzar soluciones externas.
+- **Limpieza para la visibilidad:** Si el código no "pinta" el resultado, se debe limpiar la lógica y los "gatillos" de ejecución hasta que el sistema sea transparente. No se aceptan resultados sin una base de código limpia.

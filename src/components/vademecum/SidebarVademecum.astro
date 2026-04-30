@@ -14,11 +14,13 @@ const {
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
-    <!-- Buscador sticky -->
+    <!-- BUSCADOR STICKY (Clon idéntico a Catálogo) -->
     <div class="sidebar-search-header">
         <div class="relative group">
             <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
-                <Icons type="search" class="w-full h-full" strokeWidth={1.5} />
+                <div class="relative w-4 h-4 flex items-center justify-center">
+                    <Icons type="search" class="w-full h-full" />
+                </div>
             </div>
             <input 
                 type="search" 
@@ -30,36 +32,35 @@ const {
     </div>
 
     <!-- Navegación de Filtros -->
-    <div class="flex-1 px-4 pb-6 pt-0 flex flex-col gap-7">
+    <div class="flex-1 flex flex-col pb-12" style="gap: var(--sb-section-gap)">
         <!-- Sección 1: Tipo de terapia (Productos) -->
-        <section class="sidebar-filter-section" data-view-target="products" id="section-terapia">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 tracking-wider">
-                <Icons type="mortero" class="w-4 h-4 text-slate-900" strokeWidth={1.8} />
+        <section class="sidebar-filter-section" style="padding-left: calc(var(--sb-px) + var(--sb-icon-offset))" data-view-target="products" id="section-terapia">
+            <h4 class="text-[12px] font-bold text-slate-900 mb-4 tracking-tight">
                 Tipo de terapia
             </h4>
-            <div class="space-y-4" id="filter-terapia-list">
-                <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando terapias...</p>
+            <div class="flex flex-col" style="gap: var(--sb-item-gap)" id="filter-terapia-list">
+                <!-- Skeleton Loader -->
+                <div class="space-y-2 animate-pulse pr-4">
+                    <div class="h-4 bg-slate-50 rounded w-full"></div>
+                    <div class="h-4 bg-slate-50 rounded w-3/4"></div>
+                </div>
             </div>
         </section>
 
         <!-- Sección 2: Sistema del cuerpo (solo Protocolos) -->
-        <section class="sidebar-filter-section hidden" data-view-target="protocols" id="section-sistema">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 tracking-wider">
-                <Icons type="user-circle-alt" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
+        <section class="sidebar-filter-section hidden" style="padding-left: calc(var(--sb-px) + var(--sb-icon-offset))" data-view-target="protocols" id="section-sistema">
+            <h4 class="text-[12px] font-bold text-slate-900 mb-4 tracking-tight">
                 Sistema del cuerpo
             </h4>
-            <div class="space-y-4" id="filter-sistema-list">
-                <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando sistemas...</p>
-            </div>
+            <div class="flex flex-col" style="gap: var(--sb-item-gap)" id="filter-sistema-list"></div>
         </section>
 
         <!-- Sección 3: Forma farmacéutica (Productos) -->
-        <section class="sidebar-filter-section" data-view-target="products" id="section-forma">
-            <h4 class="text-[11px] font-bold text-slate-900 mb-4 flex items-center gap-2.5 tracking-wider">
-                <Icons type="pill" class="w-4 h-4 text-slate-900" strokeWidth={1.5} />
+        <section class="sidebar-filter-section" style="padding-left: calc(var(--sb-px) + var(--sb-icon-offset))" data-view-target="products" id="section-forma">
+            <h4 class="text-[12px] font-bold text-slate-900 mb-4 tracking-tight">
                 Forma farmacéutica
             </h4>
-            <div class="space-y-4" id="filter-forma-list">
+            <div class="flex flex-col" style="gap: var(--sb-item-gap)" id="filter-forma-list">
                 <p class="text-[10px] text-slate-400 animate-pulse italic">Cargando formas...</p>
             </div>
         </section>

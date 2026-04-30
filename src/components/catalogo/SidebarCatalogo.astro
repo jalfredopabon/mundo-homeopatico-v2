@@ -18,7 +18,7 @@ import Icons from "../shared/Icons.astro";
   </div>
 
   <!-- CONTENEDOR DE NAVEGACIÓN (Se hidratará en cliente) -->
-  <nav class="pb-6 mt-0 space-y-6" id="catalogo-scrollspy">
+  <nav class="flex flex-col pb-12" style="gap: var(--sb-section-gap)" id="catalogo-scrollspy">
     <!-- Skeleton/Loader opcional aquí si se desea -->
     <div class="p-8 space-y-8 animate-pulse">
         <div class="h-4 bg-slate-50 rounded w-1/2"></div>
@@ -33,33 +33,9 @@ import Icons from "../shared/Icons.astro";
 </aside>
 
 <style>
-    /* VARIABLES DE ALINEACIÓN ELITE (PLOMADAS) */
-    :root {
-        --sidebar-gap-x: 1rem; /* 16px (Plomada 1: Borde) */
-        --sidebar-icon-w: 32px;
-        --sidebar-plumb-line: 31px; /* Eje de la línea guía */
-        --sidebar-l4-indent: 38px; /* Offset para cápsula Nivel 4 */
-    }
-
     /* Estilos base para elementos inyectados dinámicamente */
     .accordion-trigger.is-expanded {
         @apply bg-slate-50 text-slate-900 font-bold;
-    }
-
-    .accordion-content {
-        position: relative;
-    }
-
-    .accordion-content::before {
-        content: "";
-        position: absolute;
-        left: var(--sidebar-plumb-line);
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        @apply bg-slate-200;
-        z-index: 10;
-        pointer-events: none;
     }
 
     .sidebar-link {
@@ -69,7 +45,6 @@ import Icons from "../shared/Icons.astro";
 
     .sidebar-label--sub {
         @apply transition-all duration-300;
-        font-size: 13px;
         color: #475569; /* slate-600 */
     }
 

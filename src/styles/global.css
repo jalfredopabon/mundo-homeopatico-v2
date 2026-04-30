@@ -46,6 +46,17 @@ h1, h2, h3, h4, h5, h6 {
   --border-medium: #cbd5e1;
   --bg-surface-hover: #e6efed;
   --header-offset: 66px;
+  
+  /* --- 🏛️ Sistema de Diseño de Sidebar (Ultimate Spacing 8px Grid) --- */
+  --sb-px: 16px;
+  --sb-py-top: 32px;
+  --sb-item-h: 40px;
+  --sb-section-gap: 48px;
+  --sb-item-gap: 4px;
+  --sb-icon-offset: 7px; /* Alineación con Icons search left-7 */
+  --sb-plumb-line: calc(var(--sb-px) + var(--sb-icon-offset) + 8px); /* Centro del icono (23+8=31px) */
+  --sb-font-main: 14px;
+  --sb-font-label: 11px;
 
   /* --- 📏 Sistema de Tipografía Dinámica (Elite) --- */
   --dynamic-font-size: 0.75rem; /* 12px base */
@@ -255,10 +266,10 @@ input[type="search"] {
     box-shadow: 0 0 0 1px rgba(10, 92, 78, 0.3);
   }
 
-  /* Contenedor del icono: mantiene la plomada a ~22px del borde */
+  /* Contenedor del icono: mantiene la plomada sincronizada con el buscador */
   .sidebar-icon-slot {
     @apply w-8 flex-shrink-0 flex items-center justify-start;
-    padding-left: 6px;
+    padding-left: var(--sb-icon-offset);
   }
 
   .sidebar-icon-slot > * {
@@ -272,19 +283,22 @@ input[type="search"] {
 
   /* Tipografía: nivel 3 (ítems principales con icono) */
   .sidebar-label {
-    @apply text-[14px] font-normal leading-none;
+    font-size: var(--sb-font-main);
+    @apply font-normal leading-none;
     margin-top: -1px;
   }
 
   /* Tipografía: nivel 4 (sub-ítems dentro de acordeón) */
   .sidebar-label--sub {
-    @apply text-[13px] font-normal leading-none;
+    font-size: calc(var(--sb-font-main) - 1px);
+    @apply font-normal leading-none;
     margin-top: -0.5px;
   }
 
   /* Header sticky (buscador / CTA) */
   .sidebar-search-header {
-    @apply sticky top-0 z-30 bg-surface-white px-4 py-4;
+    @apply sticky top-0 z-30 bg-surface-white;
+    padding: var(--sb-py-top) var(--sb-px) 16px var(--sb-px);
   }
 
   /* --- Estados de Interacción (Fuente Única de Verdad) --- */
@@ -329,10 +343,10 @@ input[type="search"] {
   .accordion-content::before {
     content: "";
     position: absolute;
-    left: 31px;
-    top: -8px;
-    bottom: 16px;
-    border-left: 1.5px solid #64748b;
+    left: var(--sb-plumb-line);
+    top: -4px;
+    bottom: 12px;
+    border-left: 1.5px solid #cbd5e1; /* slate-200 para sutileza */
     z-index: 0;
   }
 
@@ -678,7 +692,7 @@ input[type="search"] {
   }
 
   .banner-info-icon {
-    @apply bg-brand text-white p-2 rounded-lg shrink-0 shadow-sm shadow-[rgba(10,92,78,0.2)];
+    @apply bg-orange-500 text-white p-2 rounded-lg shrink-0 shadow-sm shadow-orange-200/50;
   }
 
   .banner-info-close {
@@ -937,12 +951,14 @@ input[type="search"] {
   }
 
   .sidebar-filter-label {
-    @apply flex items-center gap-2.5 text-[13px] text-slate-700 cursor-pointer transition-colors;
+    @apply flex items-center gap-[9px] text-[var(--sb-font-main)] text-slate-700 cursor-pointer transition-colors;
+    height: 32px; /* Ritmo vertical constante (8px grid) */
+    padding-left: 0; /* Ya heredado de la sección (23px) */
     &:hover {
       @apply text-slate-900;
     }
     &:has(input:checked) {
-      @apply text-slate-900 font-medium;
+      @apply text-slate-900 font-bold;
     }
   }
 

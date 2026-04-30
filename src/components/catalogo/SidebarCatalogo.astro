@@ -1,114 +1,11 @@
 ---
 // src/components/catalogo/SidebarCatalogo.astro
-/**
- * Sidebar de Catálogo: Clonación Estricta 1:1 con la versión online.
- * Usa clases atómicas de global.css (.sidebar-capsule, .sidebar-icon-slot, etc.)
- * Plomadas: borde=16px, icono=~22px, texto=48px.
- */
 import Icons from "../shared/Icons.astro";
-import type { CatalogNavigation } from "../../data/api";
-
-interface Props {
-  navigationData?: CatalogNavigation[];
-}
-
-const { navigationData = [] } = Astro.props;
-
-// Validación defensiva: Si navigationData no es un array (por error de API), forzamos array vacío
-const safeNavData = Array.isArray(navigationData) ? navigationData : [];
-
-const getIcon = (label: string) => {
-  const lower = (label || "").toLowerCase();
-  if (lower.includes("floral")) return "flower";
-  if (lower.includes("oligo")) return "molecules";
-  if (lower.includes("aceite")) return "droplet";
-  if (lower.includes("alimento") || lower.includes("cbd")) return "leaf";
-  if (lower.includes("capilar")) return "sparkles";
-  if (lower.includes("crema") || lower.includes("gel") || lower.includes("ungüento")) return "droplet";
-  return "test-tube";
-};
-
-/**
- * Agrupador de Niveles para construir la jerarquía visual de 4 niveles
- */
-const getHierarchicalData = (navs: CatalogNavigation[]) => {
-  const root: any[] = [];
-
-  // 1. Solo procesamos filas que realmente disparan una tabla de productos
-  const dataRows = navs.filter(n => n.tabla_id && n.tabla_id.trim() !== "");
-
-  dataRows.forEach(nav => {
-    if (!nav.nivel_1) return;
-
-    // A. Nivel 1 (Categoría Global: ej. "De nuestra farmacia")
-    let cat = root.find(c => c.category === nav.nivel_1);
-    if (!cat) {
-      cat = { category: nav.nivel_1, subcategories: [] };
-      root.push(cat);
-    }
-
-    // B. Nivel 2 (Subcategoría/Grupo: ej. "Según prescripción", "Línea MH")
-    if (!nav.nivel_2) return;
-    let sub = cat.subcategories.find(s => s.label === nav.nivel_2);
-    if (!sub) {
-      sub = { label: nav.nivel_2, items: [] };
-      cat.subcategories.push(sub);
-    }
-
-    // C. Manejo de Niveles 3 y 4
-    if (nav.nivel_4) {
-      // Nivel 3 actúa como ACORDEÓN (Agrupador intermedio)
-      let accordion = sub.items.find(i => i.label === nav.nivel_3 && i.type === "accordion");
-      if (!accordion) {
-        accordion = { 
-          type: "accordion", 
-          label: nav.nivel_3, 
-          icon: getIcon(nav.nivel_3 || ""), 
-          children: [] 
-        };
-        sub.items.push(accordion);
-      }
-      
-      // Evitamos duplicados en los hijos del acordeón
-      if (!accordion.children.find(c => c.label === nav.titulo_mostrar)) {
-        accordion.children.push({ 
-            label: nav.titulo_mostrar || nav.nivel_4, 
-            href: `#${nav.tabla_id}` 
-        });
-      }
-    } else if (nav.nivel_3) {
-      // Nivel 3 actúa como LINK directo (sin hijos)
-      // Solo lo agregamos si no existe ya un acordeón con el mismo nombre
-      if (!sub.items.find(i => i.label === nav.nivel_3)) {
-          sub.items.push({ 
-            type: "link", 
-            label: nav.titulo_mostrar || nav.nivel_3, 
-            href: `#${nav.tabla_id}`, 
-            icon: getIcon(nav.nivel_3)
-          });
-      }
-    } else if (nav.tabla_id) {
-      // Caso Nivel 2 directo: El ítem cuelga directamente de Nivel 2
-      // Si el título es igual al grupo (nivel_2), lo agregamos como link pero 
-      // visualmente se sentirá como el ítem único del grupo.
-      sub.items.push({
-        type: "link",
-        label: nav.titulo_mostrar || nav.nivel_2,
-        href: `#${nav.tabla_id}`,
-        icon: getIcon(nav.titulo_mostrar || nav.nivel_2)
-      });
-    }
-  });
-
-  return root;
-};
-
-const catalogData = getHierarchicalData(safeNavData);
 ---
 
 <aside class="hidden md:flex flex-col w-64 border-r border-subtle bg-surface-white h-[calc(100dvh-64px)] sticky top-[64px] overflow-y-auto scrollbar-premium shrink-0">
   
-  <!-- BUSCADOR STICKY -->
+  <!-- BUSCADOR STICKY (Se mantiene estático para evitar parpadeo) -->
   <div class="sidebar-search-header">
     <div class="relative group">
       <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
@@ -120,170 +17,20 @@ const catalogData = getHierarchicalData(safeNavData);
     </div>
   </div>
 
+  <!-- CONTENEDOR DE NAVEGACIÓN (Se hidratará en cliente) -->
   <nav class="pb-6 mt-0 space-y-6" id="catalogo-scrollspy">
-    {catalogData.map((category) => (
-      <div class="space-y-2">
-        <span class="block text-[12px] font-semibold text-slate-900 pl-[23px] pr-4 tracking-tight">
-          {category.category}
-        </span>
-        <div class="flex flex-col gap-4">
-          {category.subcategories.map((sub) => (
-            <div class="flex flex-col gap-0">
-              {/* Lógica Inteligente: Ocultamos el título del grupo si coincide con el ítem o si es un grupo de un solo ítem de nivel superior */}
-              {(() => {
-                const isRedundant = sub.items.length === 1 && 
-                  (sub.items[0].label.toLowerCase().trim() === sub.label.toLowerCase().trim() || 
-                   ["alimentos funcionales", "cbd", "aceites esenciales"].includes(sub.label.toLowerCase().trim()));
-                
-                return !isRedundant && (
-                  <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400 pr-4 mb-1" style="padding-left: 23px;">
-                    {sub.label}
-                  </span>
-                );
-              })()}
-              <div class="flex flex-col gap-0.5">
-                {sub.items.map((item) => (
-                  <div class="flex flex-col">
-                    {item.type === "accordion" ? (
-                      <>
-                        <button class="accordion-trigger sidebar-capsule group w-[calc(100%-2rem)] ml-4 mr-0 pr-4 mt-1 hover:bg-surface-muted" data-target={item.label.toLowerCase()}>
-                          <div class="sidebar-icon-slot">
-                            <div><Icons type={item.icon} class="w-full h-full" strokeWidth={1.5} /></div>
-                          </div>
-                          <span class="sidebar-label">{item.label}</span>
-                          <Icons type="chevron-down" class="ml-auto w-3.5 h-3.5 transition-all duration-300 accordion-icon shrink-0" strokeWidth={2.5} />
-                        </button>
-                        <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
-                          {item.children?.map((child) => (
-                            <a href={child.href} class="sidebar-link sidebar-capsule group ml-[38px] w-[calc(100%-38px-1rem)] pl-[10px]">
-                              <span class="sidebar-label--sub group-[.is-active]:font-bold">{child.label}</span>
-                            </a>
-                          ))}
-                        </div>
-                      </>
-                    ) : (
-                      <a href={item.href} class="sidebar-link sidebar-capsule group">
-                        <div class="sidebar-icon-slot">
-                          <div><Icons type={item.icon} class="w-full h-full" strokeWidth={1.5} /></div>
-                        </div>
-                        <span class="sidebar-label group-[.is-active]:font-bold">{item.label}</span>
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+    <!-- Skeleton/Loader opcional aquí si se desea -->
+    <div class="p-8 space-y-8 animate-pulse">
+        <div class="h-4 bg-slate-50 rounded w-1/2"></div>
+        <div class="space-y-3">
+            <div class="h-8 bg-slate-50 rounded-lg w-full"></div>
+            <div class="h-8 bg-slate-50 rounded-lg w-full"></div>
+            <div class="h-8 bg-slate-50 rounded-lg w-full"></div>
         </div>
-      </div>
-    ))}
+    </div>
   </nav>
 
-  <!-- FIRMA DE AUTOR -->
-  <div class="mt-auto px-4 py-4 border-t border-subtle bg-surface-white">
-    <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface-muted/50 hover:shadow-sm ring-1 ring-transparent hover:ring-slate-200">
-      <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-[10px] font-bold text-white transition-transform group-hover:scale-110">
-        AP
-      </div>
-      <div class="flex flex-col">
-        <span class="text-[10px] text-slate-500 font-bold leading-none mb-1">Creado por</span>
-        <span class="text-[12px] font-bold text-slate-900 leading-none group-hover:text-brand transition-colors">Alfredo Pabón</span>
-      </div>
-      <Icons type="external-link" class="w-3 h-3 ml-auto text-slate-300 group-hover:text-brand transition-colors opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all" strokeWidth={2.5} />
-    </a>
-  </div>
 </aside>
-
-<script>
-    /**
-     * Lógica de Auto-Anclaje y Resaltado Dinámico (ScrollSpy) del Catálogo.
-     * Sincronizada con el estándar de Sedes y Contacto.
-     */
-    const initCatalogoScrollSpy = () => {
-        const scrollContainer = document.getElementById('catalogo-main-scroll');
-        const sections = document.querySelectorAll('section[id]');
-        const sidebarLinks = document.querySelectorAll('#catalogo-scrollspy .sidebar-link');
-        
-        if (!scrollContainer || !sections.length || !sidebarLinks.length) return;
-
-        const clearActiveStates = () => {
-            sidebarLinks.forEach(link => link.classList.remove('is-active'));
-        };
-
-        // 1. Manejo de clics para respuesta inmediata y cierre de acordeones ajenos
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                clearActiveStates();
-                link.classList.add('is-active');
-
-                // Si selecciono un ítem, cerramos los acordeones que NO sean el padre de este ítem
-                const parentAccordion = link.closest('.accordion-content') as HTMLElement;
-                closeAllAccordions(parentAccordion);
-            });
-        });
-
-        // 2. Observer para seguimiento del scroll (Mismos márgenes que Contacto para consistencia)
-        const observerOptions = {
-            root: scrollContainer,
-            rootMargin: '-30% 0px -60% 0px',
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const currentId = entry.target.getAttribute('id');
-                    const activeLink = document.querySelector(`#catalogo-scrollspy a[href="#${currentId}"]`);
-                    
-                    if (activeLink) {
-                        clearActiveStates();
-                        activeLink.classList.add('is-active');
-                        // Auto-expandir acordeón si es hijo
-                        const parentAccordion = activeLink.closest('.accordion-content') as HTMLElement;
-                        if (parentAccordion && parentAccordion.style.maxHeight === '0px') {
-                            parentAccordion.style.maxHeight = parentAccordion.scrollHeight + 'px';
-                            const trigger = parentAccordion.previousElementSibling;
-                            if (trigger) trigger.classList.add('is-expanded');
-                        }
-                    }
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => observer.observe(section));
-
-        // 3. Lógica de Acordeones
-        const triggers = document.querySelectorAll('.accordion-trigger');
-        const closeAllAccordions = (except: HTMLElement | null = null) => {
-            document.querySelectorAll('.accordion-content').forEach(el => {
-                const content = el as HTMLElement;
-                if (content !== except) {
-                    content.style.maxHeight = '0';
-                    const trigger = content.previousElementSibling;
-                    if (trigger) trigger.classList.remove('is-expanded');
-                }
-            });
-        };
-
-        triggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                const content = trigger.nextElementSibling as HTMLElement;
-                if (!content) return;
-                const isExpanded = trigger.classList.contains('is-expanded');
-                closeAllAccordions(content);
-                if (isExpanded) {
-                    content.style.maxHeight = '0';
-                    trigger.classList.remove('is-expanded');
-                } else {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    trigger.classList.add('is-expanded');
-                }
-            });
-        });
-    };
-
-    document.addEventListener('astro:page-load', initCatalogoScrollSpy);
-</script>
 
 <style>
     /* VARIABLES DE ALINEACIÓN ELITE (PLOMADAS) */
@@ -294,7 +41,7 @@ const catalogData = getHierarchicalData(safeNavData);
         --sidebar-l4-indent: 38px; /* Offset para cápsula Nivel 4 */
     }
 
-    /* Sobrecargas de geometría exclusivas del acordeón */
+    /* Estilos base para elementos inyectados dinámicamente */
     .accordion-trigger.is-expanded {
         @apply bg-slate-50 text-slate-900 font-bold;
     }
@@ -303,7 +50,6 @@ const catalogData = getHierarchicalData(safeNavData);
         position: relative;
     }
 
-    /* Línea maestra: Sincronizada con Plomada 2 */
     .accordion-content::before {
         content: "";
         position: absolute;
@@ -316,13 +62,11 @@ const catalogData = getHierarchicalData(safeNavData);
         pointer-events: none;
     }
 
-    /* Z-index para que las cápsulas queden bajo la línea */
     .sidebar-link {
         position: relative;
         z-index: 5;
     }
 
-    /* Ajuste fino para asegurar alineación de texto Nivel 4 */
     .sidebar-label--sub {
         @apply transition-all duration-300;
         font-size: 13px;

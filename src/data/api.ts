@@ -58,22 +58,22 @@ export type VademecumProtocolo = z.infer<typeof VademecumProtocoloSchema>;
 
 // Esquema para la estructura de navegación (navegacion)
 export const CatalogNavigationSchema = z.object({
-    nivel_1: z.string(),
+    nivel_1: z.string().optional().default(''),
     nivel_2: z.string().optional().default(''),
     nivel_3: z.string().optional().default(''),
     nivel_4: z.string().optional().default(''),
-    titulo_mostrar: z.string(),
+    titulo_mostrar: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
     descripcion: z.string().optional().default(''),
     titulo_presentacion: z.union([z.string(), z.number()]).optional().default('Presentación').transform(val => String(val)),
     titulo_precio_farmacia: z.union([z.string(), z.number()]).optional().default('Precio farmacia').transform(val => String(val)),
     titulo_precio_publico: z.union([z.string(), z.number()]).optional().default('Precio público').transform(val => String(val)),
-    tabla_id: z.string().optional().default(''),
+    tabla_id: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
 });
 
 // Esquema para los productos del catálogo (lista_precios)
 export const CatalogProductSchema = z.object({
-    tabla_id: z.string(),
-    producto: z.string(),
+    tabla_id: z.union([z.string(), z.number()]).transform(val => String(val)),
+    producto: z.union([z.string(), z.number()]).transform(val => String(val)),
     requiere_elaboracion: z.string().optional().default(''),
     descripcion_producto: z.string().optional().default(''),
     badges: z.string().optional().default(''),
@@ -181,6 +181,9 @@ function normalizeKeys(obj: any): any {
             // 🛡️ Mapeo de Alias de Auditoría (Proyecto Anterior)
             if (normalizedKey === 'tablas_id') normalizedKey = 'tabla_id';
             if (normalizedKey === 'productos') normalizedKey = 'producto';
+            if (normalizedKey === 'encabezado_1') normalizedKey = 'titulo_presentacion';
+            if (normalizedKey === 'encabezado_2') normalizedKey = 'titulo_precio_farmacia';
+            if (normalizedKey === 'encabezado_3') normalizedKey = 'titulo_precio_publico';
             
             acc[normalizedKey] = obj[key];
             return acc;

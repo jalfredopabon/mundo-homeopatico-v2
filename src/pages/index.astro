@@ -1,71 +1,10 @@
 ---
-// c:\Users\Alfredo Pabón\Documents\Proyectos antigravity\mundo_homeopatico_v2\src\pages\index.astro
+// src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SidebarCatalogo from '../components/catalogo/SidebarCatalogo.astro';
 import CartDrawer from '../components/cart/CartDrawer.astro';
 import Footer from '../components/shared/Footer.astro';
 import Icons from '../components/shared/Icons.astro';
-import CatalogTable from '../components/catalogo/CatalogTable.astro';
-import { getCatalogNavigation, getCatalogProducts } from '../data/api';
-
-/**
- * Página Principal (Catálogo): 
- * Clonación Estricta del panel principal para paridad visual 1:1.
- * Se aplica el estándar "Sage Green Real" (#E7EDE3).
- */
-
-/**
- * HIDRATACIÓN DINÁMICA (API GOOGLE SHEETS)
- */
-const navigationData = await getCatalogNavigation();
-const productsData = await getCatalogProducts();
-
-/**
- * MOTOR DE TRANSFORMACIÓN RELACIONAL
- * Vincula la estructura jerárquica de 'navegacion' con los ítems de 'lista_precios'
- */
-const catalogSections = navigationData
-    .filter(nav => nav.tabla_id) // Solo nodos que disparan tablas de productos
-    .map(nav => {
-        // 1. Filtrado de productos por tabla_id y estado activo
-        const sectionProducts = productsData
-            .filter(p => p.tabla_id === nav.tabla_id && (p.estado || '').toLowerCase() === 'activo')
-            .map(p => {
-                // Normalización de precios (Hito Colombia: Pesos con punto de mil)
-                const formatPrice = (val: string) => {
-                    const clean = String(val).replace(/[^0-9]/g, '');
-                    return clean ? `$${Number(clean).toLocaleString('es-CO')}` : '$0.00';
-                };
-
-                return {
-                    id: `${p.tabla_id}-${p.producto.toLowerCase().replace(/[^a-z0-9]/gi, '-')}`,
-                    name: p.producto,
-                    description: p.descripcion_producto,
-                    requiresPreparation: ['si', '1', 'bajo pedido'].includes((p.requiere_elaboracion || '').toLowerCase()),
-                    badges: (p.badges || '').split('|').filter(Boolean).map(label => ({
-                        label: label.trim(),
-                        variant: 'outline' as const
-                    })),
-                    farmaciaPrice: formatPrice(p.precio_farmacia),
-                    publicoPrice: formatPrice(p.precio_publico),
-                    cartData: {
-                        name: p.producto,
-                        price: String(p.precio_farmacia).replace(/[^0-9]/g, '')
-                    }
-                };
-            });
-
-        return {
-            id: nav.tabla_id,
-            title: nav.titulo_mostrar,
-            description: nav.descripcion,
-            breadcrumb: [nav.nivel_1, nav.nivel_2, nav.nivel_3, nav.nivel_4].filter(Boolean),
-            products: sectionProducts,
-            presentacionLabel: nav.titulo_presentacion,
-            farmaciaLabel: nav.titulo_precio_farmacia,
-            publicoLabel: nav.titulo_precio_publico
-        };
-    });
 ---
 
 <BaseLayout title="Catálogo de Productos | Mundo Homeopático" mostrarZoom={true}>
@@ -73,13 +12,13 @@ const catalogSections = navigationData
     <!-- Contenedor Principal de 2 columnas -->
     <div class="flex flex-col md:flex-row w-full flex-1 h-[calc(100dvh-64px)] min-h-0">
         
-        <!-- Columna Izquierda: Sidebar de Filtros (Fijo en Desktop) -->
-        <SidebarCatalogo navigationData={navigationData} />
+        <!-- Columna Izquierda: Sidebar (Se hidratará en cliente) -->
+        <SidebarCatalogo />
 
         <!-- Columna Derecha: Contenedor Master de Data + Footer -->
         <div class="main-content-scroll" id="catalogo-main-scroll">
             
-            <!-- Banner Informativo -->
+            <!-- Banner Informativo (Estático) -->
             <div id="info-banner" class="banner-info">
                 <div class="flex items-start gap-4">
                     <div class="banner-info-icon">
@@ -96,43 +35,133 @@ const catalogSections = navigationData
             </div>
 
             <div class="page-section">
-                <div class="flex flex-col gap-12">
-                    {catalogSections.map((section) => (
-                        <CatalogTable {...section} />
-                    ))}
+                <!-- CONTENEDOR DINÁMICO -->
+                <div id="catalog-dynamic-container" class="flex flex-col gap-12 min-h-[400px]">
+                    <!-- Skeleton de Carga Elite -->
+                    <div class="animate-pulse space-y-12">
+                        {[1, 2].map(() => (
+                            <div class="space-y-4">
+                                <div class="h-8 bg-slate-100 rounded-md w-1/3"></div>
+                                <div class="space-y-2">
+                                    <div class="h-12 bg-slate-50 rounded-lg w-full"></div>
+                                    <div class="h-12 bg-slate-50 rounded-lg w-full"></div>
+                                    <div class="h-12 bg-slate-50 rounded-lg w-full"></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             <!-- Footer corporativo unificado -->
             <Footer />
         </div>
-
-
-
     </div>
 </BaseLayout>
 
 <script>
+    import { getCatalogNavigation, getCatalogProducts } from '../data/api';
+    import { createCatalogTable } from '../utils/catalogo-renderer';
+    import { renderSidebar } from '../utils/sidebar-renderer';
+
     document.addEventListener('astro:page-load', async () => {
-        // --- 1. Lógica del Carrito con Micro-animaciones ---
-        const btnAddCart = document.querySelectorAll('.btn-add-cart');
+        const container = document.getElementById('catalog-dynamic-container');
+        const sidebarNav = document.getElementById('catalogo-scrollspy');
+        if (!container || !sidebarNav) return;
         
+        try {
+            // 1. CARGA DE DATOS (SWR en Cliente = Instantáneo si hay caché)
+            const [navigationData, productsData] = await Promise.all([
+                getCatalogNavigation(),
+                getCatalogProducts()
+            ]);
+
+            // 2. RENDERIZADO DE SIDEBAR
+            sidebarNav.innerHTML = renderSidebar(navigationData);
+
+            // 3. MOTOR DE TRANSFORMACIÓN (Hash Map)
+            const productsByTable = productsData.reduce((acc: any, p: any) => {
+                const status = (p.estado || '').toLowerCase();
+                if (status !== 'activo') return acc;
+                if (!acc[p.tabla_id]) acc[p.tabla_id] = [];
+                acc[p.tabla_id].push(p);
+                return acc;
+            }, {});
+
+            const catalogSections = navigationData
+                .filter((nav: any) => nav.tabla_id)
+                .map((nav: any) => {
+                    const rawProducts = productsByTable[nav.tabla_id] || [];
+                    const sectionProducts = rawProducts.map((p: any) => {
+                        const formatPrice = (val: string) => {
+                            const clean = String(val).replace(/[^0-9]/g, '');
+                            return clean ? `$${Number(clean).toLocaleString('es-CO')}` : '$0.00';
+                        };
+
+                        return {
+                            id: `${p.tabla_id}-${p.producto.toLowerCase().replace(/[^a-z0-9]/gi, '-')}`,
+                            name: p.producto,
+                            description: p.descripcion_producto,
+                            requiresPreparation: ['si', '1', 'bajo pedido'].includes((p.requiere_elaboracion || '').toLowerCase()),
+                            badges: (p.badges || '').split('|').filter(Boolean).map((label: string) => ({
+                                label: label.trim(),
+                                variant: 'outline'
+                            })),
+                            farmaciaPrice: formatPrice(p.precio_farmacia),
+                            publicoPrice: formatPrice(p.precio_publico),
+                            cartData: {
+                                name: p.producto,
+                                price: String(p.precio_farmacia).replace(/[^0-9]/g, '')
+                            }
+                        };
+                    });
+
+                    return {
+                        id: nav.tabla_id,
+                        title: nav.titulo_mostrar,
+                        description: nav.descripcion,
+                        breadcrumb: [nav.nivel_1, nav.nivel_2, nav.nivel_3, nav.nivel_4].filter(Boolean),
+                        products: sectionProducts,
+                        presentacionLabel: nav.titulo_presentacion,
+                        farmaciaLabel: nav.titulo_precio_farmacia,
+                        publicoLabel: nav.titulo_precio_publico
+                    };
+                });
+
+            // 4. RENDERIZADO DE TABLAS
+            container.innerHTML = catalogSections.map(section => createCatalogTable(section)).join('');
+
+            // 5. RE-INICIALIZAR LISTENERS
+            initCatalogListeners();
+            initSidebarListeners();
+
+            // 6. AUTO-SCROLL SI HAY HASH
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+
+        } catch (error) {
+            console.error("Error hidatrando catálogo:", error);
+            container.innerHTML = '<div class="p-8 text-center text-slate-500">Error cargando el catálogo.</div>';
+        }
+    });
+
+    function initCatalogListeners() {
+        // --- Lógica del Carrito ---
+        const btnAddCart = document.querySelectorAll('.btn-add-cart');
         btnAddCart.forEach(btn => {
-            const button = btn as HTMLButtonElement;
-            button.addEventListener('click', () => {
+            btn.addEventListener('click', () => {
+                const button = btn as HTMLButtonElement;
                 const name = button.getAttribute('data-name');
                 const price = button.getAttribute('data-price');
-
-                // Lanzar evento para CartDrawer.astro
-                document.dispatchEvent(new CustomEvent('addToCart', {
-                    detail: { name, price }
-                }));
-
-                // Micro-animación: Mutación del botón (+ → ✓) usando átomos
+                document.dispatchEvent(new CustomEvent('addToCart', { detail: { name, price } }));
+                
                 const originalContent = button.innerHTML;
                 button.innerHTML = '<div class="flex items-center justify-center animate-fade-in"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>';
                 button.classList.add('is-success');
-                
                 setTimeout(() => {
                     button.innerHTML = originalContent;
                     button.classList.remove('is-success');
@@ -140,104 +169,143 @@ const catalogSections = navigationData
             });
         });
 
-        // --- 2. Cierre del Banner ---
+        // --- Cierre del Banner ---
         const btnCloseBanner = document.getElementById('close-banner');
         const infoBanner = document.getElementById('info-banner');
-        
         if (btnCloseBanner && infoBanner) {
             btnCloseBanner.addEventListener('click', () => {
                 infoBanner.style.opacity = '0';
                 infoBanner.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    infoBanner.style.display = 'none';
-                }, 300);
+                setTimeout(() => infoBanner.style.display = 'none', 300);
             });
         }
 
-        // --- 3. Motor de Búsqueda con Resaltado (Highlighter) ---
+        // --- Motor de Búsqueda ---
         const searchInput = document.getElementById('catalogo-search') as HTMLInputElement;
         const productRows = document.querySelectorAll('.catalog-row');
-
-        // Inicializamos los nombres originales para el resaltado
+        
         productRows.forEach(row => {
             const titleEl = row.querySelector('h3');
-            if (titleEl && !row.hasAttribute('data-original')) {
-                row.setAttribute('data-original', titleEl.textContent?.trim() || '');
-            }
+            if (titleEl) row.setAttribute('data-original', titleEl.textContent?.trim() || '');
         });
 
         if (searchInput) {
-            // Importación dinámica para el motor de búsqueda (Elite Security)
-            const { sanitizeInput } = await import('../utils/security');
-
-            searchInput.addEventListener('input', (e) => {
-                const rawValue = (e.target as HTMLInputElement).value;
-                const value = sanitizeInput(rawValue).toLowerCase().trim();
+            searchInput.addEventListener('input', async (e) => {
+                const { sanitizeInput } = await import('../utils/security');
+                const value = sanitizeInput((e.target as HTMLInputElement).value).toLowerCase().trim();
                 
                 productRows.forEach(row => {
                     const originalText = row.getAttribute('data-original') || '';
                     const titleEl = row.querySelector('h3');
                     if (!titleEl) return;
 
-                    // Si no hay búsqueda, restauramos todo
                     if (!value) {
                         row.classList.remove('hidden');
                         titleEl.textContent = originalText;
-                        
-                        // Cerramos secciones que podrían haber quedado vacías
                         const section = row.closest('section');
                         if (section) section.classList.remove('hidden');
                         return;
                     }
 
-                    // Si hay coincidencia
                     if (originalText.toLowerCase().includes(value)) {
                         row.classList.remove('hidden');
-                        
-                        // Aplicamos el resaltado Elite
                         const regex = new RegExp(`(${value})`, 'gi');
-                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold animate-fade-in">$1</mark>`);
-                        
-                        // Aseguramos que la sección sea visible
+                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold">$1</mark>`);
                         const section = row.closest('section');
                         if (section) section.classList.remove('hidden');
                     } else {
                         row.classList.add('hidden');
-                        
-                        // Si todas las filas de una sección están ocultas, ocultamos la sección entera
                         const section = row.closest('section');
                         if (section) {
                             const visibleRows = section.querySelectorAll('.catalog-row:not(.hidden)');
-                            if (visibleRows.length === 0) {
-                                section.classList.add('hidden');
-                            }
+                            if (visibleRows.length === 0) section.classList.add('hidden');
                         }
                     }
                 });
             });
         }
-        // --- 4. Herramientas de Diagnóstico (Elite Debug) ---
-        (window as any).__DEBUG_CATALOG__ = async () => {
-            console.log("🔍 Iniciando Auditoría de Datos del Catálogo...");
-            try {
-                const { getCatalogNavigation, getCatalogProducts } = await import('../data/api');
-                const nav = await getCatalogNavigation();
-                const products = await getCatalogProducts();
-                console.log("📍 Navegación:", nav);
-                console.log("📦 Productos:", products);
-                
-                if (nav.length === 0) console.warn("⚠️ Advertencia: La navegación está vacía.");
-                if (products.length === 0) console.warn("⚠️ Advertencia: La lista de productos está vacía.");
-                
-                return { nav, products };
-            } catch (err) {
-                console.error("❌ Error en el diagnóstico:", err);
+
+        // --- Lógica de Badges (Revelación Progresiva) ---
+        document.addEventListener('click', (e) => {
+            const btn = (e.target as HTMLElement).closest('.js-badge-toggle') as HTMLButtonElement;
+            if (!btn) return;
+
+            const targetId = btn.getAttribute('data-extra-toggle');
+            const extraCount = btn.getAttribute('data-extra-count');
+            const container = document.getElementById(targetId || '');
+            const label = btn.querySelector('.js-label');
+            const isExpanded = btn.getAttribute('data-expanded') === 'true';
+
+            if (!container || !label) return;
+
+            if (isExpanded) {
+                container.style.display = 'none';
+                label.textContent = `+${extraCount} más`;
+                btn.setAttribute('data-expanded', 'false');
+            } else {
+                container.style.display = 'contents';
+                label.textContent = 'Ver menos';
+                btn.setAttribute('data-expanded', 'true');
             }
+        });
+    }
+
+    function initSidebarListeners() {
+        const sidebarLinks = document.querySelectorAll('#catalogo-scrollspy .sidebar-link');
+        const triggers = document.querySelectorAll('.accordion-trigger');
+        const scrollContainer = document.getElementById('catalogo-main-scroll');
+        const sections = document.querySelectorAll('section[id]');
+
+        // Acordeones
+        const closeAllAccordions = (except: HTMLElement | null = null) => {
+            document.querySelectorAll('.accordion-content').forEach(el => {
+                const content = el as HTMLElement;
+                if (content !== except) {
+                    content.style.maxHeight = '0';
+                    const trigger = content.previousElementSibling;
+                    if (trigger) trigger.classList.remove('is-expanded');
+                }
+            });
         };
 
-        // Auto-ejecución si hay ?debug en la URL
-        if (window.location.search.includes('debug')) {
-            (window as any).__DEBUG_CATALOG__();
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling as HTMLElement;
+                if (!content) return;
+                const isExpanded = trigger.classList.contains('is-expanded');
+                closeAllAccordions(content);
+                if (isExpanded) {
+                    content.style.maxHeight = '0';
+                    trigger.classList.remove('is-expanded');
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    trigger.classList.add('is-expanded');
+                }
+            });
+        });
+
+        // ScrollSpy
+        if (scrollContainer && sections.length) {
+            const observerOptions = {
+                root: scrollContainer,
+                rootMargin: '-30% 0px -60% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const currentId = entry.target.getAttribute('id');
+                        const activeLink = document.querySelector(`#catalogo-scrollspy a[href="#${currentId}"]`);
+                        if (activeLink) {
+                            sidebarLinks.forEach(l => l.classList.remove('is-active'));
+                            activeLink.classList.add('is-active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
         }
-    });
+    }
 </script>

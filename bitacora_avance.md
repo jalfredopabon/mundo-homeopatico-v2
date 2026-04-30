@@ -413,3 +413,14 @@
     - **Telemetría de Diagnóstico:** Creación de `__DEBUG_CATALOG__` para auditoría en tiempo real desde la consola del navegador.
 - **Resultado:** Conexión robusta, error-proof y jerarquía visual optimizada 1:1 con los estándares Elite.
 
+## Hito 60: Catálogo Elite v2.0 - Hidratación Dinámica y SWR (30/04/2026)
+**Estado:** Completado ✅
+**Descripción:** Eliminación total de cuellos de botella en la carga del catálogo mediante la transición de SSR bloqueante a Hidratación Dinámica en Cliente.
+**Acciones:**
+- **Zero-Blocking Architecture:** El servidor ya no espera a Google Sheets; envía un esqueleto (Skeleton) instantáneo.
+- **SWR Hydration:** Implementación de `getCatalogNavigation` y `getCatalogProducts` en el cliente con persistencia en `localStorage`.
+- **Renderizado Unificado:** Creación de `catalogo-renderer.ts` y `sidebar-renderer.ts` para replicar el diseño premium de Astro en JavaScript.
+- **Optimización de Datos:** Uso de Hash Maps para indexación $O(N+M)$, eliminando loops anidados ineficientes.
+- **Restauración Funcional:** Sincronización de listeners para búsqueda en tiempo real, expansión de badges y sistema de carrito.
+**Resultado:** Carga instantánea tras la primera visita y mejora drástica en el LCP y TBT del sitio.
+

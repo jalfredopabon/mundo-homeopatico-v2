@@ -57,6 +57,15 @@
 ### Estado Actual
 - **Navegación:** 100% Sincronizada y fluida (UX Matemática).
 - **UI/UX:** Consistencia visual total; ritmo vertical restaurado y funcional.
+- **Catálogo:** Sistema de productos `createProductRow` recalibrado para paridad 1:1 con Elite (Badges, Títulos, Precios).
+
+## [2026-05-01] Hito: Calibración Elite Catalog UI y Sistema de Badges
+1.  **Padding Universal (32px):** Estandarización de `px-8` en cabeceras y filas de tabla para alineación de plomada impecable.
+2.  **Product Row Pro:** Rediseño de la fila de producto con tipografía dinámica, descripciones `slate-600` y etiquetas de precio optimizadas para móvil.
+3.  **Sistema de Badges Dinámicos:**
+    - Implementación del toggle `+N más` con persistencia visual.
+    - Nuevo badge de "Requiere elaboración" con semántica de alerta (Ámbar) e iconografía clock.
+    - Variante `badge-elite--outline` añadida al sistema de diseño global.
 
 ## Próximos Pasos
 1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.

@@ -74,6 +74,7 @@ export const CatalogNavigationSchema = z.object({
 export const CatalogProductSchema = z.object({
     tabla_id: z.union([z.string(), z.number()]).transform(val => String(val)),
     producto: z.union([z.string(), z.number()]).transform(val => String(val)),
+    presentacion: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
     requiere_elaboracion: z.string().optional().default(''),
     descripcion_producto: z.string().optional().default(''),
     badges: z.string().optional().default(''),
@@ -176,7 +177,11 @@ function normalizeKeys(obj: any): any {
     if (Array.isArray(obj)) return obj.map(normalizeKeys);
     if (obj !== null && typeof obj === 'object') {
         return Object.keys(obj).reduce((acc, key) => {
-            let normalizedKey = key.toLowerCase().trim().replace(/\s+/g, '_');
+            let normalizedKey = key.toLowerCase()
+                .trim()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, '_');
             
             // 🛡️ Mapeo de Alias de Auditoría (Proyecto Anterior)
             if (normalizedKey === 'tablas_id') normalizedKey = 'tabla_id';
@@ -279,7 +284,7 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
  * Obtiene la estructura de navegación del catálogo (navegacion)
  */
 export async function getCatalogNavigation(): Promise<CatalogNavigation[]> {
-    return fetchWithSWR('cat_nav', async () => {
+    return fetchWithSWR('cat_nav_v4', async () => {
         try {
             const response = await robustFetch(`${GAS_WEBAPP_URL}?action=navegacion&key=${SECRET_KEY}`);
             const rawData = await response.json();
@@ -302,7 +307,7 @@ export async function getCatalogNavigation(): Promise<CatalogNavigation[]> {
  * Obtiene la lista completa de precios/productos del catálogo (lista_precios)
  */
 export async function getCatalogProducts(): Promise<CatalogProduct[]> {
-    return fetchWithSWR('cat_products', async () => {
+    return fetchWithSWR('cat_products_v4', async () => {
         try {
             const response = await robustFetch(`${GAS_WEBAPP_URL}?action=lista_precios&key=${SECRET_KEY}`);
             const rawData = await response.json();

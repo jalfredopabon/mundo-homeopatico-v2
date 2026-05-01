@@ -24,39 +24,48 @@ export function createProductRow(product: any): string {
     return `
         <div class="catalog-row group/row">
             <div class="flex flex-col w-full min-w-0 pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
+                <!-- Línea de Título y Estado -->
                 <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                    <h3 class="text-slate-900 font-bold leading-tight text-dynamic-content">
+                    <h3 class="text-slate-900 font-bold leading-tight text-dynamic-content tracking-tight">
                         ${product.name}
                         <span style="display: none !important;" aria-hidden="true">
                             ${product.badges.map((b: any) => b.label).join(' ')}
                         </span>
                     </h3>
+
+                    ${product.presentacion ? `
+                        <div class="text-slate-500 font-medium text-[12px] sm:text-[13px] leading-tight mt-0.5">
+                            ${product.presentacion}
+                        </div>
+                    ` : ''}
                     
                     ${product.requiresPreparation ? `
-                        <div class="badge-status-alert">
+                        <div class="badge-status-alert shadow-sm shadow-amber-200/20">
                             ${ICONS.clock}
                             <span>Requiere elaboración</span>
                         </div>
                     ` : ''}
                 </div>
 
+                <!-- Descripción -->
                 ${product.description ? `
-                    <p class="catalog-description text-slate-700 mt-1">
+                    <p class="catalog-description text-slate-600 mt-1.5 leading-relaxed text-[13px] sm:text-[14px]">
                         ${product.description}
                     </p>
                 ` : ''}
 
+                <!-- Hub de Badges -->
                 ${product.badges.length > 0 ? `
-                    <div class="flex flex-wrap items-center gap-2 mt-2">
+                    <div class="flex flex-wrap items-center gap-1.5 mt-3">
                         ${visibleBadges.map((badge: any) => `
-                            <span class="badge-elite badge-elite--outline text-[10px] px-2 py-0.5">${badge.label}</span>
+                            <span class="badge-elite badge-elite--outline">${badge.label}</span>
                         `).join('')}
 
                         ${extraCount > 0 ? `
                             <span id="${extraId}" style="display: none;">
                                 ${hiddenBadges.map((badge: any) => `
-                                    <span class="inline-flex m-1">
-                                        <span class="badge-elite badge-elite--outline text-[10px] px-2 py-0.5">${badge.label}</span>
+                                    <span class="inline-flex m-0.5">
+                                        <span class="badge-elite badge-elite--outline">${badge.label}</span>
                                     </span>
                                 `).join('')}
                             </span>
@@ -64,9 +73,8 @@ export function createProductRow(product: any): string {
                             <button 
                                 id="${extraId}-btn"
                                 data-expanded="false"
-                                data-extra-toggle="${extraId}"
-                                data-extra-count="${extraCount}"
-                                class="badge-elite badge-elite--emerald px-2 py-0.5 text-[9px] font-bold flex items-center gap-1 cursor-pointer hover:bg-emerald-100 transition-all group/extra ml-0.5 js-badge-toggle"
+                                class="badge-elite badge-elite--emerald px-2 py-0.5 text-[9px] font-medium flex items-center gap-1 cursor-pointer hover:bg-emerald-100 transition-all group/extra ml-0.5 js-badge-toggle"
+                                onclick="toggleBadges(this, '${extraId}', ${extraCount})"
                             >
                                 <span class="js-label">+${extraCount} más</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-data-[expanded=true]/extra:rotate-180"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -76,15 +84,16 @@ export function createProductRow(product: any): string {
                 ` : ''}
             </div>
 
+            <!-- Hub de Precios y Acciones -->
             <div class="catalog-price-hub">
-                <div class="flex flex-row flex-wrap items-center gap-x-4 gap-y-1.5 sm:contents">
-                    <div class="flex items-center gap-1.5 sm:block text-left sm:text-right">
-                        <span class="sm:hidden text-[10px] text-slate-400 font-medium">Farmacia:</span>
-                        <span class="catalog-cell-price">${product.farmaciaPrice || '$0.00'}</span>
+                <div class="flex flex-row flex-wrap items-center gap-x-6 gap-y-1.5 sm:contents">
+                    <div class="flex items-center gap-2 sm:block text-left sm:text-right">
+                        <span class="sm:hidden text-[10px] text-slate-400 font-bold tracking-wider">FARMACIA:</span>
+                        <span class="catalog-cell-price text-[14px] sm:text-[15px]">${product.farmaciaPrice || '$0.00'}</span>
                     </div>
-                    <div class="flex items-center gap-1.5 sm:block text-left sm:text-right">
-                        <span class="sm:hidden text-[10px] text-slate-400">Público:</span>
-                        <span class="catalog-cell-price">${product.publicoPrice || '$0.00'}</span>
+                    <div class="flex items-center gap-2 sm:block text-left sm:text-right">
+                        <span class="sm:hidden text-[10px] text-slate-400 font-bold tracking-wider">PÚBLICO:</span>
+                        <span class="catalog-cell-price text-[14px] sm:text-[15px]">${product.publicoPrice || '$0.00'}</span>
                     </div>
                 </div>
 
@@ -93,6 +102,7 @@ export function createProductRow(product: any): string {
                         class="catalog-btn-add btn-add-cart !w-10 sm:!w-10" 
                         data-name="${product.cartData?.name || product.name}" 
                         data-price="${product.cartData?.price || '0'}"
+                        title="Añadir al carrito"
                     >
                         <div class="flex items-center justify-center">${ICONS.plus}</div>
                     </button>

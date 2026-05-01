@@ -738,8 +738,13 @@ input[type="search"] {
   
   /* Badges Elite (ADN Online) */
   .badge-elite {
-    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-medium tracking-normal rounded border transition-all;
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-bold tracking-normal rounded-md border transition-all select-none;
     text-transform: capitalize;
+  }
+  .badge-elite--outline,
+  .badge-elite--neutral {
+    @apply bg-slate-50/50 text-slate-500 border-slate-200/60 font-medium;
+    text-transform: none;
   }
   .badge-elite--violet { 
     background-color: color-mix(in srgb, #8b5cf6 8%, transparent);
@@ -851,7 +856,7 @@ input[type="search"] {
   }
 
   .catalog-description {
-    @apply text-slate-600 leading-relaxed mt-2 font-normal max-w-3xl;
+    @apply text-slate-600 leading-relaxed mt-2 font-normal max-w-5xl;
   }
 
   .catalog-table-shell {
@@ -859,11 +864,11 @@ input[type="search"] {
   }
 
   .catalog-table-header {
-    @apply hidden sm:grid grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-4 items-center bg-white border-b border-subtle py-3.5 px-6 text-[12px] font-bold text-slate-700 tracking-wide;
+    @apply hidden sm:grid grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-4 items-center bg-white border-b border-subtle py-3.5 px-8 text-[12px] font-bold text-slate-700 tracking-wide;
   }
 
   .catalog-row {
-    @apply flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-[1.15rem] px-6 border-b border-subtle transition-all relative z-0 hover:z-10 cursor-pointer hover:bg-surface-muted hover:ring-2 hover:ring-inset hover:ring-white;
+    @apply flex flex-col sm:grid sm:grid-cols-[1fr_120px_120px_70px] md:grid-cols-[1fr_130px_130px_100px] gap-2 sm:gap-4 sm:items-center py-6 px-8 border-b border-subtle transition-all relative z-0 hover:z-10 cursor-pointer hover:bg-surface-muted hover:ring-2 hover:ring-inset hover:ring-white;
   }
 
   .catalog-cell-price {
@@ -1184,8 +1189,8 @@ input[type="search"] {
   /* --- 🏷️ Micropíldoras de Estado (Tokenizadas) --- */
   .badge-status-alert {
     @apply inline-flex items-center gap-1.5;
-    @apply bg-sky-50/50 text-sky-700 border border-sky-100/80;
-    @apply px-1.5 py-0.5 rounded-md;
+    @apply bg-amber-50/60 text-amber-700 border border-amber-200/50;
+    @apply px-2 py-0.5 rounded-md;
     @apply text-[10px] font-medium leading-tight whitespace-nowrap;
     transition: all 0.2s ease-in-out;
   }

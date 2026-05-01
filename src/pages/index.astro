@@ -83,6 +83,8 @@ import Icons from '../components/shared/Icons.astro';
             sidebarNav.innerHTML = renderSidebar(navigationData);
 
             // 3. MOTOR DE TRANSFORMACIÓN (Hash Map)
+            const cleanText = (val: string) => (val || '').replace(/\^|\\n/g, '<br>');
+
             const productsByTable = productsData.reduce((acc: any, p: any) => {
                 const status = (p.estado || '').toLowerCase();
                 if (status !== 'activo') return acc;
@@ -103,10 +105,11 @@ import Icons from '../components/shared/Icons.astro';
 
                         return {
                             id: `${p.tabla_id}-${p.producto.toLowerCase().replace(/[^a-z0-9]/gi, '-')}`,
-                            name: p.producto,
-                            description: p.descripcion_producto,
-                            requiresPreparation: ['si', '1', 'bajo pedido'].includes((p.requiere_elaboracion || '').toLowerCase()),
-                            badges: (p.badges || '').split('|').filter(Boolean).map((label: string) => ({
+                            name: cleanText(p.producto),
+                            presentacion: cleanText(p.presentacion),
+                            description: cleanText(p.descripcion_producto || p.description_producto),
+                            requiresPreparation: ['si', '1', 'bajo pedido', 'requiere elaboración', 'elaboración'].some(term => (p.requiere_elaboracion || '').toLowerCase().trim().includes(term)),
+                            badges: (p.badges || '').split(/[|;]/).filter(Boolean).map((label: string) => ({
                                 label: label.trim(),
                                 variant: 'outline'
                             })),
@@ -121,8 +124,8 @@ import Icons from '../components/shared/Icons.astro';
 
                     return {
                         id: nav.tabla_id,
-                        title: nav.titulo_mostrar,
-                        description: nav.descripcion,
+                        title: cleanText(nav.titulo_mostrar),
+                        description: cleanText(nav.descripcion),
                         breadcrumb: [nav.nivel_1, nav.nivel_2, nav.nivel_3, nav.nivel_4].filter(Boolean),
                         products: sectionProducts,
                         presentacionLabel: nav.titulo_presentacion,
@@ -233,13 +236,8 @@ import Icons from '../components/shared/Icons.astro';
         }
 
         // --- Lógica de Badges (Revelación Progresiva) ---
-        document.addEventListener('click', (e) => {
-            const btn = (e.target as HTMLElement).closest('.js-badge-toggle') as HTMLButtonElement;
-            if (!btn) return;
-
-            const targetId = btn.getAttribute('data-extra-toggle');
-            const extraCount = btn.getAttribute('data-extra-count');
-            const container = document.getElementById(targetId || '');
+        (window as any).toggleBadges = (btn: HTMLButtonElement, targetId: string, extraCount: number) => {
+            const container = document.getElementById(targetId);
             const label = btn.querySelector('.js-label');
             const isExpanded = btn.getAttribute('data-expanded') === 'true';
 
@@ -254,7 +252,7 @@ import Icons from '../components/shared/Icons.astro';
                 label.textContent = 'Ver menos';
                 btn.setAttribute('data-expanded', 'true');
             }
-        });
+        };
     }
 
     function initSidebarListeners() {

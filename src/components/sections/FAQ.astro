@@ -4,61 +4,6 @@
  * Arquitectura Elite: Datos centralizados y lógica modular.
  */
 import Icons from "../shared/Icons.astro";
-
-const faqs = [
-    {
-        id: "faq-1",
-        question: "¿Realizan envíos a nivel nacional para distribuidores B2B?",
-        paragraphs: [
-            "Sí, cubrimos logísticamente todas las ciudades principales e intermedias de Colombia utilizando flotas refrigeradas y especializadas según la cadena de frío necesaria de cada lote homeopático."
-        ],
-        isOpen: false
-    },
-    {
-        id: "faq-2",
-        question: "¿Cuáles son los requisitos para ser distribuidor autorizado?",
-        paragraphs: [
-            "Para garantizar la integridad y trazabilidad de nuestros productos, los requisitos mínimos normativos son:"
-        ],
-        list: [
-            "Registro mercantil vigente (cámara de comercio).",
-            "Resolución de funcionamiento de la secretaría de salud.",
-            "Certificación de estándares de almacenamiento técnico."
-        ],
-        isOpen: false
-    },
-    {
-        id: "faq-3",
-        question: "¿En qué horarios puedo realizar mis pedidos o recibir asesoría técnica?",
-        paragraphs: [
-            "Nuestro equipo administrativo y técnico está disponible para atenderle de Lunes a Viernes de 8:00 AM a 6:00 PM (jornada continua) y los Sábados de 8:00 AM a 12:00 PM.",
-            "Para asesorías magistrales urgentes fuera de estos horarios, puede contactar a su asesor de cuenta asignado."
-        ],
-        isOpen: false
-    },
-    {
-        id: "faq-4",
-        question: "¿Qué medios de pago aceptan para compras mayoristas?",
-        paragraphs: [
-            "Para su comodidad, aceptamos los siguientes métodos de pago:"
-        ],
-        list: [
-            "Transferencias electrónicas (Bancolombia, Banco de Occidente).",
-            "Portal de pagos PSE integrado en nuestra plataforma.",
-            "Línea de crédito comercial a 30 días (Sujeto a estudio y aprobación de cupo)."
-        ],
-        isOpen: false
-    },
-    {
-        id: "faq-5",
-        question: "¿Cuál es el tiempo estimado de entrega para pedidos nacionales?",
-        paragraphs: [
-            "El tiempo estimado de entrega depende de la ubicación de su farmacia o centro médico:",
-            "Para ciudades principales es de 24 a 48 horas hábiles tras la confirmación del pedido, y sedes intermedias y poblaciones de 3 a 5 días hábiles, garantizando siempre las condiciones de almacenamiento durante el tránsito."
-        ],
-        isOpen: false
-    }
-];
 ---
 
 <section id="faq" class="scroll-mt-10">
@@ -66,65 +11,74 @@ const faqs = [
         <h2 class="section-title">Preguntas frecuentes</h2>
         <p class="section-subtitle">Respondemos a las inquietudes más comunes.</p>
     </header>
-    <div class="faq-container">
-            {faqs.map((faq) => (
-                <div class={`faq-item ${faq.isOpen ? 'is-open' : ''}`}>
-                <button class="faq-header">
-                    <span class="faq-title">{faq.question}</span>
-                    <div class="faq-icon-box">
-                        <Icons type="chevron-down" class="icon-closed" strokeWidth={2} />
-                        <Icons type="chevron-up" class="icon-opened" strokeWidth={2} />
-                    </div>
-                </button>
-                <div class="faq-content-wrapper">
-                    <div class="overflow-hidden">
-                        <div class="faq-content-inner">
-                            {faq.paragraphs && faq.paragraphs.map(p => (
-                                <p class={faq.list ? "mb-4" : ""}>{p}</p>
-                            ))}
-                            {faq.list && (
-                                <ul class="faq-list">
-                                    {faq.list.map(item => (
-                                        <li class="faq-list-item">
-                                            <div class="faq-check-box">
-                                                <Icons type="check" class="w-3.5 h-3.5" strokeWidth={3} />
-                                            </div>
-                                            <span class="faq-list-text">{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                    </div>
-                </div>
+    
+    <div id="faq-container" class="faq-container">
+        <!-- Skeleton Loading -->
+        {[1, 2, 3, 4].map(() => (
+            <div class="animate-pulse mb-4 border border-slate-100 rounded-xl p-6">
+                <div class="h-5 bg-slate-100 rounded w-3/4 mb-4"></div>
+                <div class="h-3 bg-slate-50 rounded w-1/2"></div>
             </div>
         ))}
     </div>
 </section>
 
-
 <script>
-    /**
-     * Lógica interactiva minimalista para FAQ (Arquitectura Elite)
-     * Implementa comportamiento exclusivo (abre uno, cierra los demás).
-     */
-    document.addEventListener('astro:page-load', () => {
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const header = item.querySelector('.faq-header');
+    import { getFAQData } from "../../data/api";
+    import { renderFAQList } from "../../utils/faq-renderer";
+
+    document.addEventListener('astro:page-load', async () => {
+        const container = document.getElementById('faq-container');
+        if (!container) return;
+
+        try {
+            const faqs = await getFAQData();
+            container.innerHTML = renderFAQList(faqs);
+            initAccordionLogic();
+        } catch (e) {
+            console.error("Error al cargar FAQs:", e);
+            container.innerHTML = '<p class="text-center py-8 text-slate-500">Error al cargar la información.</p>';
+        }
+
+        function initAccordionLogic() {
+            const faqItems = container.querySelectorAll('.faq-item');
             
-            header?.addEventListener('click', () => {
-                const isCurrentlyOpen = item.classList.contains('is-open');
+            faqItems.forEach(item => {
+                const header = item.querySelector('.faq-header');
+                const contentWrapper = item.querySelector('.faq-content-wrapper') as HTMLElement;
                 
-                // Comportamiento Exclusivo: Ocultar los demás suavemente
-                faqItems.forEach(i => i.classList.remove('is-open'));
-                
-                // Abrir solo si no estaba abierto antes (Toggle inteligente)
-                if (!isCurrentlyOpen) {
-                    item.classList.add('is-open');
-                }
+                header?.addEventListener('click', () => {
+                    const isCurrentlyOpen = item.classList.contains('is-open');
+                    
+                    // Cerrar todos los demás
+                    faqItems.forEach(i => {
+                        const otherWrapper = i.querySelector('.faq-content-wrapper') as HTMLElement;
+                        i.classList.remove('is-open');
+                        if (otherWrapper) otherWrapper.style.height = '0px';
+                        
+                        // Switch icons
+                        const closedIcon = i.querySelector('.icon-closed');
+                        const openedIcon = i.querySelector('.icon-opened');
+                        closedIcon?.classList.remove('hidden');
+                        openedIcon?.classList.add('hidden');
+                    });
+                    
+                    // Abrir este si no estaba abierto
+                    if (!isCurrentlyOpen) {
+                        item.classList.add('is-open');
+                        const inner = item.querySelector('.faq-content-inner');
+                        if (inner && contentWrapper) {
+                            contentWrapper.style.height = `${inner.scrollHeight}px`;
+                        }
+                        
+                        // Switch icons
+                        const closedIcon = item.querySelector('.icon-closed');
+                        const openedIcon = item.querySelector('.icon-opened');
+                        closedIcon?.classList.add('hidden');
+                        openedIcon?.classList.remove('hidden');
+                    }
+                });
             });
-        });
+        }
     });
 </script>

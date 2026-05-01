@@ -54,6 +54,42 @@ export const VademecumProtocoloSchema = z.object({
 export type VademecumMaestro = z.infer<typeof VademecumMaestroSchema>;
 export type VademecumProtocolo = z.infer<typeof VademecumProtocoloSchema>;
 
+// --- ESQUEMA PARA VIDEO ---
+export const VideoSchema = z.object({
+    nombre_del_video: z.string().optional().default(''),
+    url: z.string().optional().default(''),
+});
+
+export type VideoData = z.infer<typeof VideoSchema>;
+
+// --- ESQUEMA PARA FAQ ---
+export const FAQSchema = z.object({
+    pregunta: z.string().optional().default(''),
+    respuesta: z.string().optional().default(''),
+});
+
+export type FAQData = z.infer<typeof FAQSchema>;
+
+// --- ESQUEMA PARA DISTRIBUIDORES ---
+export const DistributorSchema = z.object({
+    nombre: z.string().optional().default(''),
+    ciudad: z.string().optional().default(''),
+    direccion: z.string().optional().default(''),
+    whatsapp: z.string().optional().default(''),
+    telefono: z.string().optional().default(''),
+    estado: z.string().optional().default('activo'),
+});
+
+export type DistributorData = z.infer<typeof DistributorSchema>;
+
+// --- ESQUEMA PARA CONFIGURACIÓN (CONFIG) ---
+export const ConfigSchema = z.object({
+    id: z.string(),
+    contenido: z.string().optional().default(''),
+});
+
+export type ConfigData = z.infer<typeof ConfigSchema>;
+
 // --- ESQUEMAS PARA CATÁLOGO (HIERARCHY & PRICES) ---
 
 // Esquema para la estructura de navegación (navegacion)
@@ -190,6 +226,15 @@ function normalizeKeys(obj: any): any {
             if (normalizedKey === 'encabezado_2') normalizedKey = 'titulo_precio_farmacia';
             if (normalizedKey === 'encabezado_3') normalizedKey = 'titulo_precio_publico';
             
+            // 🏢 Mapeo para Sedes / Distribuidores
+            if (normalizedKey === 'sedes') normalizedKey = 'nombre';
+            if (normalizedKey === 'departamento') normalizedKey = 'ciudad';
+            if (normalizedKey === 'whatsapp_1') normalizedKey = 'whatsapp';
+            if (normalizedKey === 'telefono_fijo_1') normalizedKey = 'telefono';
+            
+            // 🎬 Mapeo para Video
+            if (normalizedKey === 'nombre' && obj.url) normalizedKey = 'nombre_del_video';
+            
             acc[normalizedKey] = obj[key];
             return acc;
         }, {} as any);
@@ -322,6 +367,86 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
         } catch (error: any) {
             console.warn('API Error (Lista de Precios):', error?.message || String(error));
             return [];
+        }
+    });
+}
+
+/**
+ * Obtiene la configuración del video institucional (video)
+ */
+export async function getVideoData(): Promise<VideoData | null> {
+    return fetchWithSWR('site_video_v1', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=video&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            
+            if (Array.isArray(cleanData) && cleanData.length > 0) {
+                return VideoSchema.parse(cleanData[0]);
+            }
+            return null;
+        } catch (error: any) {
+            console.warn('API Error (Video):', error?.message || String(error));
+            return null;
+        }
+    });
+}
+
+/**
+ * Obtiene las preguntas frecuentes (faq)
+ */
+export async function getFAQData(): Promise<FAQData[]> {
+    return fetchWithSWR('site_faq_v1', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=faq&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            
+            if (Array.isArray(cleanData)) {
+                return z.array(FAQSchema.passthrough()).parse(cleanData);
+            }
+            return [];
+        } catch (error: any) {
+            console.warn('API Error (FAQ):', error?.message || String(error));
+        }
+    });
+}
+
+/**
+ * Obtiene la lista de distribuidores (distribuidores)
+ */
+export async function getDistributors(): Promise<DistributorData[]> {
+    return fetchWithSWR('site_distributors_v1', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=distribuidores&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            
+            if (Array.isArray(cleanData)) {
+                return z.array(DistributorSchema.passthrough()).parse(cleanData)
+                    .filter(d => (d.estado || '').toLowerCase() === 'activo');
+            }
+            return [];
+        } catch (error: any) {
+            console.warn('API Error (Distribuidores):', error?.message || String(error));
+            return [];
+        }
+    });
+}
+
+/**
+ * Obtiene la configuración global del sitio (config)
+ */
+export async function getConfigData(): Promise<Record<string, string>> {
+    return fetchWithSWR('site_config_v1', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=config&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            // El nuevo GAS v2.1 ya entrega un objeto plano {clave: valor}
+            return normalizeKeys(rawData);
+        } catch (error: any) {
+            console.warn('API Error (Config):', error?.message || String(error));
+            return {};
         }
     });
 }

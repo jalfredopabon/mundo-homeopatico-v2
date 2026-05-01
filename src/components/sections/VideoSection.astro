@@ -81,13 +81,33 @@ import Icons from "../shared/Icons.astro";
         }, { threshold: 0.1 });
 
         if (videoSection) observer.observe(videoSection);
+        
+        // Helper para extraer ID de Youtube
+        function getYouTubeId(url: string) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
 
-        function initVideoLogic() {
+        async function initVideoLogic() {
             const playBtn = document.getElementById('play-video-btn');
             const closeBtn = document.getElementById('close-video');
             const overlay = document.getElementById('youtube-overlay');
             const iframe = document.getElementById('youtube-iframe') as HTMLIFrameElement;
-            const videoId = "ZCkVmauoVVo";
+            
+            // Fallback ID original
+            let videoId = "ZCkVmauoVVo";
+
+            try {
+                const { getVideoData } = await import('../../data/api');
+                const videoData = await getVideoData();
+                if (videoData && videoData.url) {
+                    const dynamicId = getYouTubeId(videoData.url);
+                    if (dynamicId) videoId = dynamicId;
+                }
+            } catch (e) {
+                console.warn("No se pudo cargar el video desde Sheets, usando fallback.");
+            }
 
             if (playBtn && overlay && iframe) {
                 playBtn.addEventListener('click', () => {

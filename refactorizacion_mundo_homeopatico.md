@@ -67,6 +67,13 @@
     - Nuevo badge de "Requiere elaboración" con semántica de alerta (Ámbar) e iconografía clock.
     - Variante `badge-elite--outline` añadida al sistema de diseño global.
 
+## [2026-05-01] Hito: Conexión Universal - Secciones Institucionales (Elite SWR)
+1.  **Infraestructura de Datos (api.ts):** Expansión del motor de datos para soportar `video`, `faq`, `distribuidores` y `config` (Configuración global).
+2.  **Zero-Blocking FAQ:** Implementación de renderizado dinámico para acordeones con soporte de mini-lenguaje (`^` para párrafos, `|` para listas).
+3.  **Sedes Dinámicas:** Conexión de la sede principal vía `CONFIG` y grilla de distribuidores automatizada.
+4.  **Video Gateway:** Dinamización del video institucional con extractor de ID de YouTube integrado.
+5.  **UX Resiliente:** Implementación de Skeletons y caché SWR en todas las secciones institucionales para carga instantánea (0ms).
+
 ## Próximos Pasos
 1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.
 2.  **Dashboard de Usuario:** Sincronización de perfiles médicos con el nuevo diseño.

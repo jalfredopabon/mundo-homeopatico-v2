@@ -7,11 +7,6 @@ import Icons from "../shared/Icons.astro";
 import ButtonElite from "../shared/ButtonElite.astro";
 
 // TODO: migrar a data layer / CMS
-const branchDistributors = [
-    { name: "Distribuidora occidente", city: "Medellín", email: "medellin@mundohomeo.co" },
-    { name: "Sede valle del Cauca", city: "Cali", email: "cali@mundohomeo.co" },
-    { name: "Farma costa norte", city: "Barranquilla", email: "barranquilla@mundohomeo.co" }
-];
 ---
 
 <section id="sedes" class="scroll-mt-10">
@@ -26,7 +21,6 @@ const branchDistributors = [
             <div class="flex flex-1 flex-col justify-between p-8 lg:p-12">
                 <div class="flex items-center gap-6 mb-10">
                         <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shrink-0">
-                        <!-- Icono Edificios (Hugeicons) -->
                         <Icons type="building" class="w-5 h-5" strokeWidth={2} />
                     </div>
                     <div>
@@ -37,26 +31,22 @@ const branchDistributors = [
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
-                                <!-- Icono Dirección/Ubicación (Hugeicons) -->
                                 <Icons type="map-pin" class="w-5 h-5" strokeWidth={2} />
                                 <span class="text-[11px] font-bold text-slate-700">Dirección</span>
                             </div>
-                            <p class="text-body leading-relaxed font-semibold text-[15px]">Calle Ficticia 123<br>Edificio de Ejemplo, Piso 0<br>Bogotá D.C.</p>
+                            <p id="main-branch-address" class="text-body leading-relaxed font-semibold text-[15px]">Cargando dirección...</p>
                         </div>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
-                                <!-- Icono Horarios (Hugeicons) -->
                                 <Icons type="clock" class="w-5 h-5" strokeWidth={2} />
                                 <span class="text-[11px] font-bold text-slate-700">Horarios</span>
                             </div>
-                            <p class="text-body leading-relaxed text-[15px]">
-                                <span class="font-bold">Lunes a viernes:</span> 8:00 AM - 6:00 PM<br> <span class="font-bold">Sábados:</span> 9:00 AM - 1:00 PM
-                            </p>
+                            <p id="main-branch-hours" class="text-body leading-relaxed text-[15px]">Cargando horarios...</p>
                         </div>
                     </div>
                 <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                    <ButtonElite variant="primary" size="lg" icon="whatsapp" label="310 000 0000" />
-                    <ButtonElite variant="outline" size="lg" icon="phone" label="320 000 0000" />
+                    <ButtonElite id="main-branch-whatsapp" variant="primary" size="lg" icon="whatsapp" label="WhatsApp" />
+                    <ButtonElite id="main-branch-phone" variant="outline" size="lg" icon="phone" label="Llamar" />
                 </div>
             </div>
             <div class="relative w-full lg:w-[40%] min-h-[300px] lg:min-h-0 bg-surface-muted overflow-hidden border-l border-subtle/50">
@@ -68,7 +58,6 @@ const branchDistributors = [
                             <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-surface-white border-r border-b border-subtle rotate-45"></div>
                         </div>
                         <div class="relative flex items-center justify-center h-12 w-12 bg-brand rounded-xl text-surface-white border-4 border-surface-white">
-                            <!-- Icono Ubicación/Pin (Hugeicons) -->
                             <Icons type="map-pin" class="w-6 h-6" strokeWidth={2.2} />
                         </div>
                     </div>
@@ -77,32 +66,50 @@ const branchDistributors = [
         </div>
 
         <!-- Grilla de Distribuidores -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branchDistributors.map((distributor) => (
-                <div class="bg-surface-white rounded-2xl p-6 border border-subtle hover:border-brand transition-all group flex flex-col">
-                    <div class="flex items-center gap-3.5 mb-5">
-                        <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-colors duration-300">
-                            <!-- Icono Edificios (Hugeicons) -->
-                            <Icons type="building" class="w-5 h-5" strokeWidth={2} />
-                        </div>
-                        <div class="flex flex-col gap-0.5">
-                            <h4 class="text-[16px] font-bold text-secondary leading-snug">{distributor.name}</h4>
-                            <p class="text-slate-700 text-[12px] font-bold">{distributor.city}</p>
+        <div id="distributors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Skeletons -->
+            {[1, 2, 3].map(() => (
+                <div class="animate-pulse bg-slate-50/50 rounded-2xl h-[220px] border border-slate-100 p-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl"></div>
+                        <div class="flex-1">
+                            <div class="h-4 bg-slate-100 rounded w-3/4 mb-2"></div>
+                            <div class="h-3 bg-slate-50 rounded w-1/4"></div>
                         </div>
                     </div>
-                    <div class="mb-5 space-y-1.5">
-                        <div class="flex items-center gap-2.5 text-brand">
-                            <Icons type="map-pin" class="w-3.5 h-3.5" strokeWidth={2} />
-                            <span class="text-[11px] font-bold text-slate-700">Dirección</span>
-                        </div>
-                        <p class="text-slate-500 text-[13px] font-medium leading-relaxed">Calle Ficticia 123<br>Bogotá D.C.</p>
-                    </div>
-                    <div class="mt-auto space-y-2.5">
-                        <ButtonElite variant="primary" size="md" icon="whatsapp" label="310 000 0000" />
-                        <ButtonElite variant="outline" size="md" icon="phone" label="300 000 0000" />
+                    <div class="space-y-3">
+                        <div class="h-3 bg-slate-50 rounded w-full"></div>
+                        <div class="h-3 bg-slate-50 rounded w-2/3"></div>
                     </div>
                 </div>
             ))}
         </div>
     </div>
 </section>
+
+<script>
+    import { getConfigData, getDistributors } from "../../data/api";
+    import { renderDistributorGrid, updateMainBranchUI } from "../../utils/locations-renderer";
+
+    document.addEventListener('astro:page-load', async () => {
+        const gridContainer = document.getElementById('distributors-grid');
+        
+        // Cargar Configuración y Distribuidores en paralelo
+        try {
+            const [config, distributors] = await Promise.all([
+                getConfigData(),
+                getDistributors()
+            ]);
+
+            // Actualizar Sede Principal
+            updateMainBranchUI(config, distributors);
+
+            // Actualizar Grilla de Distribuidores
+            if (gridContainer) {
+                gridContainer.innerHTML = renderDistributorGrid(distributors);
+            }
+        } catch (e) {
+            console.error("Error al cargar sedes y distribuidores:", e);
+        }
+    });
+</script>

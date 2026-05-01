@@ -104,7 +104,7 @@ export function createProductRow(product: any): string {
 
 export function createCatalogTable(section: any): string {
     return `
-        <section id="${section.id}" class="scroll-mt-0 reveal active">
+        <section id="${section.id}" class="scroll-mt-8 reveal active">
             <header class="catalog-section-header">
                 <nav aria-label="Breadcrumb" class="catalog-breadcrumb">
                     ${section.breadcrumb.map((item: string, index: number) => `

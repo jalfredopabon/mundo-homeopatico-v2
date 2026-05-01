@@ -49,10 +49,13 @@
 4.  **Refinamiento de Espaciado Profesional:**
     - Reversión de paddings excesivos (100px) a un estándar de **32px** funcional.
     - Restauración de jerarquía vertical en cabeceras de catálogo: Gaps de 8px entre Breadcrumbs > Título > Descripción.
-    - Margen maestro de 32px (`mb-8`) entre cabecera y tablas para evitar colisiones visuales.
+    - Margen maestro de 32px (`mb-8`) entre cabecera y tablas.
+5.  **Calibración Quirúrgica de Navegación:**
+    - Sincronización de `scroll-margin-top` a **32px (`scroll-mt-8`)** eliminando doble compensación de header.
+    - Ampliación de gap entre secciones a **64px (`gap-16`)** para garantizar el ocultamiento total de la tabla anterior durante el salto.
 
 ### Estado Actual
-- **Navegación:** 100% Sincronizada entre páginas.
+- **Navegación:** 100% Sincronizada y fluida (UX Matemática).
 - **UI/UX:** Consistencia visual total; ritmo vertical restaurado y funcional.
 
 ## Próximos Pasos

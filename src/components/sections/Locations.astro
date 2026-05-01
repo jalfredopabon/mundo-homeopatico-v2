@@ -19,15 +19,15 @@ import ButtonElite from "../shared/ButtonElite.astro";
         <!-- Tarjeta Sede Principal -->
         <div class="location-card group flex flex-col lg:flex-row overflow-hidden">
             <div class="flex flex-1 flex-col justify-between p-8 lg:p-12">
-                <div class="flex items-center gap-6 mb-10">
-                        <div class="h-10 w-10 rounded-xl bg-surface-muted border border-subtle flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-surface-white transition-all duration-500 shrink-0">
-                        <Icons type="building" class="w-5 h-5" strokeWidth={2} />
+                    <div class="flex items-center gap-6 mb-10">
+                        <div class="h-20 w-20 flex items-center justify-center shrink-0">
+                            <img id="main-branch-logo" src="/img/logo-mundo-homeopatico.webp" alt="Logo MH" class="w-full h-full object-contain" />
+                        </div>
+                        <div>
+                            <h3 class="text-[20px] font-bold text-secondary leading-tight">Sede principal y laboratorio</h3>
+                            <p id="main-branch-city" class="text-brand text-[12px] font-bold mt-1">Cargando...</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-[17px] font-bold text-secondary leading-snug">Sede principal y laboratorio</h3>
-                        <p class="text-slate-700 text-[12px] font-bold mt-0.5">Bogotá D.C.</p>
-                    </div>
-                </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
@@ -44,29 +44,34 @@ import ButtonElite from "../shared/ButtonElite.astro";
                             <p id="main-branch-hours" class="text-body leading-relaxed text-[15px]">Cargando horarios...</p>
                         </div>
                     </div>
-                <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                    <ButtonElite id="main-branch-whatsapp" variant="primary" size="lg" icon="whatsapp" label="WhatsApp" />
-                    <ButtonElite id="main-branch-phone" variant="outline" size="lg" icon="phone" label="Llamar" />
+                <div id="main-branch-contacts" class="flex flex-wrap gap-4 mt-10">
+                    <!-- Botones de contacto inyectados dinámicamente -->
                 </div>
             </div>
-            <div class="relative w-full lg:w-[40%] min-h-[300px] lg:min-h-0 bg-surface-muted overflow-hidden border-l border-subtle/50">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center grayscale contrast-125 opacity-20 filter blur-[1px]"></div>
+            <a id="main-branch-map-image-link" href="#" target="_blank" class="relative w-full lg:w-[45%] min-h-[350px] lg:min-h-0 bg-surface-muted overflow-hidden group/map">
+                <img id="main-branch-map-static" src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=800&auto=format&fit=crop" alt="Mapa de ubicación" class="absolute inset-0 w-full h-full object-cover grayscale contrast-125 opacity-30 group-hover/map:grayscale-0 group-hover/map:opacity-100 transition-all duration-700" />
+                
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="relative z-10 flex flex-col items-center group-hover:-translate-y-1 transition-transform duration-500">
-                        <div class="bg-surface-white px-4 py-2 rounded-lg border border-subtle whitespace-nowrap mb-2 relative">
-                            <p class="text-[13px] font-bold text-secondary">Sede principal MH</p>
-                            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-surface-white border-r border-b border-subtle rotate-45"></div>
+                    <div class="bg-surface-white/95 backdrop-blur-sm px-6 py-4 rounded-2xl border border-subtle shadow-xl flex items-center gap-3 transform group-hover/map:scale-105 transition-all duration-500">
+                        <div class="h-10 w-10 bg-brand/10 rounded-xl flex items-center justify-center text-brand">
+                            <Icons type="map" class="w-5 h-5" strokeWidth={2.5} />
                         </div>
-                        <div class="relative flex items-center justify-center h-12 w-12 bg-brand rounded-xl text-surface-white border-4 border-surface-white">
-                            <Icons type="map-pin" class="w-6 h-6" strokeWidth={2.2} />
-                        </div>
+                        <span class="text-sm font-bold text-secondary">Click para ver mapa interactivo</span>
                     </div>
                 </div>
-            </div>
+
+                <!-- Botón Flotante 'Cómo Llegar' -->
+                <div class="absolute bottom-6 left-6 right-auto">
+                    <div class="bg-white/90 backdrop-blur-md border border-subtle shadow-lg text-secondary px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-2.5 transition-all duration-300 hover:scale-105 hover:border-brand hover:text-brand">
+                        <span>Cómo llegar</span>
+                        <Icons type="external-link" class="w-3.5 h-3.5" />
+                    </div>
+                </div>
+            </a>
         </div>
 
         <!-- Grilla de Distribuidores -->
-        <div id="distributors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="distributors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <!-- Skeletons -->
             {[1, 2, 3].map(() => (
                 <div class="animate-pulse bg-slate-50/50 rounded-2xl h-[220px] border border-slate-100 p-6">
@@ -104,9 +109,12 @@ import ButtonElite from "../shared/ButtonElite.astro";
             // Actualizar Sede Principal
             updateMainBranchUI(config, distributors);
 
-            // Actualizar Grilla de Distribuidores
+            // Actualizar Grilla de Distribuidores (Filtrando la Sede Principal para no duplicar)
             if (gridContainer) {
-                gridContainer.innerHTML = renderDistributorGrid(distributors);
+                const authorizedDistributors = distributors.filter(d => 
+                    !(d.nombre || '').toLowerCase().includes('sede principal')
+                );
+                gridContainer.innerHTML = renderDistributorGrid(authorizedDistributors);
             }
         } catch (e) {
             console.error("Error al cargar sedes y distribuidores:", e);

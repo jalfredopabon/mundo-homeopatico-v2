@@ -72,11 +72,23 @@ export type FAQData = z.infer<typeof FAQSchema>;
 
 // --- ESQUEMA PARA DISTRIBUIDORES ---
 export const DistributorSchema = z.object({
+    logo: z.string().optional().default('logo-mundo-homeopatico'),
     nombre: z.string().optional().default(''),
     ciudad: z.string().optional().default(''),
     direccion: z.string().optional().default(''),
-    whatsapp: z.string().optional().default(''),
-    telefono: z.string().optional().default(''),
+    horarios: z.string().optional().default(''),
+    nombre_distribuidor: z.string().optional().default(''),
+    nombre_persona: z.string().optional().default(''),
+    whatsapp: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    whatsapp_2: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    whatsapp_3: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    whatsapp_4: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    movil_1: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    movil_2: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    telefono: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    telefono_fijo_1: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    telefono_fijo_2: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    mapa: z.string().optional().default(''),
     estado: z.string().optional().default('activo'),
 });
 

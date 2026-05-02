@@ -31,14 +31,14 @@ import ButtonElite from "../shared/ButtonElite.astro";
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
-                                <Icons type="map-pin" class="w-5 h-5" strokeWidth={2} />
+                                <Icons type="map-pin" class="w-5 h-5" strokeWidth={2.5} />
                                 <span class="text-[11px] font-bold text-slate-700">Dirección</span>
                             </div>
                             <p id="main-branch-address" class="text-body leading-relaxed font-semibold text-[15px]">Cargando dirección...</p>
                         </div>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2.5 text-brand">
-                                <Icons type="clock" class="w-5 h-5" strokeWidth={2} />
+                                <Icons type="clock" class="w-5 h-5" strokeWidth={2.5} />
                                 <span class="text-[11px] font-bold text-slate-700">Horarios</span>
                             </div>
                             <p id="main-branch-hours" class="text-body leading-relaxed text-[15px]">Cargando horarios...</p>
@@ -73,7 +73,7 @@ import ButtonElite from "../shared/ButtonElite.astro";
         <!-- Grilla de Distribuidores -->
         <div id="distributors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <!-- Skeletons -->
-            {[1, 2, 3].map(() => (
+            {[1, 2, 3, 4].map(() => (
                 <div class="animate-pulse bg-slate-50/50 rounded-2xl h-[220px] border border-slate-100 p-6">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-10 h-10 bg-slate-100 rounded-xl"></div>

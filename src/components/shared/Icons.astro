@@ -6,7 +6,7 @@ interface Props {
     | "chevron-down" | "chevron-right" | "pill" | "mortero" | "jarabe" | "gotas" | "edit" | "eye" | "eye-off" 
     | "file-text" | "info" | "close-x" 
     | "external-link" | "search" | "cart" | "menu" | "plus" 
-    | "minus" | "x" | "trash" | "grid" | "user" | "user-circle-alt" | "task-list" | "alert-triangle" | "check" 
+    | "minus" | "x" | "trash" | "grid" | "user" | "user-stroke" | "user-circle-alt" | "task-list" | "alert-triangle" | "check" 
     | "lock" | "text-size" | "pulse" | "list" | "instagram" | "whatsapp" 
     | "phone" | "mail" | "play" | "globe" | "award" | "map-pin" | "help-circle" 
     | "clock" | "building" | "arrow-up" | "select-card" | "chevron-up" | "grid-solid" | "map-pin-solid" | "user-solid" | "jarabe-solid";
@@ -365,6 +365,12 @@ const { type, class: className = "w-5 h-5", strokeWidth = 2.5 } = Astro.props;
 )}
 
 {type === "user" && (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={strokeWidth} stroke-linecap="round" stroke-linejoin="round" class={className} width="20" height="20">
+    <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" /><path d="M14 14H10C7.23858 14 5 16.2386 5 19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19C19 16.2386 16.7614 14 14 14Z" />
+  </svg>
+)}
+
+{type === "user-stroke" && (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={strokeWidth} stroke-linecap="round" stroke-linejoin="round" class={className} width="20" height="20">
     <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" /><path d="M14 14H10C7.23858 14 5 16.2386 5 19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19C19 16.2386 16.7614 14 14 14Z" />
   </svg>

@@ -74,6 +74,31 @@
 4.  **Video Gateway:** Dinamización del video institucional con extractor de ID de YouTube integrado.
 5.  **UX Resiliente:** Implementación de Skeletons y caché SWR en todas las secciones institucionales para carga instantánea (0ms).
 
+## [2026-05-01] Hito: Finalización Sedes & Institucional Elite (Mapa & Jerarquía)
+1.  **Mapa Real Dinámico:** Integración de Google Static Maps API para inyección de ubicaciones reales basadas en el backend (Eliminación de imágenes genéricas).
+2.  **Jerarquía de Contactos Pro:** Motor de renderizado dinámico con orden prioritario (Fijo > Móvil > WhatsApp) y diferenciación de estilos visuales.
+3.  **Minimalismo Institucional:**
+    - Eliminación de bordes internos, contenedores de logos y animaciones de escala innecesarias.
+    - Tipografía normalizada (Sentence Case) en toda la interfaz, eliminando mayúsculas sostenidas.
+4.  **Optimización de Estructura:** Migración de assets a `/public/img/` y renombrado de carpetas para estándares de industria.
+5.  **Equilibrio Visual:** Rediseño de la grilla de distribuidores a 2 columnas para una composición simétrica 2x2.
+
+## [2026-05-02] Hito: Estandarización de Iconografía Elite y Normalización de Renderizadores
+
+### Hitos Técnicos Logrados
+1.  **Normalización de Trazado (Stroke 2.5):** Calibración universal de todos los iconos dinámicos (SVG) al estándar Elite de **2.5**, eliminando grosores inconsistentes (2.0, 3.0, 4.0) en toda la plataforma.
+2.  **Centralización de Renderizadores:**
+    - Refactorización total de `catalogo-renderer.ts`, `vademecum-renderer.ts`, `faq-renderer.ts`, `locations-renderer.ts` y `sidebar-renderer.ts`.
+    - Eliminación de SVGs *hardcoded* inline, sustituyéndolos por objetos constantes de iconos para facilitar el mantenimiento.
+3.  **Librería Global (Icons.astro):** Integración del nuevo icono `user-stroke` y validación de paridad con los renderizadores de cliente.
+4.  **Limpieza de Scripts de Interfaz:** Normalización de iconos de feedback en el Carrito (`CartDrawer.astro`) y botones de acción en `index.astro`.
+
+### Estado Actual
+- **Iconografía:** 100% Consistente y Centralizada (Estándar Elite validado).
+- **Mantenimiento:** Estructura modular que permite cambiar el estilo global de iconos desde un único punto en cada renderizador.
+- **Visual:** Eliminación de ruido visual por diferencias de grosor en trazados.
+
 ## Próximos Pasos
-1.  **Refactorización de Checkout:** Aplicar el mismo estándar "Elite" al flujo de carrito y pedidos.
-2.  **Dashboard de Usuario:** Sincronización de perfiles médicos con el nuevo diseño.
+1.  **Seguridad Google Maps:** Migrar la API Key de `locations-renderer.ts` a variables de entorno (`.env`).
+2.  **Optimización LCP:** Auditoría final de activos visuales y compresión de logos institucionales.
+3.  **Pruebas de Regresión:** Validar que el cambio de grosores no afecte la legibilidad en pantallas de baja resolución (Retina vs Standard).

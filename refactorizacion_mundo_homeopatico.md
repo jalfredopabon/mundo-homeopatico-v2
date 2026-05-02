@@ -98,7 +98,22 @@
 - **Mantenimiento:** Estructura modular que permite cambiar el estilo global de iconos desde un único punto en cada renderizador.
 - **Visual:** Eliminación de ruido visual por diferencias de grosor en trazados.
 
+## [2026-05-02] Hito: Seguridad de Infraestructura y Optimización LCP (Sedes)
+
+### Hitos Técnicos Logrados
+1.  **Blindaje de API Key:** Migración exitosa de la Google Maps API Key desde el código fuente a variables de entorno (`.env`) con prefijo `PUBLIC_`.
+2.  **Arquitectura de Seguridad:** Implementación de inyección vía `data-attribute` en `Locations.astro` para permitir el acceso seguro desde scripts de cliente sin exponer la clave en el bundle estático.
+3.  **Optimización LCP (Sedes):** 
+    - Implementación de `fetchpriority="high"` en elementos críticos.
+    - Eliminación de dependencias externas de placeholders (Unsplash).
+    - Prevención de Layout Shift mediante dimensiones explícitas en imágenes dinámicas.
+
+### Estado Actual
+- **Seguridad:** ✅ Google Maps Key protegida.
+- **Rendimiento:** ✅ LCP optimizado en la sección Sedes.
+- **Iconografía:** ✅ 100% Consistente (Estándar Elite).
+
 ## Próximos Pasos
-1.  **Seguridad Google Maps:** Migrar la API Key de `locations-renderer.ts` a variables de entorno (`.env`).
-2.  **Optimización LCP:** Auditoría final de activos visuales y compresión de logos institucionales.
-3.  **Pruebas de Regresión:** Validar que el cambio de grosores no afecte la legibilidad en pantallas de baja resolución (Retina vs Standard).
+1.  **Refactorización Elite del Carrito (Checkout):** Aplicar el estándar visual y de rendimiento al flujo de compra completo.
+2.  **Optimización LCP Global:** Extender las mejoras de `fetchpriority` a los logos de distribuidores y cabeceras de catálogo.
+3.  **Auditoría de SEO:** Verificar etiquetas meta y jerarquía H1-H6 en las nuevas secciones institucionales.

@@ -146,11 +146,11 @@ export function updateMainBranchUI(config: Record<string, string>, distributors:
         contactsContainer.innerHTML = buttonsHtml;
     }
 
-    if (mainBranch.mapa) {
+        if (mainBranch.mapa) {
         if (mapImageLink) (mapImageLink as HTMLAnchorElement).href = mainBranch.mapa;
         if (mapStaticEl) {
             const address = mainBranch.direccion || 'Medellín, Antioquia';
-            const apiKey = 'AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8'; 
+            const apiKey = mapStaticEl.dataset.mapsKey || ''; 
             const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(address)}&zoom=16&size=640x400&markers=color:green%7C${encodeURIComponent(address)}&key=${apiKey}&style=feature:poi|visibility:off`;
             mapStaticEl.src = staticMapUrl;
             mapStaticEl.onload = () => mapStaticEl.classList.remove('opacity-30');

@@ -165,6 +165,7 @@ import Icons from '../components/shared/Icons.astro';
         btnAddCart.forEach(btn => {
             btn.addEventListener('click', () => {
                 const button = btn as HTMLButtonElement;
+                const originalContent = button.innerHTML; // CAPTURA CRÍTICA
                 const name = button.getAttribute('data-name');
                 const price = button.getAttribute('data-price');
                 document.dispatchEvent(new CustomEvent('addToCart', { detail: { name, price } }));
@@ -175,7 +176,7 @@ import Icons from '../components/shared/Icons.astro';
                 setTimeout(() => {
                     button.innerHTML = originalContent;
                     button.classList.remove('is-success');
-                }, 500);
+                }, 800); // Un poco más de tiempo para feedback visual Elite
             });
         });
 

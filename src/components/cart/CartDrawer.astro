@@ -30,90 +30,97 @@ import SelectElite from "../shared/SelectElite.astro";
         </div>
     </header>
 
-    <!-- Piso 2: Contenido Scrolleable (Items + Formulario) -->
-    <div class="flex-1 overflow-y-auto w-full">
+     <!-- Piso 2: Contenido Scrolleable (Items + Formulario) -->
+    <div class="flex-1 overflow-y-auto w-full custom-scrollbar">
         <!-- Lista de Productos -->
         <div id="cart-items-container" class="px-6 py-4 space-y-4">
-            <!-- Los items se inyectarán aquí vía JS -->
-             <div id="cart-empty-state" class="py-20 text-center space-y-3">
-                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
-                    <Icons type="cart" class="w-8 h-8" strokeWidth={2} />
+             <div id="cart-empty-state" class="py-20 text-center space-y-6">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
+                    <Icons type="cart" class="w-10 h-10" strokeWidth={1.5} />
                 </div>
-                <p class="text-slate-700 text-sm font-medium">Tu carrito está vacío</p>
+                <div class="space-y-2">
+                    <p class="text-slate-900 font-bold text-base">Tu carrito está vacío</p>
+                    <p class="text-slate-500 text-xs px-10">Parece que aún no has añadido productos a tu pedido.</p>
+                </div>
+                <button onclick="document.dispatchEvent(new CustomEvent('toggleCart'))" class="px-6 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all active:scale-95">
+                    Explorar Catálogo
+                </button>
              </div>
              <div id="cart-items-list" class="space-y-4"></div>
         </div>
 
-        <!-- Formulario de Facturación (Siempre debajo de los items) -->
-        <div id="checkout-form-container" class="px-6 pb-6 pt-0 space-y-4">
-            <div class="h-px bg-slate-200 w-full"></div>
-            <div class="space-y-4">
-                <h3 class="text-xs font-bold text-slate-700 tracking-widest">Información de facturación</h3>
+        <!-- Formulario de Facturación (Jerarquía Mejorada) -->
+        <div id="checkout-form-container" class="px-6 pb-10 pt-4 space-y-6">
+            <div class="flex items-center gap-4">
+                <div class="h-px bg-slate-200 flex-1"></div>
+                <h3 class="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">Datos de Entrega</h3>
+                <div class="h-px bg-slate-200 flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div class="space-y-1.5">
+                    <label for="bill-name" class="cart-label">Nombre completo <span class="text-red-500">*</span></label>
+                    <input id="bill-name" type="text" placeholder="Ej: Dr. Alejandro Ruiz" class="cart-input" />
+                </div>
                 
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="space-y-1">
-                        <label for="bill-name" class="cart-label">Nombre completo <span class="text-red-500">*</span></label>
-                        <input id="bill-name" type="text" placeholder="Ej: Dr. Alejandro Ruiz" class="cart-input" />
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label for="bill-id" class="cart-label">Cédula o NIT <span class="text-red-500">*</span></label>
+                        <input id="bill-id" type="text" inputmode="numeric" placeholder="1234567-8" class="cart-input" />
                     </div>
-                    
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="space-y-1">
-                            <label for="bill-id" class="cart-label">Cédula o NIT <span class="text-red-500">*</span></label>
-                            <input id="bill-id" type="text" inputmode="numeric" placeholder="1234567-8" class="cart-input" />
-                        </div>
-                        <div class="space-y-1">
-                            <label for="bill-whatsapp" class="cart-label">WhatsApp <span class="text-red-500">*</span></label>
-                            <input id="bill-whatsapp" type="tel" inputmode="tel" placeholder="320 000 0000" class="cart-input" />
-                        </div>
+                    <div class="space-y-1.5">
+                        <label for="bill-whatsapp" class="cart-label">WhatsApp <span class="text-red-500">*</span></label>
+                        <input id="bill-whatsapp" type="tel" inputmode="tel" placeholder="320 000 0000" class="cart-input" />
                     </div>
+                </div>
 
-                    <div class="space-y-1">
-                        <label for="bill-address" class="cart-label">Dirección de entrega (Opcional)</label>
-                        <input id="bill-address" type="text" placeholder="Calle 123 # 45-67" class="cart-input" />
-                    </div>
+                <div class="space-y-1.5">
+                    <label for="bill-address" class="cart-label">Dirección de entrega (Opcional)</label>
+                    <input id="bill-address" type="text" placeholder="Calle 123 # 45-67" class="cart-input" />
+                </div>
 
-                    <div class="space-y-1">
-                        <label for="bill-payment" class="cart-label">Método de pago</label>
-                        <SelectElite 
-                            id="bill-payment" 
-                            placeholder="Selecciona un método..." 
-                            options={[
-                                { value: "transferencia", label: "Transferencia Bancaria" },
-                                { value: "nequi", label: "Nequi / Daviplata" },
-                                { value: "efectivo", label: "Efectivo contra entrega" }
-                            ]}
-                        />
-                    </div>
+                <div class="space-y-1.5">
+                    <label for="bill-payment" class="cart-label">Método de pago</label>
+                    <SelectElite 
+                        id="bill-payment" 
+                        placeholder="Selecciona un método..." 
+                        options={[
+                            { value: "transferencia", label: "Transferencia Bancaria" },
+                            { value: "nequi", label: "Nequi / Daviplata" },
+                            { value: "efectivo", label: "Efectivo contra entrega" }
+                        ]}
+                    />
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Piso 3: Footer Fijo (Resumen y Botones) -->
-    <footer class="p-6 bg-white border-t border-slate-200 shrink-0 space-y-4">
-        <div class="space-y-2">
+    <footer class="p-6 bg-white border-t border-slate-100 shrink-0 space-y-6 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
+        <div class="space-y-3">
             <div class="flex justify-between items-center text-sm">
-                <span class="text-slate-700 font-medium">Subtotal</span>
+                <span class="text-slate-500 font-medium">Subtotal pedido</span>
                 <span id="cart-subtotal" class="text-slate-900 font-bold">$0</span>
             </div>
-            <div class="flex justify-between items-center text-[13px] text-brand-vibrant font-medium">
+            <!-- Descuento oculto hasta Fase 3 -->
+            <div id="cart-discount-row" class="hidden justify-between items-center text-[13px] text-brand-vibrant font-medium">
                 <span>Descuento aplicado</span>
                 <span id="cart-discount">-$0</span>
             </div>
-            <div class="pt-2 border-t border-slate-200 flex justify-between items-center">
-                <span class="text-slate-800 font-extrabold text-base">Total a pagar</span>
+            <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                <span class="text-slate-900 font-extrabold text-base">Total a pagar</span>
                 <span id="cart-total" class="text-2xl font-black text-slate-900 tracking-tighter">$0</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 gap-3">
-            <button id="btn-order-medico" class="btn-whatsapp-elite" data-variant="medico">
-                <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
-                Pedido Médico WhatsApp
+            <button id="btn-order-medico" class="btn-whatsapp-elite group/btn" data-variant="medico">
+                <Icons type="whatsapp" class="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                <span>Pedido Médico WhatsApp</span>
             </button>
-            <button id="btn-order-farmacia" class="btn-whatsapp-elite" data-variant="farmacia">
-                <Icons type="whatsapp" class="w-[18px] h-[18px]" strokeWidth={1.8} />
-                Pedido Farmacia WhatsApp
+            <button id="btn-order-farmacia" class="btn-whatsapp-elite group/btn" data-variant="farmacia">
+                <Icons type="whatsapp" class="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                <span>Pedido Farmacia WhatsApp</span>
             </button>
         </div>
     </footer>
@@ -121,128 +128,150 @@ import SelectElite from "../shared/SelectElite.astro";
 </aside>
 
 <!-- Fondo Oscuro Overlay -->
+<!-- Fondo Oscuro Overlay -->
 <div id="cart-overlay" class="drawer-overlay"></div>
 
 <script>
-    // --- LÓGICA GLOBAL (PERSISTENTE ENTRE TRANSICIONES - CON BLINDAJE ELITE) ---
-    if (!(window as any).cartInitialized) {
-        // Inicialización segura del carrito con desofuscación
-        (window as any).initCartStorage = async () => {
-            const { decryptData, encryptData } = await import('../../utils/security');
+    import { encryptData, decryptData } from '../../utils/security';
+    import { getDistributors } from '../../data/api';
+
+    // --- NAMESPACE PROTEGIDO ELITE ---
+    window.__MH_CART__ = window.__MH_CART__ || {
+        items: [],
+        initialized: false,
+        contacts: { medico: '', farmacia: '' }
+    };
+
+    const CART_STORAGE_KEY = 'mh_cart_data';
+
+    const saveCartToStorage = () => {
+        try {
+            const encrypted = encryptData(window.__MH_CART__.items);
+            localStorage.setItem(CART_STORAGE_KEY, encrypted);
+        } catch (e) {
+            console.error('[Elite Cart] Error persistiendo datos.');
+        }
+    };
+
+    if (!window.__MH_CART__.initialized) {
+        const loadInitialCart = () => {
             try {
-                const savedCart = localStorage.getItem('cart');
-                // Intentar leer datos ofuscados, fallback a JSON normal para compatibilidad migratoria
-                (window as any).cartItems = savedCart ? (decryptData(savedCart) || JSON.parse(savedCart)) : [];
-                
-                // Red de seguridad: si lo recuperamos como JSON normal, lo ofuscamos inmediatamente
-                if (savedCart && !savedCart.includes(' ')) { 
-                    // Ya está ofuscado o es nulo
-                } else if (savedCart) {
-                    localStorage.setItem('cart', encryptData((window as any).cartItems));
+                const saved = localStorage.getItem(CART_STORAGE_KEY) || localStorage.getItem('cart');
+                if (saved) {
+                    window.__MH_CART__.items = decryptData(saved) || JSON.parse(saved) || [];
+                    if (saved.startsWith('[')) saveCartToStorage(); 
                 }
             } catch (e) {
-                console.error('[Elite Cart Storage] Error al leer/migrar el carrito. Iniciando vacío.');
-                (window as any).cartItems = [];
+                window.__MH_CART__.items = [];
             }
         };
 
-        (window as any).initCartStorage();
-        
-        // El handler de toggle DEBE ser estable
-        (window as any).handleToggleCart = () => {
-            document.body.classList.toggle('cart-open');
-        };
+        loadInitialCart();
 
-        // El handler de añadir DEBE ser estable
-        (window as any).handleAddToCart = (e: any) => {
+        document.addEventListener('addToCart', ((e: CustomEvent) => {
             const { name, price } = e.detail;
-            const items = (window as any).cartItems;
+            const items = window.__MH_CART__.items;
             const existing = items.find((i: any) => i.name === name);
-            if (existing) { 
-                existing.quantity++; 
-            } else { 
-                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' }); 
+            
+            if (existing) {
+                existing.quantity++;
+            } else {
+                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' });
             }
-            // Disparar renderizado en el componente activo
+            
+            saveCartToStorage();
             document.dispatchEvent(new CustomEvent('renderCartInternal'));
-        };
+            document.body.classList.add('cart-open');
+        }) as EventListener);
 
-        document.addEventListener('toggleCart', (window as any).handleToggleCart);
-        document.addEventListener('addToCart', (window as any).handleAddToCart);
-        
-        (window as any).cartInitialized = true;
+        document.addEventListener('toggleCart', () => {
+            document.body.classList.toggle('cart-open');
+        });
+
+        window.__MH_CART__.initialized = true;
     }
 
-    document.addEventListener('astro:page-load', () => {
-        // --- CONSTANTES DE ICONOGRAFÍA (FUENTES DE VERDAD) ---
-        const ELITE_SVG = {
-            trash: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`,
-            minus: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
-            plus: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
-            note: `<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">`
-        };
-
-        // --- SELECTORES LOCALES (SE ACTUALIZAN EN CADA CARGA) ---
+    // --- LÓGICA DE RENDERIZADO Y NEGOCIO ---
+    document.addEventListener('astro:page-load', async () => {
         const cartItemsList = document.getElementById('cart-items-list');
         const cartEmptyState = document.getElementById('cart-empty-state');
         const cartTotalEl = document.getElementById('cart-total');
         const cartSubtotalEl = document.getElementById('cart-subtotal');
-        const cartDiscountEl = document.getElementById('cart-discount');
 
-        const renderCart = async () => {
-            const items = (window as any).cartItems || [];
+        // Cargar números de contacto dinámicamente
+        try {
+            const distributors = await getDistributors();
+            const mainBranch = distributors.find(d => (d.nombre || '').toLowerCase().includes('sede principal')) || distributors[0];
+            if (mainBranch) {
+                window.__MH_CART__.contacts = {
+                    medico: mainBranch.whatsapp || '',
+                    farmacia: mainBranch.whatsapp_2 || mainBranch.whatsapp || ''
+                };
+            }
+        } catch (e) {
+            console.warn('[Elite Cart] Error cargando contactos dinámicos.');
+        }
+
+        const ICONS = {
+            trash: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`,
+            minus: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
+            plus: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
+            note: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3z"/><polyline points="15 3 15 9 21 9"/></svg>`
+        };
+
+        const renderCart = () => {
+            const items = window.__MH_CART__.items;
             if (!cartItemsList || !cartEmptyState) return;
 
             if (items.length === 0) {
                 cartEmptyState.style.display = 'block';
                 cartItemsList.innerHTML = '';
+                document.getElementById('checkout-form-container')?.classList.add('hidden');
             } else {
                 cartEmptyState.style.display = 'none';
+                document.getElementById('checkout-form-container')?.classList.remove('hidden');
                 cartItemsList.innerHTML = items.map((item: any, index: number) => `
-                    <div class="cart-item-card group">
-                        <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors btn-remove-item" data-index="${index}">
-                            ${ELITE_SVG.trash}
+                    <div class="cart-item-card group animate-fade-in" style="animation-delay: ${index * 0.05}s">
+                        <button class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all hover:rotate-90 btn-remove-item" data-index="${index}">
+                            ${ICONS.trash}
                         </button>
                         <div class="pr-6">
-                            <h4 class="text-xs font-bold text-slate-800 leading-tight">${item.name}</h4>
-                            <p class="text-[10px] text-slate-500 mt-1">$${item.price.toLocaleString()}</p>
+                            <h4 class="text-[13px] font-bold text-slate-800 leading-tight">${item.name}</h4>
+                            <p class="text-[11px] text-slate-500 mt-1 font-medium">$${item.price.toLocaleString()}</p>
                         </div>
-                        <div class="flex items-center justify-between mt-3">
-                            <div class="flex items-center gap-1">
-                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="minus">
-                                    ${ELITE_SVG.minus}
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-100">
+                                <button class="w-7 h-7 flex items-center justify-center bg-white hover:bg-slate-100 text-slate-600 rounded-md transition-all active:scale-90 border border-slate-200 shadow-sm btn-qty" data-index="${index}" data-action="minus">
+                                    ${ICONS.minus}
                                 </button>
-                                <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
-                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="plus">
-                                    ${ELITE_SVG.plus}
+                                <span class="text-[13px] font-bold text-slate-900 min-w-[2rem] text-center tabular-nums">${item.quantity}</span>
+                                <button class="w-7 h-7 flex items-center justify-center bg-white hover:bg-slate-100 text-slate-600 rounded-md transition-all active:scale-90 border border-slate-200 shadow-sm btn-qty" data-index="${index}" data-action="plus">
+                                    ${ICONS.plus}
                                 </button>
                             </div>
-                            <span class="text-sm font-extrabold text-slate-900">$${ (item.price * item.quantity).toLocaleString()}</span>
+                            <span class="text-sm font-black text-slate-900">$${(item.price * item.quantity).toLocaleString()}</span>
                         </div>
 
-                        <div class="pt-2 border-t border-slate-100">
-                            <button class="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 transition-colors btn-add-note ${item.hasNote ? 'hover:text-red-500' : 'hover:text-brand'}" data-index="${index}">
-                                ${ELITE_SVG.note}
-                                    ${item.hasNote 
-                                        ? '<line x1="5" y1="12" x2="19" y2="12"></line>' 
-                                        : '<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>'}
-                                </svg>
-                                ${item.hasNote ? 'Quitar nota' : 'Añadir nota o especificación'}
+                        <div class="pt-3 mt-3 border-t border-dashed border-slate-100">
+                            <button class="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-slate-400 hover:text-brand transition-colors btn-add-note" data-index="${index}">
+                                ${ICONS.note}
+                                ${item.hasNote ? 'Quitar nota' : 'Añadir especificación'}
                             </button>
-                            ${item.hasNote ? `<textarea class="mt-2 w-full text-[11px] text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 resize-none focus:outline-none focus:border-brand transition-colors cart-item-note" data-index="${index}" rows="2" placeholder="Ej: Sin alcohol, concentración especial...">${item.note}</textarea>` : ''}
+                            <textarea class="mt-3 w-full text-[12px] text-slate-700 bg-white border border-slate-200 rounded-xl px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand focus:ring-opacity-10 focus:border-brand transition-all cart-item-note ${item.hasNote ? 'block' : 'hidden'}" 
+                                data-index="${index}" rows="2" placeholder="Ej: Sin alcohol, presentación 30ml...">${item.note}</textarea>
                         </div>
                     </div>
                 `).join('');
 
-                // Click events for qty
+                // Listeners (Quantity, Remove, Notes)
                 cartItemsList.querySelectorAll('.btn-qty').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const b = e.currentTarget as HTMLElement;
                         const idx = parseInt(b.dataset.index!);
-                        const action = b.dataset.action;
-                        if (action === 'plus') items[idx].quantity++;
+                        if (b.dataset.action === 'plus') items[idx].quantity++;
                         else if (items[idx].quantity > 1) items[idx].quantity--;
                         else items.splice(idx, 1);
+                        saveCartToStorage();
                         renderCart();
                     });
                 });
@@ -251,66 +280,186 @@ import SelectElite from "../shared/SelectElite.astro";
                     btn.addEventListener('click', (e) => {
                         const b = e.currentTarget as HTMLElement;
                         items.splice(parseInt(b.dataset.index!), 1);
+                        saveCartToStorage();
                         renderCart();
                     });
                 });
 
-                // Toggle nota por ítem
                 cartItemsList.querySelectorAll('.btn-add-note').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const b = btn as HTMLElement;
+                    btn.addEventListener('click', (e) => {
+                        const b = e.currentTarget as HTMLElement;
                         const idx = parseInt(b.dataset.index!);
+                        const textarea = b.nextElementSibling as HTMLTextAreaElement;
                         items[idx].hasNote = !items[idx].hasNote;
                         if (!items[idx].hasNote) items[idx].note = '';
-                        renderCart();
+                        textarea.classList.toggle('hidden');
+                        b.lastChild!.textContent = items[idx].hasNote ? ' Quitar nota' : ' Añadir especificación';
+                        saveCartToStorage();
                     });
                 });
 
-                // Guardar nota sin re-renderizar (evita perder foco - Blindado)
                 cartItemsList.querySelectorAll('.cart-item-note').forEach(textarea => {
-                    textarea.addEventListener('input', async (e) => {
-                        const t = e.currentTarget as HTMLTextAreaElement;
-                        const idx = parseInt(t.dataset.index!);
-                        items[idx].note = t.value;
-                        
-                        try {
-                            const { encryptData } = await import('../../utils/security');
-                            localStorage.setItem('cart', encryptData(items));
-                        } catch (e) {
-                            console.error('[Elite Cart Storage] Error al guardar nota por ítem.');
-                        }
+                    textarea.addEventListener('input', (e) => {
+                        const t = e.target as HTMLTextAreaElement;
+                        items[parseInt(t.dataset.index!)].note = t.value;
+                        saveCartToStorage();
                     });
                 });
             }
 
-
-            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
-            if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;
-            if (cartTotalEl) cartTotalEl.innerText = `$${subtotal.toLocaleString()}`;
-            
-            try {
-                const { encryptData } = await import('../../utils/security');
-                localStorage.setItem('cart', encryptData(items));
-            } catch (e) {
-                console.error('[Elite Cart Storage] Error al persistir cambios en el carrito.');
-            }
+            const total = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            if (cartSubtotalEl) cartSubtotalEl.innerText = `$${total.toLocaleString()}`;
+            if (cartTotalEl) cartTotalEl.innerText = `$${total.toLocaleString()}`;
             
             document.dispatchEvent(new CustomEvent('cartUpdated', { 
                 detail: { totalItems: items.reduce((acc: number, i: any) => acc + i.quantity, 0) } 
             }));
         };
 
-        // Escuchar orden de re-renderizado
-        document.removeEventListener('renderCartInternal', renderCart);
-        document.addEventListener('renderCartInternal', renderCart);
+        // --- MOTOR DE ENVÍO WHATSAPP ---
+        const handleSendOrder = (variant: 'medico' | 'farmacia') => {
+            const items = window.__MH_CART__.items;
+            const name = (document.getElementById('bill-name') as HTMLInputElement).value.trim();
+            const id = (document.getElementById('bill-id') as HTMLInputElement).value.trim();
+            const whatsapp = (document.getElementById('bill-whatsapp') as HTMLInputElement).value.trim();
+            const address = (document.getElementById('bill-address') as HTMLInputElement).value.trim();
+            const payment = (document.querySelector('#bill-payment input') as HTMLInputElement)?.value || 'No especificado';
 
-        // UI Listeners
+            if (!name || !id || !whatsapp) {
+                alert('Por favor completa los campos obligatorios (*)');
+                return;
+            }
+
+            const total = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            const targetPhone = window.__MH_CART__.contacts[variant];
+
+            let message = `*PEDIDO MUNDO HOMEOPÁTICO*\n`;
+            message += `--------------------------------\n`;
+            message += `*DATOS DEL CLIENTE:*\n`;
+            message += `👤 Nombre: ${name}\n`;
+            message += `🆔 Cédula/NIT: ${id}\n`;
+            message += `📱 WhatsApp: ${whatsapp}\n`;
+            if (address) message += `🏠 Dirección: ${address}\n`;
+            message += `💳 Pago: ${payment}\n\n`;
+
+            message += `*PRODUCTOS:*\n`;
+            items.forEach((item: any) => {
+                message += `- ${item.name} x${item.quantity} ($${(item.price * item.quantity).toLocaleString()})\n`;
+                if (item.hasNote && item.note) message += `  📝 Nota: ${item.note}\n`;
+            });
+
+            message += `\n*RESUMEN:* \n`;
+            message += `Total a pagar: *$${total.toLocaleString()}*\n`;
+            message += `--------------------------------`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${targetPhone}?text=${encodedMessage}`, '_blank');
+        };
+
+        document.getElementById('btn-order-medico')?.addEventListener('click', () => handleSendOrder('medico'));
+        document.getElementById('btn-order-farmacia')?.addEventListener('click', () => handleSendOrder('farmacia'));
+
+        // Eventos UI
         document.getElementById('close-cart')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
         document.getElementById('cart-overlay')?.addEventListener('click', () => document.body.classList.remove('cart-open'));
         document.getElementById('clear-cart')?.addEventListener('click', () => {
-            if(confirm('¿Vaciar pedido?')) { (window as any).cartItems = []; renderCart(); }
+            if (confirm('¿Vaciar pedido?')) {
+                window.__MH_CART__.items = [];
+                saveCartToStorage();
+                renderCart();
+            }
         });
 
+        document.removeEventListener('renderCartInternal', renderCart);
+        document.addEventListener('renderCartInternal', renderCart);
         renderCart();
     });
 </script>
+
+<style is:global>
+    /* --- ESTRUCTURA DEL DRAWER --- */
+    .drawer-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    }
+
+    body.cart-open {
+        overflow: hidden;
+    }
+
+    body.cart-open .drawer-panel {
+        transform: translateX(0);
+    }
+
+    body.cart-open .drawer-overlay {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 90;
+    }
+
+    /* --- COMPONENTES ELITE --- */
+    .cart-item-card {
+        @apply relative bg-white border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300;
+    }
+
+    .cart-label {
+        @apply text-[10px] font-black text-slate-400 uppercase tracking-widest block ml-1;
+    }
+
+    .cart-input {
+        @apply w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-opacity-10 focus:border-brand transition-all font-medium;
+    }
+
+    .btn-whatsapp-elite {
+        @apply w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-sm transition-all active:scale-[0.98] shadow-sm hover:shadow-lg;
+    }
+
+    .btn-whatsapp-elite[data-variant="medico"] {
+        @apply bg-[#25D366] text-white hover:bg-[#20bd5a];
+    }
+
+    .btn-whatsapp-elite[data-variant="farmacia"] {
+        @apply bg-slate-900 text-white hover:bg-slate-800;
+    }
+
+    /* --- UTILIDADES Y ANIMACIONES --- */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+    }
+
+    @keyframes fadeInSlide {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+        animation: fadeInSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+</style>

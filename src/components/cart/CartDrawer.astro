@@ -90,6 +90,18 @@ import SelectElite from "../shared/SelectElite.astro";
                 </div>
             </div>
         </div>
+
+        <!-- Mensaje de Éxito Elite -->
+        <div id="cart-success-msg" class="hidden absolute inset-0 bg-white z-[1100] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+            <div class="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-sm border border-emerald-100">
+                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3 class="text-xl font-black text-slate-900 mb-2 tracking-tight">¡Pedido Registrado!</h3>
+            <p class="text-slate-500 text-xs leading-relaxed mb-10 font-medium">Hemos guardado tu pedido en nuestro sistema. Ahora te estamos redirigiendo a WhatsApp para finalizar la atención personalizada.</p>
+            <button id="btn-close-success" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all active:scale-[0.98]">
+                Entendido
+            </button>
+        </div>
     </div>
 
     <!-- Piso 3: Footer Fijo (Resumen y Botones) -->
@@ -184,7 +196,6 @@ import SelectElite from "../shared/SelectElite.astro";
             
             saveCartToStorage();
             document.dispatchEvent(new CustomEvent('renderCartInternal'));
-            document.body.classList.add('cart-open');
         }) as EventListener);
 
         document.addEventListener('toggleCart', () => {
@@ -333,25 +344,60 @@ import SelectElite from "../shared/SelectElite.astro";
         };
 
         // --- MOTOR DE ENVÍO WHATSAPP ---
-        const handleSendOrder = (variant: 'medico' | 'farmacia') => {
+        const handleSendOrder = async (variant: 'medico' | 'farmacia') => {
             const items = window.__MH_CART__.items;
             const name = (document.getElementById('bill-name') as HTMLInputElement).value.trim();
             const id = (document.getElementById('bill-id') as HTMLInputElement).value.trim();
             const whatsapp = (document.getElementById('bill-whatsapp') as HTMLInputElement).value.trim();
             const address = (document.getElementById('bill-address') as HTMLInputElement).value.trim();
             const payment = (document.getElementById('bill-payment') as HTMLInputElement)?.value || 'No especificado';
-
+ 
             if (!name || !id || !whatsapp) {
                 alert('Por favor completa los campos obligatorios (*)');
                 return;
             }
-
+ 
             const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
             const pct = window.__MH_CART__.discount.porcentaje || 0;
             const discountAmount = Math.round(subtotal * pct / 100);
             const total = subtotal - discountAmount;
-
+ 
             const targetPhone = window.__MH_CART__.contacts[variant];
+ 
+            // --- REGISTRO AUTOMÁTICO EN GOOGLE SHEETS (PRIORIDAD ALTA) ---
+            const orderData = {
+                nombre: name,
+                cedula: id,
+                whatsapp: whatsapp,
+                direccion: address,
+                pago: payment,
+                subtotal: subtotal,
+                descuento: discountAmount,
+                total: total,
+                tipo_pedido: variant,
+                items: items.map((i: any) => ({
+                    name: i.name,
+                    quantity: i.quantity,
+                    note: i.note || ''
+                }))
+            };
+
+            const ORDERS_URL = import.meta.env.PUBLIC_ORDERS_GAS_URL;
+            
+            // Intentar el registro pero no bloquear la venta si falla
+            try {
+                if (ORDERS_URL) {
+                    await fetch(ORDERS_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify(orderData)
+                    });
+                    console.log('[Elite Order Log] Registro enviado a Google Sheets');
+                }
+            } catch (err) {
+                console.warn('[Elite Order Log] Fallo silencioso en registro:', err);
+            }
 
             let message = `*PEDIDO MUNDO HOMEOPÁTICO*\n`;
             message += `--------------------------------\n`;
@@ -361,13 +407,13 @@ import SelectElite from "../shared/SelectElite.astro";
             message += `📱 WhatsApp: ${whatsapp}\n`;
             if (address) message += `🏠 Dirección: ${address}\n`;
             message += `💳 Pago: ${payment}\n\n`;
-
+ 
             message += `*PRODUCTOS:*\n`;
             items.forEach((item: any) => {
                 message += `- ${item.name} x${item.quantity} ($${(item.price * item.quantity).toLocaleString()})\n`;
                 if (item.hasNote && item.note) message += `  📝 Nota: ${item.note}\n`;
             });
-
+ 
             message += `\n*RESUMEN:* \n`;
             message += `Subtotal: $${subtotal.toLocaleString()}\n`;
             if (pct > 0) {
@@ -375,10 +421,32 @@ import SelectElite from "../shared/SelectElite.astro";
             }
             message += `Total a pagar: *$${total.toLocaleString()}*\n`;
             message += `--------------------------------`;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${targetPhone}?text=${encodedMessage}`, '_blank');
+ 
+            window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`, '_blank');
+ 
+            // --- FLUJO DE ÉXITO ELITE ---
+            const successMsg = document.getElementById('cart-success-msg');
+            if (successMsg) {
+                successMsg.classList.remove('hidden');
+                
+                // Vaciar carrito
+                window.__MH_CART__.items = [];
+                saveCartToStorage();
+                renderCart();
+ 
+                // Limpiar campos del formulario
+                (document.getElementById('bill-name') as HTMLInputElement).value = '';
+                (document.getElementById('bill-id') as HTMLInputElement).value = '';
+                (document.getElementById('bill-address') as HTMLInputElement).value = '';
+                (document.getElementById('bill-whatsapp') as HTMLInputElement).value = '';
+            }
         };
+
+        document.getElementById('btn-close-success')?.addEventListener('click', () => {
+            const successMsg = document.getElementById('cart-success-msg');
+            successMsg?.classList.add('hidden');
+            document.body.classList.remove('cart-open');
+        });
 
         document.getElementById('btn-order-medico')?.addEventListener('click', () => handleSendOrder('medico'));
         document.getElementById('btn-order-farmacia')?.addEventListener('click', () => handleSendOrder('farmacia'));

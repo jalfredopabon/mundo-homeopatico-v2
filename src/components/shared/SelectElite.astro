@@ -102,6 +102,8 @@ const { id, options, placeholder = "Selecciona una opción..." } = Astro.props;
         }
 
         open() {
+            if (!this.container || !this.menu || !this.trigger) return;
+
             // Cerrar otros menús si están abiertos
             document.querySelectorAll('.elite-select-container').forEach(c => {
                 if (c !== this.container) {
@@ -118,27 +120,29 @@ const { id, options, placeholder = "Selecciona una opción..." } = Astro.props;
             
             // Un micro-segundo después, aplicar clases de animación
             setTimeout(() => {
-                this.menu.classList.remove('opacity-0', 'invisible', 'translate-y-2');
-                // Auto-scroll para garantizar visibilidad al usuario sin esfuerzo
-                this.menu.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                if (this.menu) {
+                    this.menu.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+                    // Auto-scroll para garantizar visibilidad al usuario sin esfuerzo
+                    this.menu.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             }, 10);
             
-            this.icon.classList.add('rotate-180');
+            if (this.icon) this.icon.classList.add('rotate-180');
         }
 
         close() {
-            if (!this.isOpen) return;
+            if (!this.isOpen || !this.menu || !this.trigger) return;
             this.isOpen = false;
             this.trigger.setAttribute('aria-expanded', 'false');
             this.menu.classList.add('opacity-0', 'invisible', 'translate-y-2');
-            this.icon.classList.remove('rotate-180');
+            if (this.icon) this.icon.classList.remove('rotate-180');
             
             // Reajustar la vista al campo para eliminar el espacio fantasma
             this.trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             
             // Esperar a que acabe la animación (200ms) y luego ocular del layout
             setTimeout(() => {
-                if (!this.isOpen) this.menu.classList.add('hidden');
+                if (!this.isOpen && this.menu) this.menu.classList.add('hidden');
             }, 200);
         }
 

@@ -128,7 +128,7 @@ import SelectElite from "../shared/SelectElite.astro";
 
 <script>
     import { encryptData, decryptData } from '../../utils/security';
-    import { getDistributors, getDiscounts } from '../../data/api';
+    import { getDistributors, getDiscounts, getConfigData } from '../../data/api';
 
     // --- NAMESPACE PROTEGIDO ELITE ---
     window.__MH_CART__ = window.__MH_CART__ || {
@@ -143,7 +143,6 @@ import SelectElite from "../shared/SelectElite.astro";
     // Pre-cargar descuentos para validación instantánea
     getDiscounts().then(data => { 
         discountsCache = data;
-        console.log('[Elite Cart] Descuentos cargados:', discountsCache.length);
     });
 
     const CART_STORAGE_KEY = 'mh_cart_data';
@@ -202,18 +201,16 @@ import SelectElite from "../shared/SelectElite.astro";
         const cartTotalEl = document.getElementById('cart-total');
         const cartSubtotalEl = document.getElementById('cart-subtotal');
 
-        // Cargar números de contacto dinámicamente
+        // Cargar configuración de contactos desde Google Sheets
         try {
-            const distributors = await getDistributors();
-            const mainBranch = distributors.find(d => (d.nombre || '').toLowerCase().includes('sede principal')) || distributors[0];
-            if (mainBranch) {
-                window.__MH_CART__.contacts = {
-                    medico: mainBranch.whatsapp || '',
-                    farmacia: mainBranch.whatsapp_2 || mainBranch.whatsapp || ''
-                };
-            }
+            const config = await getConfigData();
+            window.__MH_CART__.contacts = {
+                medico: config.pedido_medico_whatsapp || '',
+                farmacia: config.pedido_farmacia_whatsapp || ''
+            };
+            console.log('[Elite Cart] Contactos configurados desde Excel:', window.__MH_CART__.contacts);
         } catch (e) {
-            console.warn('[Elite Cart] Error cargando contactos dinámicos.');
+            console.warn('[Elite Cart] Error cargando configuración de contactos.');
         }
 
         const ICONS = {

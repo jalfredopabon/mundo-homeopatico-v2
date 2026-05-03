@@ -99,9 +99,9 @@ import SelectElite from "../shared/SelectElite.astro";
                 <span class="text-slate-500 font-bold">Subtotal</span>
                 <span id="cart-subtotal" class="text-slate-900 font-black">$0</span>
             </div>
-            <div class="flex justify-between items-center text-xs">
-                <span class="text-slate-400 font-bold">Descuento</span>
-                <span class="text-brand font-black">-$0</span>
+            <div id="cart-discount-row" class="flex justify-between items-center text-xs transition-all hidden">
+                <span id="cart-discount-label" class="text-emerald-600 font-bold">Descuento</span>
+                <span id="cart-discount-val" class="text-emerald-600 font-black">-$0</span>
             </div>
             <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
                 <span class="text-[13px] font-black text-slate-900 tracking-widest">Total pedido</span>
@@ -128,14 +128,23 @@ import SelectElite from "../shared/SelectElite.astro";
 
 <script>
     import { encryptData, decryptData } from '../../utils/security';
-    import { getDistributors } from '../../data/api';
+    import { getDistributors, getDiscounts } from '../../data/api';
 
     // --- NAMESPACE PROTEGIDO ELITE ---
     window.__MH_CART__ = window.__MH_CART__ || {
         items: [],
         initialized: false,
-        contacts: { medico: '', farmacia: '' }
+        contacts: { medico: '', farmacia: '' },
+        discount: { porcentaje: 0, nombre: '', cedula: '' }
     };
+
+    let discountsCache: any[] = [];
+    
+    // Pre-cargar descuentos para validación instantánea
+    getDiscounts().then(data => { 
+        discountsCache = data;
+        console.log('[Elite Cart] Descuentos cargados:', discountsCache.length);
+    });
 
     const CART_STORAGE_KEY = 'mh_cart_data';
 
@@ -300,8 +309,25 @@ import SelectElite from "../shared/SelectElite.astro";
                 });
             }
 
-            const total = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
-            if (cartSubtotalEl) cartSubtotalEl.innerText = `$${total.toLocaleString()}`;
+            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            const pct = window.__MH_CART__.discount.porcentaje || 0;
+            const discountAmount = Math.round(subtotal * pct / 100);
+            const total = subtotal - discountAmount;
+
+            if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;
+            
+            const discountRow = document.getElementById('cart-discount-row');
+            const discountLabel = document.getElementById('cart-discount-label');
+            const discountVal = document.getElementById('cart-discount-val');
+
+            if (pct > 0) {
+                discountRow?.classList.remove('hidden');
+                if (discountLabel) discountLabel.textContent = `Descuento (${pct}%)`;
+                if (discountVal) discountVal.textContent = `-$${discountAmount.toLocaleString()}`;
+            } else {
+                discountRow?.classList.add('hidden');
+            }
+
             if (cartTotalEl) cartTotalEl.innerText = `$${total.toLocaleString()}`;
             
             document.dispatchEvent(new CustomEvent('cartUpdated', { 
@@ -323,7 +349,11 @@ import SelectElite from "../shared/SelectElite.astro";
                 return;
             }
 
-            const total = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
+            const pct = window.__MH_CART__.discount.porcentaje || 0;
+            const discountAmount = Math.round(subtotal * pct / 100);
+            const total = subtotal - discountAmount;
+
             const targetPhone = window.__MH_CART__.contacts[variant];
 
             let message = `*PEDIDO MUNDO HOMEOPÁTICO*\n`;
@@ -342,6 +372,10 @@ import SelectElite from "../shared/SelectElite.astro";
             });
 
             message += `\n*RESUMEN:* \n`;
+            message += `Subtotal: $${subtotal.toLocaleString()}\n`;
+            if (pct > 0) {
+                message += `Descuento (${pct}%): -$${discountAmount.toLocaleString()}\n`;
+            }
             message += `Total a pagar: *$${total.toLocaleString()}*\n`;
             message += `--------------------------------`;
 
@@ -361,6 +395,37 @@ import SelectElite from "../shared/SelectElite.astro";
                 saveCartToStorage();
                 renderCart();
             }
+        });
+
+        // --- MOTOR DE DESCUENTOS REACTIVO ---
+        const billIdInput = document.getElementById('bill-id') as HTMLInputElement;
+        let discountTimeout: any;
+
+        billIdInput?.addEventListener('input', () => {
+            clearTimeout(discountTimeout);
+            discountTimeout = setTimeout(() => {
+                const cedula = billIdInput.value.trim().replace(/\D/g, ''); // Solo números para comparar
+                if (cedula.length < 8) {
+                    window.__MH_CART__.discount = { porcentaje: 0, nombre: '', cedula: '' };
+                    renderCart();
+                    return;
+                }
+
+                const match = discountsCache.find(d => String(d.cedula).replace(/\D/g, '') === cedula);
+
+                if (match) {
+                    console.log('[Elite Cart] Descuento aplicado para:', match.nombre);
+                    window.__MH_CART__.discount = {
+                        porcentaje: Number(match.porcentaje_descuento),
+                        nombre: match.nombre,
+                        cedula: cedula
+                    };
+                } else {
+                    window.__MH_CART__.discount = { porcentaje: 0, nombre: '', cedula: '' };
+                }
+
+                renderCart();
+            }, 400);
         });
 
         document.removeEventListener('renderCartInternal', renderCart);

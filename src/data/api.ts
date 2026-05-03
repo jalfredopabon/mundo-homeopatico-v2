@@ -19,7 +19,7 @@ export interface FilterMetadata {
 /**
  * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
  */
-const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbxtc14Vbzm5ZAcF2hhQsLsEuGyEyJxzAgfnxWZIgTxv_iGHWzf4xrn9IQYtXkRIcZ59/exec';
+const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbyf4h6EDfhx1OIF4EhlnjIOMKfh3vfyQ_F2xpQL-508-uBlWQvj6tN1BilRFrBHEIq9/exec';
 
 /**
  * TOKEN DE SEGURIDAD (Protocolo Fort Knox)
@@ -101,6 +101,22 @@ export const ConfigSchema = z.object({
 });
 
 export type ConfigData = z.infer<typeof ConfigSchema>;
+
+// --- ESQUEMA PARA DESCUENTOS ---
+export const DiscountSchema = z.object({
+    cedula: z.union([z.string(), z.number()]).transform(val => String(val)),
+    nombre: z.string().optional().default(''),
+    porcentaje_descuento: z.union([z.string(), z.number()]).transform(val => Number(val)),
+});
+
+export type DiscountData = z.infer<typeof DiscountSchema>;
+
+// --- TIPO RESULTADO DE VALIDACIÓN DE ACCESO ---
+export interface AccessResult {
+    ok: boolean;
+    nombre_usuario?: string;
+    error?: string;
+}
 
 // --- ESQUEMAS PARA CATÁLOGO (HIERARCHY & PRICES) ---
 
@@ -463,4 +479,39 @@ export async function getConfigData(): Promise<Record<string, string>> {
     });
 }
 
+/**
+ * Obtiene la lista de descuentos por cédula (descuentos)
+ */
+export async function getDiscounts(): Promise<DiscountData[]> {
+    return fetchWithSWR('site_discounts_v1', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=descuentos&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
 
+            if (Array.isArray(cleanData)) {
+                return z.array(DiscountSchema.passthrough()).parse(cleanData);
+            }
+            return [];
+        } catch (error: any) {
+            console.warn('API Error (Descuentos):', error?.message || String(error));
+            return [];
+        }
+    });
+}
+
+/**
+ * Valida credenciales de acceso al Vademécum de forma segura.
+ * NUNCA expone la tabla completa. El GAS solo responde ok/no ok.
+ */
+export async function validateAccess(usuario: string, contrasena: string): Promise<AccessResult> {
+    try {
+        const url = `${GAS_WEBAPP_URL}?action=validar_acceso&key=${SECRET_KEY}&usuario=${encodeURIComponent(usuario)}&contrasena=${encodeURIComponent(contrasena)}`;
+        const response = await robustFetch(url);
+        const data = await response.json();
+        return data as AccessResult;
+    } catch (error: any) {
+        console.warn('API Error (ValidarAcceso):', error?.message || String(error));
+        return { ok: false, error: 'Error de conexión' };
+    }
+}

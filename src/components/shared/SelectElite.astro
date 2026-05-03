@@ -192,10 +192,16 @@ const { id, options, placeholder = "Selecciona una opción..." } = Astro.props;
     }
 
     // Inicializar todos los componentes SelectElite en la página
-    document.addEventListener('DOMContentLoaded', () => {
+    const initSelects = () => {
         const selects = document.querySelectorAll('.elite-select-container');
         selects.forEach(container => {
-            (container as any).__eliteSelectInstance = new EliteSelect(container as HTMLElement);
+            // Evitar doble inicialización
+            if (!(container as any).__eliteSelectInstance) {
+                (container as any).__eliteSelectInstance = new EliteSelect(container as HTMLElement);
+            }
         });
-    });
+    };
+
+    document.addEventListener('DOMContentLoaded', initSelects);
+    document.addEventListener('astro:page-load', initSelects);
 </script>

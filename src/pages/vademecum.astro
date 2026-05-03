@@ -9,8 +9,8 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 
 // Nota: Ya no renderizamos las tarjetas en el servidor para evitar DOM Bloat.
 // La hidratación es 100% cliente vía motor dinámico.
-const userName = "Alfredo Pabón";
-
+// Nota: Ya no renderizamos las tarjetas en el servidor para evitar DOM Bloat.
+// La hidratación es 100% cliente vía motor dinámico.
 ---
 
 <BaseLayout title="Vademécum Clínico | Mundo Homeopático" mostrarZoom={false}>
@@ -21,7 +21,6 @@ const userName = "Alfredo Pabón";
         
         <!-- Sidebar: Ahora recibe filtros base, pero el filtrado es cliente puro -->
         <SidebarVademecum 
-            userName={userName} 
             activeView="productos"
         />
 
@@ -44,7 +43,7 @@ const userName = "Alfredo Pabón";
                 <!-- Contador de Resultados (ADN Clon Catálogo Elite) -->
                 <div class="mb-8 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal active min-h-[32px]">
                     <Icons type="mortero" class="w-3.5 h-3.5 text-slate-500" />
-                    <span id="results-counter">Cargando catálogo profesional...</span>
+                    <span id="results-counter">Verificando credenciales...</span>
                 </div>
 
                 <!-- LISTADO DINÁMICO (VACÍO AL INICIO) -->
@@ -110,7 +109,26 @@ const userName = "Alfredo Pabón";
     let _filterSistemas: string[] = [];
 
     document.addEventListener('astro:page-load', async () => {
+        const session = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
+        const authModal = document.getElementById('auth-modal-overlay');
+
+        if (!session) {
+            // Si no hay sesión, asegurar que el modal sea visible y detener carga
+            if (authModal) {
+                authModal.classList.remove('hidden', 'opacity-0');
+                document.body.style.overflow = 'hidden';
+            }
+            return;
+        }
+
+        // Si hay sesión, ocultar modal e inicializar datos
+        if (authModal) authModal.classList.add('hidden');
         await initVademecum();
+    });
+
+    // Escuchar el evento de login exitoso para arrancar el Vademécum
+    document.addEventListener('mhSessionUpdated', () => {
+        initVademecum();
     });
 
     async function initVademecum() {

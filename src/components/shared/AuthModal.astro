@@ -105,14 +105,25 @@ import Icons from './Icons.astro';
 </div>
 
 <script>
-    function initAuth() {
-        const TEMP_USER = 'invitado'; // TODO: Integrar con sistema real de autenticación
-        const TEMP_PASS = '1234';
+    import { validateAccess } from '../../data/api';
 
+    function getInitials(name: string): string {
+        const cleanName = name.replace(/^(Dr\.|Dra\.|Esp\.|Lic\.)\s+/i, '');
+        const parts = cleanName.split(' ').filter(p => p.length > 0);
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
+        } else if (parts.length === 1) {
+            return parts[0].substring(0, 2).toUpperCase();
+        }
+        return 'IN';
+    }
+
+    function initAuth() {
         const overlay = document.getElementById('auth-modal-overlay');
         const form = document.getElementById('auth-form') as HTMLFormElement | null;
         const inputNit = document.getElementById('auth-nit') as HTMLInputElement | null;
         const inputPass = document.getElementById('auth-password') as HTMLInputElement | null;
+        const inputKeep = form?.querySelector('input[type="checkbox"]') as HTMLInputElement | null;
         const errorBox = document.getElementById('auth-error');
         const errorText = document.getElementById('auth-error-text');
         const toggleBtn = document.getElementById('toggle-password');
@@ -125,29 +136,66 @@ import Icons from './Icons.astro';
         // Bloqueo de scroll al detectar el modal activo
         if (!overlay.classList.contains('hidden')) {
             document.body.style.overflow = 'hidden';
-            // Pequeño delay de foco para UX
             setTimeout(() => inputNit?.focus(), 500);
         }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const user = inputNit?.value.trim().toLowerCase(); 
-            const pass = inputPass?.value;
+            const user = inputNit?.value.trim(); 
+            const pass = inputPass?.value.trim();
 
-            if (user === TEMP_USER && pass === TEMP_PASS) {
-                if (submitBtn) submitBtn.textContent = 'Ingresando...';
-                
-                // Transición fluida de salida
-                overlay.classList.add('opacity-0');
-                
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    document.body.style.overflow = ''; // Devolver scroll al usuario
-                }, 400);
-            } else {
+            console.log('[Elite Auth] Intentando ingreso con usuario:', user);
+
+            if (!user || !pass) {
                 errorBox?.classList.remove('hidden');
                 errorBox?.classList.add('flex');
-                if (errorText) errorText.textContent = 'Credenciales incorrectas.';
+                if (errorText) errorText.textContent = 'Ingresa usuario y contraseña.';
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Verificando...';
+            }
+            errorBox?.classList.add('hidden');
+
+            try {
+                const result = await validateAccess(user, pass);
+                console.log('[Elite Auth] Respuesta de Google Script:', result);
+
+                if (result && result.ok) {
+                    const sessionData = {
+                        nombre_usuario: result.nombre_usuario || user,
+                        iniciales: getInitials(result.nombre_usuario || user),
+                        timestamp: Date.now()
+                    };
+
+                    const storage = inputKeep?.checked ? localStorage : sessionStorage;
+                    storage.setItem('mh_session', JSON.stringify(sessionData));
+
+                    // Notificar a otros componentes (como el Sidebar)
+                    document.dispatchEvent(new CustomEvent('mhSessionUpdated'));
+
+                    if (submitBtn) submitBtn.textContent = '¡Bienvenido!';
+                    overlay.classList.add('opacity-0');
+                    
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }, 400);
+                } else {
+                    const msg = result?.error || 'Credenciales incorrectas';
+                    throw new Error(msg);
+                }
+            } catch (err: any) {
+                console.error('[Elite Auth] Error en validación:', err);
+                errorBox?.classList.remove('hidden');
+                errorBox?.classList.add('flex');
+                if (errorText) errorText.textContent = err.message || 'Error de conexión con el servidor.';
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Ingresar';
+                }
                 inputPass?.focus();
             }
         });

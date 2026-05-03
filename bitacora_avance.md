@@ -125,6 +125,27 @@
 - **Integración de Datos:** Inyección de descripciones reales y estados de preparación en secciones críticas de `index.astro` (Oficinales, Magistrales, Esenciales).
 - **UX Parity:** Se logró paridad visual 1:1 con la versión online garantizando que la información crítica para médicos sea visible sin interacción (sin tooltips huerfanos).
 
+## Próximos Pasos y Futuras Implementaciones
+1.  **Refinamiento Estético Final (Usuario):** Aplicar ajustes de diseño visual personalizados al carrito para máxima coherencia con la marca.
+2.  **Registro en Google Sheets (Automatización):**
+    - **Aislamiento Total:** Implementar el registro en un Google Sheet **independiente** al de datos maestros (Vademécum/Precios) para garantizar seguridad y limpieza de datos.
+    - **Trazabilidad Completa:** Captura de metadatos críticos:
+        *   Fecha y Hora exacta del intento de pedido.
+        *   Perfil del Cliente: Nombre, Cédula/NIT, WhatsApp y Dirección.
+        *   Detalle del Carrito: Listado de productos, cantidades, precios unitarios y **notas/especificaciones**.
+        *   Resumen Financiero: Totales y método de pago seleccionado.
+    - **Notificación Dual (Confirmación):** 
+        *   Envío del pedido principal al WhatsApp de la empresa (Médico/Farmacia).
+        *   Implementación de flujo automatizado (vía Sheets/GAS) para enviar copia del pedido al WhatsApp del cliente como comprobante.
+    - **Validación de Intento (UX Elite):**
+        *   Implementación de un paso de confirmación ("¿Seguro que desea enviar su pedido?") para evitar envíos accidentales.
+        *   Este paso servirá como revisión final de datos antes de disparar el registro y el mensaje.
+    - **Objetivo:** Crear un ecosistema de pedidos blindado, profesional y con trazabilidad 360°.
+3.  **Optimización LCP Global:** Extender las mejoras de `fetchpriority` a los logos de distribuidores y cabeceras de catálogo.
+5.  **Estructura de Datos y Backend (Google Sheets):**
+    - **Hoja de Configuración de Pedidos:** Crear una nueva pestaña para asignar dinámicamente los números de WhatsApp a los botones del carrito y definir las reglas de descuento (porcentaje y beneficiarios).
+    - **Hoja de Perfiles de Vademécum:** Implementar una nueva hoja para gestionar los perfiles de acceso y visualización del catálogo (Ej: qué productos o información técnica ve un médico vs. un cliente particular).
+
 ### Hito 36: Estandarización de Layout y Resolución de Conflictos (05/04/2026)
 - **Resolución de Conflictos de Renderizado:** Eliminación del `line-clamp-2` en las descripciones de productos para desactivar el comportamiento `-webkit-box`, el cual causaba truncados prematuros (especialmente en palabras largas como "gastroesofágico") debido a interferencias con `text-wrap: pretty`.
 - **Modularización y Tokenización Total:**

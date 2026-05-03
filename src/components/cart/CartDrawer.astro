@@ -3,112 +3,108 @@
 import Icons from "../shared/Icons.astro";
 import SelectElite from "../shared/SelectElite.astro";
 ---
-<!-- Bloque 1 - Fase 2: Cimientos (Estructura Base) -->
+<!-- Bloque 1 - Estructura Base Elite -->
 <aside id="cart-drawer" class="drawer-panel" aria-labelledby="cart-title">
     
     <!-- Piso 1: Header Fijo -->
-    <header class="drawer-header">
+    <header class="p-6 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
         <div class="flex items-center gap-3">
-            <div class="text-slate-900">
-                <Icons type="cart" class="w-[28px] h-[28px]" strokeWidth={2} />
+            <div class="text-brand">
+                <Icons type="shopping-cart" class="w-7 h-7" strokeWidth={2} />
             </div>
             <div>
-                <h2 id="cart-title" class="text-lg font-bold text-slate-900 tracking-tight">Mi pedido</h2>
-                <p class="text-[10px] text-slate-700 font-medium leading-none">WhatsApp Order System</p>
+                <h2 id="cart-title" class="text-[17px] font-black text-slate-900 tracking-tight">Tu pedido</h2>
+                <p class="text-[10px] text-slate-500 font-bold leading-none tracking-wider">Sistema de pedidos WhatsApp</p>
             </div>
         </div>
         
         <div class="flex items-center gap-2">
-            <!-- Botón Vaciar (Acción destructiva aislada) -->
-            <button id="clear-cart" class="text-[10px] font-bold text-red-500 hover:text-red-700 tracking-tighter px-2 py-1 hover:bg-red-50 rounded transition-colors" title="Vaciar todo el pedido">
+            <button id="clear-cart" class="text-[10px] font-black text-slate-400 hover:text-red-500 tracking-widest px-2 py-1 transition-colors">
                 Vaciar
             </button>
-            <!-- Botón Cerrar -->
-            <button id="close-cart" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-700 hover:text-slate-900 transition-all" aria-label="Cerrar carrito">
+            <button id="close-cart" class="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all">
                 <Icons type="x" class="w-5 h-5" strokeWidth={2.5} />
             </button>
         </div>
     </header>
 
      <!-- Piso 2: Contenido Scrolleable (Items + Formulario) -->
-    <div class="flex-1 overflow-y-auto w-full custom-scrollbar">
+    <div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
         <!-- Lista de Productos -->
-        <div id="cart-items-container" class="px-6 py-4 space-y-4">
-             <div id="cart-empty-state" class="py-20 text-center space-y-6">
-                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300">
-                    <Icons type="cart" class="w-10 h-10" strokeWidth={1.5} />
+        <div id="cart-items-container">
+             <div id="cart-items-list" class="space-y-4"></div>
+             
+             <div id="cart-empty-state" class="text-center py-20 hidden">
+                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-200">
+                    <Icons type="shopping-cart" class="w-8 h-8" />
                 </div>
-                <div class="space-y-2">
-                    <p class="text-slate-900 font-bold text-base">Tu carrito está vacío</p>
-                    <p class="text-slate-500 text-xs px-10">Parece que aún no has añadido productos a tu pedido.</p>
-                </div>
-                <button onclick="document.dispatchEvent(new CustomEvent('toggleCart'))" class="px-6 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all active:scale-95">
-                    Explorar Catálogo
+                <h3 class="text-slate-900 font-bold">Tu carrito está vacío</h3>
+                <p class="text-slate-400 text-xs mt-1">Explora el catálogo para añadir productos.</p>
+                <button onclick="document.dispatchEvent(new CustomEvent('toggleCart'))" class="mt-8 px-8 py-3 bg-slate-900 text-white text-[11px] font-black tracking-widest rounded-xl hover:bg-slate-800 transition-all active:scale-95 shadow-sm">
+                    Explorar catálogo
                 </button>
              </div>
-             <div id="cart-items-list" class="space-y-4"></div>
         </div>
 
-        <!-- Formulario de Facturación (Jerarquía Mejorada) -->
-        <div id="checkout-form-container" class="px-6 pb-10 pt-4 space-y-6">
-            <div class="flex items-center gap-4">
-                <div class="h-px bg-slate-200 flex-1"></div>
-                <h3 class="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">Datos de Entrega</h3>
-                <div class="h-px bg-slate-200 flex-1"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <div class="space-y-1.5">
-                    <label for="bill-name" class="cart-label">Nombre completo <span class="text-red-500">*</span></label>
-                    <input id="bill-name" type="text" placeholder="Ej: Dr. Alejandro Ruiz" class="cart-input" />
-                </div>
+        <!-- Formulario de Pedido -->
+        <div id="checkout-form-container" class="hidden space-y-8 pt-8 border-t border-slate-100">
+            <div class="space-y-6">
+                <h3 class="text-[13px] font-black text-slate-900 tracking-widest flex items-center gap-2.5">
+                    <div class="w-6 h-6 bg-brand/10 rounded-lg flex items-center justify-center">
+                        <Icons type="truck" class="w-3.5 h-3.5 text-brand" strokeWidth={3} />
+                    </div>
+                    Datos de entrega
+                </h3>
                 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-1.5">
-                        <label for="bill-id" class="cart-label">Cédula o NIT <span class="text-red-500">*</span></label>
-                        <input id="bill-id" type="text" inputmode="numeric" placeholder="1234567-8" class="cart-input" />
+                <div class="grid grid-cols-1 gap-5">
+                    <div class="space-y-2">
+                        <label for="bill-name" class="cart-label">Nombre completo *</label>
+                        <input type="text" id="bill-name" class="cart-input" placeholder="Ej: Alejandro Ruiz" />
                     </div>
-                    <div class="space-y-1.5">
-                        <label for="bill-whatsapp" class="cart-label">WhatsApp <span class="text-red-500">*</span></label>
-                        <input id="bill-whatsapp" type="tel" inputmode="tel" placeholder="320 000 0000" class="cart-input" />
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label for="bill-id" class="cart-label">Cédula o NIT *</label>
+                            <input type="text" id="bill-id" class="cart-input" placeholder="Ej: 1.020.300..." />
+                        </div>
+                        <div class="space-y-2">
+                            <label for="bill-whatsapp" class="cart-label">WhatsApp *</label>
+                            <input type="tel" id="bill-whatsapp" class="cart-input" placeholder="Ej: 300 123 4567" />
+                        </div>
                     </div>
-                </div>
-
-                <div class="space-y-1.5">
-                    <label for="bill-address" class="cart-label">Dirección de entrega (Opcional)</label>
-                    <input id="bill-address" type="text" placeholder="Calle 123 # 45-67" class="cart-input" />
-                </div>
-
-                <div class="space-y-1.5">
-                    <label for="bill-payment" class="cart-label">Método de pago</label>
-                    <SelectElite 
-                        id="bill-payment" 
-                        placeholder="Selecciona un método..." 
-                        options={[
-                            { value: "transferencia", label: "Transferencia Bancaria" },
-                            { value: "nequi", label: "Nequi / Daviplata" },
-                            { value: "efectivo", label: "Efectivo contra entrega" }
-                        ]}
-                    />
+                    <div class="space-y-2">
+                        <label for="bill-address" class="cart-label">Dirección (Opcional)</label>
+                        <input type="text" id="bill-address" class="cart-input" placeholder="Barrio, calle y número" />
+                    </div>
+                    <div class="space-y-3">
+                        <label class="cart-label">Método de pago preferido</label>
+                        <SelectElite 
+                            id="bill-payment" 
+                            placeholder="Selecciona un método..." 
+                            options={[
+                                { value: "transferencia", label: "Transferencia Bancaria" },
+                                { value: "nequi", label: "Nequi / Daviplata" },
+                                { value: "efectivo", label: "Efectivo contra entrega" }
+                            ]} 
+                        />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Piso 3: Footer Fijo (Resumen y Botones) -->
-    <footer class="p-6 bg-white border-t border-slate-100 shrink-0 space-y-6 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
-        <div class="space-y-3">
-            <div class="flex justify-between items-center text-sm">
-                <span class="text-slate-500 font-medium">Subtotal pedido</span>
-                <span id="cart-subtotal" class="text-slate-900 font-bold">$0</span>
+    <footer class="p-6 bg-slate-50/50 border-t border-slate-100 shrink-0 space-y-6">
+        <div class="space-y-3 px-2">
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-500 font-bold">Subtotal</span>
+                <span id="cart-subtotal" class="text-slate-900 font-black">$0</span>
             </div>
-            <!-- Descuento oculto hasta Fase 3 -->
-            <div id="cart-discount-row" class="hidden justify-between items-center text-[13px] text-brand-vibrant font-medium">
-                <span>Descuento aplicado</span>
-                <span id="cart-discount">-$0</span>
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-bold">Descuento</span>
+                <span class="text-brand font-black">-$0</span>
             </div>
-            <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
-                <span class="text-slate-900 font-extrabold text-base">Total a pagar</span>
+            <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
+                <span class="text-[13px] font-black text-slate-900 tracking-widest">Total pedido</span>
                 <span id="cart-total" class="text-2xl font-black text-slate-900 tracking-tighter">$0</span>
             </div>
         </div>
@@ -127,7 +123,6 @@ import SelectElite from "../shared/SelectElite.astro";
 
 </aside>
 
-<!-- Fondo Oscuro Overlay -->
 <!-- Fondo Oscuro Overlay -->
 <div id="cart-overlay" class="drawer-overlay"></div>
 
@@ -232,7 +227,7 @@ import SelectElite from "../shared/SelectElite.astro";
                 document.getElementById('checkout-form-container')?.classList.remove('hidden');
                 cartItemsList.innerHTML = items.map((item: any, index: number) => `
                     <div class="cart-item-card group animate-fade-in" style="animation-delay: ${index * 0.05}s">
-                        <button class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all hover:rotate-90 btn-remove-item" data-index="${index}">
+                        <button class="absolute top-4 right-4 text-slate-600 hover:text-red-500 transition-all hover:rotate-90 btn-remove-item" data-index="${index}" title="Eliminar preparación">
                             ${ICONS.trash}
                         </button>
                         <div class="pr-6">
@@ -240,12 +235,12 @@ import SelectElite from "../shared/SelectElite.astro";
                             <p class="text-[11px] text-slate-500 mt-1 font-medium">$${item.price.toLocaleString()}</p>
                         </div>
                         <div class="flex items-center justify-between mt-4">
-                            <div class="flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-100">
-                                <button class="w-7 h-7 flex items-center justify-center bg-white hover:bg-slate-100 text-slate-600 rounded-md transition-all active:scale-90 border border-slate-200 shadow-sm btn-qty" data-index="${index}" data-action="minus">
+                            <div class="flex items-center gap-1">
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="minus">
                                     ${ICONS.minus}
                                 </button>
-                                <span class="text-[13px] font-bold text-slate-900 min-w-[2rem] text-center tabular-nums">${item.quantity}</span>
-                                <button class="w-7 h-7 flex items-center justify-center bg-white hover:bg-slate-100 text-slate-600 rounded-md transition-all active:scale-90 border border-slate-200 shadow-sm btn-qty" data-index="${index}" data-action="plus">
+                                <span class="text-sm font-bold text-slate-900 min-w-[1.5rem] text-center tabular-nums">${item.quantity}</span>
+                                <button class="w-7 h-7 flex items-center justify-center bg-brand-vibrant hover:bg-brand text-white rounded-md transition-all active:scale-90 btn-qty" data-index="${index}" data-action="plus">
                                     ${ICONS.plus}
                                 </button>
                             </div>
@@ -253,8 +248,8 @@ import SelectElite from "../shared/SelectElite.astro";
                         </div>
 
                         <div class="pt-3 mt-3 border-t border-dashed border-slate-100">
-                            <button class="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-slate-400 hover:text-brand transition-colors btn-add-note" data-index="${index}">
-                                ${ICONS.note}
+                            <button class="flex items-center gap-2 text-[10px] font-black tracking-wider text-slate-400 ${item.hasNote ? 'hover:text-red-500' : 'hover:text-brand'} transition-colors btn-add-note" data-index="${index}">
+                                ${item.hasNote ? ICONS.minus : ICONS.plus}
                                 ${item.hasNote ? 'Quitar nota' : 'Añadir especificación'}
                             </button>
                             <textarea class="mt-3 w-full text-[12px] text-slate-700 bg-white border border-slate-200 rounded-xl px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand focus:ring-opacity-10 focus:border-brand transition-all cart-item-note ${item.hasNote ? 'block' : 'hidden'}" 
@@ -289,12 +284,10 @@ import SelectElite from "../shared/SelectElite.astro";
                     btn.addEventListener('click', (e) => {
                         const b = e.currentTarget as HTMLElement;
                         const idx = parseInt(b.dataset.index!);
-                        const textarea = b.nextElementSibling as HTMLTextAreaElement;
                         items[idx].hasNote = !items[idx].hasNote;
                         if (!items[idx].hasNote) items[idx].note = '';
-                        textarea.classList.toggle('hidden');
-                        b.lastChild!.textContent = items[idx].hasNote ? ' Quitar nota' : ' Añadir especificación';
                         saveCartToStorage();
+                        renderCart();
                     });
                 });
 
@@ -323,7 +316,7 @@ import SelectElite from "../shared/SelectElite.astro";
             const id = (document.getElementById('bill-id') as HTMLInputElement).value.trim();
             const whatsapp = (document.getElementById('bill-whatsapp') as HTMLInputElement).value.trim();
             const address = (document.getElementById('bill-address') as HTMLInputElement).value.trim();
-            const payment = (document.querySelector('#bill-payment input') as HTMLInputElement)?.value || 'No especificado';
+            const payment = (document.getElementById('bill-payment') as HTMLInputElement)?.value || 'No especificado';
 
             if (!name || !id || !whatsapp) {
                 alert('Por favor completa los campos obligatorios (*)');
@@ -386,12 +379,12 @@ import SelectElite from "../shared/SelectElite.astro";
         width: 100%;
         max-width: 450px;
         background: white;
-        z-index: 100;
+        z-index: 1000;
         transform: translateX(100%);
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         flex-direction: column;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.1);
     }
 
     body.cart-open {
@@ -410,12 +403,12 @@ import SelectElite from "../shared/SelectElite.astro";
     .drawer-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(4px);
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(8px);
         opacity: 0;
         visibility: hidden;
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 90;
+        z-index: 900;
     }
 
     /* --- COMPONENTES ELITE --- */
@@ -424,7 +417,7 @@ import SelectElite from "../shared/SelectElite.astro";
     }
 
     .cart-label {
-        @apply text-[10px] font-black text-slate-400 uppercase tracking-widest block ml-1;
+        @apply text-[10px] font-black text-slate-400 tracking-widest block ml-1;
     }
 
     .cart-input {

@@ -70,14 +70,67 @@ const {
     <div class="px-4 py-4 mt-auto bg-surface-muted/50 border-t border-subtle">
         <div class="flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-white hover:shadow-sm group">
             <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white ring-1 ring-white/20 shadow-sm transition-transform group-hover:scale-105 overflow-hidden">
-                <span class="text-[12px] font-bold tracking-tighter">AL</span>
+                <span id="sidebar-user-initials" class="text-[12px] font-bold tracking-tighter">IN</span>
             </div>
-            <div class="flex flex-col min-w-0">
+            <div class="flex flex-col min-w-0 flex-1">
                 <span class="text-[10px] text-slate-500 font-bold leading-none mb-1 tracking-tight">Hola</span>
-                <span class="text-[13px] font-bold text-slate-900 leading-none truncate group-hover:text-brand transition-colors">
-                    Alfredo Pabón
+                <span id="sidebar-user-name" class="text-[13px] font-bold text-slate-900 leading-none truncate group-hover:text-brand transition-colors">
+                    Invitado
                 </span>
             </div>
+            <!-- Botón Logout -->
+            <button 
+                id="sidebar-logout-btn" 
+                class="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all active:scale-95"
+                title="Cerrar sesión"
+            >
+                <Icons type="log-out" class="w-4 h-4" />
+            </button>
         </div>
     </div>
 </aside>
+
+<script>
+    function updateSidebarSession() {
+        const initialsEl = document.getElementById('sidebar-user-initials');
+        const nameEl = document.getElementById('sidebar-user-name');
+        const logoutBtn = document.getElementById('sidebar-logout-btn');
+        
+        if (!initialsEl || !nameEl) return;
+
+        // Intentar leer de localStorage o sessionStorage
+        const sessionRaw = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
+        
+        if (sessionRaw) {
+            try {
+                const session = JSON.parse(sessionRaw);
+                initialsEl.textContent = session.iniciales || 'IN';
+                nameEl.textContent = session.nombre_usuario || 'Usuario';
+                if (logoutBtn) logoutBtn.classList.remove('hidden');
+            } catch (e) {
+                console.error('[Elite Sidebar] Error al parsear sesión');
+            }
+        } else {
+            initialsEl.textContent = 'IN';
+            nameEl.textContent = 'Invitado';
+            if (logoutBtn) logoutBtn.classList.add('hidden');
+        }
+    }
+
+    function initSidebarActions() {
+        const logoutBtn = document.getElementById('sidebar-logout-btn');
+        logoutBtn?.addEventListener('click', () => {
+            if (confirm('¿Desea cerrar su sesión profesional?')) {
+                localStorage.removeItem('mh_session');
+                sessionStorage.removeItem('mh_session');
+                window.location.reload(); // Esto disparará el guardián de acceso
+            }
+        });
+
+        updateSidebarSession();
+    }
+
+    // Inicializar y escuchar cambios
+    document.addEventListener('astro:page-load', initSidebarActions);
+    document.addEventListener('mhSessionUpdated', updateSidebarSession);
+</script>

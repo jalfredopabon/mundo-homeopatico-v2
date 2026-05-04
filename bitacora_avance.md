@@ -456,3 +456,26 @@
 - **Filosofía de Auditoría:** Implementación del protocolo "Auditar → Limpiar → Ver" tras detectar que la complejidad modular requería una limpieza de lógica en lugar de parches.
 **Resultado:** Catálogo 100% funcional y visualmente idéntico a la versión online.
 
+## Hito 62: Integración Élite de Pedidos (Google Sheets 360°)
+**Fecha:** 03 de Mayo, 2026
+**Estado:** Completado ✅
+**Descripción:** Implementación de un pipeline de datos robusto para el registro asíncrono de pedidos.
+**Acciones:**
+- **Pipeline de Datos:** Conexión con Google Apps Script (v5) para registro en dos tablas: `pedidos_resumen` y `pedidos_detalle`.
+- **Motor de Facturación PRO:** Generación de IDs legibles (`MH-1`, `MH-2`, etc.) mediante `LockService`.
+- **UX de Éxito:** Implementación de panel de confirmación visual y limpieza automática de estado post-envío.
+
+## Hito 63: Optimización LCP y Paso de Confirmación UX Elite
+**Fecha:** 03 de Mayo, 2026
+**Estado:** Completado ✅
+**Descripción:** Mejora de performance crítica y blindaje de la experiencia de usuario en el checkout.
+**Acciones:**
+- **Optimización LCP Global:** Inyección de `loading="lazy"`, `decoding="async"` y dimensiones explícitas en logos de distribuidores.
+- **Paso de Confirmación:** Implementación de panel intermedio "¿Confirmas tu pedido?" en el carrito para evitar envíos accidentales.
+- **Limpieza de UI:** Eliminación de artefactos visuales y caracteres huérfanos en los paneles del carrito.
+
+
+## ?? Pendientes Actualizados (Sesi�n 03/05/2026)
+- [ ] **Configuraci�n Din�mica:** Migrar URLs de endpoints e instrucciones de WhatsApp a la hoja de 'configuraci�n' en Google Sheets.
+- [ ] **Auditor�a Final LCP:** Verificar m�tricas tras optimizaci�n de logos de distribuidores.
+

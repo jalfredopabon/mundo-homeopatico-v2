@@ -31,7 +31,7 @@ export function renderDistributorGrid(distributors: DistributorData[]): string {
         <div class="bg-surface-white rounded-2xl border border-subtle hover:border-brand transition-all group flex flex-col shadow-sm hover:shadow-md overflow-hidden">
             <div class="p-6 pb-2 flex items-center gap-4 bg-slate-50/30">
                 <div class="h-12 w-12 flex items-center justify-center shrink-0">
-                    <img src="${logoPath}" alt="${distributor.nombre}" class="w-full h-full object-contain" onerror="this.src='/img/logo-mundo-homeopatico.webp'" />
+                    <img src="${logoPath}" alt="${distributor.nombre}" width="48" height="48" loading="lazy" decoding="async" class="w-full h-full object-contain" onerror="this.src='/img/logo-mundo-homeopatico.webp'" />
                 </div>
                 <div class="flex flex-col gap-0.5 overflow-hidden">
                     <h4 class="text-[15px] font-bold text-secondary leading-tight truncate">${distributor.nombre}</h4>

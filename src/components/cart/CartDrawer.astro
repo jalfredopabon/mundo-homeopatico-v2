@@ -91,6 +91,23 @@ import SelectElite from "../shared/SelectElite.astro";
             </div>
         </div>
 
+        <!-- Panel de Confirmación de Pedido (Fase 2) -->
+        <div id="cart-confirm-panel" class="hidden absolute inset-0 bg-white/95 backdrop-blur-md z-[1100] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+            <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-6 border border-slate-100">
+                <Icons type="alert-triangle" class="w-8 h-8" strokeWidth={2.5} />
+            </div>
+            <h3 class="text-lg font-black text-slate-900 mb-2 tracking-tight">¿Confirmas tu pedido?</h3>
+            <p class="text-slate-500 text-[11px] leading-relaxed mb-10 font-medium">Se registrarán tus datos en nuestro sistema y se abrirá WhatsApp para finalizar la compra.</p>
+            <div class="w-full space-y-3">
+                <button id="btn-confirm-send" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg shadow-slate-200">
+                    Sí, enviar pedido
+                </button>
+                <button id="btn-cancel-send" class="w-full py-3 bg-white text-slate-500 border border-slate-200 rounded-xl font-bold text-[11px] hover:bg-slate-50 transition-all">
+                    Revisar datos
+                </button>
+            </div>
+        </div>
+
         <!-- Mensaje de Éxito Elite -->
         <div id="cart-success-msg" class="hidden absolute inset-0 bg-white z-[1100] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
             <div class="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-sm border border-emerald-100">
@@ -344,7 +361,23 @@ import SelectElite from "../shared/SelectElite.astro";
         };
 
         // --- MOTOR DE ENVÍO WHATSAPP ---
-        const handleSendOrder = async (variant: 'medico' | 'farmacia') => {
+        let pendingVariant: 'medico' | 'farmacia' = 'farmacia';
+
+        const handleSendOrder = (variant: 'medico' | 'farmacia') => {
+            const name = (document.getElementById('bill-name') as HTMLInputElement).value.trim();
+            const id = (document.getElementById('bill-id') as HTMLInputElement).value.trim();
+            const whatsapp = (document.getElementById('bill-whatsapp') as HTMLInputElement).value.trim();
+
+            if (!name || !id || !whatsapp) {
+                alert('Por favor completa los campos obligatorios (*)');
+                return;
+            }
+
+            pendingVariant = variant;
+            document.getElementById('cart-confirm-panel')?.classList.remove('hidden');
+        };
+
+        const processOrder = async () => {
             const items = window.__MH_CART__.items;
             const name = (document.getElementById('bill-name') as HTMLInputElement).value.trim();
             const id = (document.getElementById('bill-id') as HTMLInputElement).value.trim();
@@ -352,18 +385,16 @@ import SelectElite from "../shared/SelectElite.astro";
             const address = (document.getElementById('bill-address') as HTMLInputElement).value.trim();
             const payment = (document.getElementById('bill-payment') as HTMLInputElement)?.value || 'No especificado';
  
-            if (!name || !id || !whatsapp) {
-                alert('Por favor completa los campos obligatorios (*)');
-                return;
-            }
- 
             const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
             const pct = window.__MH_CART__.discount.porcentaje || 0;
             const discountAmount = Math.round(subtotal * pct / 100);
             const total = subtotal - discountAmount;
  
-            const targetPhone = window.__MH_CART__.contacts[variant];
+            const targetPhone = window.__MH_CART__.contacts[pendingVariant];
  
+            // Ocultar confirmación y mostrar loading o flujo
+            document.getElementById('cart-confirm-panel')?.classList.add('hidden');
+
             // --- REGISTRO AUTOMÁTICO EN GOOGLE SHEETS (PRIORIDAD ALTA) ---
             const orderData = {
                 nombre: name,
@@ -374,7 +405,7 @@ import SelectElite from "../shared/SelectElite.astro";
                 subtotal: subtotal,
                 descuento: discountAmount,
                 total: total,
-                tipo_pedido: variant,
+                tipo_pedido: pendingVariant,
                 items: items.map((i: any) => ({
                     name: i.name,
                     quantity: i.quantity,
@@ -384,7 +415,6 @@ import SelectElite from "../shared/SelectElite.astro";
 
             const ORDERS_URL = import.meta.env.PUBLIC_ORDERS_GAS_URL;
             
-            // Intentar el registro pero no bloquear la venta si falla
             try {
                 if (ORDERS_URL) {
                     await fetch(ORDERS_URL, {
@@ -441,6 +471,12 @@ import SelectElite from "../shared/SelectElite.astro";
                 (document.getElementById('bill-whatsapp') as HTMLInputElement).value = '';
             }
         };
+
+        // Eventos de Confirmación
+        document.getElementById('btn-confirm-send')?.addEventListener('click', processOrder);
+        document.getElementById('btn-cancel-send')?.addEventListener('click', () => {
+            document.getElementById('cart-confirm-panel')?.classList.add('hidden');
+        });
 
         document.getElementById('btn-close-success')?.addEventListener('click', () => {
             const successMsg = document.getElementById('cart-success-msg');

@@ -1,6 +1,0 @@
-logo	sedes	departamento	direccion	horarios	nombre_distribuidor	nombre_persona	whatsapp_1	whatsapp_2	whatsapp_3	whatsapp_4	movil_1	movil_2	telefono_fijo_1	telefono_fijo_2	mapa
-logo-mundo-homeopatico	Sede principal	Medellín, Antioquia	Carrera 49 N° 64-06	L-V: 8am-12pm / 2pm-6pm | Sábados: 8am-12pm			3157150929	3182899126	3017474675						https://maps.app.goo.gl/KFeXjh1gbQQ5X5Rz5
-logo-mundo-homeopatico	Eje Cafetero y Norte del Valle	Pereira, Armenia, Manizales, Cartago				Phytoessens. Carlos Ramírez	3187166230								
-logo-biomedic	Costa atlántica	Barranquilla, Atlántico	Calle 80 N° 49 C 15, Oficina 301		Biomedic		3215365720						(605) 313 4131		
-logo-mundo-homeopatico	Santanderes	Norte de Santander, Santander				Jhon Jairo Vallejo Rolón	3133019777				3184152610				
-logo-eco-natural	Zona Córdoba	Montería			Eco natural	Martha Elena Rivas	3145532080						(034) 783 0339		

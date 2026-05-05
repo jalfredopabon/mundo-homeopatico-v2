@@ -1,2 +1,0 @@
-cedula	nombre	porcentaje_descuento
-123	alfredo	10

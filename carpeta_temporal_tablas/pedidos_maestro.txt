@@ -1,1 +1,0 @@
-id	fecha	hora	cedula_nit	cliente	whatsApp	direccion	metodo_pago	total	categoria_cliente	observaciones

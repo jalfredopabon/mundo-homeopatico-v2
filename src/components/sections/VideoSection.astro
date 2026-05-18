@@ -35,13 +35,14 @@ import Icons from "../shared/Icons.astro";
                 allowfullscreen 
                 class="w-full h-full"
             ></iframe>
-            <button id="close-video" class="absolute top-4 right-4 z-[60] p-2 bg-black/50 text-white rounded-full hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100">
+            <button id="close-video" class="absolute top-4 right-4 z-[60] p-2 bg-black/60 backdrop-blur-md text-white rounded-full hover:bg-black/80 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100">
                 <Icons type="close-x" class="w-6 h-6" />
             </button>
         </div>
 
         <div id="video-preview-elements">
             <Image 
+                id="video-cover-img"
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" 
                 alt="Laboratorio farmacéutico clínico moderno" 
                 width={1200}
@@ -107,6 +108,12 @@ import Icons from "../shared/Icons.astro";
                 }
             } catch (e) {
                 console.warn("No se pudo cargar el video desde Sheets, usando fallback.");
+            }
+
+            // Actualizar la portada de fondo dinámicamente con la oficial de YouTube
+            const coverImg = document.getElementById('video-cover-img') as HTMLImageElement;
+            if (coverImg) {
+                coverImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
             }
 
             if (playBtn && overlay && iframe) {

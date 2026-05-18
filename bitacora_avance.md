@@ -479,3 +479,19 @@
 - [ ] **Configuraci�n Din�mica:** Migrar URLs de endpoints e instrucciones de WhatsApp a la hoja de 'configuraci�n' en Google Sheets.
 - [ ] **Auditor�a Final LCP:** Verificar m�tricas tras optimizaci�n de logos de distribuidores.
 
+
+## Hito 64: Normalización de Títulos de Porcentaje (UX Élite)
+**Fecha:** 14 de Mayo, 2026
+**Estado:** Completado ✅.
+**Descripción:** Corrección de la visualización de porcentajes en los encabezados de tabla del catálogo.
+**Acciones:**
+- **Implementación de smartFormat:** Creación de lógica heurística en `api.ts` para detectar decimales de Google Sheets (0.2 -> 20%, 1 -> 100%).
+- **Resiliencia de Datos:** Aplicación de la transformación a todos los campos de títulos (`titulo_mostrar`, `titulo_presentacion`, `titulo_precio_farmacia`, `titulo_precio_publico`).
+
+## Hito 65: Re-jerarquización Visual del Sidebar
+**Fecha:** 14 de Mayo, 2026
+**Estado:** Completado ✅.
+**Descripción:** Ajuste de contraste y jerarquía en la navegación lateral para mejorar el flujo visual.
+**Acciones:**
+- **Inversión de Niveles:** El Nivel 1 (Categoría Maestra) se configuró como etiqueta secundaria (`slate-500`, uppercase, tracking-widest).
+- **Protagonismo del Nivel 2:** El Nivel 2 (Sub-agrupadores) se elevó a `slate-900` para actuar como el ancla visual principal de cada sección.

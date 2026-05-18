@@ -137,3 +137,7 @@
 2.  **Auditoría de SEO:** Verificar etiquetas meta y jerarquía H1-H6 en las nuevas secciones institucionales.
 3.  **Pruebas de Carga de Datos:** Validar el comportamiento del carrito con listas de 20+ productos para asegurar la legibilidad del mensaje de WhatsApp.
 
+
+### Mejoras Recientes (14/05/2026)
+- **Capa de Abstracción de Datos:** Implementada función `smartFormat` en `api.ts` para normalizar tipos de datos inconsistentes de Google Sheets (Porcentajes interpretados como decimales). Esto garantiza paridad visual 1:1 entre la hoja de cálculo y la web sin intervención del usuario.
+- **Inversión de Jerarquía Sidebar:** Ajuste de tokens de color en `sidebar-renderer.ts` para invertir el peso visual entre Nivel 1 y Nivel 2, alineándose con el nuevo criterio estético de navegación.

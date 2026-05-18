@@ -120,17 +120,32 @@ export interface AccessResult {
 
 // --- ESQUEMAS PARA CATÁLOGO (HIERARCHY & PRICES) ---
 
+/**
+ * Formatea valores que vienen de Excel/Sheets. 
+ * Detecta si un número es un decimal (porcentaje) y lo convierte a string legible.
+ */
+const smartFormat = (val: any) => {
+    if (typeof val === 'number') {
+        // Si el número está entre 0 y 1 (inclusive), lo tratamos como porcentaje
+        // Esto corrige el comportamiento de Google Sheets (20% -> 0.2, 100% -> 1)
+        if (val > 0 && val <= 1) {
+            return `${Math.round(val * 100)}%`;
+        }
+    }
+    return String(val);
+};
+
 // Esquema para la estructura de navegación (navegacion)
 export const CatalogNavigationSchema = z.object({
     nivel_1: z.string().optional().default(''),
     nivel_2: z.string().optional().default(''),
     nivel_3: z.string().optional().default(''),
     nivel_4: z.string().optional().default(''),
-    titulo_mostrar: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
+    titulo_mostrar: z.union([z.string(), z.number()]).optional().default('').transform(smartFormat),
     descripcion: z.string().optional().default(''),
-    titulo_presentacion: z.union([z.string(), z.number()]).optional().default('Presentación').transform(val => String(val)),
-    titulo_precio_farmacia: z.union([z.string(), z.number()]).optional().default('Precio farmacia').transform(val => String(val)),
-    titulo_precio_publico: z.union([z.string(), z.number()]).optional().default('Precio público').transform(val => String(val)),
+    titulo_presentacion: z.union([z.string(), z.number()]).optional().default('Presentación').transform(smartFormat),
+    titulo_precio_farmacia: z.union([z.string(), z.number()]).optional().default('Precio farmacia').transform(smartFormat),
+    titulo_precio_publico: z.union([z.string(), z.number()]).optional().default('Precio público').transform(smartFormat),
     tabla_id: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
 });
 

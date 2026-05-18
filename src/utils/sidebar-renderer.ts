@@ -89,7 +89,7 @@ export function renderSidebar(navs: any[]): string {
 
     return root.map(category => `
         <div class="space-y-2">
-            <span class="block text-[12px] font-semibold text-slate-900 pl-[23px] pr-4 tracking-tight">
+            <span class="block text-[11px] font-bold text-slate-500 pl-[23px] pr-4 tracking-widest uppercase opacity-70">
                 ${category.category}
             </span>
             <div class="flex flex-col gap-4">
@@ -101,7 +101,7 @@ export function renderSidebar(navs: any[]): string {
                     return `
                         <div class="flex flex-col gap-0">
                             ${!isRedundant ? `
-                                <span class="block tracking-tight font-bold text-slate-400 pr-4 mb-2" style="font-size: var(--sb-font-label); padding-left: calc(var(--sb-px) + var(--sb-icon-offset)); opacity: 0.8;">
+                                <span class="block tracking-tight font-bold text-slate-900 pr-4 mb-2" style="font-size: var(--sb-font-label); padding-left: calc(var(--sb-px) + var(--sb-icon-offset));">
                                     ${sub.label}
                                 </span>
                             ` : ''}

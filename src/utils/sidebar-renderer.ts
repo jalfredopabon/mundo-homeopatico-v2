@@ -5,6 +5,12 @@
  * Recrea la jerarquía de 4 niveles en el cliente.
  */
 
+const toSentenceCase = (str: string) => {
+    if (!str) return "";
+    const clean = str.trim().toLowerCase();
+    return clean.charAt(0).toUpperCase() + clean.slice(1);
+};
+
 const getIcon = (label: string) => {
     const lower = (label || "").toLowerCase();
     if (lower.includes("floral")) return "flower";
@@ -89,8 +95,8 @@ export function renderSidebar(navs: any[]): string {
 
     return root.map(category => `
         <div class="space-y-2">
-            <span class="block text-[11px] font-bold text-slate-500 pl-[23px] pr-4 tracking-widest uppercase opacity-70">
-                ${category.category}
+            <span class="block text-[11px] font-bold text-slate-500 pl-[23px] pr-4 tracking-widest opacity-70">
+                ${toSentenceCase(category.category)}
             </span>
             <div class="flex flex-col gap-4">
                 ${category.subcategories.map((sub: any) => {

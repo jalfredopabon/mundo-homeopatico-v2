@@ -109,6 +109,7 @@ import Icons from '../components/shared/Icons.astro';
                             presentacion: cleanText(p.presentacion),
                             description: cleanText(p.descripcion_producto || p.description_producto),
                             requiresPreparation: ['si', '1', 'bajo pedido', 'requiere elaboración', 'elaboración'].some(term => (p.requiere_elaboracion || '').toLowerCase().trim().includes(term)),
+                            permanentStock: ['stock permanente', 'permanente', 'stock'].some(term => (p.requiere_elaboracion || '').toLowerCase().trim().includes(term)),
                             badges: (p.badges || '').split(/[|;]/).filter(Boolean).map((label: string) => ({
                                 label: label.trim(),
                                 variant: 'outline'

@@ -1194,4 +1194,12 @@ input[type="search"] {
     @apply text-[10px] font-medium leading-tight whitespace-nowrap;
     transition: all 0.2s ease-in-out;
   }
+
+  .badge-status-info {
+    @apply inline-flex items-center gap-1.5;
+    @apply bg-sky-50/60 text-sky-700 border border-sky-200/50;
+    @apply px-2 py-0.5 rounded-md;
+    @apply text-[10px] font-medium leading-tight whitespace-nowrap;
+    transition: all 0.2s ease-in-out;
+  }
 }

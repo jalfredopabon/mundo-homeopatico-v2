@@ -124,13 +124,13 @@ export function renderSidebar(navs: any[]): string {
                                             </button>
                                             <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
                                                 ${item.children.map((child: any) => `
-                                                    <a href="${child.href}" class="sidebar-link sidebar-capsule group ml-[calc(var(--sb-plumb-line)+var(--sb-icon-offset))] w-[calc(100%-var(--sb-plumb-line)-var(--sb-px)-var(--sb-icon-offset))] pl-[10px]">
+                                                    <a href="${child.href}" class="sidebar-link sidebar-capsule group ml-[calc(var(--sb-plumb-line)+var(--sb-icon-offset))] w-[calc(100%-var(--sb-plumb-line)-var(--sb-px)-var(--sb-icon-offset))] pl-[10px] [&.is-active]:bg-surface-muted">
                                                         <span class="sidebar-label--sub group-[.is-active]:font-bold">${child.label}</span>
                                                     </a>
                                                 `).join('')}
                                             </div>
                                         ` : `
-                                            <a href="${item.href}" class="sidebar-link sidebar-capsule group">
+                                            <a href="${item.href}" class="sidebar-link sidebar-capsule group [&.is-active]:bg-surface-muted">
                                                 <div class="sidebar-icon-slot">
                                                     <div>${SIDEBAR_ICONS[item.icon] || ''}</div>
                                                 </div>

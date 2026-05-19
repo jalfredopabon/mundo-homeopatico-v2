@@ -295,7 +295,7 @@ import Icons from '../components/shared/Icons.astro';
         if (scrollContainer && sections.length) {
             const observerOptions = {
                 root: scrollContainer,
-                rootMargin: '-30% 0px -60% 0px',
+                rootMargin: '-30% 0px -40% 0px',
                 threshold: 0
             };
 
@@ -307,6 +307,19 @@ import Icons from '../components/shared/Icons.astro';
                         if (activeLink) {
                             sidebarLinks.forEach(l => l.classList.remove('is-active'));
                             activeLink.classList.add('is-active');
+
+                            // Abrir acordeón padre si el enlace está dentro de uno
+                            const accordionContent = activeLink.closest('.accordion-content') as HTMLElement | null;
+                            closeAllAccordions(accordionContent);
+                            
+                            if (accordionContent) {
+                                accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                                const trigger = accordionContent.previousElementSibling;
+                                if (trigger) trigger.classList.add('is-expanded');
+                            }
+
+                            // Auto-scroll del sidebar hacia el enlace activo
+                            activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                     }
                 });

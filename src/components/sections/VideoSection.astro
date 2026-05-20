@@ -83,11 +83,11 @@ import Icons from "../shared/Icons.astro";
 
         if (videoSection) observer.observe(videoSection);
         
-        // Helper para extraer ID de Youtube
+        // Helper para extraer ID de Youtube (Rescatado de versión robusta)
         function getYouTubeId(url: string) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
+            if (!url || typeof url !== 'string') return null;
+            const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/);
+            return match && match[1] ? match[1] : null;
         }
 
         async function initVideoLogic() {
@@ -110,7 +110,17 @@ import Icons from "../shared/Icons.astro";
                 console.warn("No se pudo cargar el video desde Sheets, usando fallback.");
             }
 
-            // La portada ahora es estática y local (/img/portada-video.webp)
+            // Rescatar inyección dinámica de YouTube (Pilar 3: Data-Driven UI)
+            const coverImg = document.getElementById('video-cover-img');
+            if (coverImg && videoId) {
+                const tailwindClasses = coverImg.className;
+                coverImg.outerHTML = `<img 
+                    id="video-cover-img"
+                    src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" 
+                    alt="Portada oficial del video" 
+                    class="${tailwindClasses}"
+                    onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';">`;
+            }
 
             if (playBtn && overlay && iframe) {
                 playBtn.addEventListener('click', () => {

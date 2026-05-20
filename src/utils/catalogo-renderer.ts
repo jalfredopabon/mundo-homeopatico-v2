@@ -54,6 +54,18 @@ export function createProductRow(product: any): string {
                             <span>Stock permanente</span>
                         </div>
                     ` : ''}
+
+                    ${product.is20Percent ? `
+                        <div class="badge-status-info shadow-sm shadow-sky-200/20">
+                            <span class="font-bold">20%</span>
+                        </div>
+                    ` : ''}
+
+                    ${product.is100Percent ? `
+                        <div class="badge-status-alert shadow-sm shadow-amber-200/20">
+                            <span class="font-bold">100%</span>
+                        </div>
+                    ` : ''}
                 </div>
 
                 <!-- Descripción -->

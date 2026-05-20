@@ -105,6 +105,7 @@ export type ConfigData = z.infer<typeof ConfigSchema>;
 // --- ESQUEMA PARA DESCUENTOS ---
 export const DiscountSchema = z.object({
     cedula: z.union([z.string(), z.number()]).transform(val => String(val)),
+    nit: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
     nombre: z.string().optional().default(''),
     porcentaje_descuento: z.union([z.string(), z.number()]).transform(val => Number(val)),
 });

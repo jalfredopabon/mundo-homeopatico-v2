@@ -512,7 +512,10 @@ import SelectElite from "../shared/SelectElite.astro";
                     return;
                 }
 
-                const match = discountsCache.find(d => String(d.cedula).replace(/\D/g, '') === cedula);
+                const match = discountsCache.find(d => 
+                    String(d.cedula).replace(/\D/g, '') === cedula || 
+                    (d.nit && String(d.nit).replace(/\D/g, '') === cedula)
+                );
 
                 if (match) {
                     console.log('[Elite Cart] Descuento aplicado para:', match.nombre);

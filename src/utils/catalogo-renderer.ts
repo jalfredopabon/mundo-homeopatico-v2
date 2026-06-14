@@ -1,5 +1,4 @@
 // src/utils/catalogo-renderer.ts
-import { sanitizeInput } from "./security";
 
 /**
  * RENDERIZADOR ÉLITE DE CATÁLOGO
@@ -23,16 +22,21 @@ export function createProductRow(product: any): string {
     const hiddenBadges = product.badges.slice(10);
     const extraCount = hiddenBadges.length;
 
+    const normalize = (str: string) =>
+        (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    const searchName = normalize(product.name);
+    const searchPresentacion = normalize(product.presentacion);
+    const searchBadges = product.badges.map((b: any) => normalize(b.label)).join(' ');
+    const searchData = `${searchName} ${searchPresentacion} ${searchBadges}`.trim().replace(/\s+/g, ' ');
+
     return `
-        <div class="catalog-row group/row">
+        <div class="catalog-row group/row" id="${product.id}" data-search="${searchData}">
             <div class="flex flex-col w-full min-w-0 pl-0 transition-transform duration-500 group-hover/row:translate-x-1">
                 <!-- Línea de Título y Estado -->
                 <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <h3 class="text-slate-900 font-bold leading-tight text-dynamic-content tracking-tight">
                         ${product.name}
-                        <span style="display: none !important;" aria-hidden="true">
-                            ${product.badges.map((b: any) => b.label).join(' ')}
-                        </span>
                     </h3>
 
                     ${product.presentacion ? `

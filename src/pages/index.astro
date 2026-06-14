@@ -144,7 +144,7 @@ import Icons from '../components/shared/Icons.astro';
             container.innerHTML = catalogSections.map(section => createCatalogTable(section)).join('');
 
             // 5. RE-INICIALIZAR LISTENERS
-            initCatalogListeners();
+            initCatalogListeners(catalogSections);
             initSidebarListeners();
 
             // 6. AUTO-SCROLL SI HAY HASH
@@ -165,7 +165,7 @@ import Icons from '../components/shared/Icons.astro';
     document.addEventListener('DOMContentLoaded', initCatalog);
     document.addEventListener('astro:page-load', initCatalog);
 
-    function initCatalogListeners() {
+    function initCatalogListeners(catalogSections: any[]) {
         // --- Lógica del Carrito ---
         const btnAddCart = document.querySelectorAll('.btn-add-cart');
         btnAddCart.forEach(btn => {
@@ -197,50 +197,252 @@ import Icons from '../components/shared/Icons.astro';
             });
         }
 
-        // --- Motor de Búsqueda ---
-        const searchInput = document.getElementById('catalogo-search') as HTMLInputElement;
-        const productRows = document.querySelectorAll('.catalog-row');
-        
-        productRows.forEach(row => {
-            const titleEl = row.querySelector('h3');
-            if (titleEl) row.setAttribute('data-original', titleEl.textContent?.trim() || '');
-        });
+        // --- Motor de Búsqueda Predictivo ---
+        let searchInput = document.getElementById('catalogo-search') as HTMLInputElement;
+        const searchDropdown = document.getElementById('catalogo-search-dropdown');
+
+        if (searchInput) {
+            // Clonar para limpiar event listeners antiguos (evita duplicados de Astro y HMR)
+            const cleanedInput = searchInput.cloneNode(true) as HTMLInputElement;
+            searchInput.parentNode?.replaceChild(cleanedInput, searchInput);
+            searchInput = cleanedInput;
+        }
+
+        // Construir base de datos de búsqueda predictiva directamente de los datos cargados en memoria
+        const searchDatabase: any[] = [];
+        if (catalogSections) {
+            catalogSections.forEach(section => {
+                section.products.forEach((p: any) => {
+                    const searchName = p.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                    const searchPresentacion = p.presentacion.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                    const searchBadges = p.badges.map((b: any) => b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()).join(' ');
+                    const searchTerms = `${searchName} ${searchPresentacion} ${searchBadges}`.trim().replace(/\s+/g, ' ');
+
+                    searchDatabase.push({
+                        rowId: p.id,
+                        name: p.name,
+                        searchTerms,
+                        categoryName: section.title,
+                        badges: p.badges.map((b: any) => b.label)
+                    });
+                });
+            });
+        }
+
+        let searchFocusIndex = -1;
+        let lastSearchItems: any[] = [];
+        let lastSearchQuery = '';
+        let isSearchExpanded = false;
+
+        const toggleDropdown = (show: boolean) => {
+            if (searchDropdown) {
+                if (show) {
+                    searchDropdown.classList.remove('hidden');
+                } else {
+                    searchDropdown.classList.add('hidden');
+                }
+            }
+        };
+
+        const updateSearchFocus = (elements: NodeListOf<Element>) => {
+            elements.forEach((el, idx) => {
+                if (idx === searchFocusIndex) {
+                    el.classList.add('is-focused');
+                    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                } else {
+                    el.classList.remove('is-focused');
+                }
+            });
+        };
+
+        const scrollToElement = (rowId: string) => {
+            const targetEl = document.getElementById(rowId);
+            if (targetEl) {
+                toggleDropdown(false);
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Resaltar con animación de destello
+                targetEl.classList.add('highlight-row');
+                setTimeout(() => targetEl.classList.remove('highlight-row'), 2500);
+            }
+        };
+
+        const updateSearchDropdown = (items: any[] | null, query: string | null, forceExpand: boolean | null = null) => {
+            if (!searchDropdown) return;
+
+            let finalItems = items;
+            let finalQuery = query;
+
+            if (items !== null && query !== null) {
+                lastSearchItems = items;
+                lastSearchQuery = query;
+                if (forceExpand === null) {
+                    isSearchExpanded = false;
+                    searchFocusIndex = -1;
+                }
+            } else {
+                finalItems = lastSearchItems;
+                finalQuery = lastSearchQuery;
+            }
+
+            if (forceExpand !== null) isSearchExpanded = forceExpand;
+
+            const initialLimit = 6;
+            const limit = isSearchExpanded ? 1000 : initialLimit;
+            const shown = (finalItems || []).slice(0, limit);
+
+            if (shown.length === 0 || !finalQuery) {
+                toggleDropdown(false);
+                return;
+            }
+
+            // Sanitización y resaltado
+            const escapeHtml = (text: string) => {
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            };
+
+            let html = `
+                <div class="p-2.5 border-b border-slate-100 text-[10px] text-slate-400 font-bold tracking-wider flex justify-between bg-slate-50/80 sticky top-0 z-10 backdrop-blur-sm">
+                    <span>RESULTADOS (${(finalItems || []).length})</span>
+                    <span class="hidden sm:block">Navega con ↑↓ Enter</span>
+                </div>
+                <div class="search-results-list">
+            `;
+
+            html += shown.map((item, index) => {
+                const qNorm = (finalQuery || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const iNorm = item.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                
+                let highlightedName = escapeHtml(item.name);
+                const matchIdx = iNorm.indexOf(qNorm);
+                
+                if (matchIdx !== -1 && qNorm.length > 0) {
+                    const originalText = item.name.substring(matchIdx, matchIdx + (finalQuery || '').length);
+                    highlightedName = escapeHtml(item.name.substring(0, matchIdx)) +
+                        `<span class="search-highlight">${escapeHtml(originalText)}</span>` +
+                        escapeHtml(item.name.substring(matchIdx + (finalQuery || '').length));
+                }
+
+                // Detectar badge coincidente para mostrarlo como pista visual
+                let matchedBadgeHtml = '';
+                if (qNorm.length > 0) {
+                    const matchingBadge = (item.badges || []).find((b: string) => {
+                        const bNorm = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                        return bNorm.includes(qNorm);
+                    });
+                    if (matchingBadge) {
+                        const bNorm = matchingBadge.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                        const bIdx = bNorm.indexOf(qNorm);
+                        const highlighted = escapeHtml(matchingBadge.substring(0, bIdx)) +
+                            `<span class="search-highlight">${escapeHtml(matchingBadge.substring(bIdx, bIdx + (finalQuery || '').length))}</span>` +
+                            escapeHtml(matchingBadge.substring(bIdx + (finalQuery || '').length));
+                        matchedBadgeHtml = `<div class="text-[10px] text-slate-400 mt-0.5">🏷 ${highlighted}</div>`;
+                    }
+                }
+
+                const focusClass = (index === searchFocusIndex) ? 'is-focused' : '';
+
+                return `
+                    <div class="search-result-item ${focusClass} js-search-item" data-row-id="${item.rowId}" data-index="${index}">
+                        <div class="text-[12px] font-bold text-slate-700 leading-tight">${highlightedName}</div>
+                        ${matchedBadgeHtml}
+                        <div class="text-[10px] text-brand-vibrant font-medium truncate mt-0.5">en ${escapeHtml(item.categoryName)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            html += `</div>`;
+
+            if ((finalItems || []).length > initialLimit) {
+                const toggleLabel = isSearchExpanded
+                    ? 'Ver menos'
+                    : `Ver ${(finalItems || []).length - initialLimit} más...`;
+                
+                html += `
+                    <div class="sticky bottom-0 z-10 p-2.5 text-[11px] text-center text-brand font-bold bg-white cursor-pointer hover:bg-emerald-50 transition-all border-t border-slate-100 js-search-toggle-more">
+                        ${toggleLabel}
+                    </div>
+                `;
+            }
+
+            searchDropdown.innerHTML = html;
+            toggleDropdown(true);
+
+            // Re-vincular eventos del dropdown inyectado
+            const itemsEls = searchDropdown.querySelectorAll('.js-search-item');
+            itemsEls.forEach(el => {
+                el.addEventListener('click', () => {
+                    const rowId = el.getAttribute('data-row-id');
+                    if (rowId) scrollToElement(rowId);
+                });
+            });
+
+            const toggleBtn = searchDropdown.querySelector('.js-search-toggle-more');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateSearchDropdown(null, null, !isSearchExpanded);
+                });
+            }
+        };
 
         if (searchInput) {
             searchInput.addEventListener('input', async (e) => {
                 const { sanitizeInput } = await import('../utils/security');
-                const value = sanitizeInput((e.target as HTMLInputElement).value).toLowerCase().trim();
+                const raw = sanitizeInput((e.target as HTMLInputElement).value).trim();
+                const value = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
                 
-                productRows.forEach(row => {
-                    const originalText = row.getAttribute('data-original') || '';
-                    const titleEl = row.querySelector('h3');
-                    if (!titleEl) return;
+                if (!value) {
+                    toggleDropdown(false);
+                    return;
+                }
 
-                    if (!value) {
-                        row.classList.remove('hidden');
-                        titleEl.textContent = originalText;
-                        const section = row.closest('section');
-                        if (section) section.classList.remove('hidden');
-                        return;
-                    }
+                // Filtrar en memoria
+                const matches = searchDatabase.filter(item => item.searchTerms.includes(value));
+                updateSearchDropdown(matches, value);
+            });
 
-                    if (originalText.toLowerCase().includes(value)) {
-                        row.classList.remove('hidden');
-                        const regex = new RegExp(`(${value})`, 'gi');
-                        titleEl.innerHTML = originalText.replace(regex, `<mark class="bg-brand/15 text-brand rounded-sm px-0.5 font-bold">$1</mark>`);
-                        const section = row.closest('section');
-                        if (section) section.classList.remove('hidden');
-                    } else {
-                        row.classList.add('hidden');
-                        const section = row.closest('section');
-                        if (section) {
-                            const visibleRows = section.querySelectorAll('.catalog-row:not(.hidden)');
-                            if (visibleRows.length === 0) section.classList.add('hidden');
-                        }
+            searchInput.addEventListener('keydown', (e) => {
+                if (!searchDropdown || searchDropdown.classList.contains('hidden')) return;
+
+                const itemsEls = searchDropdown.querySelectorAll('.js-search-item');
+                if (itemsEls.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    searchFocusIndex = (searchFocusIndex + 1) % itemsEls.length;
+                    updateSearchFocus(itemsEls);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    searchFocusIndex = (searchFocusIndex - 1 + itemsEls.length) % itemsEls.length;
+                    updateSearchFocus(itemsEls);
+                } else if (e.key === 'Enter') {
+                    if (searchFocusIndex >= 0) {
+                        e.preventDefault();
+                        const selectedEl = itemsEls[searchFocusIndex];
+                        const rowId = selectedEl.getAttribute('data-row-id');
+                        if (rowId) scrollToElement(rowId);
                     }
-                });
+                } else if (e.key === 'Escape') {
+                    toggleDropdown(false);
+                }
             });
         }
+
+        // Cerrar dropdown si se hace click fuera
+        document.addEventListener('click', (e) => {
+            if (searchDropdown && !searchDropdown.classList.contains('hidden')) {
+                const target = e.target as HTMLElement;
+                if (!target.closest('#catalogo-search') && !target.closest('#catalogo-search-dropdown')) {
+                    toggleDropdown(false);
+                }
+            }
+        });
 
         // --- Lógica de Badges (Revelación Progresiva) ---
         (window as any).toggleBadges = (btn: HTMLButtonElement, targetId: string, extraCount: number) => {

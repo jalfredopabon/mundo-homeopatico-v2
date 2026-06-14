@@ -7,13 +7,16 @@ import Icons from "../shared/Icons.astro";
   
   <!-- BUSCADOR STICKY (Se mantiene estático para evitar parpadeo) -->
   <div class="sidebar-search-header">
-    <div class="relative group">
+    <div class="relative group w-full">
       <div class="absolute left-[7px] top-0 h-full w-4 flex items-center justify-center text-slate-700 group-focus-within:text-brand transition-colors">
         <div class="relative w-4 h-4 flex items-center justify-center">
           <Icons type="search" class="w-full h-full" />
         </div>
       </div>
-      <input type="search" id="catalogo-search" placeholder="Buscar productos..." class="input-elite-field pl-8 pr-4 mt-[-2.5px]">
+      <input type="search" id="catalogo-search" placeholder="Buscar productos..." class="input-elite-field pl-8 pr-4 mt-[-2.5px] w-full" autocomplete="off">
+      
+      <!-- Dropdown flotante predictivo -->
+      <div id="catalogo-search-dropdown" class="search-dropdown hidden absolute left-0 right-0 mt-1.5 w-full bg-white border border-slate-200 rounded-lg shadow-xl max-h-[380px] overflow-y-auto z-50"></div>
     </div>
   </div>
 

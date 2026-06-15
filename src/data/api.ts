@@ -108,6 +108,7 @@ export const DiscountSchema = z.object({
     nit: z.union([z.string(), z.number()]).optional().default('').transform(val => String(val)),
     nombre: z.string().optional().default(''),
     porcentaje_descuento: z.union([z.string(), z.number()]).transform(val => Number(val)),
+    porcentaje_descuento_exclusivos: z.union([z.string(), z.number()]).optional().default(0).transform(val => Number(val)),
 });
 
 export type DiscountData = z.infer<typeof DiscountSchema>;

@@ -127,6 +127,7 @@ export function createProductRow(product: any): string {
                         class="catalog-btn-add btn-add-cart !w-10 sm:!w-10" 
                         data-name="${product.cartData?.name || product.name}" 
                         data-price="${product.cartData?.price || '0'}"
+                        data-table-id="${product.cartData?.tableId || ''}"
                         title="Añadir al carrito"
                     >
                         <div class="flex items-center justify-center">${ICONS.plus}</div>

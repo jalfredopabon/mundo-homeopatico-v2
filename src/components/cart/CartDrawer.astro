@@ -129,9 +129,13 @@ import SelectElite from "../shared/SelectElite.astro";
                 <span class="text-slate-500 font-bold">Subtotal</span>
                 <span id="cart-subtotal" class="text-slate-900 font-black">$0</span>
             </div>
-            <div id="cart-discount-row" class="flex justify-between items-center text-xs transition-all hidden">
-                <span id="cart-discount-label" class="text-emerald-600 font-bold">Descuento</span>
-                <span id="cart-discount-val" class="text-emerald-600 font-black">-$0</span>
+            <div id="cart-discount-mh-row" class="flex justify-between items-center text-xs transition-all hidden">
+                <span id="cart-discount-mh-label" class="text-emerald-600 font-bold">Descuento Medicamentos</span>
+                <span id="cart-discount-mh-val" class="text-emerald-600 font-black">-$0</span>
+            </div>
+            <div id="cart-discount-exclusivos-row" class="flex justify-between items-center text-xs transition-all hidden">
+                <span id="cart-discount-exclusivos-label" class="text-emerald-600 font-bold">Descuento Bienestar</span>
+                <span id="cart-discount-exclusivos-val" class="text-emerald-600 font-black">-$0</span>
             </div>
             <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
                 <span class="text-[13px] font-black text-slate-900 tracking-widest">Total pedido</span>
@@ -165,7 +169,7 @@ import SelectElite from "../shared/SelectElite.astro";
         items: [],
         initialized: false,
         contacts: { medico: '', farmacia: '' },
-        discount: { porcentaje: 0, nombre: '', cedula: '' }
+        discount: { porcentaje: 0, porcentajeExclusivos: 0, nombre: '', cedula: '' }
     };
 
     let discountsCache: any[] = [];
@@ -202,14 +206,15 @@ import SelectElite from "../shared/SelectElite.astro";
         loadInitialCart();
 
         document.addEventListener('addToCart', ((e: CustomEvent) => {
-            const { name, price } = e.detail;
+            const { name, price, tableId } = e.detail;
             const items = window.__MH_CART__.items;
             const existing = items.find((i: any) => i.name === name);
             
             if (existing) {
                 existing.quantity++;
+                if (tableId) existing.tableId = tableId;
             } else {
-                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '' });
+                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '', tableId: tableId || '' });
             }
             
             saveCartToStorage();
@@ -335,23 +340,52 @@ import SelectElite from "../shared/SelectElite.astro";
                 });
             }
 
-            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
-            const pct = window.__MH_CART__.discount.porcentaje || 0;
-            const discountAmount = Math.round(subtotal * pct / 100);
+            let subtotal = 0;
+            let discountMhAmount = 0;
+            let discountExclusivosAmount = 0;
+
+            const pctMh = window.__MH_CART__.discount.porcentaje || 0;
+            const pctExclusivos = window.__MH_CART__.discount.porcentajeExclusivos || 0;
+
+            items.forEach((item: any) => {
+                const itemSubtotal = item.price * item.quantity;
+                subtotal += itemSubtotal;
+
+                const isExclusive = ['cbd', 'aceites-esenciales', 'alimentos-funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
+                if (isExclusive) {
+                    discountExclusivosAmount += Math.round(itemSubtotal * pctExclusivos / 100);
+                } else {
+                    discountMhAmount += Math.round(itemSubtotal * pctMh / 100);
+                }
+            });
+
+            const discountAmount = discountMhAmount + discountExclusivosAmount;
             const total = subtotal - discountAmount;
 
             if (cartSubtotalEl) cartSubtotalEl.innerText = `$${subtotal.toLocaleString()}`;
             
-            const discountRow = document.getElementById('cart-discount-row');
-            const discountLabel = document.getElementById('cart-discount-label');
-            const discountVal = document.getElementById('cart-discount-val');
+            const discountMhRow = document.getElementById('cart-discount-mh-row');
+            const discountMhLabel = document.getElementById('cart-discount-mh-label');
+            const discountMhVal = document.getElementById('cart-discount-mh-val');
 
-            if (pct > 0) {
-                discountRow?.classList.remove('hidden');
-                if (discountLabel) discountLabel.textContent = `Descuento (${pct}%)`;
-                if (discountVal) discountVal.textContent = `-$${discountAmount.toLocaleString()}`;
+            const discountExRow = document.getElementById('cart-discount-exclusivos-row');
+            const discountExLabel = document.getElementById('cart-discount-exclusivos-label');
+            const discountExVal = document.getElementById('cart-discount-exclusivos-val');
+
+            if (pctMh > 0 && discountMhAmount > 0) {
+                discountMhRow?.classList.remove('hidden');
+                if (discountMhLabel) discountMhLabel.textContent = `Descuento Medicamentos (${pctMh}%)`;
+                if (discountMhVal) discountMhVal.textContent = `-$${discountMhAmount.toLocaleString()}`;
             } else {
-                discountRow?.classList.add('hidden');
+                discountMhRow?.classList.add('hidden');
+            }
+
+            if (pctExclusivos > 0 && discountExclusivosAmount > 0) {
+                discountExRow?.classList.remove('hidden');
+                if (discountExLabel) discountExLabel.textContent = `Descuento Bienestar (${pctExclusivos}%)`;
+                if (discountExVal) discountExVal.textContent = `-$${discountExclusivosAmount.toLocaleString()}`;
+            } else {
+                discountExRow?.classList.add('hidden');
             }
 
             if (cartTotalEl) cartTotalEl.innerText = `$${total.toLocaleString()}`;
@@ -387,9 +421,26 @@ import SelectElite from "../shared/SelectElite.astro";
             const payment = (document.getElementById('bill-payment') as HTMLInputElement)?.value || 'No especificado';
             const generalNotes = (document.getElementById('bill-notes') as HTMLTextAreaElement)?.value.trim() || '';
  
-            const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
-            const pct = window.__MH_CART__.discount.porcentaje || 0;
-            const discountAmount = Math.round(subtotal * pct / 100);
+            let subtotal = 0;
+            let discountMhAmount = 0;
+            let discountExclusivosAmount = 0;
+
+            const pctMh = window.__MH_CART__.discount.porcentaje || 0;
+            const pctExclusivos = window.__MH_CART__.discount.porcentajeExclusivos || 0;
+
+            items.forEach((item: any) => {
+                const itemSubtotal = item.price * item.quantity;
+                subtotal += itemSubtotal;
+
+                const isExclusive = ['cbd', 'aceites-esenciales', 'alimentos-funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
+                if (isExclusive) {
+                    discountExclusivosAmount += Math.round(itemSubtotal * pctExclusivos / 100);
+                } else {
+                    discountMhAmount += Math.round(itemSubtotal * pctMh / 100);
+                }
+            });
+
+            const discountAmount = discountMhAmount + discountExclusivosAmount;
             const total = subtotal - discountAmount;
  
             const targetPhone = window.__MH_CART__.contacts[pendingVariant];
@@ -435,27 +486,30 @@ import SelectElite from "../shared/SelectElite.astro";
             let message = `*PEDIDO MUNDO HOMEOPÁTICO*\n`;
             message += `--------------------------------\n`;
             message += `*DATOS DEL CLIENTE:*\n`;
-            message += `👤 Nombre: ${name}\n`;
-            message += `🆔 Cédula/NIT: ${id}\n`;
-            message += `📱 WhatsApp: ${whatsapp}\n`;
-            if (address) message += `🏠 Dirección: ${address}\n`;
-            message += `💳 Pago: ${payment}\n\n`;
+            message += `* Nombre: ${name}\n`;
+            message += `* Cedula/NIT: ${id}\n`;
+            message += `* WhatsApp: ${whatsapp}\n`;
+            if (address) message += `* Direccion: ${address}\n`;
+            message += `* Pago: ${payment}\n\n`;
             
             if (generalNotes) {
-                message += `📝 *OBSERVACIONES GENERALES:*\n`;
+                message += `*OBSERVACIONES GENERALES:*\n`;
                 message += `_${generalNotes}_\n\n`;
             }
  
             message += `*PRODUCTOS:*\n`;
             items.forEach((item: any) => {
-                message += `- ${item.name} x${item.quantity} ($${(item.price * item.quantity).toLocaleString()})\n`;
-                if (item.hasNote && item.note) message += `  📝 Nota: ${item.note}\n`;
+                message += `• ${item.name} x${item.quantity} ($${(item.price * item.quantity).toLocaleString()})\n`;
+                if (item.hasNote && item.note) message += `  Nota: ${item.note}\n`;
             });
  
             message += `\n*RESUMEN:* \n`;
             message += `Subtotal: $${subtotal.toLocaleString()}\n`;
-            if (pct > 0) {
-                message += `Descuento (${pct}%): -$${discountAmount.toLocaleString()}\n`;
+            if (pctMh > 0 && discountMhAmount > 0) {
+                message += `Descuento Medicamentos (${pctMh}%): -$${discountMhAmount.toLocaleString()}\n`;
+            }
+            if (pctExclusivos > 0 && discountExclusivosAmount > 0) {
+                message += `Descuento Bienestar (${pctExclusivos}%): -$${discountExclusivosAmount.toLocaleString()}\n`;
             }
             message += `Total a pagar: *$${total.toLocaleString()}*\n`;
             message += `--------------------------------`;
@@ -517,7 +571,7 @@ import SelectElite from "../shared/SelectElite.astro";
             discountTimeout = setTimeout(() => {
                 const cedula = billIdInput.value.trim().replace(/\D/g, ''); // Solo números para comparar
                 if (cedula.length < 8) {
-                    window.__MH_CART__.discount = { porcentaje: 0, nombre: '', cedula: '' };
+                    window.__MH_CART__.discount = { porcentaje: 0, porcentajeExclusivos: 0, nombre: '', cedula: '' };
                     renderCart();
                     return;
                 }
@@ -531,11 +585,12 @@ import SelectElite from "../shared/SelectElite.astro";
                     console.log('[Elite Cart] Descuento aplicado para:', match.nombre);
                     window.__MH_CART__.discount = {
                         porcentaje: Number(match.porcentaje_descuento),
+                        porcentajeExclusivos: Number(match.porcentaje_descuento_exclusivos || 0),
                         nombre: match.nombre,
                         cedula: cedula
                     };
                 } else {
-                    window.__MH_CART__.discount = { porcentaje: 0, nombre: '', cedula: '' };
+                    window.__MH_CART__.discount = { porcentaje: 0, porcentajeExclusivos: 0, nombre: '', cedula: '' };
                 }
 
                 renderCart();

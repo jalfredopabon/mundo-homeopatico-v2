@@ -132,6 +132,26 @@
 - **Seguridad:** Datos de persistencia cifrados en el cliente.
 - **Rendimiento:** Carga instantánea vía SWR y manipulaciones del DOM optimizadas (Zero-Re-render).
 
+## [2026-06-15] Hito: Descuentos Escalonados Elite y Pulido de Canal WhatsApp
+
+### Hitos Técnicos Logrados
+1. **Descuentos Escalonados (Tiered/Split Discounts):**
+   - Actualización de `DiscountSchema` en [api.ts](file:///c:/Users/Alfredo%20Pab%C3%B3n/Documents/Proyectos%20antigravity/mundo_homeopatico_v2/src/data/api.ts) para soportar el campo `porcentaje_descuento_exclusivos`.
+   - Propagación de `tableId` de productos desde la vista del catálogo hasta el carrito mediante atributos HTML (`data-table-id`) y eventos personalizados.
+   - Lógica de cálculo en `CartDrawer.astro` que aplica el descuento de "Medicamentos" o "Bienestar" según la categoría del producto (exclusivos: `cbd`, `aceites-esenciales`, `alimentos-funcionales`).
+   - Implementación de filas de desglose de descuentos duales en la UI del carrito (`cart-discount-mh-row` y `cart-discount-exclusivos-row`).
+2. **Pulido de Canal WhatsApp:**
+   - Corrección de codificación en mensajes salientes de WhatsApp eliminando emojis problemáticos y sustituyéndolos por viñetas estándar (`•`, `*`).
+3. **Renombrado a Composición:**
+   - Cambio de alias históricos en la capa de validación para renombrar `principios_activos` a `composicion` de forma segura.
+4. **Filtro del Abecedario (Vademécum):**
+   - Inclusión de un filtro dinámico A-Z en la columna central del Vademécum.
+
+### Estado Actual
+- **Descuentos:** Totalmente operativos en UI y en el mensaje de WhatsApp.
+- **Canal de Pedidos:** Optimizado contra fallos de renderizado de emojis.
+- **Vademécum:** Filtro alfabético integrado.
+
 ## Próximos Pasos
 1.  **Optimización LCP Global:** Extender las mejoras de `fetchpriority` a los logos de distribuidores y cabeceras de catálogo.
 2.  **Auditoría de SEO:** Verificar etiquetas meta y jerarquía H1-H6 en las nuevas secciones institucionales.

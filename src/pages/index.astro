@@ -86,7 +86,7 @@ import Icons from '../components/shared/Icons.astro';
                 const bannerMsg = configData.banner_mensaje || '';
                 const bannerTitle = configData.banner_titulo || '';
                 if (bannerMsg.trim()) {
-                    if (bannerTitleEl) bannerTitleEl.textContent = bannerTitle;
+                    if (bannerTitleEl) bannerTitleEl.textContent = bannerTitle || 'Se informa al público';
                     if (bannerMsgEl) bannerMsgEl.textContent = bannerMsg;
                 } else {
                     infoBannerEl.style.display = 'none';

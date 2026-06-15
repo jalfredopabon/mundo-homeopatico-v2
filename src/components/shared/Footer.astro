@@ -1,11 +1,19 @@
 ---
 // src/components/shared/Footer.astro
 import Icons from "./Icons.astro";
+import { getConfigData } from "../../data/api";
+
 const year = new Date().getFullYear();
-/**
- * Footer: Pie de página institucional de 3 columnas
- * Clonación Estricta: Se respeta el diseño visual idéntico al online.
- */
+
+let autorLink = "https://www.linkedin.com/in/jalfredopabon/";
+try {
+  const config = await getConfigData();
+  if (config.autor_link) {
+    autorLink = config.autor_link;
+  }
+} catch (e) {
+  console.warn("No se pudo cargar el link del autor desde config.");
+}
 ---
 
 <footer class="footer-main">
@@ -48,7 +56,7 @@ const year = new Date().getFullYear();
       <div class="mt-1 space-y-1">
         <p class="footer-text">Todos los derechos reservados.</p>
         <p class="footer-text">Medellín, Colombia</p>
-        <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="inline-block footer-text hover:text-white transition-colors group">
+        <a href={autorLink} target="_blank" rel="noopener noreferrer" class="inline-block footer-text hover:text-white transition-colors group">
           Creado por <span class="text-slate-300 group-hover:text-brand transition-colors">Alfredo Pabón</span>
         </a>
       </div>

@@ -168,10 +168,9 @@
    - Sincronización de `link_autor` con el enlace de firma en la base del panel lateral (Sidebar de catálogo) a través de `sidebar-renderer.ts`.
    - Dinamización de la descripción comercial del footer (`footer_descripcion`), cargada en build-time desde Sheets.
 4. **Consolidación de Redes Sociales y Multimedia:**
-   - Redirección de la función `getVideoData` en `api.ts` para alimentarse de los datos de la hoja `configuracion` bajo la clave normalizada `link_video` (con fallback a `video_url` / `video_ural`).
-   - Dinamización de la descripción en la vista de video (`video_descripcion`), eliminando textos duros del componente `VideoSection.astro`.
    - Enlaces de redes sociales en el pie de página (`link_instagram`, `link_whatsapp` y `link_web`) dinamizados desde la hoja `configuracion`.
    - Sincronización del enlace de Instagram con el botón superior del Sidebar en la vista de Sedes y Contacto (`SidebarContacto.astro`).
+   - Calibración visual de plomada para el widget de Horarios de Atención al Cliente, reposicionando el icono del reloj (`clock`) en la cabecera del título para mejorar el balance estético de la Columna 1.
 
 ### Estado Actual
 - **Hoja de video:** Migrada a `configuracion` (clave `link_video`). Lista para ser eliminada de Sheets.

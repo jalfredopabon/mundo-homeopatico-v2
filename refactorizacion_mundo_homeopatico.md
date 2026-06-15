@@ -157,18 +157,20 @@
 ### Hitos Técnicos Logrados
 1. **Consolidación de Video:**
    - Redirección de la función `getVideoData` en `api.ts` para alimentarse de los datos de la hoja `configuracion` (`video_url` / `video_ural`).
+   - Dinamización de la descripción en la vista de video (`video_descripcion`), eliminando textos duros del componente `VideoSection.astro`.
    - Eliminación de la llamada a la acción individual `video` de GAS, reduciendo peticiones de red adicionales.
 2. **Consolidación de Banner Informativo:**
    - Conversión del banner informativo estático de `index.astro` a dinámico.
    - Ahora lee `banner_titulo` y `banner_mensaje` de la hoja `configuracion` y se oculta automáticamente si el mensaje está vacío.
    - Implementado fallback automático que muestra *"Se informa al público"* si la celda de título está vacía en Sheets.
-3. **Consolidación de Autor (Créditos):**
+3. **Consolidación de Autor (Créditos) y Footer:**
    - Dinamización de `autor_link` en `Footer.astro` leyendo desde la hoja de `configuracion`. Tu nombre permanece seguro en el código y el enlace es 100% dinámico.
+   - Dinamización de la descripción comercial del footer (`footer_descripcion`), cargada en build-time desde Sheets.
 
 ### Estado Actual
 - **Hoja de video:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
 - **Hoja de banner:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
-- **Hoja de autor:** Migrada a `configuracion` (clave `autor_link`). Lista para ser eliminada de Sheets.
+- **Hoja de autor:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
 
 ## Próximos Pasos
 1. Continuar revisando hojas sencillas (`seo`, etc.) para consolidación.

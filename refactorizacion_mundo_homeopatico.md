@@ -158,6 +158,7 @@
 1. **Consolidación de Video:**
    - Redirección de la función `getVideoData` en `api.ts` para alimentarse de los datos de la hoja `configuracion` (`video_url` / `video_ural`).
    - Dinamización de la descripción en la vista de video (`video_descripcion`), eliminando textos duros del componente `VideoSection.astro`.
+   - Implementación de hidratación del lado del cliente para `video_descripcion` (SWR-compliant) resolviendo desfases entre la compilación estática de servidor y el estado de caché local del navegador.
    - Eliminación de la llamada a la acción individual `video` de GAS, reduciendo peticiones de red adicionales.
 2. **Consolidación de Banner Informativo:**
    - Conversión del banner informativo estático de `index.astro` a dinámico.

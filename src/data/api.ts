@@ -418,24 +418,23 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
 }
 
 /**
- * Obtiene la configuración del video institucional (video)
+ * Obtiene la configuración del video institucional (desde config)
  */
 export async function getVideoData(): Promise<VideoData | null> {
-    return fetchWithSWR('site_video_v1', async () => {
-        try {
-            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=video&key=${SECRET_KEY}`);
-            const rawData = await response.json();
-            const cleanData = normalizeKeys(rawData);
-            
-            if (Array.isArray(cleanData) && cleanData.length > 0) {
-                return VideoSchema.parse(cleanData[0]);
-            }
-            return null;
-        } catch (error: any) {
-            console.warn('API Error (Video):', error?.message || String(error));
-            return null;
+    try {
+        const config = await getConfigData();
+        const url = config.video_url || config.video_ural || '';
+        if (url) {
+            return {
+                nombre_del_video: 'Video Institucional',
+                url: url
+            };
         }
-    });
+        return null;
+    } catch (error: any) {
+        console.warn('API Error (Video de Config):', error?.message || String(error));
+        return null;
+    }
 }
 
 /**

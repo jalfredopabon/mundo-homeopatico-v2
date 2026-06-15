@@ -3,22 +3,22 @@
 ---
 <!-- Fuente para el Logo de Animación (Centralizada en BaseLayout) -->
 
-<div id="mobile-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#158C77] pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden opacity-0" style="display: none;">
+<div id="mobile-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#158C77] pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden opacity-0" style="display: none;">
     
     <div class="relative flex flex-row items-baseline text-white font-serif tracking-tighter">
         <!-- Parte: M [undo] -->
-        <div class="flex items-baseline overflow-hidden">
-            <span class="text-5xl sm:text-6xl font-bold animate-expand-m">M</span>
-            <span class="text-3xl sm:text-4xl opacity-0 animate-reveal-suffix ml-2">undo</span>
+        <div class="flex items-baseline">
+            <span class="text-5xl sm:text-6xl font-bold">M</span>
+            <span class="text-3xl sm:text-4xl ml-1">undo</span>
         </div>
 
-        <!-- Espacio entre palabras (se expande) -->
-        <div class="w-3 sm:w-6"></div>
+        <!-- Espacio entre palabras -->
+        <div class="w-3 sm:w-4"></div>
 
         <!-- Parte: H [omeopático] -->
-        <div class="flex items-baseline overflow-hidden">
-            <span class="text-5xl sm:text-6xl font-bold animate-expand-h">H</span>
-            <span class="text-3xl sm:text-4xl opacity-0 animate-reveal-suffix ml-2">omeopático</span>
+        <div class="flex items-baseline">
+            <span class="text-5xl sm:text-6xl font-bold">H</span>
+            <span class="text-3xl sm:text-4xl ml-1">omeopático</span>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
             setTimeout(() => {
                 if (splash.style.display !== 'none') {
                     console.warn('[Elite Splash] Fail-safe activado: Quitando splash por tiempo límite (5s).');
-                    splash.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+                    splash.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
                     splash.style.opacity = '0';
                     splash.style.transform = 'translateY(-20px)';
                     setTimeout(() => {
@@ -59,7 +59,7 @@
                             mainEl.style.opacity = '1';
                             mainEl.style.visibility = 'visible';
                         }
-                    }, 1000);
+                    }, 700);
                 }
             }, 5000); 
         }
@@ -79,7 +79,7 @@
         }
 
         if (!hasSeenSplash) {
-            // Tiempo total de la coreografía (3 segundos para visualización ágil y dinámica)
+            // Tiempo total de visualización ágil y dinámica (1.2 segundos)
             setTimeout(() => {
                 splash.style.opacity = '0';
                 splash.style.transform = 'translateY(-10px)'; // Menos salto, más elegancia
@@ -98,37 +98,12 @@
                         mainEl.style.opacity = '1';
                         mainEl.style.visibility = 'visible';
                     }
-                }, 700);
-            }, 3000); 
+                }, 500);
+            }, 1200); 
         }
     });
 </script>
 
 <style>
-    /* 1. La M comienza en el centro y se mueve a su lugar */
-    @keyframes expandM {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(0); }
-    }
-    .animate-expand-m {
-        animation: expandM 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
-    }
-
-    /* 2. La H comienza en el centro (traslapada con M) y se mueve a la derecha */
-    @keyframes expandH {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(0); }
-    }
-    .animate-expand-h {
-        animation: expandH 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
-    }
-
-    /* 3. Revelar el resto de las palabras (undo, omeopático) */
-    @keyframes revealSuffix {
-        0% { opacity: 0; transform: translateY(5px); filter: blur(5px); }
-        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
-    .animate-reveal-suffix {
-        animation: revealSuffix 1.5s ease-out 1.5s forwards;
-    }
+    /* Estilos base limpios y optimizados (se eliminaron animaciones de retraso de letras) */
 </style>

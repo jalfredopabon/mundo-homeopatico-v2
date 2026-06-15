@@ -38,7 +38,7 @@ const SIDEBAR_ICONS: Record<string, string> = {
 };
 
 
-export function renderSidebar(navs: any[]): string {
+export function renderSidebar(navs: any[], autorLink?: string): string {
     const root: any[] = [];
     const dataRows = navs.filter(n => n.tabla_id && n.tabla_id.trim() !== "");
 
@@ -148,7 +148,7 @@ export function renderSidebar(navs: any[]): string {
     `).join('') + `
         <!-- FIRMA DE AUTOR (Paridad 1:1) -->
         <div class="mt-auto border-t border-subtle bg-surface-white" style="padding: 16px var(--sb-px);">
-            <a href="https://www.linkedin.com/in/jalfredopabon/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface-muted/50 hover:shadow-sm ring-1 ring-transparent hover:ring-slate-200">
+            <a href="${autorLink || 'https://www.linkedin.com/in/jalfredopabon/'}" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface-muted/50 hover:shadow-sm ring-1 ring-transparent hover:ring-slate-200">
                 <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-[10px] font-bold text-white transition-transform group-hover:scale-110">
                     AP
                 </div>

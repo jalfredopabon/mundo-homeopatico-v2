@@ -7,6 +7,9 @@ const year = new Date().getFullYear();
 
 let autorLink = "https://www.linkedin.com/in/jalfredopabon/";
 let footerDescripcion = "Más de 20 años formulando soluciones magistrales con absoluta precisión y los más altos estándares de calidad internacional.";
+let linkInstagram = "https://instagram.com/mundohomeopatico";
+let linkWhatsapp = "https://wa.me/573001234567";
+let linkWeb = "https://mhmundohomeopatico.com";
 
 try {
   const config = await getConfigData();
@@ -15,6 +18,15 @@ try {
   }
   if (config.footer_descripcion) {
     footerDescripcion = config.footer_descripcion;
+  }
+  if (config.link_instagram) {
+    linkInstagram = config.link_instagram;
+  }
+  if (config.link_whatsapp) {
+    linkWhatsapp = config.link_whatsapp;
+  }
+  if (config.link_web) {
+    linkWeb = config.link_web;
   }
 } catch (e) {
   console.warn("No se pudo cargar la configuracion del footer.");
@@ -41,13 +53,13 @@ try {
         <h3 class="footer-title">Síguenos</h3>
       </div>
       <div class="flex items-center justify-start gap-4">
-        <a href="#/" class="footer-social-link group" data-brand="instagram" aria-label="Instagram">
+        <a href={linkInstagram} target="_blank" rel="noopener noreferrer" class="footer-social-link group" data-brand="instagram" aria-label="Instagram">
           <Icons type="instagram" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={1.5} />
         </a>
-        <a href="#/" class="footer-social-link group" data-brand="whatsapp" aria-label="WhatsApp">
+        <a href={linkWhatsapp} target="_blank" rel="noopener noreferrer" class="footer-social-link group" data-brand="whatsapp" aria-label="WhatsApp">
           <Icons type="whatsapp" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={2} />
         </a>
-        <a href="https://mhmundohomeopatico.com" target="_blank" rel="noopener noreferrer" class="footer-social-link group" data-brand="web" aria-label="Sitio web principal">
+        <a href={linkWeb} target="_blank" rel="noopener noreferrer" class="footer-social-link group" data-brand="web" aria-label="Sitio web principal">
           <Icons type="globe" class="w-[18px] h-[18px] group-hover:scale-110 transition-transform" strokeWidth={2} />
         </a>
       </div>

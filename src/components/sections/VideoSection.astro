@@ -1,10 +1,17 @@
 ---
 // src/components/sections/VideoSection.astro
 import Icons from "../shared/Icons.astro";
-/**
- * VideoSection: Sección de excelencia homeopática con video institucional
- * Clonación Estricta: Se respeta el diseño visual idéntico al online.
- */
+import { getConfigData } from "../../data/api";
+
+let videoDescripcion = "Descubra cómo transformamos la materia prima en soluciones homeopáticas de alta fidelidad clínica.";
+try {
+  const config = await getConfigData();
+  if (config.video_descripcion) {
+    videoDescripcion = config.video_descripcion;
+  }
+} catch (e) {
+  console.warn("No se pudo cargar la descripcion del video.");
+}
 ---
 
 <section id="excelencia" class="scroll-mt-10">
@@ -59,7 +66,7 @@ import Icons from "../shared/Icons.astro";
                 <div class="bg-black/30 backdrop-blur-md border border-surface-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 pointer-events-auto">
                     <div class="flex flex-col gap-1.5">
                         <p class="text-sm font-bold text-surface-white tracking-widest opacity-90 uppercase">Procesos de calidad premium</p>
-                        <p class="text-surface-white/80 text-xs sm:text-sm max-w-md">Descubra cómo transformamos la materia prima en soluciones homeopáticas de alta fidelidad clínica.</p>
+                        <p class="text-surface-white/80 text-xs sm:text-sm max-w-md">{videoDescripcion}</p>
                     </div>
                 </div>
             </div>

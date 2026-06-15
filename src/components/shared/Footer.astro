@@ -6,13 +6,18 @@ import { getConfigData } from "../../data/api";
 const year = new Date().getFullYear();
 
 let autorLink = "https://www.linkedin.com/in/jalfredopabon/";
+let footerDescripcion = "Más de 20 años formulando soluciones magistrales con absoluta precisión y los más altos estándares de calidad internacional.";
+
 try {
   const config = await getConfigData();
   if (config.autor_link) {
     autorLink = config.autor_link;
   }
+  if (config.footer_descripcion) {
+    footerDescripcion = config.footer_descripcion;
+  }
 } catch (e) {
-  console.warn("No se pudo cargar el link del autor desde config.");
+  console.warn("No se pudo cargar la configuracion del footer.");
 }
 ---
 
@@ -26,7 +31,7 @@ try {
         <h2 class="text-[1.3rem] font-bold text-white tracking-tight group-hover:text-brand transition-colors duration-500">Mundo homeopático</h2>
       </div>
       <p class="text-[13px] text-slate-400 leading-relaxed font-light md:pr-4 group-hover:text-slate-300 transition-colors duration-500">
-        Más de 20 años formulando soluciones magistrales con absoluta precisión y los más altos estándares de calidad internacional.
+        {footerDescripcion}
       </p>
     </div>
 

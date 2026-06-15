@@ -423,7 +423,7 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
 export async function getVideoData(): Promise<VideoData | null> {
     try {
         const config = await getConfigData();
-        const url = config.video_url || config.video_ural || '';
+        const url = config.link_video || config.video_url || config.video_ural || '';
         if (url) {
             return {
                 nombre_del_video: 'Video Institucional',

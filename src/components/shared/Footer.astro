@@ -13,8 +13,8 @@ let linkWeb = "https://mhmundohomeopatico.com";
 
 try {
   const config = await getConfigData();
-  if (config.autor_link) {
-    autorLink = config.autor_link;
+  if (config.link_autor || config.autor_link) {
+    autorLink = config.link_autor || config.autor_link;
   }
   if (config.footer_descripcion) {
     footerDescripcion = config.footer_descripcion;

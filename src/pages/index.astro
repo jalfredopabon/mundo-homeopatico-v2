@@ -97,7 +97,7 @@ import Icons from '../components/shared/Icons.astro';
             (window as any).__DEBUG_CATALOG__ = { navData: navigationData, prodData: productsData };
 
             // 2. RENDERIZADO DE SIDEBAR
-            sidebarNav.innerHTML = renderSidebar(navigationData, configData.autor_link);
+            sidebarNav.innerHTML = renderSidebar(navigationData, configData.link_autor || configData.autor_link);
 
             // 3. MOTOR DE TRANSFORMACIÓN (Hash Map)
             const cleanText = (val: string) => (val || '').replace(/\^|\\n/g, '<br>');

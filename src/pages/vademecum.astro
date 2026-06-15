@@ -40,6 +40,11 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                     </div>
                 </header>
 
+                <!-- Índice Alfabético A-Z -->
+                <div id="alphabet-filter-container" class="mb-6 flex flex-wrap gap-1.5 items-center bg-surface-white border border-subtle p-3 rounded-2xl shadow-sm reveal active products-view-content">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+
                 <!-- Contador de Resultados (ADN Clon Catálogo Elite) -->
                 <div class="mb-8 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal active min-h-[32px]">
                     <Icons type="mortero" class="w-3.5 h-3.5 text-slate-500" />
@@ -107,6 +112,10 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     let _filtersProtocols = { search: '' };
     // Fase 3: Filtro compartido
     let _filterSistemas: string[] = [];
+    
+    // Estado del Abecedario
+    let _selectedLetter: string | null = null;
+    const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     document.addEventListener('astro:page-load', async () => {
         const session = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
@@ -140,6 +149,9 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             
             _allMeds = medicines.sort((a, b) => a.name.localeCompare(b.name));
 
+            // Renderizar la barra del abecedario
+            renderAlphabetBar();
+
             // Hidratar filtros de productos (Terapias y Formas)
             renderSidebarFilters(metadata);
 
@@ -170,6 +182,69 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     }
 
     // --- MOTOR DE HIDRATACIÓN DINÁMICA ---
+
+    function renderAlphabetBar() {
+        const container = document.getElementById('alphabet-filter-container');
+        if (!container) return;
+
+        // Calcular qué letras tienen medicamentos reales en los datos
+        const activeLetters = new Set(
+            _allMeds.map(m => {
+                const char = m.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                return char;
+            })
+        );
+
+        let html = `
+            <button 
+                class="alphabet-letter-btn ${!_selectedLetter ? 'is-active bg-brand text-white border-brand font-black' : 'bg-white text-slate-700 hover:bg-slate-50 border-subtle font-bold'} text-[12px] px-3.5 py-1.5 rounded-xl transition-all border active:scale-95 cursor-pointer shadow-sm" 
+                data-letter="all"
+            >
+                Todos
+            </button>
+        `;
+
+        ALPHABET.forEach(letter => {
+            const hasMeds = activeLetters.has(letter);
+            const isSelected = _selectedLetter === letter;
+            
+            if (hasMeds) {
+                html += `
+                    <button 
+                        class="alphabet-letter-btn ${isSelected ? 'is-active bg-brand text-white border-brand font-black' : 'bg-white text-slate-700 hover:bg-slate-50 border-subtle font-bold'} text-[12px] w-8 h-8 rounded-xl transition-all border active:scale-95 flex items-center justify-center cursor-pointer shadow-sm" 
+                        data-letter="${letter}"
+                    >
+                        ${letter}
+                    </button>
+                `;
+            } else {
+                html += `
+                    <button 
+                        class="text-[12px] w-8 h-8 rounded-xl font-bold border border-slate-100 bg-slate-50/50 text-slate-300 flex items-center justify-center cursor-not-allowed select-none" 
+                        disabled
+                    >
+                        ${letter}
+                    </button>
+                `;
+            }
+        });
+
+        container.innerHTML = html;
+
+        // Listeners de clics para letras
+        container.querySelectorAll('.alphabet-letter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const target = e.currentTarget as HTMLElement;
+                const letter = target.dataset.letter;
+                
+                _selectedLetter = letter === 'all' ? null : letter;
+                _currentPage = 1;
+                
+                renderAlphabetBar();
+                applyFiltersAndRender();
+            });
+        });
+    }
 
     function renderSidebarFilters(metadata: any) {
         if (metadata.terapias) {
@@ -214,7 +289,12 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
                 const matchesForma = f.formas.length === 0 || f.formas.includes(item.type);
                 const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
-                return matchesSearch && matchesTerapia && matchesForma && matchesSistema;
+                
+                // Normalizar primera letra del nombre para soportar tildes
+                const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                
+                return matchesSearch && matchesTerapia && matchesForma && matchesSistema && matchesLetter;
             } else {
                 const matchesSistema = _filterSistemas.length === 0 || _filterSistemas.includes(item.system);
                 return matchesSearch && matchesSistema;
@@ -383,8 +463,10 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             
             // Fase 3: Limpiar sistemas también
             _filterSistemas = [];
+            _selectedLetter = null;
 
             syncFilterUI();
+            renderAlphabetBar();
             _currentPage = 1;
             applyFiltersAndRender();
         });
@@ -393,6 +475,14 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         window.addEventListener('vademecum:view-change', (e: any) => {
             _currentView = e.detail.view;
             _currentPage = 1;
+            
+            // Ocultar o mostrar el abecedario según la vista activa
+            const alphabetContainer = document.getElementById('alphabet-filter-container');
+            if (alphabetContainer) {
+                alphabetContainer.classList.toggle('hidden', _currentView !== 'products');
+            }
+            _selectedLetter = null;
+            renderAlphabetBar();
             
             // Actualizar Sidebar visibility
             document.querySelectorAll('.sidebar-filter-section').forEach(section => {

@@ -60,7 +60,7 @@ import Icons from '../components/shared/Icons.astro';
 </BaseLayout>
 
 <script>
-    import { getCatalogNavigation, getCatalogProducts } from '../data/api';
+    import { getCatalogNavigation, getCatalogProducts, getConfigData } from '../data/api';
     import { createCatalogTable } from '../utils/catalogo-renderer';
     import { renderSidebar } from '../utils/sidebar-renderer';
 
@@ -71,10 +71,27 @@ import Icons from '../components/shared/Icons.astro';
         
         try {
             // 1. CARGA DE DATOS (SWR en Cliente = Instantáneo si hay caché)
-            const [navigationData, productsData] = await Promise.all([
+            const [navigationData, productsData, configData] = await Promise.all([
                 getCatalogNavigation(),
-                getCatalogProducts()
+                getCatalogProducts(),
+                getConfigData()
             ]);
+
+            // Dinamizar banner informativo
+            const bannerTitleEl = document.querySelector('#info-banner .flex-col span:first-child');
+            const bannerMsgEl = document.querySelector('#info-banner .flex-col span:last-child');
+            const infoBannerEl = document.getElementById('info-banner');
+            
+            if (infoBannerEl) {
+                const bannerMsg = configData.banner_mensaje || '';
+                const bannerTitle = configData.banner_titulo || '';
+                if (bannerMsg.trim()) {
+                    if (bannerTitleEl) bannerTitleEl.textContent = bannerTitle;
+                    if (bannerMsgEl) bannerMsgEl.textContent = bannerMsg;
+                } else {
+                    infoBannerEl.style.display = 'none';
+                }
+            }
 
             // EXPORTAR VARIABLE DEBUG PARA AUDITORÍA
             (window as any).__DEBUG_CATALOG__ = { navData: navigationData, prodData: productsData };

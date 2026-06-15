@@ -164,17 +164,19 @@
    - Ahora lee `banner_titulo` y `banner_mensaje` de la hoja `configuracion` y se oculta automáticamente si el mensaje está vacío.
    - Implementado fallback automático que muestra *"Se informa al público"* si la celda de título está vacía en Sheets.
 3. **Consolidación de Autor (Créditos) y Footer:**
-   - Dinamización de `autor_link` en `Footer.astro` leyendo desde la hoja de `configuracion`. Tu nombre permanece seguro en el código y el enlace es 100% dinámico.
-   - Sincronización del `autor_link` con el enlace de firma en la base del panel lateral (Sidebar de catálogo) a través de `sidebar-renderer.ts`.
+   - Dinamización de `link_autor` (con fallback de compatibilidad a `autor_link`) en `Footer.astro` leyendo desde la hoja de `configuracion`. Tu nombre permanece seguro en el código y el enlace es 100% dinámico.
+   - Sincronización de `link_autor` con el enlace de firma en la base del panel lateral (Sidebar de catálogo) a través de `sidebar-renderer.ts`.
    - Dinamización de la descripción comercial del footer (`footer_descripcion`), cargada en build-time desde Sheets.
-4. **Consolidación de Redes Sociales:**
+4. **Consolidación de Redes Sociales y Multimedia:**
+   - Redirección de la función `getVideoData` en `api.ts` para alimentarse de los datos de la hoja `configuracion` bajo la clave normalizada `link_video` (con fallback a `video_url` / `video_ural`).
+   - Dinamización de la descripción en la vista de video (`video_descripcion`), eliminando textos duros del componente `VideoSection.astro`.
    - Enlaces de redes sociales en el pie de página (`link_instagram`, `link_whatsapp` y `link_web`) dinamizados desde la hoja `configuracion`.
    - Sincronización del enlace de Instagram con el botón superior del Sidebar en la vista de Sedes y Contacto (`SidebarContacto.astro`).
 
 ### Estado Actual
-- **Hoja de video:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
+- **Hoja de video:** Migrada a `configuracion` (clave `link_video`). Lista para ser eliminada de Sheets.
 - **Hoja de banner:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
-- **Hoja de autor:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
+- **Hoja de autor:** Migrada a `configuracion` (clave `link_autor`). Lista para ser eliminada de Sheets.
 
 ## Próximos Pasos
 1. Continuar revisando hojas sencillas (`seo`, etc.) para consolidación.

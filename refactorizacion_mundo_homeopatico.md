@@ -152,10 +152,22 @@
 - **Canal de Pedidos:** Optimizado contra fallos de renderizado de emojis.
 - **Vademécum:** Filtro alfabético integrado.
 
+## [2026-06-15] Hito: Consolidación de Hojas de Configuración Simple
+
+### Hitos Técnicos Logrados
+1. **Consolidación de Video:**
+   - Redirección de la función `getVideoData` en `api.ts` para alimentarse de los datos de la hoja `configuracion` (`video_url` / `video_ural`).
+   - Eliminación de la llamada a la acción individual `video` de GAS, reduciendo peticiones de red adicionales.
+2. **Consolidación de Banner Informativo:**
+   - Conversión del banner informativo estático de `index.astro` a dinámico.
+   - Ahora lee `banner_titulo` y `banner_mensaje` de la hoja `configuracion` y se oculta automáticamente si el mensaje está vacío.
+
+### Estado Actual
+- **Hoja de video:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.
+- **Hoja de banner:** Migrada a `configuracion` (claves `banner_titulo` y `banner_mensaje`). Lista para ser eliminada de Sheets.
+
 ## Próximos Pasos
-1.  **Optimización LCP Global:** Extender las mejoras de `fetchpriority` a los logos de distribuidores y cabeceras de catálogo.
-2.  **Auditoría de SEO:** Verificar etiquetas meta y jerarquía H1-H6 en las nuevas secciones institucionales.
-3.  **Pruebas de Carga de Datos:** Validar el comportamiento del carrito con listas de 20+ productos para asegurar la legibilidad del mensaje de WhatsApp.
+1. Continuar revisando hojas sencillas (`seo`, `author`) para consolidación.
 
 
 ### Mejoras Recientes (14/05/2026)

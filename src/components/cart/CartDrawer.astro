@@ -84,6 +84,10 @@ import SelectElite from "../shared/SelectElite.astro";
                             ]} 
                         />
                     </div>
+                    <div class="space-y-2">
+                        <label for="bill-notes" class="cart-label">Observaciones generales (Opcional)</label>
+                        <textarea id="bill-notes" class="cart-input h-20 resize-none py-3" placeholder="Ej: Entregar después de las 2:00 PM o dejar en portería..."></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -381,6 +385,7 @@ import SelectElite from "../shared/SelectElite.astro";
             const whatsapp = (document.getElementById('bill-whatsapp') as HTMLInputElement).value.trim();
             const address = (document.getElementById('bill-address') as HTMLInputElement).value.trim();
             const payment = (document.getElementById('bill-payment') as HTMLInputElement)?.value || 'No especificado';
+            const generalNotes = (document.getElementById('bill-notes') as HTMLTextAreaElement)?.value.trim() || '';
  
             const subtotal = items.reduce((acc: number, i: any) => acc + (i.price * i.quantity), 0);
             const pct = window.__MH_CART__.discount.porcentaje || 0;
@@ -399,6 +404,7 @@ import SelectElite from "../shared/SelectElite.astro";
                 whatsapp: whatsapp,
                 direccion: address,
                 pago: payment,
+                observaciones_generales: generalNotes,
                 subtotal: subtotal,
                 descuento: discountAmount,
                 total: total,
@@ -434,6 +440,11 @@ import SelectElite from "../shared/SelectElite.astro";
             message += `📱 WhatsApp: ${whatsapp}\n`;
             if (address) message += `🏠 Dirección: ${address}\n`;
             message += `💳 Pago: ${payment}\n\n`;
+            
+            if (generalNotes) {
+                message += `📝 *OBSERVACIONES GENERALES:*\n`;
+                message += `_${generalNotes}_\n\n`;
+            }
  
             message += `*PRODUCTOS:*\n`;
             items.forEach((item: any) => {
@@ -466,6 +477,8 @@ import SelectElite from "../shared/SelectElite.astro";
                 (document.getElementById('bill-id') as HTMLInputElement).value = '';
                 (document.getElementById('bill-address') as HTMLInputElement).value = '';
                 (document.getElementById('bill-whatsapp') as HTMLInputElement).value = '';
+                const billNotesEl = document.getElementById('bill-notes') as HTMLTextAreaElement;
+                if (billNotesEl) billNotesEl.value = '';
             }
         };
 

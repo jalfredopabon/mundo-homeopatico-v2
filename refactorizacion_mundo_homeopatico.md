@@ -165,7 +165,11 @@
    - Implementado fallback automático que muestra *"Se informa al público"* si la celda de título está vacía en Sheets.
 3. **Consolidación de Autor (Créditos) y Footer:**
    - Dinamización de `autor_link` en `Footer.astro` leyendo desde la hoja de `configuracion`. Tu nombre permanece seguro en el código y el enlace es 100% dinámico.
+   - Sincronización del `autor_link` con el enlace de firma en la base del panel lateral (Sidebar de catálogo) a través de `sidebar-renderer.ts`.
    - Dinamización de la descripción comercial del footer (`footer_descripcion`), cargada en build-time desde Sheets.
+4. **Consolidación de Redes Sociales:**
+   - Enlaces de redes sociales en el pie de página (`link_instagram`, `link_whatsapp` y `link_web`) dinamizados desde la hoja `configuracion`.
+   - Sincronización del enlace de Instagram con el botón superior del Sidebar en la vista de Sedes y Contacto (`SidebarContacto.astro`).
 
 ### Estado Actual
 - **Hoja de video:** Migrada a `configuracion`. Lista para ser eliminada de Sheets.

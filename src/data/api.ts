@@ -31,7 +31,7 @@ export const VademecumMaestroSchema = z.object({
     id_producto: z.string(),
     linea: z.string(),
     nombre: z.string(),
-    principios_activos: z.string(),
+    composicion: z.string(),
     indicaciones: z.string(),
     posologia: z.string(),
     presentaciones: z.string(),
@@ -206,7 +206,7 @@ async function fetchWithSWR<T>(
  * Transforma los datos del Maestro de CSV/JSON a la interfaz Medicine del proyecto
  */
 export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
-    const indicationsList = item.indicaciones ? item.indicaciones.split('^').map(i => i.trim()) : [item.indicaciones];
+    const indicationsList = item.indications ? (Array.isArray(item.indications) ? item.indications : [item.indications]) : (item.indicaciones ? item.indicaciones.split('^').map(i => i.trim()) : [item.indicaciones]);
     
     return {
         id: item.id_producto || `prod-${Math.random().toString(36).substr(2, 9)}`,
@@ -215,7 +215,7 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
         category: item.linea, // Necesario para el filtro de vademecum.astro
         type: item.presentaciones.split(';')[0]?.split('x')[0]?.trim() || 'No especificada', // Necesario para el filtro de vademecum.astro
         shortDesc: indicationsList[0] ? `${indicationsList[0].substring(0, 120)}...` : 'Descripción no disponible',
-        activeIngredients: item.principios_activos,
+        activeIngredients: item.composicion,
         indications: item.indicaciones,
         dosage: item.posologia,
         presentations: item.presentaciones,
@@ -231,9 +231,9 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
                 items: indicationsList
             },
             {
-                title: 'Principios Activos',
+                title: 'Composición',
                 icon: 'gotas',
-                items: item.principios_activos ? item.principios_activos.split(';').map(i => i.trim()) : []
+                items: item.composicion ? item.composicion.split(';').map(i => i.trim()) : []
             },
             {
                 title: 'Dosificación y Posología',
@@ -269,6 +269,7 @@ function normalizeKeys(obj: any): any {
             if (normalizedKey === 'encabezado_1') normalizedKey = 'titulo_presentacion';
             if (normalizedKey === 'encabezado_2') normalizedKey = 'titulo_precio_farmacia';
             if (normalizedKey === 'encabezado_3') normalizedKey = 'titulo_precio_publico';
+            if (normalizedKey === 'principios_activos') normalizedKey = 'composicion';
             
             // 🏢 Mapeo para Sedes / Distribuidores
             if (normalizedKey === 'sedes') normalizedKey = 'nombre';

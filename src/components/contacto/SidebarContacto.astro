@@ -51,12 +51,12 @@ import Icons from "../shared/Icons.astro";
     <!-- Contenedor Inferior: Información estática de soporte -->
     <div class="px-4 py-4 mt-auto bg-surface-muted/50 border-t border-subtle hidden md:block">
         <div class="flex flex-col gap-2">
-            <h4 class="text-[12px] font-bold text-slate-700">Atención al cliente</h4>
+            <h4 class="text-[12px] font-bold text-slate-700 pl-8">Atención al cliente</h4>
             <div class="flex items-start">
                 <div class="sidebar-icon-slot mt-0.5">
                     <div><Icons type="clock" class="w-full h-full text-slate-700" strokeWidth={1.5} /></div>
                 </div>
-                <div>
+                <div id="sidebar-hours-container" class="flex-1">
                     <p class="text-[13px] font-medium text-body leading-tight">Lunes a sábado</p>
                     <p class="text-[11px] text-slate-700">8:00 AM - 6:00 PM</p>
                 </div>
@@ -73,6 +73,8 @@ import Icons from "../shared/Icons.astro";
 </style>
 
 <script>
+    import { getConfigData } from "../../data/api";
+
     /**
      * Lógica de Auto-Anclaje y Resaltado Dinámico (ScrollSpy)
      * Optimizada para precisión quirúrgica y soporte de clics.
@@ -120,6 +122,49 @@ import Icons from "../shared/Icons.astro";
         sections.forEach(section => observer.observe(section));
     };
 
+    /**
+     * Carga y renderiza dinámicamente los horarios de atención desde el Google Sheet (Config).
+     */
+    const loadSidebarHours = async () => {
+        const hoursContainer = document.getElementById('sidebar-hours-container');
+        if (!hoursContainer) return;
+
+        try {
+            const config = await getConfigData();
+            const rawHours = config['horario_atencion'];
+            if (rawHours) {
+                const blocks = rawHours.split('^').map(b => b.trim());
+                let html = '';
+                
+                blocks.forEach((block, index) => {
+                    const colonIndex = block.indexOf(':');
+                    const isLast = index === blocks.length - 1;
+                    const marginBottomClass = isLast ? '' : 'mb-1.5';
+                    
+                    if (colonIndex !== -1) {
+                        const title = block.substring(0, colonIndex).trim();
+                        const details = block.substring(colonIndex + 1).trim();
+                        html += `
+                            <p class="text-[13px] font-medium text-body leading-tight">${title}</p>
+                            <p class="text-[11px] text-slate-700 ${marginBottomClass}">${details}</p>
+                        `;
+                    } else {
+                        html += `
+                            <p class="text-[13px] font-medium text-body leading-tight ${marginBottomClass}">${block}</p>
+                        `;
+                    }
+                });
+                
+                hoursContainer.innerHTML = html;
+            }
+        } catch (e) {
+            console.error("Error al cargar los horarios del sidebar:", e);
+        }
+    };
+
     // Inicializar en carga inicial y navegaciones
-    document.addEventListener('astro:page-load', initScrollSpy);
+    document.addEventListener('astro:page-load', () => {
+        initScrollSpy();
+        loadSidebarHours();
+    });
 </script>

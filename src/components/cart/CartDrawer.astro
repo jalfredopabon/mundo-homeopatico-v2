@@ -130,11 +130,11 @@ import SelectElite from "../shared/SelectElite.astro";
                 <span id="cart-subtotal" class="text-slate-900 font-black">$0</span>
             </div>
             <div id="cart-discount-mh-row" class="flex justify-between items-center text-xs transition-all hidden">
-                <span id="cart-discount-mh-label" class="text-emerald-600 font-bold">Descuento Medicamentos</span>
+                <span id="cart-discount-mh-label" class="text-emerald-600 font-bold">Descuento de nuestra farmacia</span>
                 <span id="cart-discount-mh-val" class="text-emerald-600 font-black">-$0</span>
             </div>
             <div id="cart-discount-exclusivos-row" class="flex justify-between items-center text-xs transition-all hidden">
-                <span id="cart-discount-exclusivos-label" class="text-emerald-600 font-bold">Descuento Bienestar</span>
+                <span id="cart-discount-exclusivos-label" class="text-emerald-600 font-bold">Descuento productos exclusivos</span>
                 <span id="cart-discount-exclusivos-val" class="text-emerald-600 font-black">-$0</span>
             </div>
             <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
@@ -374,7 +374,7 @@ import SelectElite from "../shared/SelectElite.astro";
 
             if (pctMh > 0 && discountMhAmount > 0) {
                 discountMhRow?.classList.remove('hidden');
-                if (discountMhLabel) discountMhLabel.textContent = `Descuento Medicamentos (${pctMh}%)`;
+                if (discountMhLabel) discountMhLabel.textContent = `Descuento de nuestra farmacia (${pctMh}%)`;
                 if (discountMhVal) discountMhVal.textContent = `-$${discountMhAmount.toLocaleString()}`;
             } else {
                 discountMhRow?.classList.add('hidden');
@@ -382,7 +382,7 @@ import SelectElite from "../shared/SelectElite.astro";
 
             if (pctExclusivos > 0 && discountExclusivosAmount > 0) {
                 discountExRow?.classList.remove('hidden');
-                if (discountExLabel) discountExLabel.textContent = `Descuento Bienestar (${pctExclusivos}%)`;
+                if (discountExLabel) discountExLabel.textContent = `Descuento productos exclusivos (${pctExclusivos}%)`;
                 if (discountExVal) discountExVal.textContent = `-$${discountExclusivosAmount.toLocaleString()}`;
             } else {
                 discountExRow?.classList.add('hidden');
@@ -506,10 +506,10 @@ import SelectElite from "../shared/SelectElite.astro";
             message += `\n*RESUMEN:* \n`;
             message += `Subtotal: $${subtotal.toLocaleString()}\n`;
             if (pctMh > 0 && discountMhAmount > 0) {
-                message += `Descuento Medicamentos (${pctMh}%): -$${discountMhAmount.toLocaleString()}\n`;
+                message += `Descuento de nuestra farmacia (${pctMh}%): -$${discountMhAmount.toLocaleString()}\n`;
             }
             if (pctExclusivos > 0 && discountExclusivosAmount > 0) {
-                message += `Descuento Bienestar (${pctExclusivos}%): -$${discountExclusivosAmount.toLocaleString()}\n`;
+                message += `Descuento productos exclusivos (${pctExclusivos}%): -$${discountExclusivosAmount.toLocaleString()}\n`;
             }
             message += `Total a pagar: *$${total.toLocaleString()}*\n`;
             message += `--------------------------------`;

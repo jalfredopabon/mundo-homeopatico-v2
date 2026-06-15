@@ -167,6 +167,10 @@ export const CatalogProductSchema = z.object({
 export type CatalogNavigation = z.infer<typeof CatalogNavigationSchema>;
 export type CatalogProduct = z.infer<typeof CatalogProductSchema>;
 
+// Caché en memoria para el servidor (Node.js) con coalescencia y TTL para desarrollo y build
+const serverCache = new Map<string, { promise: Promise<any>; timestamp: number }>();
+const SERVER_CACHE_TTL = 60000; // TTL de 1 minuto en servidor
+
 /**
  * Helper para manejo de caché SWR (Stale-While-Revalidate)
  * Proporciona carga instantánea desde localStorage y refresca en background.
@@ -175,8 +179,23 @@ async function fetchWithSWR<T>(
     cacheKey: string,
     fetcher: () => Promise<T>
 ): Promise<T> {
-    // Modo Servidor (Astro Build): Fetch directo
-    if (typeof window === 'undefined') return await fetcher();
+    // Modo Servidor (Astro Build / Dev Server): Coalescencia y caché en memoria
+    if (typeof window === 'undefined') {
+        const now = Date.now();
+        const cached = serverCache.get(cacheKey);
+        
+        if (cached && (now - cached.timestamp < SERVER_CACHE_TTL)) {
+            return cached.promise;
+        }
+        
+        const promise = fetcher().catch(err => {
+            serverCache.delete(cacheKey);
+            throw err;
+        });
+        
+        serverCache.set(cacheKey, { promise, timestamp: now });
+        return promise;
+    }
 
     const cached = localStorage.getItem(cacheKey);
     

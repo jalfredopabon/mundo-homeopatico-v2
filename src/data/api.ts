@@ -231,12 +231,14 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
         ? rawIndicaciones.split('^').map(i => i.trim()) 
         : (rawIndicaciones.includes(';') ? rawIndicaciones.split(';').map(i => i.trim()) : [rawIndicaciones]);
     
+    const cleanForm = item.forma_farmaceutica.split(';')[0]?.trim() || 'No especificada';
+    
     return {
         id: item.id_producto || `prod-${Math.random().toString(36).substr(2, 9)}`,
         name: item.nombre,
         linea: item.tipo_terapia,
         category: item.tipo_terapia, // Necesario para el filtro de vademecum.astro
-        type: item.forma_farmaceutica.split(';')[0]?.split('x')[0]?.trim() || 'No especificada', // Necesario para el filtro de vademecum.astro
+        type: cleanForm, // Necesario para el filtro de vademecum.astro
         shortDesc: indicationsList[0] ? `${indicationsList[0].substring(0, 120)}...` : 'Descripción no disponible',
         activeIngredients: item.composicion,
         indications: rawIndicaciones,
@@ -245,7 +247,7 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
         tags: {
             terapia: item.tipo_terapia,
             sistema: [], // Los productos no tienen sistema asignado en el CSV
-            forma: item.forma_farmaceutica.split(';')[0]?.split('x')[0]?.trim() || 'No especificada' 
+            forma: cleanForm 
         },
         sections: [
             {
@@ -351,9 +353,14 @@ export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], me
                 .filter(item => (item.estado || '').toLowerCase() === 'activo')
                 .map(mapMaestroToMedicine);
 
+            // Extraer todas las formas individuales de las presentaciones de todos los productos
+            const allFormas = medicines.flatMap(m => 
+                (m.presentations || '').split(';').map(p => p.trim())
+            ).filter(Boolean);
+
             const metadata: FilterMetadata = {
                 terapias: [...new Set(medicines.map(m => m.linea))].sort(),
-                formas: [...new Set(medicines.map(m => m.type))].sort()
+                formas: [...new Set(allFormas)].sort()
             };
             
             return { medicines, metadata };

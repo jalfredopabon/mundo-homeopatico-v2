@@ -26,11 +26,12 @@ export function renderDistributorGrid(distributors: DistributorData[]): string {
 
         const logoName = distributor.logo || 'logo-mundo-homeopatico';
         const logoPath = `/img/${logoName}.webp`;
+        const isEcoNatural = logoName === 'logo-eco-natural';
 
         return `
         <div class="bg-surface-white rounded-2xl border border-subtle hover:border-brand transition-all group flex flex-col shadow-sm hover:shadow-md overflow-hidden">
             <div class="p-6 pb-2 flex items-center gap-4 bg-slate-50/30">
-                <div class="h-12 w-12 flex items-center justify-center shrink-0">
+                <div class="h-12 w-12 flex items-center justify-center shrink-0 ${isEcoNatural ? 'scale-[1.35]' : ''}">
                     <img src="${logoPath}" alt="${distributor.nombre}" width="48" height="48" loading="lazy" decoding="async" class="w-full h-full object-contain" onerror="this.src='/img/logo-mundo-homeopatico.webp'" />
                 </div>
                 <div class="flex flex-col gap-0.5 overflow-hidden">

@@ -38,7 +38,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Coadyuvante en el tratamiento de dispepsias, flatulencia y estreñimiento espasmódico.',
@@ -77,7 +77,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Tratamiento de traumatismos, contusiones y dolores musculares.',
@@ -116,7 +116,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Trastornos emocionales, ansiedad con espasmos y labilidad afectiva.',
@@ -155,7 +155,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Afecciones de mucosas con secreciones blandas.',
@@ -194,7 +194,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Procesos febriles de aparición repentina y angustia aguda.',
@@ -233,7 +233,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Inflamaciones agudas, rubor y calor.',
@@ -272,7 +272,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Estados gripales con postración y temblores.',
@@ -311,7 +311,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Momentos de pánico, estrés elevado o noticias impactantes.',
@@ -350,7 +350,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Disfunciones metabólicas menores.',
@@ -389,7 +389,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Problemas de auto-percepción.',
@@ -428,7 +428,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Contusiones deportivas y dolores localizados.',
@@ -467,7 +467,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Cicatrización de heridas superficiales.',
@@ -506,7 +506,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Dolores por aplastamiento de dedos o lesiones en columna.',
@@ -545,7 +545,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Reumatismo articular y dolores musculares por humedad.',
@@ -584,7 +584,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Pleuresía y tos seca dolorosa.',
@@ -623,7 +623,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Edemas repentinos en párpados o garganta.',
@@ -662,7 +662,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Infecciones agudas de garganta con sensación de espina.',
@@ -701,7 +701,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Dolores de muelas infantiles e irritabilidad extrema.',
@@ -740,7 +740,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Somnolencia irresistible en periodos digestivos.',
@@ -779,7 +779,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Tratamiento de verrugas y papilomas.',
@@ -818,7 +818,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Coadyuvante en litiasis renal y biliar.',
@@ -857,7 +857,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Alivio de prurito y enrojecimiento cutáneo.',
@@ -896,7 +896,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Conjuntivitis alérgica e infecciosa incipiente.',
@@ -935,7 +935,7 @@ export const medicines: Medicine[] = [
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: [
                     'Rinitis alérgica estacional.',

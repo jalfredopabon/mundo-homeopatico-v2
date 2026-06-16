@@ -188,6 +188,22 @@ export function createMedicineDetails(medicine: any): string {
             `).join('')}
           </ul>
         </div>
+
+        <!-- Forma farmacéutica -->
+        <div class="medical-section-container">
+          <h4 class="medical-section-title">
+            ${ICONS['pill']}
+            Forma farmacéutica
+          </h4>
+          <ul class="space-y-2">
+            ${formatList(medicine.presentations || '').map(text => `
+              <li class="medical-list-item">
+                <span class="vademecum-bullet-dot"></span>
+                <div class="flex-1">${text}</div>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
       </div>
     </div>
   `;

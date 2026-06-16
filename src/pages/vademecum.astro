@@ -41,7 +41,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 </header>
 
                 <!-- Índice Alfabético A-Z -->
-                <div id="alphabet-filter-container" class="mb-6 flex flex-wrap gap-1.5 items-center reveal active products-view-content py-2">
+                <div id="alphabet-filter-container" class="mb-6 flex flex-wrap gap-1.5 items-center reveal active py-2">
                     <!-- Inyectado dinámicamente -->
                 </div>
 
@@ -193,10 +193,11 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         const container = document.getElementById('alphabet-filter-container');
         if (!container) return;
 
-        // Calcular qué letras tienen medicamentos reales en los datos
+        // Calcular qué letras tienen elementos reales en los datos (según vista activa)
+        const sourceList = _currentView === 'products' ? _allMeds : _allProtocols;
         const activeLetters = new Set(
-            _allMeds.map(m => {
-                const char = m.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+            sourceList.map(item => {
+                const char = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
                 return char;
             })
         );
@@ -306,7 +307,12 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 return matchesSearch && matchesTerapia && matchesForma && matchesSistema && matchesLetter;
             } else {
                 const matchesSistema = _filterSistemas.length === 0 || _filterSistemas.includes(item.system);
-                return matchesSearch && matchesSistema;
+                
+                // Normalizar primera letra del nombre para soportar tildes
+                const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                
+                return matchesSearch && matchesSistema && matchesLetter;
             }
         });
 
@@ -731,11 +737,6 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             _currentView = e.detail.view;
             _currentPage = 1;
             
-            // Ocultar o mostrar el abecedario según la vista activa
-            const alphabetContainer = document.getElementById('alphabet-filter-container');
-            if (alphabetContainer) {
-                alphabetContainer.classList.toggle('hidden', _currentView !== 'products');
-            }
             _selectedLetter = null;
             renderAlphabetBar();
             

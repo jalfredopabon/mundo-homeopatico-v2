@@ -117,6 +117,12 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     let _selectedLetter: string | null = null;
     const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+    // Estado del Buscador Predictivo
+    let searchFocusIndex = -1;
+    let lastSearchItems: any[] = [];
+    let lastSearchQuery = '';
+    let isSearchExpanded = false;
+
     document.addEventListener('astro:page-load', async () => {
         const session = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
         const authModal = document.getElementById('auth-modal-overlay');
@@ -282,7 +288,9 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         const source = _currentView === 'products' ? _allMeds : _allProtocols;
 
         const filtered = source.filter(item => {
-            const matchesSearch = !searchTerm || item.name.toLowerCase().includes(searchTerm);
+            const itemNorm = item.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            const searchNorm = searchTerm.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            const matchesSearch = !searchTerm || itemNorm.includes(searchNorm);
             
             if (_currentView === 'products') {
                 const f = _filtersProducts as any;
@@ -418,12 +426,258 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         const clearBtn = document.getElementById('clear-filters-btn');
         const sidebar = document.querySelector('aside');
 
-        // Búsqueda
-        searchInput?.addEventListener('input', () => { 
+        // Búsqueda Predictiva y Filtrado
+        const searchDropdown = document.getElementById('vademecum-search-dropdown');
+
+        const toggleDropdown = (show: boolean) => {
+            if (searchDropdown) {
+                if (show) searchDropdown.classList.remove('hidden');
+                else searchDropdown.classList.add('hidden');
+            }
+        };
+
+        const updateSearchFocus = (elements: NodeListOf<Element>) => {
+            elements.forEach((el, idx) => {
+                if (idx === searchFocusIndex) {
+                    el.classList.add('is-focused');
+                    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                } else {
+                    el.classList.remove('is-focused');
+                }
+            });
+        };
+
+        const selectFromDropdown = (id: string, type: 'medicine' | 'protocol') => {
+            if (type === 'medicine') {
+                const medicine = _allMeds.find(m => m.id === id);
+                if (medicine) {
+                    _selectedMed = medicine;
+                    if (searchInput) searchInput.value = medicine.name;
+                    _filtersProducts.search = medicine.name;
+                    _selectedLetter = null;
+                    _currentPage = 1;
+                    
+                    applyFiltersAndRender();
+                    renderAlphabetBar();
+                    
+                    window.dispatchEvent(new CustomEvent('vademecum:select-item', { 
+                        detail: { item: medicine, type: 'medicine' } 
+                    }));
+                    checkGhostState();
+                    
+                    setTimeout(() => {
+                        const cardEl = document.querySelector(`[data-medicine-id="${id}"]`);
+                        if (cardEl) {
+                            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            const card = cardEl.querySelector('.medical-card');
+                            if (card) {
+                                card.classList.add('is-selected');
+                                card.classList.add('highlight-row');
+                                setTimeout(() => card.classList.remove('highlight-row'), 2000);
+                            }
+                        }
+                    }, 150);
+                }
+            } else {
+                const protocol = _allProtocols.find(p => p.id === id);
+                if (protocol) {
+                    _selectedProtocol = protocol;
+                    if (searchInput) searchInput.value = protocol.name;
+                    _filtersProtocols.search = protocol.name;
+                    _currentPage = 1;
+                    
+                    applyFiltersAndRender();
+                    
+                    window.dispatchEvent(new CustomEvent('vademecum:select-item', { 
+                        detail: { item: protocol, type: 'protocol' } 
+                    }));
+                    checkGhostState();
+                    
+                    setTimeout(() => {
+                        const cardEl = document.querySelector(`[data-protocol-id="${id}"]`);
+                        if (cardEl) {
+                            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            const card = cardEl.querySelector('.medical-card');
+                            if (card) {
+                                card.classList.add('is-selected');
+                                card.classList.add('highlight-row');
+                                setTimeout(() => card.classList.remove('highlight-row'), 2000);
+                            }
+                        }
+                    }, 150);
+                }
+            }
+            toggleDropdown(false);
+        };
+
+        const updateSearchDropdown = (items: any[], query: string, forceExpand: boolean | null = null) => {
+            if (!searchDropdown) return;
+
+            if (items !== null && query !== null) {
+                lastSearchItems = items;
+                lastSearchQuery = query;
+                if (forceExpand === null) {
+                    isSearchExpanded = false;
+                    searchFocusIndex = -1;
+                }
+            } else {
+                items = lastSearchItems;
+                query = lastSearchQuery;
+            }
+
+            if (forceExpand !== null) isSearchExpanded = forceExpand;
+
+            const initialLimit = 6;
+            const limit = isSearchExpanded ? 1000 : initialLimit;
+            const shown = (items || []).slice(0, limit);
+
+            if (shown.length === 0 || !query) {
+                toggleDropdown(false);
+                return;
+            }
+
+            const escapeHtml = (text: string) => {
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            };
+
+            let html = `
+                <div class="p-2.5 border-b border-slate-100 text-[10px] text-slate-400 font-bold tracking-wider flex justify-between bg-slate-50/80 sticky top-0 z-10 backdrop-blur-sm">
+                    <span>RESULTADOS (${items.length})</span>
+                    <span class="hidden sm:block">Navega con ↑↓ Enter</span>
+                </div>
+                <div class="search-results-list">
+            `;
+
+            html += shown.map((item, index) => {
+                const qNorm = query.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const iNorm = item.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                
+                let highlightedName = escapeHtml(item.name);
+                const matchIdx = iNorm.indexOf(qNorm);
+                
+                if (matchIdx !== -1 && qNorm.length > 0) {
+                    const originalText = item.name.substring(matchIdx, matchIdx + query.length);
+                    highlightedName = escapeHtml(item.name.substring(0, matchIdx)) +
+                        `<span class="search-highlight">${escapeHtml(originalText)}</span>` +
+                        escapeHtml(item.name.substring(matchIdx + query.length));
+                }
+
+                // Mostrar categoría o sistema
+                const categoryLabel = _currentView === 'products' ? item.linea : item.system;
+                const focusClass = (index === searchFocusIndex) ? 'is-focused' : '';
+
+                return `
+                    <div class="search-result-item ${focusClass} js-search-item" data-row-id="${item.id}" data-index="${index}">
+                        <div class="text-[12px] font-bold text-slate-700 leading-tight">${highlightedName}</div>
+                        <div class="text-[10px] text-brand font-medium truncate mt-0.5">${categoryLabel || 'Medicina General'}</div>
+                    </div>
+                `;
+            }).join('');
+
+            html += `</div>`;
+
+            if (items.length > initialLimit) {
+                const toggleLabel = isSearchExpanded
+                    ? 'Ver menos'
+                    : `Ver ${items.length - initialLimit} más...`;
+                
+                html += `
+                    <div class="sticky bottom-0 z-10 p-2.5 text-[11px] text-center text-brand font-bold bg-white cursor-pointer hover:bg-emerald-50 transition-all border-t border-slate-100 js-search-toggle-more">
+                        ${toggleLabel}
+                    </div>
+                `;
+            }
+
+            searchDropdown.innerHTML = html;
+            toggleDropdown(true);
+
+            // Listeners para clics en los items del dropdown
+            searchDropdown.querySelectorAll('.js-search-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = el.getAttribute('data-row-id');
+                    if (id) selectFromDropdown(id, _currentView === 'products' ? 'medicine' : 'protocol');
+                });
+            });
+
+            const toggleBtn = searchDropdown.querySelector('.js-search-toggle-more');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateSearchDropdown(null as any, null as any, !isSearchExpanded);
+                });
+            }
+        };
+
+        searchInput?.addEventListener('input', () => {
             const f = (_currentView === 'products' ? _filtersProducts : _filtersProtocols) as any;
-            f.search = sanitizeInput(searchInput.value);
-            _currentPage = 1; 
-            applyFiltersAndRender(); 
+            const rawValue = searchInput.value;
+            f.search = sanitizeInput(rawValue);
+            _currentPage = 1;
+            applyFiltersAndRender();
+
+            const query = rawValue.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+            if (!query) {
+                toggleDropdown(false);
+                return;
+            }
+
+            // Filtrar en memoria para el dropdown predictivo
+            if (_currentView === 'products') {
+                const matches = _allMeds.filter(m => {
+                    const clean = (val: string) => (val || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                    const searchTerms = `${clean(m.name)} ${clean(m.indications)} ${clean(m.activeIngredients)} ${clean(m.linea)}`;
+                    return searchTerms.includes(query);
+                });
+                updateSearchDropdown(matches, query);
+            } else {
+                const matches = _allProtocols.filter(p => {
+                    const clean = (val: string) => (val || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                    const searchTerms = `${clean(p.name)} ${clean(p.description)} ${clean(p.systemSupport)} ${clean(p.complementary)} ${clean(p.system)}`;
+                    return searchTerms.includes(query);
+                });
+                updateSearchDropdown(matches, query);
+            }
+        });
+
+        searchInput?.addEventListener('keydown', (e) => {
+            if (!searchDropdown || searchDropdown.classList.contains('hidden')) return;
+
+            const itemsEls = searchDropdown.querySelectorAll('.js-search-item');
+            if (itemsEls.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                searchFocusIndex = (searchFocusIndex + 1) % itemsEls.length;
+                updateSearchFocus(itemsEls);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                searchFocusIndex = (searchFocusIndex - 1 + itemsEls.length) % itemsEls.length;
+                updateSearchFocus(itemsEls);
+            } else if (e.key === 'Enter') {
+                if (searchFocusIndex >= 0) {
+                    e.preventDefault();
+                    const selectedEl = itemsEls[searchFocusIndex];
+                    const id = selectedEl.getAttribute('data-row-id');
+                    if (id) selectFromDropdown(id, _currentView === 'products' ? 'medicine' : 'protocol');
+                }
+            } else if (e.key === 'Escape') {
+                toggleDropdown(false);
+            }
+        });
+
+        // Cerrar dropdown si se hace click fuera
+        document.addEventListener('click', (e) => {
+            if (searchDropdown && !searchDropdown.classList.contains('hidden')) {
+                const target = e.target as HTMLElement;
+                if (!target.closest('#vademecum-search') && !target.closest('#vademecum-search-dropdown')) {
+                    toggleDropdown(false);
+                }
+            }
         });
 
         // Delegación de eventos para filtros dinámicos

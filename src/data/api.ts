@@ -29,12 +29,12 @@ const SECRET_KEY = import.meta.env.PUBLIC_GAS_SECRET || 'MH_SECRET_2026_ELITE';
 // Esquema de validación para el Vademécum Maestro
 export const VademecumMaestroSchema = z.object({
     id_producto: z.string(),
-    linea: z.string(),
+    tipo_terapia: z.string(),
     nombre: z.string(),
     composicion: z.string(),
-    indicaciones: z.string(),
-    posologia: z.string(),
-    presentaciones: z.string(),
+    indicaciones_terapeuticas: z.string(),
+    presentacion_posologia: z.string(),
+    forma_farmaceutica: z.string(),
     estado: z.string(),
 });
 
@@ -226,27 +226,30 @@ async function fetchWithSWR<T>(
  * Transforma los datos del Maestro de CSV/JSON a la interfaz Medicine del proyecto
  */
 export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
-    const indicationsList = item.indications ? (Array.isArray(item.indications) ? item.indications : [item.indications]) : (item.indicaciones ? item.indicaciones.split('^').map(i => i.trim()) : [item.indicaciones]);
+    const rawIndicaciones = item.indicaciones_terapeuticas || '';
+    const indicationsList = rawIndicaciones.includes('^') 
+        ? rawIndicaciones.split('^').map(i => i.trim()) 
+        : (rawIndicaciones.includes(';') ? rawIndicaciones.split(';').map(i => i.trim()) : [rawIndicaciones]);
     
     return {
         id: item.id_producto || `prod-${Math.random().toString(36).substr(2, 9)}`,
         name: item.nombre,
-        linea: item.linea,
-        category: item.linea, // Necesario para el filtro de vademecum.astro
-        type: item.presentaciones.split(';')[0]?.split('x')[0]?.trim() || 'No especificada', // Necesario para el filtro de vademecum.astro
+        linea: item.tipo_terapia,
+        category: item.tipo_terapia, // Necesario para el filtro de vademecum.astro
+        type: item.forma_farmaceutica.split(';')[0]?.split('x')[0]?.trim() || 'No especificada', // Necesario para el filtro de vademecum.astro
         shortDesc: indicationsList[0] ? `${indicationsList[0].substring(0, 120)}...` : 'Descripción no disponible',
         activeIngredients: item.composicion,
-        indications: item.indicaciones,
-        dosage: item.posologia,
-        presentations: item.presentaciones,
+        indications: rawIndicaciones,
+        dosage: item.presentacion_posologia,
+        presentations: item.forma_farmaceutica,
         tags: {
-            terapia: item.linea,
+            terapia: item.tipo_terapia,
             sistema: [], // Los productos no tienen sistema asignado en el CSV
-            forma: item.presentaciones.split(';')[0]?.split('x')[0]?.trim() || 'No especificada' 
+            forma: item.forma_farmaceutica.split(';')[0]?.split('x')[0]?.trim() || 'No especificada' 
         },
         sections: [
             {
-                title: 'Indicaciones clínicas',
+                title: 'Indicaciones terapéuticas',
                 icon: 'task-list',
                 items: indicationsList
             },
@@ -256,14 +259,16 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
                 items: item.composicion ? item.composicion.split(';').map(i => i.trim()) : []
             },
             {
-                title: 'Dosificación y Posología',
+                title: 'Presentación y posología',
                 icon: 'edit',
-                items: item.posologia ? [item.posologia] : ['Consulte a su médico.']
+                items: item.presentacion_posologia 
+                    ? (item.presentacion_posologia.includes('^') ? item.presentacion_posologia.split('^').map(i => i.trim()) : [item.presentacion_posologia]) 
+                    : ['Consultar con su especialista médico.']
             },
             {
                 title: 'Presentaciones disponibles',
                 icon: 'package',
-                items: item.presentaciones ? item.presentaciones.split(';').map(i => i.trim()) : []
+                items: item.forma_farmaceutica ? item.forma_farmaceutica.split(';').map(i => i.trim()) : []
             }
         ]
     };

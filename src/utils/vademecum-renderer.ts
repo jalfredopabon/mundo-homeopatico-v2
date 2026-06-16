@@ -110,7 +110,12 @@ export function createMedicineDetails(medicine: any): string {
     { label: 'Tropismo principal', value: medicine.scientificName || 'Sistemas varios' },
     { label: 'Mecanismo', value: medicine.category || 'Homeopatía compleja' }
   ];
-  const posologia = formatList(medicine.posologia || 'Consultar con su especialista médico.');
+  
+  // Posología se separa por '^' para no romper líneas que contengan punto y coma ';' internos
+  const rawPosologia = medicine.dosage || '';
+  const posologia = rawPosologia.includes('^')
+    ? rawPosologia.split('^').map((text: string) => text.trim()).filter((text: string) => text.length > 0)
+    : [rawPosologia || 'Consultar con su especialista médico.'];
 
   return `
     <div class="animate-content-in medical-sheet-inner" data-sheet-id="${medicine.id}">
@@ -140,7 +145,7 @@ export function createMedicineDetails(medicine: any): string {
         <div class="medical-section-container">
           <h4 class="medical-section-title">
             ${ICONS['task-list']}
-            Indicaciones clínicas
+            Indicaciones terapéuticas
           </h4>
           <ul class="space-y-2">
             ${indicaciones.map(text => `
@@ -152,17 +157,17 @@ export function createMedicineDetails(medicine: any): string {
           </ul>
         </div>
 
-        <!-- Perfil -->
+        <!-- Composición -->
         <div class="medical-section-container">
           <h4 class="medical-section-title">
             ${ICONS['flask']}
-            Perfil farmacológico
+            Composición
           </h4>
           <ul class="space-y-2">
-            ${perfil.map(item => `
+            ${formatList(medicine.activeIngredients || '').map(text => `
               <li class="medical-list-item">
                 <span class="vademecum-bullet-dot"></span>
-                <div class="flex-1"><span class="font-bold text-slate-900">${item.label}:</span> ${item.value}</div>
+                <div class="flex-1">${text}</div>
               </li>
             `).join('')}
           </ul>
@@ -172,7 +177,7 @@ export function createMedicineDetails(medicine: any): string {
         <div class="medical-section-container">
           <h4 class="medical-section-title">
             ${ICONS['pen']}
-            Protocolo de posología
+            Presentación y posología
           </h4>
           <ul class="space-y-2">
             ${posologia.map(text => `

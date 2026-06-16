@@ -42,13 +42,13 @@ export const VademecumMaestroSchema = z.object({
 export const VademecumProtocoloSchema = z.object({
     id_protocolo: z.string(),
     patologia: z.string(),
-    principales: z.string(),
-    sistema: z.string(),
-    complementarios: z.string(),
-    oligoelementos: z.string(),
-    topicos: z.string(),
-    estado: z.string(),
-    sistema_corporal: z.string().optional().default(''),
+    medicamentos_principales: z.string().optional().default(''),
+    soporte_sistemas: z.string().optional().default(''),
+    soporte_complementario: z.string().optional().default(''),
+    oligoelementos: z.string().optional().default(''),
+    tratamientos_topicos: z.string().optional().default(''),
+    estado: z.string().optional().default('activo'),
+    sistema_cuerpo: z.string().optional().default(''),
 });
 
 export type VademecumMaestro = z.infer<typeof VademecumMaestroSchema>;
@@ -381,11 +381,12 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
                     ...item,
                     id: item.id_protocolo,
                     name: item.patologia,
-                    system: item.sistema_corporal || item.sistema,
-                    description: item.principales,
-                    complementary: item.complementarios,
+                    system: item.sistema_cuerpo || '',
+                    description: item.medicamentos_principales,
+                    systemSupport: item.soporte_sistemas,
+                    complementary: item.soporte_complementario,
                     oligoelementos: item.oligoelementos,
-                    topicos: item.topicos
+                    topicos: item.tratamientos_topicos
                 }));
         } catch (error) {
             console.error('API Error (Protocolos):', error);

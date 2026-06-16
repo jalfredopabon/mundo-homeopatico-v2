@@ -201,7 +201,8 @@ export function createProtocolDetails(protocol: any): string {
   };
 
   const sections = [
-    { title: 'Medicamentos Principales', content: protocol.description || protocol.principales, icon: 'mortero' },
+    { title: 'Medicamentos Principales', content: protocol.description, icon: 'mortero' },
+    { title: 'Soporte de sistemas', content: protocol.systemSupport, icon: 'mortero' },
     { title: 'Soporte Complementario', content: protocol.complementary, icon: 'plus' },
     { title: 'Oligoelementos', content: protocol.oligoelementos, icon: 'pill' },
     { title: 'Tratamientos Tópicos', content: protocol.topicos, icon: 'droplet' }

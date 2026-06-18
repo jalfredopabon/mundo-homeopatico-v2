@@ -24,9 +24,18 @@ import Icons from '../shared/Icons.astro';
             <Icons type="select-card" class="w-16 h-16" strokeWidth={1} />
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-2">Selecciona un elemento</h3>
-        <p class="text-sm text-slate-500 max-w-[240px] mb-1 leading-relaxed">
+        <p class="text-sm text-slate-500 max-w-[240px] mb-4 leading-relaxed">
             Explora el catálogo y selecciona un medicamento o protocolo para ver su ficha técnica.
         </p>
+        <div class="w-full border-t border-slate-100 mt-4 pt-6 flex flex-col items-center">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">¿Buscas dosificaciones generales?</p>
+            <button 
+                id="empty-state-posologia-btn" 
+                class="flex items-center gap-2 py-2 px-3.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-950 font-bold text-xs rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer"
+            >
+                📋 Ver guía de posologías
+            </button>
+        </div>
     </div>
 
     <!-- BANNER DE CONTEXTO (GHOST MODE) - Estilo Catálogo Elite -->
@@ -101,8 +110,14 @@ import Icons from '../shared/Icons.astro';
             }
         });
 
-        // SALTO MAESTRO: Delegación de eventos para links dentro de protocolos
+        // Delegación de eventos para links y botones dentro de la ficha
         content?.addEventListener('click', (e) => {
+            const posologiaBtn = (e.target as HTMLElement).closest('.js-ficha-posologia-btn');
+            if (posologiaBtn) {
+                window.dispatchEvent(new CustomEvent('vademecum:request-posologia-modal'));
+                return;
+            }
+
             const jumpLink = (e.target as HTMLElement).closest('.master-jump-link');
             if (jumpLink) {
                 const targetId = jumpLink.getAttribute('data-jump-to');
@@ -111,6 +126,12 @@ import Icons from '../shared/Icons.astro';
                     detail: { id: targetId } 
                 }));
             }
+        });
+
+        // Click en el botón de posología del estado vacío
+        const emptyStatePosologiaBtn = document.getElementById('empty-state-posologia-btn');
+        emptyStatePosologiaBtn?.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('vademecum:request-posologia-modal'));
         });
 
         // Cierre móvil

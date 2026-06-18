@@ -3,6 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 import AuthModal from '../components/shared/AuthModal.astro';
+import PosologiaModal from '../components/vademecum/PosologiaModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 import Icons from '../components/shared/Icons.astro';
 import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
@@ -16,6 +17,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 <BaseLayout title="Vademécum | Mundo Homeopático" mostrarZoom={false}>
     
     <AuthModal />
+    <PosologiaModal />
 
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden" id="vademecum-page-container" data-view="products">
         
@@ -92,13 +94,14 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 </BaseLayout>
 
 <script>
-    import { getVademecumMaestro, getVademecumProtocolos } from '../data/api';
-    import { createMedicalCard, createProtocolCard } from '../utils/vademecum-renderer';
+    import { getVademecumMaestro, getVademecumProtocolos, getVademecumPosologia } from '../data/api';
+    import { createMedicalCard, createProtocolCard, setStandardPosologiaMap } from '../utils/vademecum-renderer';
     import { sanitizeInput } from '../utils/security';
 
     // Estado Centralizado de Datos
     let _allMeds: any[] = [];
     let _allProtocols: any[] = [];
+    let _allPosologias: any[] = [];
     let _currentView: 'products' | 'protocols' = 'products';
     let _currentPage = 1;
     const ITEMS_PER_PAGE = 12;
@@ -150,6 +153,14 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         const counter = document.getElementById('results-counter');
 
         try {
+            // 0. CARGA POSOLOGÍAS (Para inyección contextual)
+            try {
+                _allPosologias = await getVademecumPosologia();
+                setStandardPosologiaMap(_allPosologias);
+            } catch (err) {
+                console.error("Error al cargar posologías estándar:", err);
+            }
+
             // 1. CARGA MAESTRO (Prioridad Alta + Metadatos)
             const { medicines, metadata } = await getVademecumMaestro();
             
@@ -162,7 +173,10 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             renderSidebarFilters(metadata);
 
             // 1.5. Habilitar Salto Maestro
-            import('../utils/vademecum-renderer').then(m => m.setProductJumpMap(_allMeds));
+            import('../utils/vademecum-renderer').then(m => {
+                m.setProductJumpMap(_allMeds);
+                m.setStandardPosologiaMap(_allPosologias);
+            });
 
             // 2. INICIALIZAR LISTENERS DE UI (Delegación de eventos)
             initUIListeners();
@@ -812,6 +826,13 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 }));
                 checkGhostState();
             }
+        });
+
+        // Escuchar solicitud para abrir modal de posologías
+        window.addEventListener('vademecum:request-posologia-modal', () => {
+            window.dispatchEvent(new CustomEvent('vademecum:open-posologia-modal', {
+                detail: { posologia: _allPosologias }
+            }));
         });
     }
 </script>

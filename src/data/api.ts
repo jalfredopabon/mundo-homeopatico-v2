@@ -402,6 +402,31 @@ export async function getVademecumProtocolos(): Promise<VademecumProtocolo[]> {
     });
 }
 
+// --- ESQUEMA PARA POSOLOGÍA ---
+export const VademecumPosologiaSchema = z.object({
+    forma_farmaceutica: z.string(),
+    posologia: z.string(),
+});
+
+export type VademecumPosologia = z.infer<typeof VademecumPosologiaSchema>;
+
+/**
+ * Obtiene las Posologías estándar desde Google Sheets con soporte SWR
+ */
+export async function getVademecumPosologia(): Promise<VademecumPosologia[]> {
+    return fetchWithSWR('vd_posologia', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=posologia&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+            return z.array(VademecumPosologiaSchema.passthrough()).parse(cleanData);
+        } catch (error) {
+            console.error('API Error (Posologia):', error);
+            return [];
+        }
+    });
+}
+
 
 /**
  * Obtiene la estructura de navegación del catálogo (navegacion)

@@ -45,6 +45,7 @@ function doGet(e) {
     case 'video':          sheetName = 'video';                break;
     case 'distribuidores': sheetName = 'distribuidores';       break;
     case 'descuentos':     sheetName = 'descuentos';           break;
+    case 'posologia':      sheetName = 'vademecum_posologia';  break;
     default: return buildResponse({ error: 'Acción no válida: ' + action });
   }
 

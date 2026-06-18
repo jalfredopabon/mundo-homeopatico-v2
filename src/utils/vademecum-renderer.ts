@@ -29,6 +29,15 @@ export function setProductJumpMap(meds: any[]) {
     PRODUCT_JUMP_MAP = new Map(meds.map(m => [m.name.toLowerCase(), m.id]));
 }
 
+// Mapa global para las posologías estándar
+let STANDARDIZED_POSOLOGIA_MAP: Map<string, string> = new Map();
+
+export function setStandardPosologiaMap(posologiaList: any[]) {
+    STANDARDIZED_POSOLOGIA_MAP = new Map(
+        posologiaList.map(p => [p.forma_farmaceutica.toLowerCase().trim(), p.posologia])
+    );
+}
+
 function enrichText(text: string) {
     if (!text || text === '-' || PRODUCT_JUMP_MAP.size === 0) return text;
     let enriched = text;
@@ -113,7 +122,17 @@ export function createMedicineDetails(medicine: any): string {
   ];
   
   // Posología se separa por '^' para no romper líneas que contengan punto y coma ';' internos
-  const rawPosologia = medicine.dosage || '';
+  let rawPosologia = medicine.dosage || '';
+  let isSuggested = false;
+
+  if (!rawPosologia || rawPosologia === '-' || rawPosologia.trim().toLowerCase() === 'consultar con su especialista médico.') {
+      const formKey = (medicine.type || '').toLowerCase().trim();
+      if (STANDARDIZED_POSOLOGIA_MAP.has(formKey)) {
+          rawPosologia = STANDARDIZED_POSOLOGIA_MAP.get(formKey) || '';
+          isSuggested = true;
+      }
+  }
+
   const posologia = rawPosologia.includes('^')
     ? rawPosologia.split('^').map((text: string) => text.trim()).filter((text: string) => text.length > 0)
     : [rawPosologia || 'Consultar con su especialista médico.'];
@@ -125,9 +144,14 @@ export function createMedicineDetails(medicine: any): string {
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           ${ICONS['close-x']}
         </button>
-        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
-          ${ICONS['file-text']}
-          Ficha técnica del producto
+        <div class="flex items-center justify-between text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+          <div class="flex items-center gap-3">
+            ${ICONS['file-text']}
+            Ficha técnica del producto
+          </div>
+          <button class="text-brand hover:text-brand-dark flex items-center gap-1 font-bold underline transition-colors cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
+            📋 Ver posologías
+          </button>
         </div>
         <h2 class="medical-title">${medicine.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">
@@ -190,6 +214,11 @@ export function createMedicineDetails(medicine: any): string {
                     <div class="flex-1">${text}</div>
                   </li>
                 `).join('')}
+                ${isSuggested ? `
+                  <li class="mt-2 text-[10px] italic text-slate-400 flex items-center gap-1">
+                    <span>* Posología estándar para esta forma farmacéutica.</span>
+                  </li>
+                ` : ''}
               </ul>
             </div>
             <div>
@@ -231,9 +260,14 @@ export function createProtocolDetails(protocol: any): string {
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           ${ICONS['close-x']}
         </button>
-        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
-          ${ICONS['task-list']}
-          Guía de protocolo clínico
+        <div class="flex items-center justify-between text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+          <div class="flex items-center gap-3">
+            ${ICONS['task-list']}
+            Guía de protocolo clínico
+          </div>
+          <button class="text-brand hover:text-brand-dark flex items-center gap-1 font-bold underline transition-colors cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
+            📋 Ver posologías
+          </button>
         </div>
         <h2 class="medical-title">${protocol.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">

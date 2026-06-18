@@ -120,6 +120,7 @@ const {
 
     function initSidebarActions() {
         const logoutBtn = document.getElementById('sidebar-logout-btn');
+
         logoutBtn?.addEventListener('click', () => {
             if (confirm('¿Desea cerrar su sesión profesional?')) {
                 localStorage.removeItem('mh_session');

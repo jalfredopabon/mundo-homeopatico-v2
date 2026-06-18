@@ -6,7 +6,7 @@ from collections import defaultdict
 
 # Rutas de archivos
 BASE_PATH = r'c:\Users\Alfredo Pabón\Documents\Proyectos antigravity\mundo_homeopatico_v2'
-CSV_MAESTRO = os.path.join(BASE_PATH, 'carpeta_temporal_tablas', 'vademecum_maestro.csv')
+CSV_MAESTRO = os.path.join(BASE_PATH, 'carpeta_temporal_tablas', 'vademecum_medicamentos.csv')
 CSV_PROTOCOLOS = os.path.join(BASE_PATH, 'carpeta_temporal_tablas', 'vademecum_protocolos.csv')
 OUTPUT_HTML = os.path.join(BASE_PATH, 'vademecum_digital_mh_v2.html')
 

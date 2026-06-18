@@ -182,6 +182,9 @@
 1. Continuar revisando hojas sencillas (`seo`, etc.) para consolidación.
 
 
-### Mejoras Recientes (14/05/2026)
+### Mejoras Recientes (17/06/2026)
+- **Alineación de Nombres (vademecum_medicamentos):** Renombrado del archivo local y la pestaña de Google Sheets a `vademecum_medicamentos` (antes `vademecum_maestro`) para mantener consistencia conceptual con la interfaz, actualizando el script de Google Apps Script (`google_sheets_script.js`) y los scripts locales de procesamiento de datos correspondientes.
+- **Sede Medellín en Sidebar de Contacto:** Adición de la etiqueta "Sede Medellín" justo debajo de "Atención al cliente" en el pie del sidebar de Sedes y Contacto, manteniendo la jerarquía tipográfica `font-bold` y alineando el icono del reloj verticalmente al inicio de ambas líneas.
+- **Categoría en Carrito:** Integración de la sección/categoría de procedencia de los productos (ej: "Oficinales") en la tarjeta del carrito (Cart Drawer), mostrándola justo encima del nombre del producto con una tipografía reducida y tono Slate-400 para dar contexto visual sin sobrecargar el diseño.
 - **Capa de Abstracción de Datos:** Implementada función `smartFormat` en `api.ts` para normalizar tipos de datos inconsistentes de Google Sheets (Porcentajes interpretados como decimales). Esto garantiza paridad visual 1:1 entre la hoja de cálculo y la web sin intervención del usuario.
 - **Inversión de Jerarquía Sidebar:** Ajuste de tokens de color en `sidebar-renderer.ts` para invertir el peso visual entre Nivel 1 y Nivel 2, alineándose con el nuevo criterio estético de navegación.

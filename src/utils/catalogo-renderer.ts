@@ -14,7 +14,7 @@ const ICONS = {
     'cart': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`
 };
 
-export function createProductRow(product: any): string {
+export function createProductRow(product: any, sectionTitle: string = ''): string {
     const safeId = product.id.replace(/[^a-z0-9]/gi, '-');
     const extraId = `badges-${safeId}`;
     
@@ -128,6 +128,7 @@ export function createProductRow(product: any): string {
                         data-name="${product.cartData?.name || product.name}" 
                         data-price="${product.cartData?.price || '0'}"
                         data-table-id="${product.cartData?.tableId || ''}"
+                        data-category="${sectionTitle}"
                         title="Añadir al carrito"
                     >
                         <div class="flex items-center justify-center">${ICONS.plus}</div>
@@ -163,7 +164,7 @@ export function createCatalogTable(section: any): string {
                 </div>
                 
                 <div class="catalog-rows-container">
-                    ${section.products.map((p: any) => createProductRow(p)).join('')}
+                    ${section.products.map((p: any) => createProductRow(p, section.title)).join('')}
                 </div>
             </div>
         </section>

@@ -37,7 +37,7 @@ function doGet(e) {
   // --- Acciones genéricas (array de objetos) ---
   let sheetName = '';
   switch (action) {
-    case 'maestro':        sheetName = 'vademecum_maestro';    break;
+    case 'maestro':        sheetName = 'vademecum_medicamentos';    break;
     case 'protocolos':     sheetName = 'vademecum_protocolos'; break;
     case 'navegacion':     sheetName = 'navegacion';           break;
     case 'lista_precios':  sheetName = 'lista_precios';        break;

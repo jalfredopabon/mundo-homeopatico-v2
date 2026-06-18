@@ -206,15 +206,16 @@ import SelectElite from "../shared/SelectElite.astro";
         loadInitialCart();
 
         document.addEventListener('addToCart', ((e: CustomEvent) => {
-            const { name, price, tableId } = e.detail;
+            const { name, price, tableId, category } = e.detail;
             const items = window.__MH_CART__.items;
             const existing = items.find((i: any) => i.name === name);
             
             if (existing) {
                 existing.quantity++;
                 if (tableId) existing.tableId = tableId;
+                if (category) existing.category = category;
             } else {
-                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '', tableId: tableId || '' });
+                items.push({ name, price: parseInt(price), quantity: 1, hasNote: false, note: '', tableId: tableId || '', category: category || '' });
             }
             
             saveCartToStorage();
@@ -271,6 +272,7 @@ import SelectElite from "../shared/SelectElite.astro";
                             ${ICONS.trash}
                         </button>
                         <div class="pr-6">
+                            ${item.category ? `<span class="block text-[10px] text-slate-400 font-medium tracking-wide mb-1 select-none">${item.category}</span>` : ''}
                             <h4 class="text-[13px] font-bold text-slate-800 leading-tight">${item.name}</h4>
                             <p class="text-[11px] text-slate-500 mt-1 font-medium">$${item.price.toLocaleString()}</p>
                         </div>

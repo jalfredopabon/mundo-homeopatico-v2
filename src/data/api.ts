@@ -419,6 +419,17 @@ export async function getVademecumPosologia(): Promise<VademecumPosologia[]> {
             const response = await robustFetch(`${GAS_WEBAPP_URL}?action=posologia&key=${SECRET_KEY}`);
             const rawData = await response.json();
             const cleanData = normalizeKeys(rawData);
+            
+            // Si el backend responde con un objeto de error (ej: Hoja no encontrada)
+            if (cleanData && typeof cleanData === 'object' && !Array.isArray(cleanData)) {
+                if ('error' in cleanData) {
+                    console.error('❌ Error desde el Script de Google Sheets (Posología):', cleanData.error);
+                } else {
+                    console.error('⚠️ Respuesta inesperada del backend (Posología):', cleanData);
+                }
+                return [];
+            }
+            
             return z.array(VademecumPosologiaSchema.passthrough()).parse(cleanData);
         } catch (error) {
             console.error('API Error (Posologia):', error);

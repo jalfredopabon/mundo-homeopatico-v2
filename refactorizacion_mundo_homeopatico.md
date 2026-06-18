@@ -183,6 +183,7 @@
 
 
 ### Mejoras Recientes (17/06/2026)
+- **Renombrado y Reordenación de Protocolos:** Reestructuración de la ficha de detalles de protocolos clónicos (`vademecum-renderer.ts` y `api.ts`), aplicando los nuevos nombres descriptivos de la clienta en el orden exacto solicitado (Medicamentos principales, Medicamentos complementarios, Oligoelementos recomendados, Medicamento tópico, Apoyo emocional / Bienestar) y asociándolos a las nuevas columnas del backend.
 - **Consolidación de Ficha Técnica (Presentación y dosificación):** Fusión de las secciones individuales de "Presentación y posología" y "Forma farmacéutica" en una única sección llamada "Presentación y dosificación" (con icono de píldora) dentro de la ficha de detalles de medicamentos (`vademecum-renderer.ts`), organizando la información mediante subsecciones claras y espaciado optimizado.
 - **Alineación de Nombres (vademecum_medicamentos):** Renombrado del archivo local y la pestaña de Google Sheets a `vademecum_medicamentos` (antes `vademecum_maestro`) para mantener consistencia conceptual con la interfaz, actualizando el script de Google Apps Script (`google_sheets_script.js`) y los scripts locales de procesamiento de datos correspondientes.
 - **Sede Medellín en Sidebar de Contacto:** Adición de la etiqueta "Sede Medellín" justo debajo de "Atención al cliente" en el pie del sidebar de Sedes y Contacto, manteniendo la jerarquía tipográfica `font-bold` y alineando el icono del reloj verticalmente al inicio de ambas líneas.

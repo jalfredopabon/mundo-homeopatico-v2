@@ -643,7 +643,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             } else {
                 const matches = _allProtocols.filter(p => {
                     const clean = (val: string) => (val || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-                    const searchTerms = `${clean(p.name)} ${clean(p.description)} ${clean(p.systemSupport)} ${clean(p.complementary)} ${clean(p.system)}`;
+                    const searchTerms = `${clean(p.name)} ${clean(p.description)} ${clean(p.complementary)} ${clean(p.oligoelementos)} ${clean(p.topicos)} ${clean(p.emotionalSupport)} ${clean(p.system)}`;
                     return searchTerms.includes(query);
                 });
                 updateSearchDropdown(matches, query);

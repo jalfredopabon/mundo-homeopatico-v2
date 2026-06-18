@@ -236,8 +236,8 @@ export function createMedicineDetails(medicine: any): string {
               </ul>
             </div>
             <!-- Botón de consulta rápida de posologías generales -->
-            <div class="w-full border-t border-slate-100 mt-5 pt-4">
-              <button class="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-950 border border-slate-200 hover:border-slate-300 rounded-xl font-bold text-[11px] transition-all active:scale-[0.98] cursor-pointer js-ficha-posologia-btn">
+            <div class="w-full border-t border-slate-100 mt-5 pt-4 text-center">
+              <button class="inline-flex items-center justify-center gap-2 text-brand hover:text-brand-dark font-bold text-xs underline decoration-brand/30 hover:decoration-brand transition-all cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
                 ${ICONS['mortero']}
                 Ver guía de dosificación general
               </button>
@@ -299,8 +299,8 @@ export function createProtocolDetails(protocol: any): string {
         `).join('')}
         
         <!-- Botón de consulta rápida de posologías generales para protocolos -->
-        <div class="w-full border-t border-slate-100 mt-6 pt-5 mb-4">
-          <button class="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-950 border border-slate-200 hover:border-slate-300 rounded-xl font-bold text-[11px] transition-all active:scale-[0.98] cursor-pointer js-ficha-posologia-btn">
+        <div class="w-full border-t border-slate-100 mt-6 pt-5 mb-4 text-center">
+          <button class="inline-flex items-center justify-center gap-2 text-brand hover:text-brand-dark font-bold text-xs underline decoration-brand/30 hover:decoration-brand transition-all cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
             ${ICONS['mortero']}
             Ver guía de dosificación general
           </button>

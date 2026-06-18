@@ -19,7 +19,7 @@ export interface FilterMetadata {
 /**
  * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
  */
-const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbyf4h6EDfhx1OIF4EhlnjIOMKfh3vfyQ_F2xpQL-508-uBlWQvj6tN1BilRFrBHEIq9/exec';
+const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbyXL-XjAW_vX8aSA2gSN_HTQFJVePSdEDvPadlLumBZ5Oa0ozJBmSDCf4oogzTXIcpp/exec';
 
 /**
  * TOKEN DE SEGURIDAD (Protocolo Fort Knox)

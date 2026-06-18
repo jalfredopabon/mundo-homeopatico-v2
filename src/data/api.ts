@@ -231,7 +231,7 @@ export function mapMaestroToMedicine(item: VademecumMaestro): Medicine {
         ? rawIndicaciones.split('^').map(i => i.trim()) 
         : (rawIndicaciones.includes(';') ? rawIndicaciones.split(';').map(i => i.trim()) : [rawIndicaciones]);
     
-    const cleanForm = item.forma_farmaceutica.split(';')[0]?.trim() || 'No especificada';
+    const cleanForm = item.forma_farmaceutica.split(';')[0]?.trim().replace(/\*$/, '') || 'No especificada';
     
     return {
         id: item.id_producto || `prod-${Math.random().toString(36).substr(2, 9)}`,
@@ -355,7 +355,7 @@ export async function getVademecumMaestro(): Promise<{ medicines: Medicine[], me
 
             // Extraer todas las formas individuales de las presentaciones de todos los productos
             const allFormas = medicines.flatMap(m => 
-                (m.presentations || '').split(';').map(p => p.trim())
+                (m.presentations || '').split(';').map(p => p.trim().replace(/\*$/, ''))
             ).filter(Boolean);
 
             const metadata: FilterMetadata = {

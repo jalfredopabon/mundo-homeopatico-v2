@@ -310,7 +310,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             if (_currentView === 'products') {
                 const f = _filtersProducts as any;
                 const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
-                const itemFormas = (item.presentations || '').split(';').map((p: string) => p.trim());
+                const itemFormas = (item.presentations || '').split(';').map((p: string) => p.trim().replace(/\*$/, ''));
                 const matchesForma = f.formas.length === 0 || f.formas.some((selectedForma: string) => itemFormas.includes(selectedForma));
                 const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
                 

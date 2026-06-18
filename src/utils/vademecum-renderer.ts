@@ -144,14 +144,9 @@ export function createMedicineDetails(medicine: any): string {
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           ${ICONS['close-x']}
         </button>
-        <div class="flex items-center justify-between text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
-          <div class="flex items-center gap-3">
-            ${ICONS['file-text']}
-            Ficha técnica del producto
-          </div>
-          <button class="text-brand hover:text-brand-dark flex items-center gap-1 font-bold underline transition-colors cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
-            📋 Ver posologías
-          </button>
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+          ${ICONS['file-text']}
+          Ficha técnica del producto
         </div>
         <h2 class="medical-title">${medicine.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">
@@ -224,13 +219,28 @@ export function createMedicineDetails(medicine: any): string {
             <div>
               <h5 class="text-[12px] font-bold text-slate-700 mb-2">Forma farmacéutica</h5>
               <ul class="space-y-2">
-                ${formatList(medicine.presentations || '').map(text => `
-                  <li class="medical-list-item">
-                    <span class="vademecum-bullet-dot"></span>
-                    <div class="flex-1">${text}</div>
-                  </li>
-                `).join('')}
+                ${formatList(medicine.presentations || '').map(text => {
+                  const cleanText = text.trim();
+                  const isStock = cleanText.endsWith('*');
+                  const displayText = isStock ? cleanText.slice(0, -1).trim() : cleanText;
+                  return `
+                    <li class="medical-list-item">
+                      <span class="vademecum-bullet-dot"></span>
+                      <div class="flex-1 flex items-center gap-2">
+                        <span>${displayText}</span>
+                        ${isStock ? `<span class="badge-elite badge-elite--emerald px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide">Stock permanente</span>` : ''}
+                      </div>
+                    </li>
+                  `;
+                }).join('')}
               </ul>
+            </div>
+            <!-- Botón de consulta rápida de posologías generales -->
+            <div class="w-full border-t border-slate-100 mt-5 pt-4">
+              <button class="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-950 border border-slate-200 hover:border-slate-300 rounded-xl font-bold text-[11px] transition-all active:scale-[0.98] cursor-pointer js-ficha-posologia-btn">
+                ${ICONS['mortero']}
+                Ver guía de dosificación general
+              </button>
             </div>
           </div>
         </div>
@@ -260,14 +270,9 @@ export function createProtocolDetails(protocol: any): string {
         <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
           ${ICONS['close-x']}
         </button>
-        <div class="flex items-center justify-between text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
-          <div class="flex items-center gap-3">
-            ${ICONS['task-list']}
-            Guía de protocolo clínico
-          </div>
-          <button class="text-brand hover:text-brand-dark flex items-center gap-1 font-bold underline transition-colors cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
-            📋 Ver posologías
-          </button>
+        <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
+          ${ICONS['task-list']}
+          Guía de protocolo clínico
         </div>
         <h2 class="medical-title">${protocol.name}</h2>
         <div class="flex flex-wrap gap-2.5 mb-6 pb-6 border-b border-subtle">
@@ -292,6 +297,14 @@ export function createProtocolDetails(protocol: any): string {
             </ul>
           </div>
         `).join('')}
+        
+        <!-- Botón de consulta rápida de posologías generales para protocolos -->
+        <div class="w-full border-t border-slate-100 mt-6 pt-5 mb-4">
+          <button class="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-950 border border-slate-200 hover:border-slate-300 rounded-xl font-bold text-[11px] transition-all active:scale-[0.98] cursor-pointer js-ficha-posologia-btn">
+            ${ICONS['mortero']}
+            Ver guía de dosificación general
+          </button>
+        </div>
       </div>
     </div>
   `;

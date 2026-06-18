@@ -228,7 +228,7 @@ export function createMedicineDetails(medicine: any): string {
                       <span class="vademecum-bullet-dot"></span>
                       <div class="flex-1 flex items-center gap-2">
                         <span>${displayText}</span>
-                        ${isStock ? `<span class="badge-elite badge-elite--emerald px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide">Stock permanente</span>` : ''}
+                        ${isStock ? `<span class="badge-elite badge-elite--emerald px-1.5 py-0.5 text-[9px]" style="font-weight: 400 !important; text-transform: none !important;">Stock permanente</span>` : ''}
                       </div>
                     </li>
                   `;

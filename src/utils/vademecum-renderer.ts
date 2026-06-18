@@ -173,36 +173,36 @@ export function createMedicineDetails(medicine: any): string {
           </ul>
         </div>
 
-        <!-- Posología -->
-        <div class="medical-section-container">
-          <h4 class="medical-section-title">
-            ${ICONS['pen']}
-            Presentación y posología
-          </h4>
-          <ul class="space-y-2">
-            ${posologia.map(text => `
-              <li class="medical-list-item">
-                <span class="vademecum-bullet-dot"></span>
-                <div class="flex-1">${text}</div>
-              </li>
-            `).join('')}
-          </ul>
-        </div>
-
-        <!-- Forma farmacéutica -->
+        <!-- Presentación y dosificación -->
         <div class="medical-section-container">
           <h4 class="medical-section-title">
             ${ICONS['pill']}
-            Forma farmacéutica
+            Presentación y dosificación
           </h4>
-          <ul class="space-y-2">
-            ${formatList(medicine.presentations || '').map(text => `
-              <li class="medical-list-item">
-                <span class="vademecum-bullet-dot"></span>
-                <div class="flex-1">${text}</div>
-              </li>
-            `).join('')}
-          </ul>
+          <div class="space-y-5 pl-7 mt-3">
+            <div>
+              <h5 class="text-[12px] font-bold text-slate-700 mb-2">Presentación y posología</h5>
+              <ul class="space-y-2">
+                ${posologia.map(text => `
+                  <li class="medical-list-item">
+                    <span class="vademecum-bullet-dot"></span>
+                    <div class="flex-1">${text}</div>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+            <div>
+              <h5 class="text-[12px] font-bold text-slate-700 mb-2">Forma farmacéutica</h5>
+              <ul class="space-y-2">
+                ${formatList(medicine.presentations || '').map(text => `
+                  <li class="medical-list-item">
+                    <span class="vademecum-bullet-dot"></span>
+                    <div class="flex-1">${text}</div>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

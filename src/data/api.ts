@@ -414,21 +414,43 @@ export type VademecumPosologia = z.infer<typeof VademecumPosologiaSchema>;
  * Obtiene las Posologías estándar desde Google Sheets con soporte SWR
  */
 export async function getVademecumPosologia(): Promise<VademecumPosologia[]> {
+    // 🛡️ Limpieza preventiva: si la caché SWR tiene datos corruptos (no-array), se elimina
+    if (typeof window !== 'undefined') {
+        try {
+            const cached = localStorage.getItem('vd_posologia');
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                if (!Array.isArray(parsed)) {
+                    console.warn('⚠️ Caché de posología corrupta detectada, limpiando...');
+                    localStorage.removeItem('vd_posologia');
+                }
+            }
+        } catch (_) {
+            localStorage.removeItem('vd_posologia');
+        }
+    }
+
     return fetchWithSWR('vd_posologia', async () => {
         try {
             const response = await robustFetch(`${GAS_WEBAPP_URL}?action=posologia&key=${SECRET_KEY}`);
             const rawData = await response.json();
-            const cleanData = normalizeKeys(rawData);
+            let cleanData = normalizeKeys(rawData);
             
-            // Si el backend responde con un objeto de error (ej: Hoja no encontrada)
+            // Si normalizeKeys envolvió un array en un objeto o si es objeto con datos, intentar extraer
             if (cleanData && typeof cleanData === 'object' && !Array.isArray(cleanData)) {
-                if ('error' in cleanData) {
+                // Caso: El script devolvió un objeto con los datos dentro
+                const keys = Object.keys(cleanData);
+                if (keys.length === 1 && Array.isArray(cleanData[keys[0]])) {
+                    cleanData = cleanData[keys[0]];
+                } else if ('error' in cleanData) {
                     console.error('❌ Error desde el Script de Google Sheets (Posología):', cleanData.error);
+                    return [];
                 } else {
-                    console.error('⚠️ Respuesta inesperada del backend (Posología):', cleanData);
+                    return [];
                 }
-                return [];
             }
+            
+            if (!Array.isArray(cleanData)) return [];
             
             return z.array(VademecumPosologiaSchema.passthrough()).parse(cleanData);
         } catch (error) {

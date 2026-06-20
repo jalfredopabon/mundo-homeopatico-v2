@@ -479,21 +479,23 @@ input[type="search"] {
 
   /* --- 🦶 Footer --- */
   .footer-main {
-    @apply bg-slate-900 py-12 md:py-[72px] px-8 md:px-[72px] mt-auto border-t border-slate-800;
+    @apply bg-surface-white pt-16 mt-auto border-t border-subtle relative overflow-hidden flex flex-col shrink-0;
   }
 
   .footer-logo-box {
-    @apply w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded text-white font-bold tracking-widest transition-all duration-500;
+    @apply w-10 h-10 flex items-center justify-center rounded text-brand font-bold tracking-widest transition-all duration-500;
+    background-color: rgba(0, 77, 64, 0.1);
+    border: 1px solid rgba(0, 77, 64, 0.2);
   }
 
   .group:hover .footer-logo-box {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 77, 64, 0.2);
+    border-color: rgba(0, 77, 64, 0.3);
     transform: scale(1.1);
   }
 
   .footer-title {
-    @apply text-[13px] font-bold text-slate-300 tracking-[0.1em];
+    @apply text-[13px] font-bold text-slate-800 tracking-[0.1em] uppercase;
   }
 
   .footer-text {
@@ -501,7 +503,7 @@ input[type="search"] {
   }
 
   .footer-social-link {
-    @apply w-9 h-9 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:text-white transition-all duration-300;
+    @apply w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-white transition-all duration-300;
   }
 
   .footer-social-link[data-brand="instagram"]:hover {

@@ -34,22 +34,35 @@ try {
 ---
 
 <footer class="footer-main">
-  <div class="max-w-full mx-auto flex flex-col md:flex-row gap-12 items-start justify-between">
+  <!-- Sección Superior: Grid de Enlaces y Contacto -->
+  <div class="max-w-full mx-auto px-8 md:px-[72px] grid grid-cols-1 md:grid-cols-4 gap-12 items-start justify-between relative z-10 w-full pb-16">
 
-    <!-- Branding & Descripción -->
-    <div class="space-y-4 md:w-1/3 group cursor-default">
-      <div class="flex items-center gap-3">
+    <!-- Columna 1: Logo & Descripción -->
+    <div class="space-y-4 group cursor-default">
+      <div class="h-12 flex items-end border-b border-slate-100 pb-3 gap-3">
         <div class="footer-logo-box">MH</div>
-        <h2 class="text-[1.3rem] font-bold text-white tracking-tight group-hover:text-brand transition-colors duration-500">Mundo homeopático</h2>
+        <h2 class="text-[1.3rem] font-bold text-slate-900 tracking-tight group-hover:text-brand transition-colors duration-500 font-serif leading-none">Mundo homeopático</h2>
       </div>
-      <p class="text-[13px] text-slate-400 leading-relaxed font-light md:pr-4 group-hover:text-slate-300 transition-colors duration-500">
+      <p class="text-[13px] text-slate-500 leading-relaxed font-normal md:pr-4 group-hover:text-slate-700 transition-colors duration-500">
         {footerDescripcion}
       </p>
     </div>
 
-    <!-- Redes Sociales -->
-    <div class="space-y-4 flex flex-col md:items-start md:w-1/3">
-      <div class="h-10 flex items-center">
+    <!-- Columna 2: Navegación -->
+    <div class="space-y-4 flex flex-col items-start">
+      <div class="h-12 flex items-end border-b border-slate-100 w-full pb-3">
+        <h3 class="footer-title">Navegación</h3>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="/" class="text-[12px] font-semibold text-slate-500 hover:text-brand transition-colors">Catálogo de productos</a>
+        <a href="/vademecum" class="text-[12px] font-semibold text-slate-500 hover:text-brand transition-colors">Vademécum clínico</a>
+        <a href="/contacto" class="text-[12px] font-semibold text-slate-500 hover:text-brand transition-colors">Sedes y contacto</a>
+      </div>
+    </div>
+
+    <!-- Columna 3: Redes Sociales -->
+    <div class="space-y-4 flex flex-col items-start">
+      <div class="h-12 flex items-end border-b border-slate-100 w-full pb-3">
         <h3 class="footer-title">Síguenos</h3>
       </div>
       <div class="flex items-center justify-start gap-4">
@@ -65,23 +78,40 @@ try {
       </div>
     </div>
 
-    <!-- Copyright & Créditos -->
-    <div class="space-y-3 flex flex-col h-full md:items-end md:text-right md:w-1/3">
-      <div class="h-10 flex items-center">
-        <p class="footer-title font-semibold">&copy; {year} Mundo Homeopático.</p>
+    <!-- Columna 4: Ubicación e Info -->
+    <div class="space-y-4 flex flex-col md:items-start">
+      <div class="h-12 flex items-end border-b border-slate-100 w-full pb-3">
+        <h3 class="footer-title">Ubicación</h3>
       </div>
-      <div class="mt-1 space-y-1">
-        <p class="footer-text">Todos los derechos reservados.</p>
-        <p class="footer-text">Medellín, Colombia</p>
-        <a href={autorLink} target="_blank" rel="noopener noreferrer" class="inline-block footer-text hover:text-white transition-colors group">
-          Creado por <span class="text-slate-300 group-hover:text-brand transition-colors">Alfredo Pabón</span>
+      <div class="space-y-2 text-[12px] text-slate-500 font-medium">
+        <p>Medellín, Colombia</p>
+        <a href={autorLink} target="_blank" rel="noopener noreferrer" class="inline-block hover:text-brand transition-colors group">
+          Creado por <span class="text-slate-800 font-bold group-hover:text-brand transition-colors">Alfredo Pabón</span>
         </a>
       </div>
     </div>
 
   </div>
 
-  <button id="back-to-top" class="btn-back-to-top" aria-label="Volver arriba">
+  <!-- Sección Inferior: Lienzo Botánico con Texto Enmascarado -->
+  <div class="w-full h-[260px] md:h-[340px] relative mt-auto flex items-end justify-center overflow-hidden select-none pointer-events-none">
+    
+    <!-- Imagen de Naturaleza de Fondo -->
+    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[12s] ease-out hover:scale-105" style="background-image: url('/img/img_footer.webp');">
+       <!-- Gradiente: Desvanece desde blanco arriba, transparente en medio, y oscurece con pizarra/negro abajo -->
+       <div class="absolute inset-0 bg-gradient-to-b from-surface-white via-transparent to-slate-950/45"></div>
+    </div>
+
+    <!-- Texto de Marca Gigante Fusionado -->
+    <div class="w-full text-center relative z-10 pb-6 md:pb-10">
+      <h1 class="text-[9vw] font-black text-white leading-none tracking-tight uppercase select-none pointer-events-none drop-shadow-md" style="letter-spacing: -0.03em;">
+        Mundo Homeopático
+      </h1>
+    </div>
+
+  </div>
+
+  <button id="back-to-top" class="btn-back-to-top shadow-md border border-slate-100/50" aria-label="Volver arriba">
     <Icons type="arrow-up" class="w-5 h-5" strokeWidth={2.5} />
   </button>
 </footer>

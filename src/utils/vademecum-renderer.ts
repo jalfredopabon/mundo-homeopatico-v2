@@ -151,7 +151,6 @@ export function createMedicineDetails(medicine: any): string {
             : ''
           }
           ${renderEliteBadge(medicine.category, 'terapia')}
-          ${renderEliteBadge(medicine.type || 'Gotas', 'forma')}
         </div>
       </div>
 

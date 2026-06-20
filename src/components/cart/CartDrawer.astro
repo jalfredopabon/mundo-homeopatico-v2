@@ -353,7 +353,7 @@ import SelectElite from "../shared/SelectElite.astro";
                 const itemSubtotal = item.price * item.quantity;
                 subtotal += itemSubtotal;
 
-                const isExclusive = ['cbd', 'aceites-esenciales', 'alimentos-funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
+                const isExclusive = ['cbd', 'aceites-esenciales', 'aceites_esenciales', 'alimentos-funcionales', 'alimentos_funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
                 if (isExclusive) {
                     discountExclusivosAmount += Math.round(itemSubtotal * pctExclusivos / 100);
                 } else {
@@ -434,7 +434,7 @@ import SelectElite from "../shared/SelectElite.astro";
                 const itemSubtotal = item.price * item.quantity;
                 subtotal += itemSubtotal;
 
-                const isExclusive = ['cbd', 'aceites-esenciales', 'alimentos-funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
+                const isExclusive = ['cbd', 'aceites-esenciales', 'aceites_esenciales', 'alimentos-funcionales', 'alimentos_funcionales'].includes(String(item.tableId || '').toLowerCase().trim());
                 if (isExclusive) {
                     discountExclusivosAmount += Math.round(itemSubtotal * pctExclusivos / 100);
                 } else {

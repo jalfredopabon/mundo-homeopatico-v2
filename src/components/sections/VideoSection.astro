@@ -62,14 +62,6 @@ try {
                     <Icons type="play" class="w-[36px] h-[36px]" />
                 </button>
             </div>
-            <div class="absolute bottom-0 left-0 w-full p-6 sm:p-8 pointer-events-none">
-                <div class="bg-black/30 backdrop-blur-md border border-surface-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 pointer-events-auto">
-                    <div class="flex flex-col gap-1.5">
-                        <p class="text-sm font-bold text-surface-white tracking-widest opacity-90 uppercase">Procesos de calidad premium</p>
-                        <p id="video-descripcion" class="text-surface-white/80 text-xs sm:text-sm max-w-md">{videoDescripcion}</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -114,26 +106,11 @@ try {
                     const dynamicId = getYouTubeId(videoData.url);
                     if (dynamicId) videoId = dynamicId;
                 }
-                
-                if (config && config.video_descripcion) {
-                    const descEl = document.getElementById('video-descripcion');
-                    if (descEl) descEl.textContent = config.video_descripcion;
-                }
+
             } catch (e) {
                 console.warn("No se pudo cargar el video desde Sheets, usando fallback.");
             }
 
-            // Rescatar inyección dinámica de YouTube (Pilar 3: Data-Driven UI)
-            const coverImg = document.getElementById('video-cover-img');
-            if (coverImg && videoId) {
-                const tailwindClasses = coverImg.className;
-                coverImg.outerHTML = `<img 
-                    id="video-cover-img"
-                    src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" 
-                    alt="Portada oficial del video" 
-                    class="${tailwindClasses}"
-                    onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';">`;
-            }
 
             if (playBtn && overlay && iframe) {
                 playBtn.addEventListener('click', () => {

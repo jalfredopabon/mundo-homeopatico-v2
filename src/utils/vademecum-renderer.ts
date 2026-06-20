@@ -80,7 +80,6 @@ export function createMedicalCard(medicine: any): string {
         <div class="flex items-center gap-2 flex-wrap">
           ${renderEliteBadge(medicine.category, 'terapia')}
           ${sistemas.map((s: string) => renderEliteBadge(s, 'sistema')).join('')}
-          ${medicine.type ? renderEliteBadge(medicine.type, 'forma') : ""}
         </div>
       </div>
     </div>
@@ -141,9 +140,6 @@ export function createMedicineDetails(medicine: any): string {
     <div class="animate-content-in medical-sheet-inner" data-sheet-id="${medicine.id}">
       <!-- Encabezado de la Ficha -->
       <div class="mb-8 relative">
-        <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
-          ${ICONS['close-x']}
-        </button>
         <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
           ${ICONS['file-text']}
           Ficha técnica del producto
@@ -187,54 +183,44 @@ export function createMedicineDetails(medicine: any): string {
             ${formatList(medicine.activeIngredients || '').map(text => `
               <li class="medical-list-item">
                 <span class="vademecum-bullet-dot"></span>
-                <div class="flex-1">${text}</div>
+                <div class="flex-1 cursor-pointer text-brand-dark font-medium underline decoration-brand/30 hover:decoration-brand transition-all js-composition-search-btn" data-ingredient="${text.trim()}">${text}</div>
               </li>
             `).join('')}
           </ul>
+          <div class="mt-4 pt-3 border-t border-slate-100/50">
+            <button class="inline-flex items-center justify-center gap-2 text-brand hover:text-brand-dark font-bold text-xs underline decoration-brand/30 hover:decoration-brand transition-all cursor-pointer js-ficha-principios-btn border-0 bg-transparent p-0">
+              ${ICONS['mortero']}
+              Ver equivalencias de principios activos
+            </button>
+          </div>
         </div>
 
         <!-- Presentación y dosificación -->
         <div class="medical-section-container">
           <h4 class="medical-section-title">
             ${ICONS['pill']}
-            Presentación y dosificación
+            Formas farmacéuticas
           </h4>
           <div class="space-y-5 pl-7 mt-3">
-            <div>
-              <h5 class="text-[12px] font-bold text-slate-700 mb-2">Presentación y posología</h5>
-              <ul class="space-y-2">
-                ${posologia.map(text => `
+            <ul class="space-y-2">
+              ${formatList(medicine.presentations || '').map(text => {
+                const cleanText = text.trim();
+                const isStock = cleanText.endsWith('*');
+                const displayText = isStock ? cleanText.slice(0, -1).trim() : cleanText;
+                return `
                   <li class="medical-list-item">
                     <span class="vademecum-bullet-dot"></span>
-                    <div class="flex-1">${text}</div>
+                    <div class="flex-1 flex items-center gap-2">
+                      <span>${displayText}</span>
+                      ${isStock 
+                        ? `<span class="badge-elite badge-elite--slate px-1.5 py-0.5 text-[9px]" style="font-weight: 400 !important; text-transform: none !important;">Stock permanente</span>` 
+                        : `<span class="badge-elite badge-elite--amber px-1.5 py-0.5 text-[9px]" style="font-weight: 400 !important; text-transform: none !important;">Bajo pedido</span>`
+                      }
+                    </div>
                   </li>
-                `).join('')}
-                ${isSuggested ? `
-                  <li class="mt-2 text-[10px] italic text-slate-400 flex items-center gap-1">
-                    <span>* Posología estándar para esta forma farmacéutica.</span>
-                  </li>
-                ` : ''}
-              </ul>
-            </div>
-            <div>
-              <h5 class="text-[12px] font-bold text-slate-700 mb-2">Forma farmacéutica</h5>
-              <ul class="space-y-2">
-                ${formatList(medicine.presentations || '').map(text => {
-                  const cleanText = text.trim();
-                  const isStock = cleanText.endsWith('*');
-                  const displayText = isStock ? cleanText.slice(0, -1).trim() : cleanText;
-                  return `
-                    <li class="medical-list-item">
-                      <span class="vademecum-bullet-dot"></span>
-                      <div class="flex-1 flex items-center gap-2">
-                        <span>${displayText}</span>
-                        ${isStock ? `<span class="badge-elite badge-elite--emerald px-1.5 py-0.5 text-[9px]" style="font-weight: 400 !important; text-transform: none !important;">Stock permanente</span>` : ''}
-                      </div>
-                    </li>
-                  `;
-                }).join('')}
-              </ul>
-            </div>
+                `;
+              }).join('')}
+            </ul>
             <!-- Botón de consulta rápida de posologías generales -->
             <div class="w-full border-t border-slate-100 mt-5 pt-4 text-center">
               <button class="inline-flex items-center justify-center gap-2 text-brand hover:text-brand-dark font-bold text-xs underline decoration-brand/30 hover:decoration-brand transition-all cursor-pointer js-ficha-posologia-btn border-0 bg-transparent p-0">
@@ -267,9 +253,6 @@ export function createProtocolDetails(protocol: any): string {
   return `
     <div class="animate-content-in medical-sheet-inner" data-sheet-id="${protocol.id}">
       <div class="mb-8 relative">
-        <button class="close-ficha-btn lg:hidden absolute top-0 right-0 p-2 text-slate-400 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-100 transition-all">
-          ${ICONS['close-x']}
-        </button>
         <div class="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-2 tracking-widest">
           ${ICONS['task-list']}
           Guía de protocolo clínico

@@ -756,6 +756,11 @@ input[type="search"] {
     color: #f97316;
     border-color: #f97316;
   }
+  .badge-elite--amber { 
+    background-color: color-mix(in srgb, #d97706 8%, transparent);
+    color: #d97706;
+    border-color: #d97706;
+  }
   .badge-elite--emerald { 
     background-color: color-mix(in srgb, #10b981 8%, transparent);
     color: #10b981;
@@ -767,7 +772,9 @@ input[type="search"] {
     border-color: var(--primary);
   }
   .badge-elite--slate {
-    @apply text-slate-500 border-slate-200;
+    background-color: color-mix(in srgb, #475569 8%, transparent);
+    color: #475569;
+    border-color: #475569;
   }
 
 

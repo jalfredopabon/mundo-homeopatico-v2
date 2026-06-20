@@ -17,7 +17,7 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
   <!-- Header del Drawer -->
   <div class="h-16 flex items-center justify-between px-6 border-b border-subtle shrink-0">
     <span class="text-body font-bold tracking-tight text-[16px]">{drawerTitle}</span>
-    <button id="close-mobile-menu" class="p-2 text-muted hover:text-body active:bg-surface-muted rounded-full transition-all" aria-label="Cerrar menú">
+    <button id="close-mobile-menu" class="w-12 h-12 flex items-center justify-center text-slate-600 hover:text-slate-900 active:bg-surface-muted rounded-full transition-all" aria-label="Cerrar menú">
       <Icons type="close-x" class="w-6 h-6" />
     </button>
   </div>
@@ -179,22 +179,10 @@ const drawerTitle = isContacto ? 'Sedes y contacto' : (isVademecum ? 'Vademécum
 
   <!-- Footer del Drawer -->
   <div class="p-6 bg-surface-muted/30">
-    {isVademecum ? (
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white font-bold text-[11px] shrink-0">
-          AL
-        </div>
-        <div class="flex flex-col">
-          <span class="text-[10px] text-slate-500 font-bold tracking-tight leading-none mb-1">Hola</span>
-          <span class="text-xs font-bold text-body leading-none">Alfredo Pabón</span>
-        </div>
-      </div>
-    ) : (
-      <div class="flex items-center gap-3">
-          <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs shrink-0">MH</div>
-          <span class="text-xs font-bold text-body">Mundo homeopático</span>
-      </div>
-    )}
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-brand/10 rounded flex items-center justify-center text-brand font-bold text-xs shrink-0">MH</div>
+        <span class="text-xs font-bold text-body">Mundo homeopático</span>
+    </div>
   </div>
 </div>
 

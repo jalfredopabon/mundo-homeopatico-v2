@@ -1,0 +1,168 @@
+---
+// src/components/vademecum/PrincipiosModal.astro
+import Icons from "../shared/Icons.astro";
+---
+
+<div id="principios-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 animate-fade-in" role="dialog" aria-modal="true">
+    <!-- Backdrop de Vidrio -->
+    <div id="principios-modal-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- Contenedor del Modal -->
+    <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[85vh] overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out" id="principios-modal-container">
+        
+        <!-- Cabecera -->
+        <header class="p-6 pb-4 border-b border-slate-100 flex items-start justify-between">
+            <div class="space-y-1 pr-6">
+                <div class="flex items-center gap-2.5 text-[10px] font-bold text-brand tracking-wider">
+                    <Icons type="task-list" class="w-3.5 h-3.5 text-brand" />
+                    Guía de referencia rápida
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Principios Activos</h3>
+                <p class="text-xs text-slate-500">Listado de principios activos y los medicamentos que los contienen.</p>
+            </div>
+            <button id="close-principios-modal-btn" class="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-100 transition-all active:scale-95 cursor-pointer">
+                <Icons type="close-x" class="w-4 h-4" />
+            </button>
+        </header>
+
+        <!-- Barra de Búsqueda Interna -->
+        <div class="px-6 py-3 bg-slate-50/50 border-b border-slate-100">
+            <div class="relative group">
+                <div class="absolute left-3.5 top-0 h-full flex items-center justify-center text-slate-400 group-focus-within:text-brand transition-colors">
+                    <Icons type="search" class="w-4 h-4" />
+                </div>
+                <input 
+                    type="text" 
+                    id="principios-modal-search" 
+                    placeholder="Buscar por principio activo o medicamento (ej: Adonis, Cactus)..." 
+                    class="w-full h-10 pl-10 pr-4 bg-white border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all shadow-sm"
+                />
+            </div>
+        </div>
+
+        <!-- Cuerpo / Tabla -->
+        <div class="flex-1 overflow-y-auto p-6 scrollbar-premium">
+            <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+                <table class="w-full border-collapse text-left text-sm text-slate-500">
+                    <thead class="bg-slate-50 text-[11px] font-bold tracking-wider text-slate-700 border-b border-slate-200">
+                        <tr>
+                            <th scope="col" class="px-5 py-3.5 font-bold w-1/3">Principio activo</th>
+                            <th scope="col" class="px-5 py-3.5 font-bold">Medicamento(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200" id="principios-modal-table-body">
+                        <!-- Las filas se inyectan dinámicamente -->
+                        <tr id="principios-modal-loading-row">
+                            <td colspan="2" class="px-5 py-8 text-center text-slate-400 italic">
+                                Cargando principios activos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Estado Vacío del Buscador -->
+            <div id="principios-modal-empty" class="hidden py-10 text-center text-slate-400">
+                No se encontraron principios activos que coincidan con la búsqueda.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let _principiosData: any[] = [];
+
+    function openModal() {
+        const modal = document.getElementById('principios-modal');
+        const container = document.getElementById('principios-modal-container');
+        if (!modal || !container) return;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Retrasar ligeramente la animación para que se active correctamente
+        requestAnimationFrame(() => {
+            container.classList.remove('scale-95', 'opacity-0');
+            container.classList.add('scale-100', 'opacity-100');
+        });
+        
+        document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
+        
+        // Focus en el buscador del modal
+        const searchInput = document.getElementById('principios-modal-search') as HTMLInputElement;
+        if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+        }
+        renderTable(_principiosData);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('principios-modal');
+        const container = document.getElementById('principios-modal-container');
+        if (!modal || !container) return;
+
+        container.classList.remove('scale-100', 'opacity-100');
+        container.classList.add('scale-95', 'opacity-0');
+
+        // Esperar a que termine la animación
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // Restaurar scroll
+        }, 200);
+    }
+
+    function renderTable(data: any[], filter: string = '') {
+        const tbody = document.getElementById('principios-modal-table-body');
+        const emptyState = document.getElementById('principios-modal-empty');
+        if (!tbody || !emptyState) return;
+
+        const query = filter.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+        const filtered = data.filter(item => {
+            const principio = (item.principio_activo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            const medicamentos = (item.medicamentos || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            return !query || principio.includes(query) || medicamentos.includes(query);
+        });
+
+        if (filtered.length === 0) {
+            tbody.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+        } else {
+            tbody.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = filtered.map(item => `
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                    <td class="px-5 py-3.5 font-bold text-slate-900">${item.principio_activo}</td>
+                    <td class="px-5 py-3.5 text-slate-700 leading-relaxed">${item.medicamentos}</td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    // Inicializar listeners
+    document.addEventListener('astro:page-load', () => {
+        const closeBtn = document.getElementById('close-principios-modal-btn');
+        const backdrop = document.getElementById('principios-modal-backdrop');
+        const searchInput = document.getElementById('principios-modal-search') as HTMLInputElement;
+
+        closeBtn?.addEventListener('click', closeModal);
+        backdrop?.addEventListener('click', closeModal);
+
+        searchInput?.addEventListener('input', () => {
+            renderTable(_principiosData, searchInput.value);
+        });
+
+        // Escuchar el evento global para abrir el modal
+        window.addEventListener('vademecum:open-principios-modal', (e: any) => {
+            _principiosData = e.detail?.principios || [];
+            openModal();
+        });
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    });
+</script>

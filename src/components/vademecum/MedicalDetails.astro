@@ -14,7 +14,7 @@ import Icons from '../shared/Icons.astro';
     class="medical-aside"
 >
     <!-- Botón de cierre móvil unificado -->
-    <button id="close-mobile-details" class="close-ficha-btn lg:hidden absolute top-4 right-4 z-50 p-2 text-slate-400 hover:text-brand bg-white rounded-full shadow-lg border border-slate-100 transition-all">
+    <button id="close-mobile-details" class="close-ficha-btn lg:hidden absolute top-4 right-4 z-50 w-12 h-12 flex items-center justify-center p-0 text-slate-600 hover:text-brand bg-white rounded-full shadow-lg border border-slate-100 transition-all">
         <Icons type="close-x" class="w-5 h-5" />
     </button>
 
@@ -118,12 +118,27 @@ import Icons from '../shared/Icons.astro';
                 return;
             }
 
+            const principiosBtn = (e.target as HTMLElement).closest('.js-ficha-principios-btn');
+            if (principiosBtn) {
+                window.dispatchEvent(new CustomEvent('vademecum:request-principios-modal'));
+                return;
+            }
+
             const jumpLink = (e.target as HTMLElement).closest('.master-jump-link');
             if (jumpLink) {
                 const targetId = jumpLink.getAttribute('data-jump-to');
                 // Emitimos evento de búsqueda de producto para que el controlador principal lo encuentre
                 window.dispatchEvent(new CustomEvent('vademecum:request-jump', { 
                     detail: { id: targetId } 
+                }));
+                return;
+            }
+
+            const compositionBtn = (e.target as HTMLElement).closest('.js-composition-search-btn');
+            if (compositionBtn) {
+                const ingredient = compositionBtn.getAttribute('data-ingredient');
+                window.dispatchEvent(new CustomEvent('vademecum:request-composition-search', {
+                    detail: { query: ingredient }
                 }));
             }
         });

@@ -19,7 +19,7 @@ export interface FilterMetadata {
 /**
  * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
  */
-const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbyXL-XjAW_vX8aSA2gSN_HTQFJVePSdEDvPadlLumBZ5Oa0ozJBmSDCf4oogzTXIcpp/exec';
+const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbzdBE7gACgT67iJkrw_UOxQGiiRl9udwYC6uQcpeE9xHzteNdbZX_c6OL7grNvIg5zn/exec';
 
 /**
  * TOKEN DE SEGURIDAD (Protocolo Fort Knox)
@@ -409,6 +409,60 @@ export const VademecumPosologiaSchema = z.object({
 });
 
 export type VademecumPosologia = z.infer<typeof VademecumPosologiaSchema>;
+
+// --- ESQUEMA PARA PRINCIPIOS ACTIVOS ---
+export const VademecumPrincipioSchema = z.object({
+    principio_activo: z.string(),
+    medicamentos: z.string(),
+});
+
+export type VademecumPrincipio = z.infer<typeof VademecumPrincipioSchema>;
+
+/**
+ * Obtiene los principios activos desde Google Sheets con soporte SWR
+ */
+export async function getVademecumPrincipios(): Promise<VademecumPrincipio[]> {
+    if (typeof window !== 'undefined') {
+        try {
+            const cached = localStorage.getItem('vd_principios');
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                if (!Array.isArray(parsed) || parsed.length === 0) {
+                    localStorage.removeItem('vd_principios');
+                }
+            }
+        } catch (_) {
+            localStorage.removeItem('vd_principios');
+        }
+    }
+
+    return fetchWithSWR('vd_principios', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=principios&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            let cleanData = normalizeKeys(rawData);
+            
+            if (cleanData && typeof cleanData === 'object' && !Array.isArray(cleanData)) {
+                const keys = Object.keys(cleanData);
+                if (keys.length === 1 && Array.isArray(cleanData[keys[0]])) {
+                    cleanData = cleanData[keys[0]];
+                } else if ('error' in cleanData) {
+                    console.error('❌ Error desde el Script de Google Sheets (Principios):', cleanData.error);
+                    return [];
+                } else {
+                    return [];
+                }
+            }
+            
+            if (!Array.isArray(cleanData)) return [];
+            
+            return z.array(VademecumPrincipioSchema.passthrough()).parse(cleanData);
+        } catch (error) {
+            console.error('API Error (Principios):', error);
+            return [];
+        }
+    });
+}
 
 /**
  * Obtiene las Posologías estándar desde Google Sheets con soporte SWR

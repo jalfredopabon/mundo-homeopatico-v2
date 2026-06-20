@@ -67,27 +67,21 @@ const {
         </section>
     </div>
 
-    <!-- Contenedor Inferior: Identidad del Profesional (Hito: Reubicación de Saludo) -->
-    <div class="px-4 py-4 mt-auto bg-surface-muted/50 border-t border-subtle">
-        <div class="flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-white hover:shadow-sm group">
-            <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white ring-1 ring-white/20 shadow-sm transition-transform group-hover:scale-105 overflow-hidden">
-                <span id="sidebar-user-initials" class="text-[12px] font-bold tracking-tighter">IN</span>
-            </div>
-            <div class="flex flex-col min-w-0 flex-1">
-                <span class="text-[10px] text-slate-500 font-bold leading-none mb-1 tracking-tight">Hola</span>
-                <span id="sidebar-user-name" class="text-[13px] font-bold text-slate-900 leading-none truncate group-hover:text-brand transition-colors">
-                    Invitado
-                </span>
-            </div>
-            <!-- Botón Logout -->
-            <button 
-                id="sidebar-logout-btn" 
-                class="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all active:scale-95"
-                title="Cerrar sesión"
-            >
-                <Icons type="logout" class="w-4 h-4" />
-            </button>
-        </div>
+    <!-- Contenedor Inferior: Identidad del Profesional Simplificado -->
+    <div class="px-5 py-4 mt-auto border-t border-subtle flex items-center justify-between text-[12px] text-slate-500 bg-surface-white">
+        <span class="truncate pr-2 font-medium">
+            Sesión: <span id="sidebar-user-name" class="text-slate-900 font-bold">Invitado</span>
+            <span id="sidebar-user-initials" class="hidden">IN</span>
+        </span>
+        <!-- Botón Logout -->
+        <button 
+            id="sidebar-logout-btn" 
+            class="flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all active:scale-95 cursor-pointer font-semibold shrink-0"
+            title="Cerrar sesión"
+        >
+            <Icons type="logout" class="w-4 h-4" />
+            <span>Salir</span>
+        </button>
     </div>
 </aside>
 

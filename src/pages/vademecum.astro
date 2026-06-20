@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SidebarVademecum from '../components/vademecum/SidebarVademecum.astro';
 import AuthModal from '../components/shared/AuthModal.astro';
 import PosologiaModal from '../components/vademecum/PosologiaModal.astro';
+import PrincipiosModal from '../components/vademecum/PrincipiosModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 import Icons from '../components/shared/Icons.astro';
 import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
@@ -18,6 +19,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     
     <AuthModal />
     <PosologiaModal />
+    <PrincipiosModal />
 
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden" id="vademecum-page-container" data-view="products">
         
@@ -47,10 +49,20 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                     <!-- Inyectado dinámicamente -->
                 </div>
 
-                <!-- Contador de Resultados (ADN Clon Catálogo Elite) -->
-                <div class="mb-8 flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm reveal active min-h-[32px]">
-                    <Icons type="mortero" class="w-3.5 h-3.5 text-slate-500" />
-                    <span id="results-counter">Verificando credenciales...</span>
+                <!-- Contador de Resultados (ADN Clon Catálogo Elite) y Quitar filtros -->
+                <div class="mb-8 flex flex-wrap items-center gap-3 reveal active">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-white border border-subtle rounded-md text-[11px] font-bold text-slate-700 w-fit shadow-sm min-h-[32px]">
+                        <Icons type="mortero" class="w-3.5 h-3.5 text-slate-500" />
+                        <span id="results-counter">Verificando credenciales...</span>
+                    </div>
+                    
+                    <button 
+                        id="global-clear-filters-btn" 
+                        class="hidden items-center gap-1.5 py-1 px-3 bg-red-50 hover:bg-red-100/80 active:scale-95 text-red-600 border border-red-200 hover:border-red-300 font-bold text-[10px] rounded-lg transition-all cursor-pointer shadow-sm animate-fade-in"
+                    >
+                        <Icons type="close-x" class="w-3 h-3 text-red-500" />
+                        Quitar filtros
+                    </button>
                 </div>
 
                 <!-- LISTADO DINÁMICO (VACÍO AL INICIO) -->
@@ -94,7 +106,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 </BaseLayout>
 
 <script>
-    import { getVademecumMaestro, getVademecumProtocolos, getVademecumPosologia } from '../data/api';
+    import { getVademecumMaestro, getVademecumProtocolos, getVademecumPosologia, getVademecumPrincipios } from '../data/api';
     import { createMedicalCard, createProtocolCard, setStandardPosologiaMap } from '../utils/vademecum-renderer';
     import { sanitizeInput } from '../utils/security';
 
@@ -102,6 +114,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     let _allMeds: any[] = [];
     let _allProtocols: any[] = [];
     let _allPosologias: any[] = [];
+    let _allPrincipios: any[] = [];
     let _currentView: 'products' | 'protocols' = 'products';
     let _currentPage = 1;
     const ITEMS_PER_PAGE = 12;
@@ -159,6 +172,13 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 setStandardPosologiaMap(_allPosologias);
             } catch (err) {
                 console.error("Error al cargar posologías estándar:", err);
+            }
+
+            // 0.5. CARGA PRINCIPIOS ACTIVOS
+            try {
+                _allPrincipios = await getVademecumPrincipios();
+            } catch (err) {
+                console.error("Error al cargar principios activos:", err);
             }
 
             // 1. CARGA MAESTRO (Prioridad Alta + Metadatos)
@@ -267,6 +287,21 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         });
     }
 
+    function getBaseForm(presentation: string, baseForms: string[]): string {
+        const cleanPres = presentation.trim().toLowerCase().replace(/\*$/, '');
+        // Ordenar formas base de mayor a menor longitud para evitar coincidencias parciales erróneas
+        const sortedBases = [...baseForms].sort((a, b) => b.length - a.length);
+        for (const base of sortedBases) {
+            const cleanBase = base.toLowerCase().trim();
+            if (cleanPres.startsWith(cleanBase) || cleanPres.includes(cleanBase)) {
+                return base;
+            }
+        }
+        // Fallback: capitalizar primera palabra
+        const firstWord = presentation.split(/[\s:x]/)[0].trim().replace(/\*$/, '');
+        return firstWord.charAt(0).toUpperCase() + firstWord.slice(1).toLowerCase();
+    }
+
     function renderSidebarFilters(metadata: any) {
         if (metadata.terapias) {
             const container = document.getElementById('filter-terapia-list');
@@ -274,7 +309,11 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         }
         if (metadata.formas) {
             const container = document.getElementById('filter-forma-list');
-            if (container) container.innerHTML = metadata.formas.map((f: string) => createFilterMarkup('forma', f, 'accent-orange-500')).join('');
+            if (container) {
+                const baseFormsList = _allPosologias.map(p => p.forma_farmaceutica.trim());
+                const cleanFormas = [...new Set(metadata.formas.map((f: string) => getBaseForm(f, baseFormsList)))].sort();
+                container.innerHTML = cleanFormas.map((f: string) => createFilterMarkup('forma', f, 'accent-orange-500')).join('');
+            }
         }
         if (metadata.sistemas) {
             const container = document.getElementById('filter-sistema-list');
@@ -302,16 +341,25 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         
         const source = _currentView === 'products' ? _allMeds : _allProtocols;
 
-        const filtered = source.filter(item => {
+        let filtered = source.filter(item => {
             const itemNorm = item.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
             const searchNorm = searchTerm.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-            const matchesSearch = !searchTerm || itemNorm.includes(searchNorm);
+            
+            let matchesSearch = !searchTerm || itemNorm.includes(searchNorm);
+            if (!matchesSearch && _currentView === 'products' && item.activeIngredients) {
+                const compNorm = item.activeIngredients.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                matchesSearch = compNorm.includes(searchNorm);
+            }
             
             if (_currentView === 'products') {
                 const f = _filtersProducts as any;
                 const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
-                const itemFormas = (item.presentations || '').split(';').map((p: string) => p.trim().replace(/\*$/, ''));
-                const matchesForma = f.formas.length === 0 || f.formas.some((selectedForma: string) => itemFormas.includes(selectedForma));
+                
+                const baseFormsList = _allPosologias.map(p => p.forma_farmaceutica.trim());
+                const itemFormasRaw = (item.presentations || '').split(';').map((p: string) => p.trim().replace(/\*$/, ''));
+                const itemFormasBase = itemFormasRaw.map((p: string) => getBaseForm(p, baseFormsList));
+                const matchesForma = f.formas.length === 0 || f.formas.some((selectedForma: string) => itemFormasBase.includes(selectedForma));
+                
                 const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
                 
                 // Normalizar primera letra del nombre para soportar tildes
@@ -329,6 +377,59 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 return matchesSearch && matchesSistema && matchesLetter;
             }
         });
+
+        // 🛡️ Prevenir Callejón sin Salida:
+        // Si hay una búsqueda de texto activa, pero el listado da 0 resultados,
+        // evaluamos si quitando la búsqueda de texto SÍ habría resultados con los filtros actuales de sidebar/abecedario.
+        if (filtered.length === 0 && searchTerm) {
+            const wouldHaveResults = source.some(item => {
+                if (_currentView === 'products') {
+                    const f = _filtersProducts as any;
+                    const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
+                    const baseFormsList = _allPosologias.map(p => p.forma_farmaceutica.trim());
+                    const itemFormasRaw = (item.presentations || '').split(';').map((p: string) => p.trim().replace(/\*$/, ''));
+                    const itemFormasBase = itemFormasRaw.map((p: string) => getBaseForm(p, baseFormsList));
+                    const matchesForma = f.formas.length === 0 || f.formas.some((selectedForma: string) => itemFormasBase.includes(selectedForma));
+                    const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
+                    const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                    const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                    return matchesTerapia && matchesForma && matchesSistema && matchesLetter;
+                } else {
+                    const matchesSistema = _filterSistemas.length === 0 || _filterSistemas.includes(item.system);
+                    const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                    const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                    return matchesSistema && matchesLetter;
+                }
+            });
+
+            if (wouldHaveResults) {
+                // Limpiamos la búsqueda de texto para mostrar las tarjetas filtradas por sidebar
+                activeFilters.search = '';
+                const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
+                if (searchInput) searchInput.value = '';
+                
+                // Volver a calcular filtrado fresco sin search
+                filtered = source.filter(item => {
+                    if (_currentView === 'products') {
+                        const f = _filtersProducts as any;
+                        const matchesTerapia = f.terapias.length === 0 || f.terapias.includes(item.category);
+                        const baseFormsList = _allPosologias.map(p => p.forma_farmaceutica.trim());
+                        const itemFormasRaw = (item.presentations || '').split(';').map((p: string) => p.trim().replace(/\*$/, ''));
+                        const itemFormasBase = itemFormasRaw.map((p: string) => getBaseForm(p, baseFormsList));
+                        const matchesForma = f.formas.length === 0 || f.formas.some((selectedForma: string) => itemFormasBase.includes(selectedForma));
+                        const matchesSistema = _filterSistemas.length === 0 || (item.tags?.sistema || []).some((s: string) => _filterSistemas.includes(s));
+                        const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                        const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                        return matchesTerapia && matchesForma && matchesSistema && matchesLetter;
+                    } else {
+                        const matchesSistema = _filterSistemas.length === 0 || _filterSistemas.includes(item.system);
+                        const firstChar = item.name.trim().charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                        const matchesLetter = !_selectedLetter || firstChar === _selectedLetter;
+                        return matchesSistema && matchesLetter;
+                    }
+                });
+            }
+        }
 
         renderList(filtered);
     }
@@ -385,6 +486,30 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
         if (counter) counter.innerText = `${totalItems} ${_currentView === 'products' ? 'medicamentos' : 'protocolos'} encontrados`;
         if (emptyState) emptyState.classList.toggle('hidden', totalItems > 0);
         if (nav) nav.style.display = totalItems > 0 ? 'flex' : 'none';
+
+        // Mostrar u ocultar el botón global de limpiar filtros de forma condicional
+        const globalClearBtn = document.getElementById('global-clear-filters-btn');
+        if (globalClearBtn) {
+            const hasActiveFilters = 
+                (_currentView === 'products' && (
+                    _filtersProducts.search || 
+                    _filtersProducts.terapias.length > 0 || 
+                    _filtersProducts.formas.length > 0
+                )) ||
+                (_currentView === 'protocols' && (
+                    _filtersProtocols.search
+                )) ||
+                _filterSistemas.length > 0 ||
+                _selectedLetter !== null;
+            
+            if (hasActiveFilters) {
+                globalClearBtn.classList.remove('hidden');
+                globalClearBtn.classList.add('inline-flex');
+            } else {
+                globalClearBtn.classList.add('hidden');
+                globalClearBtn.classList.remove('inline-flex');
+            }
+        }
 
         renderPaginationControls(totalPages);
 
@@ -746,6 +871,24 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             applyFiltersAndRender();
         });
 
+        // Botón condicional de Quitar Filtros al lado del contador
+        const globalClearBtn = document.getElementById('global-clear-filters-btn');
+        globalClearBtn?.addEventListener('click', () => {
+            _filtersProducts = { search: '', terapias: [], formas: [] };
+            _filtersProtocols = { search: '' };
+            _filterSistemas = [];
+            _selectedLetter = null;
+            
+            // Limpiar buscador visual
+            const searchInput = document.getElementById('vademecum-search') as HTMLInputElement;
+            if (searchInput) searchInput.value = '';
+
+            syncFilterUI();
+            renderAlphabetBar();
+            _currentPage = 1;
+            applyFiltersAndRender();
+        });
+
         // Switcher de Vistas
         window.addEventListener('vademecum:view-change', (e: any) => {
             _currentView = e.detail.view;
@@ -828,10 +971,57 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
             }
         });
 
+        // MANEJADOR DE BÚSQUEDA POR COMPOSICIÓN (Principios Activos)
+        window.addEventListener('vademecum:request-composition-search', (e: any) => {
+            let query = e.detail.query || '';
+            
+            // Limpiar potencias/diluciones comunes para buscar el compuesto base (ej: "Acidum citricum D8" -> "Acidum citricum")
+            let cleanQuery = query.replace(/\b(D\d+|CH\d+|\d+CH|\d+D|\d+ch|d\d+|CH|D)\b/gi, '').trim();
+            if (cleanQuery.length < 3) cleanQuery = query;
+
+            // Forzar vista de productos si estamos en protocolos
+            if (_currentView !== 'products') {
+                _currentView = 'products';
+                window.dispatchEvent(new CustomEvent('vademecum:view-change', { detail: { view: 'products' } }));
+            }
+
+            // Cambiar el buscador central
+            if (searchInput) {
+                searchInput.value = cleanQuery;
+            }
+            
+            _filtersProducts.search = cleanQuery;
+            _selectedLetter = null; // Limpiar filtro A-Z
+            _currentPage = 1;
+
+            // Limpiar otros filtros para que no restrinjan
+            _filtersProducts.terapias = [];
+            _filtersProducts.formas = [];
+            _filterSistemas = [];
+            
+            syncFilterUI();
+            renderAlphabetBar();
+            applyFiltersAndRender();
+        });
+
         // Escuchar solicitud para abrir modal de posologías
         window.addEventListener('vademecum:request-posologia-modal', () => {
             window.dispatchEvent(new CustomEvent('vademecum:open-posologia-modal', {
                 detail: { posologia: _allPosologias }
+            }));
+        });
+
+        // Escuchar solicitud para abrir modal de principios activos
+        window.addEventListener('vademecum:request-principios-modal', async () => {
+            if (!_allPrincipios || _allPrincipios.length === 0) {
+                try {
+                    _allPrincipios = await getVademecumPrincipios();
+                } catch (err) {
+                    console.error("Error al recargar principios activos en caliente:", err);
+                }
+            }
+            window.dispatchEvent(new CustomEvent('vademecum:open-principios-modal', {
+                detail: { principios: _allPrincipios }
             }));
         });
     }

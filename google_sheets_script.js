@@ -47,6 +47,7 @@ function doGet(e) {
     case 'descuentos':     sheetName = 'descuentos';           break;
     case 'posologia':      sheetName = 'vademecum_posologia';  break;
     case 'principios':     sheetName = 'vademecum_principios'; break;
+    case 'vademecum_importados': sheetName = 'vademecum_importados'; break;
     default: return buildResponse({ error: 'Acción no válida: ' + action });
   }
 
@@ -179,6 +180,7 @@ function validateAccess(usuario, contrasena) {
   const colUsuario    = headers.indexOf('usuario');
   const colContrasena = headers.indexOf('contrasena');
   const colNombre     = headers.indexOf('nombre_usuario');
+  const colImportados = headers.indexOf('productos_importados');
 
   if (colUsuario === -1 || colContrasena === -1) {
     throw new Error("Columnas 'usuario' o 'contrasena' no encontradas en la hoja 'accesos'.");
@@ -191,9 +193,12 @@ function validateAccess(usuario, contrasena) {
   );
 
   if (match) {
+    const rawVal = colImportados !== -1 ? match[colImportados].toString().trim().toUpperCase() : 'FALSO';
+    const isVip = rawVal === 'VERDADERO' || rawVal === 'TRUE' || rawVal === '1';
     return buildResponse({
       ok: true,
-      nombre_usuario: colNombre !== -1 ? match[colNombre].toString().trim() : usuario
+      nombre_usuario: colNombre !== -1 ? match[colNombre].toString().trim() : usuario,
+      productos_importados: isVip
     });
   }
 

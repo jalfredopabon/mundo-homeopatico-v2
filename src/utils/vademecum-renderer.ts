@@ -189,7 +189,7 @@ export function createMedicineDetails(medicine: any): string {
           <div class="mt-4 pt-3 border-t border-slate-100/50">
             <button class="inline-flex items-center justify-center gap-2 text-brand hover:text-brand-dark font-bold text-xs underline decoration-brand/30 hover:decoration-brand transition-all cursor-pointer js-ficha-principios-btn border-0 bg-transparent p-0">
               ${ICONS['mortero']}
-              Ver equivalencias de principios activos
+              Ver guía de principios activos
             </button>
           </div>
         </div>

@@ -192,3 +192,13 @@
 - **Inversión de Jerarquía Sidebar:** Ajuste de tokens de color en `sidebar-renderer.ts` para invertir el peso visual entre Nivel 1 y Nivel 2, alineándose con el nuevo criterio estético de navegación.
 - **Reestructuración del Libro Vademécum:** Reescritura desde cero de `generar_libro_vademecum.py` para normalizar el mapeo de columnas del CSV actual (`composicion`, `indicaciones_terapeuticas`, `presentacion_posologia`, `forma_farmaceutica` y `tipo_terapia`), rediseñar la portada en formato limpio tipográfico sin logos, y forzar que las tarjetas de medicamentos y protocolos clínicos sean totalmente planas (sin sombras ni movimientos) para una impresión editorial PDF A4 impecable.
 
+## [2026-06-21] Hito: Módulo Exclusivo de Productos Importados en Vademécum
+
+### Hitos Técnicos Logrados
+1. **Seguridad y Control de Acceso Invisible:** Modificación del backend en `google_sheets_script.js` y `api.ts` para leer la columna `productos_importados` en la hoja `accesos`. El flag se inyecta en la sesión (`mh_session`) y se remite al frontend tras un login correcto.
+2. **Nomenclatura y Almacenamiento Local:** Integración de la hoja de cálculo `vademecum_importados` y su correspondiente archivo local `productos_importados.txt` en `carpeta_temporal_tablas`.
+3. **Modal Premium de Precios VIP (`ImportadosModal.astro`):** Maquetación de un modal superpuesto de estética premium con desenfoque de fondo y tabla interactiva de precios, con soporte para buscador integrado y badges variables por fila.
+4. **Flujo de Carrito Nativo:** Integración del botón de compra en la tabla del modal que dispara eventos `addToCart` nativos, permitiendo a los médicos VIP solicitar estos productos directamente a través del carrito de compras a WhatsApp.
+5. **Acceso UI Condicional:** Implementación de un botón `"💎 Importados"` situado junto al switcher de modo en `vademecum.astro`, el cual permanece completamente oculto para médicos ordinarios y solo se revela para cuentas VIP autorizadas.
+
+

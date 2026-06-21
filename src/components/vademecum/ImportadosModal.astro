@@ -1,0 +1,261 @@
+---
+// src/components/vademecum/ImportadosModal.astro
+import Icons from "../shared/Icons.astro";
+---
+
+<div id="importados-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 animate-fade-in" role="dialog" aria-modal="true">
+    <!-- Backdrop de Vidrio -->
+    <div id="importados-modal-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- Contenedor del Modal -->
+    <div class="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[85vh] overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out" id="importados-modal-container">
+        
+        <!-- Cabecera -->
+        <header class="p-6 pb-4 border-b border-slate-100 flex items-start justify-between">
+            <div class="space-y-1 pr-6">
+                <div class="flex items-center gap-2.5 text-[10px] font-bold text-brand tracking-wider uppercase">
+                    <Icons type="mortero" class="w-3.5 h-3.5 text-brand" />
+                    Listado Exclusivo
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Productos Importados</h3>
+                <p class="text-xs text-slate-500">Lista de precios de productos premium importados.</p>
+            </div>
+            <button id="close-importados-modal-btn" class="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-100 transition-all active:scale-95 cursor-pointer">
+                <Icons type="close-x" class="w-4 h-4" />
+            </button>
+        </header>
+
+        <!-- Barra de Búsqueda Interna -->
+        <div class="px-6 py-3 bg-slate-50/50 border-b border-slate-100">
+            <div class="relative group">
+                <div class="absolute left-3.5 top-0 h-full flex items-center justify-center text-slate-400 group-focus-within:text-brand transition-colors">
+                    <Icons type="search" class="w-4 h-4" />
+                </div>
+                <input 
+                    type="text" 
+                    id="importados-modal-search" 
+                    placeholder="Buscar producto importado..." 
+                    class="w-full h-10 pl-10 pr-4 bg-white border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all shadow-sm"
+                />
+            </div>
+        </div>
+
+        <!-- Cuerpo / Tabla -->
+        <div class="flex-1 overflow-y-auto p-6 scrollbar-premium">
+            <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+                <table class="w-full border-collapse text-left text-sm text-slate-500">
+                    <thead class="bg-slate-50 text-[11px] font-bold tracking-wider text-slate-700 border-b border-slate-200">
+                        <tr>
+                            <th scope="col" class="px-5 py-3.5 font-bold">Producto</th>
+                            <th scope="col" class="px-5 py-3.5 font-bold">Presentación</th>
+                            <th scope="col" class="px-5 py-3.5 font-bold">Precio</th>
+                            <th scope="col" class="px-5 py-3.5 font-bold text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200" id="importados-modal-table-body">
+                        <!-- Las filas se inyectan dinámicamente -->
+                        <tr id="importados-modal-loading-row">
+                            <td colspan="4" class="px-5 py-8 text-center text-slate-400 italic">
+                                Cargando catálogo de importados...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Estado Vacío del Buscador -->
+            <div id="importados-modal-empty" class="hidden py-10 text-center text-slate-400">
+                No se encontraron productos importados que coincidan con la búsqueda.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { getImportedProducts } from '../../data/api';
+
+    let _importedProducts: any[] = [];
+
+    function openModal() {
+        const modal = document.getElementById('importados-modal');
+        const container = document.getElementById('importados-modal-container');
+        if (!modal || !container) return;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        requestAnimationFrame(() => {
+            container.classList.remove('scale-95', 'opacity-0');
+            container.classList.add('scale-100', 'opacity-100');
+        });
+        
+        document.body.style.overflow = 'hidden';
+        
+        const searchInput = document.getElementById('importados-modal-search') as HTMLInputElement;
+        if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+        }
+        
+        loadAndRender();
+    }
+
+    async function loadAndRender() {
+        const tbody = document.getElementById('importados-modal-table-body');
+        if (tbody && _importedProducts.length === 0) {
+            tbody.innerHTML = `
+                <tr id="importados-modal-loading-row">
+                    <td colspan="4" class="px-5 py-8 text-center text-slate-400 italic">
+                        Cargando catálogo de importados...
+                    </td>
+                </tr>
+            `;
+        }
+
+        try {
+            _importedProducts = await getImportedProducts();
+            renderTable(_importedProducts);
+        } catch (err) {
+            console.error('Error al cargar productos importados:', err);
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-5 py-8 text-center text-red-500 font-medium">
+                            Error al cargar los datos del servidor.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('importados-modal');
+        const container = document.getElementById('importados-modal-container');
+        if (!modal || !container) return;
+
+        container.classList.remove('scale-100', 'opacity-100');
+        container.classList.add('scale-95', 'opacity-0');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }, 200);
+    }
+
+    function formatNumber(num: number): string {
+        return new Intl.NumberFormat('es-CO', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(num);
+    }
+
+    function renderTable(data: any[], filter: string = '') {
+        const tbody = document.getElementById('importados-modal-table-body');
+        const emptyState = document.getElementById('importados-modal-empty');
+        if (!tbody || !emptyState) return;
+
+        const query = filter.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+        const filtered = data.filter(item => {
+            const prodName = (item.producto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            const desc = (item.descripcion_producto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            return !query || prodName.includes(query) || desc.includes(query);
+        });
+
+        if (filtered.length === 0) {
+            tbody.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+        } else {
+            tbody.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = filtered.map(item => {
+                const badgeText = (item.badges || '').trim();
+                const badgeHtml = badgeText 
+                    ? `<span class="badge-elite badge-elite--brand ml-2 text-[10px] py-0.5 px-1.5 font-bold uppercase tracking-wide inline-block">${badgeText}</span>` 
+                    : '';
+                const parsedPrice = parseInt(String(item.precio_farmacia).replace(/[^0-9]/g, ''), 10) || 0;
+
+                return `
+                    <tr class="hover:bg-slate-50/80 transition-colors">
+                        <td class="px-5 py-3.5 font-bold text-slate-900">
+                            <div class="flex items-center">
+                                <span>${item.producto}</span>
+                                ${badgeHtml}
+                            </div>
+                        </td>
+                        <td class="px-5 py-3.5 text-slate-600 font-medium">${item.descripcion_producto || '-'}</td>
+                        <td class="px-5 py-3.5 font-bold text-slate-900">$ ${formatNumber(parsedPrice)}</td>
+                        <td class="px-5 py-3.5 text-center">
+                            <button 
+                                class="inline-flex items-center justify-center p-2 rounded-xl text-brand hover:text-white hover:bg-brand border border-subtle hover:border-brand transition-all active:scale-95 cursor-pointer js-add-imported-cart-btn"
+                                data-name="${item.producto}"
+                                data-price="${parsedPrice}"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    }
+
+    // Inicializar listeners
+    document.addEventListener('astro:page-load', () => {
+        const modal = document.getElementById('importados-modal');
+        const closeBtn = document.getElementById('close-importados-modal-btn');
+        const backdrop = document.getElementById('importados-modal-backdrop');
+        const searchInput = document.getElementById('importados-modal-search') as HTMLInputElement;
+        const tbody = document.getElementById('importados-modal-table-body');
+
+        closeBtn?.addEventListener('click', closeModal);
+        backdrop?.addEventListener('click', closeModal);
+
+        searchInput?.addEventListener('input', () => {
+            renderTable(_importedProducts, searchInput.value);
+        });
+
+        // Evento global de apertura
+        window.addEventListener('vademecum:open-importados-modal', openModal);
+
+        // Delegación de clics para agregar al carrito
+        tbody?.addEventListener('click', (e) => {
+            const addBtn = (e.target as HTMLElement).closest('.js-add-imported-cart-btn') as HTMLButtonElement | null;
+            if (addBtn) {
+                const name = addBtn.getAttribute('data-name') || '';
+                const price = addBtn.getAttribute('data-price') || '0';
+                
+                // Disparar evento global de carrito
+                document.dispatchEvent(new CustomEvent('addToCart', {
+                    detail: {
+                        name: `${name} (Importado)`,
+                        price: parseInt(price, 10),
+                        tableId: 'productos_importados',
+                        category: 'Importados VIP'
+                    }
+                }));
+
+                // Microanimación de éxito al agregar
+                addBtn.classList.remove('text-brand', 'hover:bg-brand');
+                addBtn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-500');
+                const originalHtml = addBtn.innerHTML;
+                addBtn.innerHTML = `<span class="flex items-center justify-center font-black text-[13px] tracking-tight animate-fade-in">+1</span>`;
+                
+                setTimeout(() => {
+                    addBtn.classList.remove('bg-emerald-500', 'text-white', 'border-emerald-500');
+                    addBtn.classList.add('text-brand', 'hover:bg-brand');
+                    addBtn.innerHTML = originalHtml;
+                }, 1000);
+            }
+        });
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    });
+</script>

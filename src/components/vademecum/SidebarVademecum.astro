@@ -68,19 +68,26 @@ const {
     </div>
 
     <!-- Contenedor Inferior: Identidad del Profesional Simplificado -->
-    <div class="px-5 py-4 mt-auto border-t border-subtle flex items-center justify-between text-[12px] text-slate-500 bg-surface-white">
-        <span class="truncate pr-2 font-medium">
-            Sesión: <span id="sidebar-user-name" class="text-slate-900 font-bold">Invitado</span>
-            <span id="sidebar-user-initials" class="hidden">IN</span>
-        </span>
+    <div class="px-5 py-4 mt-auto border-t border-subtle flex flex-col gap-3 text-[12px] bg-surface-white">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <!-- Avatar con Iniciales -->
+            <div class="w-8 h-8 rounded-full bg-emerald-50 text-brand border border-emerald-100/60 flex items-center justify-center font-bold text-[11px] shrink-0 select-none uppercase">
+                <span id="sidebar-user-initials">IN</span>
+            </div>
+            <!-- Info del Usuario -->
+            <div class="flex flex-col min-w-0 leading-tight">
+                <span class="text-[10px] font-medium text-slate-400 tracking-tight">Sesión profesional</span>
+                <span id="sidebar-user-name" class="text-slate-800 font-bold truncate text-[13px] mt-0.5" title="Invitado">Invitado</span>
+            </div>
+        </div>
         <!-- Botón Logout -->
         <button 
             id="sidebar-logout-btn" 
-            class="flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all active:scale-95 cursor-pointer font-semibold shrink-0"
+            class="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-red-50/50 text-red-600 hover:text-white hover:bg-red-600 border border-red-100 hover:border-red-600 transition-all active:scale-95 cursor-pointer font-bold text-[11px] shrink-0"
             title="Cerrar sesión"
         >
-            <Icons type="logout" class="w-4 h-4" />
-            <span>Salir</span>
+            <Icons type="logout" class="w-3.5 h-3.5" />
+            <span>Cerrar sesión</span>
         </button>
     </div>
 </aside>
@@ -101,6 +108,7 @@ const {
                 const session = JSON.parse(sessionRaw);
                 initialsEl.textContent = session.iniciales || 'IN';
                 nameEl.textContent = session.nombre_usuario || 'Usuario';
+                nameEl.setAttribute('title', session.nombre_usuario || 'Usuario');
                 if (logoutBtn) logoutBtn.classList.remove('hidden');
             } catch (e) {
                 console.error('[Elite Sidebar] Error al parsear sesión');
@@ -108,6 +116,7 @@ const {
         } else {
             initialsEl.textContent = 'IN';
             nameEl.textContent = 'Invitado';
+            nameEl.setAttribute('title', 'Invitado');
             if (logoutBtn) logoutBtn.classList.add('hidden');
         }
     }

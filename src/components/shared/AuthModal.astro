@@ -167,6 +167,7 @@ import Icons from './Icons.astro';
                     const sessionData = {
                         nombre_usuario: result.nombre_usuario || user,
                         iniciales: getInitials(result.nombre_usuario || user),
+                        productos_importados: result.productos_importados || false,
                         timestamp: Date.now()
                     };
 

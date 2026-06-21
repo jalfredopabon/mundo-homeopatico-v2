@@ -19,7 +19,7 @@ export interface FilterMetadata {
 /**
  * CONFIGURACIÓN DE ORIGEN DE DATOS (HIDRATACIÓN ÉLITE)
  */
-const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbzdBE7gACgT67iJkrw_UOxQGiiRl9udwYC6uQcpeE9xHzteNdbZX_c6OL7grNvIg5zn/exec';
+const GAS_WEBAPP_URL = import.meta.env.PUBLIC_GAS_URL || 'https://script.google.com/macros/s/AKfycbyz10_U3ZSobcssSWDP4DHLMAu8n1R5S-iQWgt1-g5Ci96Zh9zo7KGnArBEEAzLlNQm/exec';
 
 /**
  * TOKEN DE SEGURIDAD (Protocolo Fort Knox)
@@ -118,6 +118,7 @@ export interface AccessResult {
     ok: boolean;
     nombre_usuario?: string;
     error?: string;
+    productos_importados?: boolean;
 }
 
 // --- ESQUEMAS PARA CATÁLOGO (HIERARCHY & PRICES) ---
@@ -164,8 +165,18 @@ export const CatalogProductSchema = z.object({
     estado: z.string().optional().default('activo'),
 });
 
+// --- ESQUEMA PARA PRODUCTOS IMPORTADOS ---
+export const CatalogImportedProductSchema = z.object({
+    producto: z.string(),
+    descripcion_producto: z.string().optional().default(''),
+    badges: z.string().optional().default(''),
+    precio_farmacia: z.union([z.string(), z.number()]).transform(val => String(val)),
+    precio_publico: z.union([z.string(), z.number()]).transform(val => String(val)),
+});
+
 export type CatalogNavigation = z.infer<typeof CatalogNavigationSchema>;
 export type CatalogProduct = z.infer<typeof CatalogProductSchema>;
+export type CatalogImportedProduct = z.infer<typeof CatalogImportedProductSchema>;
 
 // Caché en memoria para el servidor (Node.js) con coalescencia y TTL para desarrollo y build
 const serverCache = new Map<string, { promise: Promise<any>; timestamp: number }>();
@@ -556,6 +567,29 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
             return z.array(CatalogProductSchema.passthrough()).parse(cleanData);
         } catch (error: any) {
             console.warn('API Error (Lista de Precios):', error?.message || String(error));
+            return [];
+        }
+    });
+}
+
+/**
+ * Obtiene la lista de productos importados exclusivos (vademecum_importados)
+ */
+export async function getImportedProducts(): Promise<CatalogImportedProduct[]> {
+    return fetchWithSWR('vd_importados', async () => {
+        try {
+            const response = await robustFetch(`${GAS_WEBAPP_URL}?action=vademecum_importados&key=${SECRET_KEY}`);
+            const rawData = await response.json();
+            const cleanData = normalizeKeys(rawData);
+
+            if (!Array.isArray(cleanData)) {
+                console.error("API Error: La respuesta de importados no es un array", cleanData);
+                return [];
+            }
+
+            return z.array(CatalogImportedProductSchema.passthrough()).parse(cleanData);
+        } catch (error: any) {
+            console.warn('API Error (Productos Importados):', error?.message || String(error));
             return [];
         }
     });

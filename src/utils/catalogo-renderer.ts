@@ -131,7 +131,7 @@ export function createProductRow(product: any, sectionTitle: string = ''): strin
                         data-category="${sectionTitle}"
                         title="Añadir al carrito"
                     >
-                        <div class="flex items-center justify-center">${ICONS.plus}</div>
+                        <div class="flex items-center justify-center">${ICONS.cart}</div>
                     </button>
                 </div>
             </div>

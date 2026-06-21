@@ -8,6 +8,7 @@ import PrincipiosModal from '../components/vademecum/PrincipiosModal.astro';
 import MedicalDetails from '../components/vademecum/MedicalDetails.astro';
 import Icons from '../components/shared/Icons.astro';
 import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
+import ImportadosModal from '../components/vademecum/ImportadosModal.astro';
 
 // Nota: Ya no renderizamos las tarjetas en el servidor para evitar DOM Bloat.
 // La hidratación es 100% cliente vía motor dinámico.
@@ -20,6 +21,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     <AuthModal />
     <PosologiaModal />
     <PrincipiosModal />
+    <ImportadosModal />
 
     <div class="flex flex-col md:flex-row w-full max-w-full mx-auto flex-1 h-[calc(100dvh-66px)] min-h-0 overflow-hidden" id="vademecum-page-container" data-view="products">
         
@@ -34,9 +36,18 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
                 
                 <header class="catalog-section-header reveal active">
                     <div class="flex flex-col w-full gap-6">
-                        <!-- Switcher de Modo (Prioridad UX) -->
-                        <div class="w-fit">
-                            <VademecumToggle />
+                        <!-- Switcher de Modo y Botón VIP (Prioridad UX) -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 w-full">
+                            <div class="w-fit">
+                                <VademecumToggle />
+                            </div>
+                            <button 
+                                id="vip-importados-btn" 
+                                class="hidden items-center gap-2 py-2 px-4 bg-white hover:bg-brand active:scale-95 text-slate-800 hover:text-white border border-brand hover:border-brand font-bold text-xs rounded-xl transition-all cursor-pointer shadow-sm animate-fade-in group"
+                            >
+                                <Icons type="globe" class="w-3.5 h-3.5 text-brand group-hover:text-white transition-colors" />
+                                Productos importados
+                            </button>
                         </div>
 
                         <!-- Título Principal -->
@@ -139,9 +150,37 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
     let lastSearchQuery = '';
     let isSearchExpanded = false;
 
+    function checkVIPAccess() {
+        const sessionRaw = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
+        const vipBtn = document.getElementById('vip-importados-btn');
+        if (!vipBtn) return;
+        
+        if (sessionRaw) {
+            try {
+                const session = JSON.parse(sessionRaw);
+                if (session.productos_importados) {
+                    vipBtn.classList.remove('hidden');
+                    vipBtn.classList.add('inline-flex');
+                    return;
+                }
+            } catch (e) {
+                console.error('Error parsing session for VIP access:', e);
+            }
+        }
+        vipBtn.classList.add('hidden');
+        vipBtn.classList.remove('inline-flex');
+    }
+
     document.addEventListener('astro:page-load', async () => {
         const session = localStorage.getItem('mh_session') || sessionStorage.getItem('mh_session');
         const authModal = document.getElementById('auth-modal-overlay');
+
+        checkVIPAccess();
+
+        const vipBtn = document.getElementById('vip-importados-btn');
+        vipBtn?.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('vademecum:open-importados-modal'));
+        });
 
         if (!session) {
             // Si no hay sesión, asegurar que el modal sea visible y detener carga
@@ -159,6 +198,7 @@ import VademecumToggle from '../components/vademecum/VademecumToggle.astro';
 
     // Escuchar el evento de login exitoso para arrancar el Vademécum
     document.addEventListener('mhSessionUpdated', () => {
+        checkVIPAccess();
         initVademecum();
     });
 

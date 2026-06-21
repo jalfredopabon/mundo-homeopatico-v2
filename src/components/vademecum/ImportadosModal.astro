@@ -241,7 +241,7 @@ import Icons from "../shared/Icons.astro";
                 addBtn.classList.remove('text-brand', 'hover:bg-brand');
                 addBtn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-500');
                 const originalHtml = addBtn.innerHTML;
-                addBtn.innerHTML = `<span class="flex items-center justify-center font-black text-[13px] tracking-tight animate-fade-in">+1</span>`;
+                addBtn.innerHTML = `<span class="flex items-center justify-center text-[13px] tracking-tight animate-fade-in"><span class="font-normal text-[11px] mr-[0.5px]">+</span><span class="font-black">1</span></span>`;
                 
                 setTimeout(() => {
                     addBtn.classList.remove('bg-emerald-500', 'text-white', 'border-emerald-500');

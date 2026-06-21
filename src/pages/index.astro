@@ -196,7 +196,7 @@ import Icons from '../components/shared/Icons.astro';
                 const category = button.getAttribute('data-category');
                 document.dispatchEvent(new CustomEvent('addToCart', { detail: { name, price, tableId, category } }));
                 
-                button.innerHTML = `<span class="flex items-center justify-center font-black text-[13px] tracking-tight animate-fade-in">+1</span>`;
+                button.innerHTML = `<span class="flex items-center justify-center text-[13px] tracking-tight animate-fade-in"><span class="font-normal text-[11px] mr-[0.5px]">+</span><span class="font-black">1</span></span>`;
                 button.classList.add('is-success');
                 setTimeout(() => {
                     button.innerHTML = originalContent;
